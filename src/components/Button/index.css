@@ -1,0 +1,37 @@
+.btn {
+  padding: 12px 40px;
+  border-radius: 46px;
+  border: 2px solid var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  transition: 0.3s ease;
+  font-weight: 700;
+  font-family: Montserrat;
+}
+.aboutInner .activeBtn {
+  transform: translateX(20px);
+  box-shadow: -21px 13px 29px rgba(221, 38, 78, 0.35);
+}
+.activeBtn {
+  background-color: var(--main-color) !important;
+  color: #fff !important;
+}
+.btn_icon {
+  width: 25px;
+  height: 25px;
+}
+.pagination .btn_icon {
+  width: 15px;
+  height: 15px;
+}
+.pagination_backBtn img {
+  transform: rotate(180deg);
+}
+@media screen and (max-width: 975px) {
+  .homePage_btn {
+    font-size: clamp(0.9375rem, -0.0004rem + 4.6893vw, 1.758125rem) !important;
+    padding: 17px !important;
+  }
+}
