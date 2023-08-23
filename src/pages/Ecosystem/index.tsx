@@ -23,15 +23,35 @@ import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
-const Ecosystem = () => {
+interface EcosystemProps {
+  ourEcosystem: any;
+  lang: string;
+  sages: any;
+  club301: any;
+  ambassadors: any;
+  volunteers: any;
+  experts: any;
+  partners: any;
+  foundationFriends: any;
+}
+
+const Ecosystem: React.FC<EcosystemProps> = ({
+  ourEcosystem,
+  lang,
+  sages,
+  club301,
+  ambassadors,
+  volunteers,
+  experts,
+  partners,
+  foundationFriends,
+}) => {
   const data = [
     {
       id: 1,
-      headerName: "Мудрецы",
+      title: sages[0][`title_${lang}`],
       headerIcon: SagesIcon,
-      p: [
-        "В рамках проекта на постоянное жительство в Армению переедет 301 мудрец. Это люди больше чем просто профессионалы в своей области, это мудрецы — мыслители и деятели, люди большого ума с нестандартным мышлением и неожиданными взглядами. В Армении будут созданы все условия для реализации их идей, что должно привести к осуществлению ряда прорывных проектов.На сегодняшний день ядро Фонда составляют четыре мудреца, приехавших в Армению из разных стан мира и решивших связать свою жизнь с армянской землей.",
-      ],
+      description: sages[0][`description_${lang}`],
       mainImg: SAGES,
       btn: ["Узнать больше"],
       btnStyle: [
@@ -42,11 +62,9 @@ const Ecosystem = () => {
     },
     {
       id: 2,
-      headerName: "Клуб «301»",
+      title: club301[0][`title_${lang}`],
       headerIcon: ClubIcon,
-      p: [
-        "Фонд «301. Земля мудрости» — некоммерческая организация и осуществляет свою деятельность с помощью взносов участников клуба «301». Размер взноса составляет 301$ в месяц. Участником клуба может стать каждый, кто разделяет нашу миссию и ценности вне зависимости от географических границ.",
-      ],
+      description: club301[0][`description_${lang}`],
       mainImg: CLUB,
       btn: ["Become one of 301", "Узнать больше"],
       btnStyle: [
@@ -65,11 +83,9 @@ const Ecosystem = () => {
     },
     {
       id: 3,
-      headerName: "Амбассадоры",
+      title: ambassadors[0][`title_${lang}`],
       headerIcon: AmbassadorIcon,
-      p: [
-        "Амбассадоры фонда являются официальными представителями нашего фонда в различных странах мира. Основная миссия наших амбассадоров — представлять интересы фонда в местах их проживания, доносить миссию и ценности фонда «301», искать и находить поддержку среди тех, кто разделяет наши взгляды.",
-      ],
+      description: ambassadors[0][`description_${lang}`],
       mainImg: AMBASSDOR,
       btn: ["Стать амбассадором"],
       btnStyle: [
@@ -84,11 +100,9 @@ const Ecosystem = () => {
     },
     {
       id: 4,
-      headerName: "Волонтеры",
+      title: volunteers[0][`title_${lang}`],
       headerIcon: VolunteersIcon,
-      p: [
-        "Важной частью нашего фонда являются волонтеры, которые по своей личной инициативе помогают нам в проектах.  Наши волонтеры — неравнодушные люди, которые верят, что им по силам сделать мир лучше. Волонтером «301» может стать каждый, кто разделяет миссию и ценности фонда.",
-      ],
+      p: volunteers[0][`description_${lang}`],
       mainImg: VOLUNTEERS,
       btn: ["Стать волонтером"],
       btnStyle: [
@@ -103,11 +117,9 @@ const Ecosystem = () => {
     },
     {
       id: 5,
-      headerName: "Эксперты",
+      title: experts[0][`title_${lang}`],
       headerIcon: ExpertIcon,
-      p: [
-        "Компетентные специалисты в различных отраслях — важное звено экосистемы фонда «301». Эксперты подключаются к проектам на разных стадиях: помогают проверять гипотезы и реализовывать идеи мудрецов. В наших проектах активное участие принимают эксперты в области науки, культуры, образования, истории, искусства и многих других.",
-      ],
+      description: experts[0][`description_${lang}`],
       mainImg: EXPERT,
       btn: ["Стать экспертом "],
       btnStyle: [
@@ -122,11 +134,9 @@ const Ecosystem = () => {
     },
     {
       id: 6,
-      headerName: "Партнеры",
+      title: partners[0][`title_${lang}`],
       headerIcon: PartnersIcon,
-      p: [
-        "Нашими партнерами являются различные организации, а также отдельные личности, которые разделяют наши идеи. Наши партнеры поддерживают проекты фонда и оказывают содействие и в их реализации, предоставляя нам различные ресурсы. ",
-      ],
+      description: partners[0][`description_${lang}`],
       mainImg: PARTNERS,
       btn: ["Стать партнером", "Все партнеры"],
       btnStyle: [
@@ -162,12 +172,9 @@ const Ecosystem = () => {
     },
     {
       id: 7,
-      headerName: "Друзья фонда",
+      title: foundationFriends[0][`title_${lang}`],
       headerIcon: FriendsIcon,
-      p: [
-        "Друзьями фонда являются все, кто помогает: ресурсами, временем, поддержкой, идеями, и остается рядом. ",
-        "Чужих не бывает.",
-      ],
+      description: foundationFriends[0][`description_${lang}`],
       mainImg: FRIENDS,
       btn: ["Стать другом фонда"],
       btnStyle: [
@@ -193,10 +200,8 @@ const Ecosystem = () => {
         style={{ flexDirection: "column", padding: "60px 0" }}
       >
         <Header
-          h1="ЭКОСИСТЕМА Клуб  «301»"
-          p={[
-            "Мы видим два основный пути развития: с одной стороны — мудрое использовании потенциала, знаний и накопленного культурно-исторического опыта армянского народа; с другой — привлечение нестандартно мыслящих людей, как из Армении, так и из других стран, способных по-новому взглянуть на сложившуюся картину мира.Поэтому мы интегрируем в свою экосистему всех, кто готов вместе с нами строить благополучное будущее Армении.",
-          ]}
+          title={ourEcosystem[0][`title_${lang}`]}
+          description={ourEcosystem[0][`description_${lang}`]}
           icon={EcosystemIcon}
           style={{ marginBottom: "80px" }}
           className="differedHeaderContainer"
@@ -206,8 +211,8 @@ const Ecosystem = () => {
             <div className="ecosystem" key={data.id}>
               <div className="ecosystemInner">
                 <Header
-                  h1={data.headerName}
-                  p={data.p}
+                  title={data.title}
+                  description={data.description}
                   btns={data.btn}
                   icon={data.headerIcon}
                   btnStyles={data.btnStyle}

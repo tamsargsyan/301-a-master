@@ -9,11 +9,18 @@ import LOGO_MOBILE from "../../assets/301-mobile.png";
 import "./index.css";
 import FollowUs from "../../components/FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import BG from "../../assets/info/main-page-bg.svg"
-import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg"
+import BG from "../../assets/info/main-page-bg.svg";
+import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg";
 
-const Main = () => {
+interface MainProps {
+  landOfWisdom: any;
+  followUs: any;
+  lang: string;
+}
+
+const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
   const windowSize = useWindowSize();
+  console.log(followUs);
   return (
     <Background
       pattern1={windowSize.width < 975 ? SIDE_PATTERN_MOBILE : SIDE_PATTERN}
@@ -23,7 +30,7 @@ const Main = () => {
         display: windowSize.width < 975 ? "none" : "block",
       }}
       shoudHaveSidePattern={true}
-      style={{ flexDirection: windowSize.width < 975 ? "column" : "row"}}
+      style={{ flexDirection: windowSize.width < 975 ? "column" : "row" }}
     >
       {windowSize.width < 975 && (
         <div className="bgLogo">
@@ -35,12 +42,9 @@ const Main = () => {
         <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt="Background" />
       </div>
       <Header
-        h1="ЗЕМЛЯ МУДРОСТИ"
+        title={landOfWisdom[`title_${lang}`]}
         icon={""}
-        p={[
-          "Изменение сценария будущего Армении путем создания онтологической безопасности.",
-          "В центре нашего внимания Армения — земля многовековой культуры и мудрости, которой есть что предложить миру.",
-        ]}
+        description={landOfWisdom[`description_${lang}`]}
         btns={["Стань одним из 301", "Весь проект"]}
         btnStyles={[
           {
@@ -61,7 +65,7 @@ const Main = () => {
           <img src={LOGO} alt="301" />
         </div>
       )}
-      <FollowUs className="mainFollowUs" />
+      <FollowUs className="mainFollowUs" links={followUs} />
     </Background>
   );
 };

@@ -8,7 +8,11 @@ import "./index.css";
 import FollowUs from "../../components/FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
-const Footer = () => {
+interface FooterProps {
+  followUs: any;
+}
+
+const Footer: React.FC<FooterProps> = ({ followUs }) => {
   const ecosystem = [
     {
       id: 1,
@@ -105,7 +109,7 @@ const Footer = () => {
             )}
           </div>
           <div className="footerForthtPart">
-            <FollowUs />
+            <FollowUs links={followUs} />
           </div>
           {windowSize.width < 875 && (
             <div className="logo301Footer">

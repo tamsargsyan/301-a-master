@@ -45,7 +45,7 @@ const Contact = () => {
         style={{ flexDirection: "column", padding: "0" }}
       >
         <Header
-          h1="Напишите нам"
+          title="Напишите нам"
           icon={EMAIL}
           style={{
             paddingTop: "40px",

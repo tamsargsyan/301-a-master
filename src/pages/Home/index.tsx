@@ -1,7 +1,7 @@
 import Main from "../Main";
 import Background from "../../components/Background";
 import Header from "../../components/Header";
-import About from "../About";
+import About from "../Hypotheses";
 import Projects from "../Projects";
 import Ecosystem from "../Ecosystem";
 import News from "../News";
@@ -22,56 +22,6 @@ import { Spin } from "antd";
 
 const Home = () => {
   const windowSize = useWindowSize();
-  const sections = [
-    {
-      id: 1,
-      h1: "НАША МИССИЯ",
-      h2: "Наша миссия — обеспечить онтологическую безопасность Армении.",
-      p: [
-        "Мы запускаем научные проекты, реализовываем культурные инициативы, строим образовательную среду, формируем экспертное сообщество  — это актуализирует систему привычных ценностей и позволяет менять сценарий будущего. Мы верим, что именно такой подход сможет укрепить место армян как носителей уникального  культурного кода в современном мире. Мы выстраиваем те границы Армении, которые никому не под силу нарушить. Мы создаем будущее, в котором армянская цивилизация  уникальна и ценна для мира.",
-      ],
-      btn: ["Узнать больше"],
-      icon: ICON_1,
-      pattern1: undefined,
-      pattern2: SMALL_PATTERN_2,
-      pattern3: BIG_PATTERN_2,
-      shoudHaveSidePattern: false,
-      innerClassName: undefined,
-    },
-    {
-      id: 2,
-      h1: "ПОЧЕМУ ЭТО ВАЖНО?",
-      h2: "",
-      p: [
-        "Можем ли мы назвать ныне живущих представителей армянской культуры, известных по всему миру? Нет — Армении нет на современной культурной карте. Многие армяне достигли успеха в области культуры в других странах, однако культура, которую они представляют — американская, французская, русская, но не армянская.",
-        "В Армении также наблюдается кризис образования; отсутствие общественного договора и системы национальных ценностей, что может вести к необратимым последствиям — потере идентичности, а позже и государственности. ",
-        "Мы верим, что выстраивание границ онтологической безопасности сможет этому противостоять. Для этого нужно определить, чем Армения уникальна для мира. Каким органом на теле планеты может стать наша страна: совестью, памятью, руками, голосом? А может быть быть нейронами или мозжечком? ",
-        "Ответив на этот вопрос, армянская цивилизация сумеет сохранить себя и сможет стать важной большому миру.",
-      ],
-      btn: undefined,
-      icon: ICON_2,
-      pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
-      pattern2: SMALL_PATTERN_2,
-      pattern3: BIG_PATTERN_3,
-      shoudHaveSidePattern: false,
-      innerClassName: "importantInner",
-    },
-    {
-      id: 3,
-      h1: "ГИПОТЕЗЫ БУДУЩЕГО",
-      h2: "",
-      p: [
-        "Мы разработали четыре основные гипотезы, согласно которым Армения может развиваться и позиционировать себя на карте планеты.",
-      ],
-      btn: undefined,
-      icon: ICON_3,
-      pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
-      pattern2: undefined,
-      pattern3: undefined,
-      shoudHaveSidePattern: false,
-      innerClassName: "hypothesesInner",
-    },
-  ];
 
   const [data, setData] = useState<any>(null);
 
@@ -84,7 +34,7 @@ const Home = () => {
   if (!data)
     return (
       <div className="loadingContainer">
-        <Spin size="large"/>
+        <Spin size="large" />
       </div>
     );
 
@@ -94,7 +44,7 @@ const Home = () => {
     club301,
     experts,
     foundationFriends,
-    hypothesesCategory,
+    dataHypotheses,
     news,
     ourEcosystem,
     ourMission,
@@ -103,13 +53,60 @@ const Home = () => {
     sages,
     volunteers,
     whyImportant,
+    hypothesesForTheFuture,
+    landOfWisdom,
+    followUs,
   } = data;
-  // console.log(data)
+
+  const lang = "en";
+
+  const sections = [
+    {
+      id: 1,
+      title: ourMission[0][`title_${lang}`],
+      shortDescription: ourMission[0][`short_description_${lang}`],
+      description: ourMission[0][`description_${lang}`],
+      btn: ["Узнать больше"],
+      icon: ICON_1,
+      pattern1: undefined,
+      pattern2: SMALL_PATTERN_2,
+      pattern3: BIG_PATTERN_2,
+      shoudHaveSidePattern: false,
+      innerClassName: undefined,
+    },
+    {
+      id: 2,
+      title: whyImportant[0][`title_${lang}`],
+      shortDescription: "",
+      description: whyImportant[0][`description_${lang}`],
+      btn: undefined,
+      icon: ICON_2,
+      pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
+      pattern2: SMALL_PATTERN_2,
+      pattern3: BIG_PATTERN_3,
+      shoudHaveSidePattern: false,
+      innerClassName: "importantInner",
+    },
+    {
+      id: 3,
+      title: hypothesesForTheFuture[0][`title_${lang}`],
+      shortDescription: "",
+      description: hypothesesForTheFuture[0][`description_${lang}`],
+      btn: undefined,
+      icon: ICON_3,
+      pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
+      pattern2: undefined,
+      pattern3: undefined,
+      shoudHaveSidePattern: false,
+      innerClassName: "hypothesesInner",
+    },
+  ];
+
   return (
     <>
       {data && (
         <>
-          <Main />
+          <Main followUs={followUs} landOfWisdom={landOfWisdom} lang={lang} />
           {sections.map((section) => (
             <Fragment key={section.id}>
               <div className="separatedPart"></div>
@@ -121,9 +118,9 @@ const Home = () => {
                 style={{ padding: "60px 0" }}
               >
                 <Header
-                  h1={section.h1}
-                  h2={section.h2}
-                  p={section.p}
+                  title={section.title}
+                  shortDescription={section.shortDescription}
+                  description={section.description}
                   btns={section.btn}
                   icon={section.icon}
                   innerClassName={section.innerClassName}
@@ -132,12 +129,22 @@ const Home = () => {
               </Background>
             </Fragment>
           ))}
-          <About />
-          <Projects OurProjects={OurProjects} />
-          <Ecosystem />
-          <News />
+          <About dataHypotheses={dataHypotheses} />
+          <Projects OurProjects={OurProjects} lang={lang} projects={projects} />
+          <Ecosystem
+            ourEcosystem={ourEcosystem}
+            lang={lang}
+            sages={sages}
+            club301={club301}
+            ambassadors={ambassadors}
+            volunteers={volunteers}
+            experts={experts}
+            partners={partners}
+            foundationFriends={foundationFriends}
+          />
+          <News news={news} lang={lang} />
           <Contact />
-          <Footer />
+          <Footer followUs={followUs} />
         </>
       )}
     </>

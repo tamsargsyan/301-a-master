@@ -11,13 +11,14 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 
 interface ProjectsProps {
   OurProjects: any;
+  lang: string;
+  projects: any;
 }
 
-const Projects: React.FC<ProjectsProps> = ({ OurProjects }) => {
+const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   const windowSize = useWindowSize();
   const projects = [
     {
@@ -92,14 +93,14 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects }) => {
     }
   };
 
-  const {
-    description_am,
-    description_ru,
-    description_en,
-    title_am,
-    title_ru,
-    title_en,
-  } = OurProjects[0];
+  // const {
+  //   description_am,
+  //   description_ru,
+  //   description_en,
+  //   title_am,
+  //   title_ru,
+  //   title_en,
+  // } = OurProjects[0];
 
   return (
     <>
@@ -114,8 +115,8 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects }) => {
       >
         <div className="projectsContainer" id="projects">
           <Header
-            h1={title_am}
-            p={[removeHtmlTags(description_am)]}
+            title={OurProjects[0][`title_${lang}`]}
+            description={OurProjects[0][`description_${lang}`]}
             icon={ICON}
             className="differedHeaderContainer"
             style={{ width: "100%" }}

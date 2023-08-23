@@ -111,8 +111,8 @@ const OurProjects = () => {
     >
       <div className="filteringWrapper">
         <Header
-          h1="НАШИ ПРОЕКТЫ"
-          p={[
+          title="НАШИ ПРОЕКТЫ"
+          description={[
             "За несколько лет работы фонда «301. Земля мудрости» мы запустили ряд важных проектов по направлениям образования, культуры, науки и инноваций и целостного развития территории. ",
           ]}
           icon={ICON}
@@ -248,7 +248,7 @@ const OurProjects = () => {
       ) : (
         <FullProjectInfo viewedProject={viewedProject} setIsView={setIsView} />
       )}
-      <Footer />
+      <Footer followUs={undefined} />
     </Background>
   );
 };

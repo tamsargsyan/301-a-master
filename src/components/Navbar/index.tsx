@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import LOGO from "../../assets/logo.svg";
 import BIG_PATTERN from "../../assets/bigPatternNavbar.svg";
 import SIDE_PATTERN from "../../assets/patterns/side-1-mobile.svg";
@@ -51,6 +51,15 @@ const Navbar = () => {
       document.body.classList.remove("no-scroll");
     };
   }, [openMenu]);
+
+  const langs = ["en", "ru", "am"];
+  const [lang, setLang] = useState({
+    open: false,
+    activeLang: "en",
+  });
+
+  const copyLangs = langs.filter((item) => item !== lang.activeLang);
+
   return (
     <div className="navbarContainer">
       {windowSize.width < 975 && (
@@ -115,7 +124,38 @@ const Navbar = () => {
             </NavLink>
           ))}
         </div>
-        <div className="lang">ENG</div>
+        {/* <div className="lang">ENG</div> */}
+        <div className="langsWrapper">
+          <Button
+            text={lang.activeLang}
+            link={false}
+            to={""}
+            className="activeLang lang"
+            onClick={() =>
+              setLang((prev) => ({
+                ...prev,
+                open: !lang.open,
+              }))
+            }
+          />
+          {copyLangs.map((item, i) => (
+            <Fragment key={i}>
+              <Button
+                text={item}
+                link={false}
+                to={""}
+                className={`${lang.open && "openedLang"} lang`}
+                onClick={() =>
+                  setLang((prev) => ({
+                    ...prev,
+                    open: !lang.open,
+                    activeLang: item,
+                  }))
+                }
+              />
+            </Fragment>
+          ))}
+        </div>
       </div>
       <Button text="Sign In" link={true} to="" />
     </div>

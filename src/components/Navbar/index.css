@@ -33,10 +33,26 @@
   width: 33px;
   height: 33px;
   border-radius: 50%;
-  background-color: var(--main-color);
-  color: #fff;
   padding: 20px;
   font-size: 12px;
+  color: var(--text-color);
+  text-transform: uppercase;
+}
+.activeLang {
+  color: #fff;
+  background-color: var(--main-color);
+}
+.lang:not(.activeLang) {
+  opacity: 0;
+  cursor: unset;
+}
+.openedLang {
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+.langsWrapper {
+  display: flex;
+  gap: 10px;
 }
 @media screen and (max-width: 975px) {
   body.no-scroll {
@@ -120,7 +136,7 @@
     opacity: 0;
     transform: translateY(100%);
     animation: reveal 1s ease forwards;
-    color: #151C26; 
+    color: #151c26;
   }
   .openedMobileMenu .logout a {
     animation-delay: 0.7s;
@@ -140,7 +156,7 @@
   .openedMobileMenu .sidePattern1 {
     top: 85px;
   }
-  .openedMobileMenu .sidePattern2  {
+  .openedMobileMenu .sidePattern2 {
     bottom: 0;
   }
 }

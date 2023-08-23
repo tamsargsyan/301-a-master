@@ -3,9 +3,9 @@ import Button from "../Button";
 import "./index.css";
 
 interface HeaderProps {
-  h1: string;
-  h2?: string;
-  p?: string[];
+  title: string;
+  shortDescription?: string;
+  description?: any;
   btns?: string[];
   style?: Object;
   btnStyles?: React.CSSProperties[];
@@ -17,9 +17,9 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  h1,
-  h2,
-  p,
+  title,
+  shortDescription,
+  description,
   btns,
   icon,
   style,
@@ -45,19 +45,18 @@ const Header: React.FC<HeaderProps> = ({
               <img src={icon} alt="Ecosystem" />
             </div>
           )}
-          <h1>{h1}</h1>
-          {h2 && <h2>{h2}</h2>}
+          <h1>{title}</h1>
+          {shortDescription && <h2 dangerouslySetInnerHTML={{ __html: shortDescription }}></h2>}
         </div>
         {windowSize.width < 975 && mainImg && (
           <div className="mainImgHeader">
             <img src={mainImg} alt="Main" />
           </div>
         )}
-        <div className={`${innerClassName} inner`}>
-          {p?.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </div>
+        <div
+          className={`${innerClassName} inner`}
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
         {btns && (
           <div className="btns">
             {btns.map((btnText, index) => (

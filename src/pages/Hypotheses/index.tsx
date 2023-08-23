@@ -13,7 +13,11 @@ const btnStyle = {
   height: "70px",
 };
 
-const About = () => {
+interface HypothesesProps {
+  dataHypotheses: any;
+}
+
+const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses }) => {
   const infos = [
     {
       id: 1,
@@ -102,4 +106,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Hypotheses;
