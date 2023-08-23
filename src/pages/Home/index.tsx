@@ -18,6 +18,7 @@ import ICON_2 from "../../assets/info/2.svg";
 import ICON_3 from "../../assets/info/3.svg";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
+import { Spin } from "antd";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -80,7 +81,12 @@ const Home = () => {
     });
   }, []);
 
-  if (!data) return null;
+  if (!data)
+    return (
+      <div className="loadingContainer">
+        <Spin size="large"/>
+      </div>
+    );
 
   const {
     OurProjects,
@@ -98,39 +104,42 @@ const Home = () => {
     volunteers,
     whyImportant,
   } = data;
-  console.log(data)
-  
+  // console.log(data)
   return (
     <>
-      <Main />
-      {sections.map((section) => (
-        <Fragment key={section.id}>
-          <div className="separatedPart"></div>
-          <Background
-            pattern1={section.pattern1}
-            pattern2={section.pattern2}
-            pattern3={section.pattern3}
-            shoudHaveSidePattern={section.shoudHaveSidePattern}
-            style={{ padding: "60px 0" }}
-          >
-            <Header
-              h1={section.h1}
-              h2={section.h2}
-              p={section.p}
-              btns={section.btn}
-              icon={section.icon}
-              innerClassName={section.innerClassName}
-              className="differedHeaderContainer homePageHeader"
-            />
-          </Background>
-        </Fragment>
-      ))}
-      <About />
-      <Projects OurProjects={OurProjects} />
-      <Ecosystem />
-      <News />
-      <Contact />
-      <Footer />
+      {data && (
+        <>
+          <Main />
+          {sections.map((section) => (
+            <Fragment key={section.id}>
+              <div className="separatedPart"></div>
+              <Background
+                pattern1={section.pattern1}
+                pattern2={section.pattern2}
+                pattern3={section.pattern3}
+                shoudHaveSidePattern={section.shoudHaveSidePattern}
+                style={{ padding: "60px 0" }}
+              >
+                <Header
+                  h1={section.h1}
+                  h2={section.h2}
+                  p={section.p}
+                  btns={section.btn}
+                  icon={section.icon}
+                  innerClassName={section.innerClassName}
+                  className="differedHeaderContainer homePageHeader"
+                />
+              </Background>
+            </Fragment>
+          ))}
+          <About />
+          <Projects OurProjects={OurProjects} />
+          <Ecosystem />
+          <News />
+          <Contact />
+          <Footer />
+        </>
+      )}
     </>
   );
 };
