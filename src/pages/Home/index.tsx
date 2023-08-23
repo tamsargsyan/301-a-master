@@ -16,7 +16,8 @@ import BIG_PATTERN_3 from "../../assets/patterns/big-3.svg";
 import ICON_1 from "../../assets/info/1.svg";
 import ICON_2 from "../../assets/info/2.svg";
 import ICON_3 from "../../assets/info/3.svg";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import axios from "axios";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -70,6 +71,35 @@ const Home = () => {
       innerClassName: "hypothesesInner",
     },
   ];
+
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    axios.get("https://301.machtech.site/api/home").then(({ data }) => {
+      setData(data);
+    });
+  }, []);
+
+  if (!data) return null;
+
+  const {
+    OurProjects,
+    ambassadors,
+    club301,
+    experts,
+    foundationFriends,
+    hypothesesCategory,
+    news,
+    ourEcosystem,
+    ourMission,
+    partners,
+    projects,
+    sages,
+    volunteers,
+    whyImportant,
+  } = data;
+  console.log(data)
+  
   return (
     <>
       <Main />
@@ -96,7 +126,7 @@ const Home = () => {
         </Fragment>
       ))}
       <About />
-      <Projects />
+      <Projects OurProjects={OurProjects} />
       <Ecosystem />
       <News />
       <Contact />

@@ -11,8 +11,13 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 
-const Projects = () => {
+interface ProjectsProps {
+  OurProjects: any;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ OurProjects }) => {
   const windowSize = useWindowSize();
   const projects = [
     {
@@ -86,6 +91,16 @@ const Projects = () => {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
+
+  const {
+    description_am,
+    description_ru,
+    description_en,
+    title_am,
+    title_ru,
+    title_en,
+  } = OurProjects[0];
+
   return (
     <>
       <div className="separatedPart"></div>
@@ -99,10 +114,8 @@ const Projects = () => {
       >
         <div className="projectsContainer" id="projects">
           <Header
-            h1="НАШИ ПРОЕКТЫ"
-            p={[
-              "За несколько лет работы фонда «301. Земля мудрости» мы запустили ряд важных проектов по направлениям образования, культуры, науки и инноваций и целостного развития территории. ",
-            ]}
+            h1={title_am}
+            p={[removeHtmlTags(description_am)]}
             icon={ICON}
             className="differedHeaderContainer"
             style={{ width: "100%" }}

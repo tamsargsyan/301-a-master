@@ -3,20 +3,15 @@ import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
 import { useLocation } from "react-router";
+import { scrollToTop } from "./globalFunctions/scrollToTop";
 
 function App() {
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
-    const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    };
-    scrollToTop()
+    scrollToTop();
   }, [location]);
-  
+
   return (
     <div className="App">
       <Navbar />

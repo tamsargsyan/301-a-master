@@ -6,6 +6,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
 import { NavLink } from "react-router-dom";
+import { scrollToTop } from "../../globalFunctions/scrollToTop";
 
 export const menu = [
   {
@@ -43,12 +44,7 @@ export const menu = [
 const Navbar = () => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+
   useEffect(() => {
     document.body.classList.toggle("no-scroll", openMenu);
     return () => {
