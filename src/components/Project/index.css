@@ -26,6 +26,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: 40vw;
 }
 .ourProject__author,
 .ourProject__title {
@@ -109,6 +110,7 @@
     font-size: clamp(0.520625rem, -0.001rem + 1.0433vw, 0.71625rem);
   }
   .ourProject__projectInner {
+    width: 100%;
     padding: 30px clamp(1.301875rem, -0.0015rem + 2.6067vw, 1.790625rem);
   }
 }
