@@ -98,23 +98,23 @@ const Ecosystem: React.FC<EcosystemProps> = ({
         },
       ],
     },
-    {
-      id: 4,
-      title: volunteers[0][`title_${lang}`],
-      headerIcon: VolunteersIcon,
-      p: volunteers[0][`description_${lang}`],
-      mainImg: VOLUNTEERS,
-      btn: ["Стать волонтером"],
-      btnStyle: [
-        {
-          background: "#C5D92D",
-          border: "none",
-          color: "#fff",
-          padding: "13px 40px",
-          boxShadow: "-21px 16px 38px 0px rgba(197, 217, 45, 0.29)",
-        },
-      ],
-    },
+    // {
+    //   id: 4,
+    //   title: volunteers[0][`title_${lang}`],
+    //   headerIcon: VolunteersIcon,
+    //   p: volunteers[0][`description_${lang}`],
+    //   mainImg: VOLUNTEERS,
+    //   btn: ["Стать волонтером"],
+    //   btnStyle: [
+    //     {
+    //       background: "#C5D92D",
+    //       border: "none",
+    //       color: "#fff",
+    //       padding: "13px 40px",
+    //       boxShadow: "-21px 16px 38px 0px rgba(197, 217, 45, 0.29)",
+    //     },
+    //   ],
+    // },
     {
       id: 5,
       title: experts[0][`title_${lang}`],

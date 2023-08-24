@@ -34,7 +34,7 @@ const Home = () => {
     //   setData(data);
     // });
     //@ts-ignore
-    dispatch(fetching());
+    dispatch(fetching("home"));
   }, [dispatch]);
 
   const { lang } = useParams(); // Get the current language from URL
@@ -67,6 +67,14 @@ const Home = () => {
     landOfWisdom,
     followUs,
   } = data;
+  const removeHtmlTags = (text: string) => {
+    return text.replace(/<\/?[^>]+(>|$)/g, "");
+  };
+  const ourMissionShortDesc =
+    ourMission &&
+    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`]).split(
+      "—"
+    );
 
   const sections = [
     {
@@ -143,11 +151,12 @@ const Home = () => {
                   icon={section.icon}
                   innerClassName={section.innerClassName}
                   className="differedHeaderContainer homePageHeader"
+                  ourMissionDesc={section.id === 1 && ourMissionShortDesc}
                 />
               </Background>
             </Fragment>
           ))}
-          <About dataHypotheses={dataHypotheses} lang={lang || ""} />
+          <About dataHypotheses={dataHypotheses} lang={lang || "ru"} />
           <Projects
             OurProjects={OurProjects}
             lang={lang || "ru"}

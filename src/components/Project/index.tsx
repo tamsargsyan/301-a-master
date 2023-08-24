@@ -1,6 +1,9 @@
+import { useDispatch, useSelector } from "react-redux";
 import FLAG from "../../assets/flag.svg";
 import Button from "../Button";
 import "./index.css";
+import { fetching } from "../../actions/apiActions";
+import { RootState } from "../../store/configureStore";
 
 interface ProjectProps {
   author: string;
@@ -29,6 +32,7 @@ const Project: React.FC<ProjectProps> = ({
   setIsView,
   view,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className="ourProject__project">
       <div className="ourProject__projectInner">
@@ -44,9 +48,10 @@ const Project: React.FC<ProjectProps> = ({
               <span>{flag}</span>
             </div>
           </div>
-          <div className="ourProject__desc">
-            <p>{desc}</p>
-          </div>
+          <div
+            className="ourProject__desc"
+            dangerouslySetInnerHTML={{ __html: desc }}
+          />
         </div>
         <div className="btns" style={{ width: "100%" }}>
           <Button
@@ -63,6 +68,8 @@ const Project: React.FC<ProjectProps> = ({
             onClick={() => {
               setIsView(true);
               view(id);
+              //@ts-ignore
+              dispatch(fetching(`project-details/${id}`));
             }}
           />
           <button

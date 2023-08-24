@@ -10,11 +10,16 @@ import { Spin } from "antd";
 import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import DropDown from "../../components/Dropdown";
-import FullProjectInfo from "../FullProjectInfo";
 import "./index.css";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Footer from "../Footer";
 import ARROW_NEXT from "../../assets/arrow-next.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { fetching } from "../../actions/apiActions";
+import { RootState } from "../../store/configureStore";
+import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
+import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
+import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
@@ -23,26 +28,16 @@ const OurProjects = () => {
     filteringName: "Project Ideas we offer",
   });
   const [typedProject, setTypedProject] = useState("all");
-  const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState(
     projectsData[activeProjects.i]
   );
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, []);
 
   const handleClick = (i: number, filteringName: string) => {
-    setLoading(true);
     setActiveProjects((prev) => ({
       ...prev,
       i,
       filteringName,
     }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
   };
   useEffect(() => {
     if (typedProject === "all") {
@@ -98,157 +93,169 @@ const OurProjects = () => {
     //@ts-ignore
     setViewedProject(viewedProject);
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    !isView && navigate("/projects");
-  }, [isView, navigate]);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   !isView && navigate("/projects");
+  // }, [isView, navigate]);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetching("project"));
+  }, [dispatch]);
+
+  const { lang } = useParams();
+
+  const { data, loading } = useSelector(
+    (state: RootState) => state.projectData
+  );
+  const { ourProject, projectCategory, projectStatus, projects } = data;
+
+  if (loading)
+    return (
+      <div className="loadingContainer">
+        <Spin size="large" />
+      </div>
+    );
+    
   return (
     <Background
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN}
       sidePatter2Style={{ display: "none" }}
       style={{ flexDirection: "column", padding: "0" }}
     >
-      <div className="filteringWrapper">
-        <Header
-          title="НАШИ ПРОЕКТЫ"
-          description={[
-            "За несколько лет работы фонда «301. Земля мудрости» мы запустили ряд важных проектов по направлениям образования, культуры, науки и инноваций и целостного развития территории. ",
-          ]}
-          icon={ICON}
-        />
-        {windowSize.width > 800 ? (
-          <div className="filteringBtnsWrapper">
-            {projectsData.map((project, i) => (
-              <button
-                disabled={isView}
-                key={i}
-                className={`${activeProjects.i === i && "activeProjectBtn"}`}
-                onClick={() => handleClick(i, project.name)}
-              >
-                {project.name}
-              </button>
-            ))}
+      {ourProject && projects && (
+        <>
+          <div className="filteringWrapper">
+            <Header
+              title={ourProject[0][`title_${lang || "ru"}`]}
+              description={ourProject[0][`description_${lang || "ru"}`]}
+              icon={ICON}
+            />
+            {windowSize.width > 800 ? (
+              <div className="filteringBtnsWrapper">
+                {projectCategory.map((category: any, i: number) => (
+                  <button
+                    disabled={isView}
+                    key={i}
+                    className={`${
+                      activeProjects.i === i && "activeProjectBtn"
+                    }`}
+                    onClick={() => handleClick(i, category.name_am)}
+                  >
+                    {category[`name_${lang || "ru"}`]}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <DropDown
+                items={projectsData}
+                setItem={handleClick}
+                type="i"
+                text={activeProjects.filteringName}
+                style={{ marginBottom: "20px" }}
+              />
+            )}
+            {windowSize.width > 800 ? (
+              <div className="typedBtnsWrapper">
+                {projectStatus.map((status: any) => (
+                  <Fragment key={status.id}>
+                    <Button
+                      text={status[`name_${lang || "ru"}`]}
+                      link={false}
+                      // active={typedProject === btn.type}
+                      to={""}
+                      style={{
+                        padding: "12px 22px",
+                        border: "none",
+                      }}
+                      // onClick={() => setTypedProject(btn.type)}
+                      disabled={isView}
+                      className="typedBtn"
+                    />
+                  </Fragment>
+                ))}
+              </div>
+            ) : (
+              <DropDown
+                items={typeBtn}
+                setItem={setTypedProject}
+                type="type"
+                text={typedProject}
+                style={{ width: "50vw", marginRight: "auto" }}
+              />
+            )}
           </div>
-        ) : (
-          <DropDown
-            items={projectsData}
-            setItem={handleClick}
-            type="i"
-            text={activeProjects.filteringName}
-            style={{ marginBottom: "20px" }}
-          />
-        )}
-        {windowSize.width > 800 ? (
-          <div className="typedBtnsWrapper">
-            {typeBtn.map((btn) => (
-              <Fragment key={btn.id}>
-                <Button
-                  text={btn.name}
-                  link={false}
-                  active={typedProject === btn.type}
-                  to={""}
-                  style={{
-                    padding: "12px 22px",
-                    border: "none",
-                  }}
-                  onClick={() => setTypedProject(btn.type)}
-                  disabled={isView}
-                  className="typedBtn"
+          {projects?.length ? (
+            projects?.map((project: any) => (
+              <Fragment key={project.id}>
+                <Project
+                  author="Peter Nemoy"
+                  authorImg={AUTHOR_1}
+                  title={project[`project_name_${lang || "ru"}`]}
+                  flag={15}
+                  desc={project[`problem_description_${lang || "ru"}`]}
+                  projectImg={PROJECT_1}
+                  heartit={() => heartit(project.id)}
+                  isSaved={false}
+                  id={project.id}
+                  setIsView={setIsView}
+                  view={view}
                 />
               </Fragment>
-            ))}
-          </div>
-        ) : (
-          <DropDown
-            items={typeBtn}
-            setItem={setTypedProject}
-            type="type"
-            text={typedProject}
-            style={{ width: "50vw", marginRight: "auto" }}
-          />
-        )}
-      </div>
-      {!isView ? (
-        <>
-          {!loading ? (
-            currentProjects?.length ? (
-              currentProjects?.map((project) => (
-                <Fragment key={project.id}>
-                  <Project
-                    author={project.author}
-                    authorImg={project.authorImg}
-                    title={project.title}
-                    flag={project.flag}
-                    desc={project.desc}
-                    projectImg={project.img}
-                    heartit={() => heartit(project.id)}
-                    isSaved={project.isSaved}
-                    id={project.id}
-                    setIsView={setIsView}
-                    view={view}
-                  />
-                </Fragment>
-              ))
-            ) : (
-              <div className="noProject">There is no project</div>
-            )
+            ))
           ) : (
-            <Spin />
+            <div className="noProject">There is no project</div>
           )}
-          {totalPages &&
-            totalPages.length > 1 &&
-            !!currentProjects?.length &&
-            !loading && (
-              <div className="pagination">
-                <Button
-                  text="Prev"
-                  link={false}
-                  to={""}
-                  icon={ARROW_NEXT}
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  style={{
-                    border: "1px solid #000",
-                    gap: "10px",
-                    fontWeight: "500",
-                    opacity: currentPage === 1 ? 0 : 1,
-                    cursor: currentPage === 1 ? "unset" : "pointer",
-                  }}
-                  className="pagination_backBtn"
-                />
-                <div className="paginationBtnWrapper">
-                  {totalPages.map((_, i) => (
-                    <button
-                      key={i}
-                      className={`${
-                        currentPage === i + 1 && "paginationBtn_active"
-                      } paginationBtn`}
-                      onClick={() => setCurrentPage(i + 1)}
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-                </div>
-                <Button
-                  text="Next"
-                  link={false}
-                  to={""}
-                  icon={ARROW_NEXT}
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  style={{
-                    border: "1px solid #000",
-                    gap: "10px",
-                    fontWeight: "500",
-                  }}
-                  disabled={currentPage === totalPages.length}
-                />
+          {totalPages && totalPages.length > 1 && !!currentProjects?.length && (
+            <div className="pagination">
+              <Button
+                text="Prev"
+                link={false}
+                to={""}
+                icon={ARROW_NEXT}
+                onClick={() => setCurrentPage(currentPage - 1)}
+                style={{
+                  border: "1px solid #000",
+                  gap: "10px",
+                  fontWeight: "500",
+                  opacity: currentPage === 1 ? 0 : 1,
+                  cursor: currentPage === 1 ? "unset" : "pointer",
+                }}
+                className="pagination_backBtn"
+              />
+              <div className="paginationBtnWrapper">
+                {totalPages.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`${
+                      currentPage === i + 1 && "paginationBtn_active"
+                    } paginationBtn`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
               </div>
-            )}
+              <Button
+                text="Next"
+                link={false}
+                to={""}
+                icon={ARROW_NEXT}
+                onClick={() => setCurrentPage(currentPage + 1)}
+                style={{
+                  border: "1px solid #000",
+                  gap: "10px",
+                  fontWeight: "500",
+                }}
+                disabled={currentPage === totalPages.length}
+              />
+            </div>
+          )}
+          <Footer followUs={undefined} />
         </>
-      ) : (
-        <FullProjectInfo viewedProject={viewedProject} setIsView={setIsView} />
       )}
-      <Footer followUs={undefined} />
     </Background>
   );
 };

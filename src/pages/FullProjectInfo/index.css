@@ -121,33 +121,12 @@
 .workTeamContainer .roadMap_heading {
   border: 1px solid rgba(49, 58, 75, 0.27);
 }
-
-.terms {
-  border-radius: 46px;
-  border: 1px solid rgba(0, 0, 0, 0.18);
-  width: 250px;
-  display: flex;
-}
 ._inner {
   padding: 40px 30px;
   overflow: hidden;
   border-radius: 3px;
   background: #fff;
   box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.07);
-}
-.terms button {
-  padding: 0;
-  width: 100%;
-  padding: 12px 18px;
-  border-radius: inherit;
-  font-weight: 600;
-  height: 100%;
-  color: var(--text-color);
-}
-.terms button:first-child {
-  background: #189387;
-  color: #fff;
-  font-family: Montserrat;
 }
 .month_circle {
   width: 12px;

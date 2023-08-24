@@ -17,11 +17,11 @@ import { FETCH_ERROR } from "../utils/actionTypes";
 //     payload: string; // Define the payload type
 //   }
 
-export const fetching = () => async (dispatch: any) => {
-  dispatch({ type: FETCH_START });
+export const fetching = (data: string) => async (dispatch: any) => {
 
+  dispatch({ type: FETCH_START });
   try {
-    const response = await apiService.getData();
+    const response = await apiService.getData(data);
     dispatch({ type: FETCH_SUCCESS, payload: response });
   } catch (error: any) {
     dispatch({ type: FETCH_ERROR, payload: error.message });

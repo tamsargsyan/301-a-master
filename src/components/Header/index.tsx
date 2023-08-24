@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
@@ -14,6 +15,7 @@ interface HeaderProps {
   className?: string;
   isEcosystem?: boolean;
   innerClassName?: string;
+  ourMissionDesc?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -28,8 +30,11 @@ const Header: React.FC<HeaderProps> = ({
   className,
   isEcosystem,
   innerClassName,
+  ourMissionDesc,
 }) => {
   const windowSize = useWindowSize();
+  const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
+  const ourMissionLink = ourMissionDesc && ourMissionDesc[1];
 
   return (
     <div className={`${className} headerContainer`} style={style}>
@@ -46,7 +51,17 @@ const Header: React.FC<HeaderProps> = ({
             </div>
           )}
           <h1>{title}</h1>
-          {shortDescription && <h2 dangerouslySetInnerHTML={{ __html: shortDescription }}></h2>}
+          {shortDescription &&
+            (ourMissionDesc ? (
+              <p>
+                {ourMissionTxt} —
+                <NavLink to="" style={{ color: "var(--main-color)" }}>
+                  {ourMissionLink}
+                </NavLink>
+              </p>
+            ) : (
+              <h2 dangerouslySetInnerHTML={{ __html: shortDescription }}></h2>
+            ))}
         </div>
         {windowSize.width < 975 && mainImg && (
           <div className="mainImgHeader">

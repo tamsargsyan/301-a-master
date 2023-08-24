@@ -24,7 +24,6 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
     id: 1,
   });
   const windowSize = useWindowSize();
-  console.log(activeItem);
   return (
     <div className="aboutContainer">
       <div className="aboutInner">
