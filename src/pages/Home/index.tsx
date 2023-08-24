@@ -16,13 +16,13 @@ import BIG_PATTERN_3 from "../../assets/patterns/big-3.svg";
 import ICON_1 from "../../assets/info/1.svg";
 import ICON_2 from "../../assets/info/2.svg";
 import ICON_3 from "../../assets/info/3.svg";
-import { Fragment, useEffect, useState } from "react";
-import axios from "axios";
+import { Fragment, useEffect } from "react";
 import { Spin } from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetching } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
+import { useParams } from "react-router";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -36,6 +36,8 @@ const Home = () => {
     //@ts-ignore
     dispatch(fetching());
   }, [dispatch]);
+
+  const { lang } = useParams(); // Get the current language from URL
 
   const { loading, data } = useSelector((state: RootState) => state.homeData);
 
@@ -66,15 +68,13 @@ const Home = () => {
     followUs,
   } = data;
 
-  const lang = "en";
-
   const sections = [
     {
       id: 1,
-      title: ourMission && ourMission[0][`title_${lang}`],
+      title: ourMission && ourMission[0][`title_${lang || "ru"}`],
       shortDescription:
-        ourMission && ourMission[0][`short_description_${lang}`],
-      description: ourMission && ourMission[0][`description_${lang}`],
+        ourMission && ourMission[0][`short_description_${lang || "ru"}`],
+      description: ourMission && ourMission[0][`description_${lang || "ru"}`],
       btn: ["Узнать больше"],
       icon: ICON_1,
       pattern1: undefined,
@@ -85,9 +85,10 @@ const Home = () => {
     },
     {
       id: 2,
-      title: whyImportant && whyImportant[0][`title_${lang}`],
+      title: whyImportant && whyImportant[0][`title_${lang || "ru"}`],
       shortDescription: "",
-      description: whyImportant && whyImportant[0][`description_${lang}`],
+      description:
+        whyImportant && whyImportant[0][`description_${lang || "ru"}`],
       btn: undefined,
       icon: ICON_2,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -99,11 +100,12 @@ const Home = () => {
     {
       id: 3,
       title:
-        hypothesesForTheFuture && hypothesesForTheFuture[0][`title_${lang}`],
+        hypothesesForTheFuture &&
+        hypothesesForTheFuture[0][`title_${lang || "ru"}`],
       shortDescription: "",
       description:
         hypothesesForTheFuture &&
-        hypothesesForTheFuture[0][`description_${lang}`],
+        hypothesesForTheFuture[0][`description_${lang || "ru"}`],
       btn: undefined,
       icon: ICON_3,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -118,7 +120,11 @@ const Home = () => {
     <>
       {data && landOfWisdom && (
         <>
-          <Main followUs={followUs} landOfWisdom={landOfWisdom} lang={lang} />
+          <Main
+            followUs={followUs}
+            landOfWisdom={landOfWisdom}
+            lang={lang || "ru"}
+          />
           {sections.map((section) => (
             <Fragment key={section.id}>
               <div className="separatedPart"></div>
@@ -141,11 +147,15 @@ const Home = () => {
               </Background>
             </Fragment>
           ))}
-          <About dataHypotheses={dataHypotheses} />
-          <Projects OurProjects={OurProjects} lang={lang} projects={projects} />
+          <About dataHypotheses={dataHypotheses} lang={lang || ""} />
+          <Projects
+            OurProjects={OurProjects}
+            lang={lang || "ru"}
+            projects={projects}
+          />
           <Ecosystem
             ourEcosystem={ourEcosystem}
-            lang={lang}
+            lang={lang || "ru"}
             sages={sages}
             club301={club301}
             ambassadors={ambassadors}
@@ -154,7 +164,7 @@ const Home = () => {
             partners={partners}
             foundationFriends={foundationFriends}
           />
-          <News news={news} lang={lang} />
+          <News news={news} lang={lang || "ru"} />
           <Contact />
           <Footer followUs={followUs} />
         </>

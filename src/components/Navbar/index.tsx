@@ -7,6 +7,7 @@ import Button from "../Button";
 import "./index.css";
 import { NavLink } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
+// import { useTranslation } from 'react-i18next';
 
 export const menu = [
   {
@@ -55,10 +56,18 @@ const Navbar = () => {
   const langs = ["en", "ru", "am"];
   const [lang, setLang] = useState({
     open: false,
-    activeLang: "en",
+    activeLang: "ru",
   });
 
   const copyLangs = langs.filter((item) => item !== lang.activeLang);
+
+  // const a = useTranslation();
+
+  // const handleLanguageChange = (language: string) => {
+  //   console.log(a)
+  //   // i18n.changeLanguage(language);
+  //   // history.push(`/${language}`); // Update URL with new language
+  // };
 
   return (
     <div className="navbarContainer">
@@ -128,8 +137,8 @@ const Navbar = () => {
         <div className="langsWrapper">
           <Button
             text={lang.activeLang}
-            link={false}
-            to={""}
+            link={true}
+            to={`${lang.activeLang}`}
             className="activeLang lang"
             onClick={() =>
               setLang((prev) => ({
@@ -142,16 +151,16 @@ const Navbar = () => {
             <Fragment key={i}>
               <Button
                 text={item}
-                link={false}
-                to={""}
+                link={true}
+                to={`${item}`}
                 className={`${lang.open && "openedLang"} lang`}
-                onClick={() =>
+                onClick={() => {
                   setLang((prev) => ({
                     ...prev,
                     open: !lang.open,
                     activeLang: item,
-                  }))
-                }
+                  }));
+                }}
               />
             </Fragment>
           ))}

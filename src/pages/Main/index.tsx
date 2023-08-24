@@ -20,7 +20,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
   const windowSize = useWindowSize();
-  console.log(followUs);
+
   return (
     <Background
       pattern1={windowSize.width < 975 ? SIDE_PATTERN_MOBILE : SIDE_PATTERN}

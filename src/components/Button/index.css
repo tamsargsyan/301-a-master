@@ -8,7 +8,7 @@
   width: fit-content;
   transition: 0.3s ease;
   font-weight: 700;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
 }
 .aboutInner .activeBtn {
   transform: translateX(20px);

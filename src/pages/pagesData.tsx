@@ -9,7 +9,22 @@ const pagesData: routerType[] = [
     title: "home",
   },
   {
+    path: "/:lang",
+    element: <Home />,
+    title: "home",
+  },
+  {
     path: "projects",
+    element: <OurProjects />,
+    title: "Projects",
+  },
+  {
+    path: "projects/:lang",
+    element: <OurProjects />,
+    title: "Projects",
+  },
+  {
+    path: "projects/:id/:lang",
     element: <OurProjects />,
     title: "Projects",
   },
