@@ -1,4 +1,4 @@
-import { routerType } from "../types/router.types";
+import { routerType } from "../utils/router.types";
 import Home from "./Home";
 import OurProjects from "./OurProject";
 

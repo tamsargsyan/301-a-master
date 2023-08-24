@@ -19,19 +19,27 @@ import ICON_3 from "../../assets/info/3.svg";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetching } from "../../actions/apiActions";
+import { RootState } from "../../store/configureStore";
 
 const Home = () => {
   const windowSize = useWindowSize();
-
-  const [data, setData] = useState<any>(null);
+  // const [data, setData] = useState<any>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get("https://301.machtech.site/api/home").then(({ data }) => {
-      setData(data);
-    });
-  }, []);
+    // axios.get("https://301.machtech.site/api/home").then(({ data }) => {
+    //   setData(data);
+    // });
+    //@ts-ignore
+    dispatch(fetching());
+  }, [dispatch]);
 
-  if (!data)
+  const { loading, data } = useSelector((state: RootState) => state.homeData);
+
+  if (loading)
     return (
       <div className="loadingContainer">
         <Spin size="large" />
@@ -63,9 +71,10 @@ const Home = () => {
   const sections = [
     {
       id: 1,
-      title: ourMission[0][`title_${lang}`],
-      shortDescription: ourMission[0][`short_description_${lang}`],
-      description: ourMission[0][`description_${lang}`],
+      title: ourMission && ourMission[0][`title_${lang}`],
+      shortDescription:
+        ourMission && ourMission[0][`short_description_${lang}`],
+      description: ourMission && ourMission[0][`description_${lang}`],
       btn: ["Узнать больше"],
       icon: ICON_1,
       pattern1: undefined,
@@ -76,9 +85,9 @@ const Home = () => {
     },
     {
       id: 2,
-      title: whyImportant[0][`title_${lang}`],
+      title: whyImportant && whyImportant[0][`title_${lang}`],
       shortDescription: "",
-      description: whyImportant[0][`description_${lang}`],
+      description: whyImportant && whyImportant[0][`description_${lang}`],
       btn: undefined,
       icon: ICON_2,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -89,9 +98,12 @@ const Home = () => {
     },
     {
       id: 3,
-      title: hypothesesForTheFuture[0][`title_${lang}`],
+      title:
+        hypothesesForTheFuture && hypothesesForTheFuture[0][`title_${lang}`],
       shortDescription: "",
-      description: hypothesesForTheFuture[0][`description_${lang}`],
+      description:
+        hypothesesForTheFuture &&
+        hypothesesForTheFuture[0][`description_${lang}`],
       btn: undefined,
       icon: ICON_3,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -104,7 +116,7 @@ const Home = () => {
 
   return (
     <>
-      {data && (
+      {data && landOfWisdom && (
         <>
           <Main followUs={followUs} landOfWisdom={landOfWisdom} lang={lang} />
           {sections.map((section) => (
