@@ -64,15 +64,14 @@ const Home = () => {
     landOfWisdom,
     followUs,
   } = data;
+
   const removeHtmlTags = (text: string) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   };
   const ourMissionShortDesc =
     ourMission &&
-    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`]).split(
-      "—"
-    );
-
+    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`])
+  console.log(ourMissionShortDesc)
   const sections = [
     {
       id: 1,

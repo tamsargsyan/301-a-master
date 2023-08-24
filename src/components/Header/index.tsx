@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
+import { useEffect, useState } from "react";
 
 interface HeaderProps {
   title: string;
@@ -35,6 +36,25 @@ const Header: React.FC<HeaderProps> = ({
   const windowSize = useWindowSize();
   const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
   const ourMissionLink = ourMissionDesc && ourMissionDesc[1];
+  const [ourMission, setOurMission] = useState({
+    txt: "Наша миссия — ",
+    link: "формирование онтологической безопасности Армении.",
+  });
+  const { lang } = useParams();
+
+  useEffect(() => {
+    if (lang === "en") {
+      setOurMission({
+        txt: "Our mission is ",
+        link: "the formation of the ontological security of Armenia.",
+      });
+    } else if (lang === "am") {
+      setOurMission({
+        txt: "Մեր առաքելությունը ",
+        link: "Հայաստանի գոյաբանական անվտանգության ձևավորումն է:"
+      })
+    }
+  }, [lang]);
 
   return (
     <div className={`${className} headerContainer`} style={style}>
@@ -52,11 +72,11 @@ const Header: React.FC<HeaderProps> = ({
           )}
           <h1>{title}</h1>
           {shortDescription &&
-            (ourMissionDesc ? (
+            (ourMissionTxt ? (
               <p>
-                {ourMissionTxt} —
+                {ourMission.txt}
                 <NavLink to="" style={{ color: "var(--main-color)" }}>
-                  {ourMissionLink}
+                  {ourMission.link}
                 </NavLink>
               </p>
             ) : (

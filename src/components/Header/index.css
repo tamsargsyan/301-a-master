@@ -32,6 +32,7 @@
   font-weight: 500;
   font-size: clamp(1.125rem, 0rem + 0.9375vw, 3.375rem);
   text-align: justify;
+  line-height: 155%;
 }
 .mainImgHeader {
   display: flex;

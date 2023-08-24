@@ -496,9 +496,9 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                         color: "#717883",
                         border: "1px solid #000",
                         gap: "10px",
-                        padding: "12px 35px",
+                        padding: "12px 35spx",
                         fontWeight: 600,
-                        width: "250px",
+                        width: "100%",
                       }}
                       className="donationBtn"
                     />
@@ -507,11 +507,11 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                       link={false}
                       to={""}
                       style={{
-                        width: "250px",
                         color: "#fff",
                         background: "#DD264E",
                         boxShadow: "0px 26px 40px 0px rgba(191, 9, 48, 0.15)",
                         padding: "12px 35px",
+                        width: !isVisible ? "auto" : "100%",
                       }}
                       className="donationBtn"
                     />
