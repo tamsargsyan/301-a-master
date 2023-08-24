@@ -15,7 +15,10 @@ import "./index.css";
 import RevolveText from "../../components/Revolve";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetching } from "../../actions/apiActions";
+import {
+  fetchingProjectDetails,
+  fetchingProjects,
+} from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
@@ -146,9 +149,9 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
   const { id } = useParams();
   useEffect(() => {
     //@ts-ignore
-    // dispatch(fetching("project"));
+    dispatch(fetchingProjects("project"));
     //@ts-ignore
-    dispatch(fetching(`project-details/${id}`));
+    dispatch(fetchingProjectDetails(`project-details/${id}`));
   }, [dispatch]);
 
   const { lang } = useParams();
@@ -160,6 +163,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
   const { ourProject } = useSelector(
     (state: RootState) => state.projectData.data
   );
+
   useEffect(() => {
     if (project) {
       const observer = new IntersectionObserver((entries) => {
@@ -198,7 +202,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     >
       {project && (
         <>
-          {/* <div className="filteringWrapper">
+          <div className="filteringWrapper">
             <Header
               title={ourProject[0][`title_${lang || "ru"}`]}
               description={ourProject[0][`description_${lang || "ru"}`]}
@@ -257,7 +261,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                 style={{ width: "50vw", marginRight: "auto" }}
               />
             )}
-          </div> */}
+          </div>
           <div className="fullProjectContainer">
             <div className="fullProjectInner">
               <div className="fullProjectBg">
@@ -494,7 +498,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                         gap: "10px",
                         padding: "12px 35px",
                         fontWeight: 600,
-                        width: "250px"
+                        width: "250px",
                       }}
                       className="donationBtn"
                     />

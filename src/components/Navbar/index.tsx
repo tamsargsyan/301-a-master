@@ -133,7 +133,6 @@ const Navbar = () => {
             </NavLink>
           ))}
         </div>
-        {/* <div className="lang">ENG</div> */}
         <div className="langsWrapper">
           <Button
             text={lang.activeLang}

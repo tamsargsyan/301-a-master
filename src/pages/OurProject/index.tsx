@@ -15,7 +15,7 @@ import { useNavigate, useParams } from "react-router";
 import Footer from "../Footer";
 import ARROW_NEXT from "../../assets/arrow-next.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { fetching } from "../../actions/apiActions";
+import { fetchingProjects } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
@@ -102,7 +102,7 @@ const OurProjects = () => {
 
   useEffect(() => {
     //@ts-ignore
-    dispatch(fetching("project"));
+    dispatch(fetchingProjects("project"));
   }, [dispatch]);
 
   const { lang } = useParams();
@@ -118,7 +118,7 @@ const OurProjects = () => {
         <Spin size="large" />
       </div>
     );
-    
+
   return (
     <Background
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN}

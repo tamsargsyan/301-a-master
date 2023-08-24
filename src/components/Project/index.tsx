@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FLAG from "../../assets/flag.svg";
 import Button from "../Button";
 import "./index.css";
-import { fetching } from "../../actions/apiActions";
+import { fetchingProjectDetails } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 
 interface ProjectProps {
@@ -69,7 +69,7 @@ const Project: React.FC<ProjectProps> = ({
               setIsView(true);
               view(id);
               //@ts-ignore
-              dispatch(fetching(`project-details/${id}`));
+              dispatch(fetchingProjectDetails(`project-details/${id}`));
             }}
           />
           <button

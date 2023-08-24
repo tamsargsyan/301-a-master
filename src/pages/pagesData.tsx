@@ -19,16 +19,6 @@ const pagesData: routerType[] = [
     element: <OurProjects />,
     title: "Projects",
   },
-  // {
-  //   path: "projects/:lang",
-  //   element: <OurProjects />,
-  //   title: "Projects",
-  // },
-  // {
-  //   path: "projects/:id/:lang",
-  //   element: <FullProjectInfo />,
-  //   title: "Projects",
-  // },
   {
     path: "projects/:id",
     element: <FullProjectInfo />,

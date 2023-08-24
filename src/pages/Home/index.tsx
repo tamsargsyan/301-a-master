@@ -20,7 +20,7 @@ import { Fragment, useEffect } from "react";
 import { Spin } from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { fetching } from "../../actions/apiActions";
+import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useParams } from "react-router";
 
@@ -30,11 +30,8 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // axios.get("https://301.machtech.site/api/home").then(({ data }) => {
-    //   setData(data);
-    // });
     //@ts-ignore
-    dispatch(fetching("home"));
+    dispatch(fetchingHome("home"));
   }, [dispatch]);
 
   const { lang } = useParams(); // Get the current language from URL
