@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import ARROW from "../../assets/info/dropdown-arrow.svg";
 import Button from "../Button";
 import "./index.css";
+import { useParams } from "react-router";
 
 interface Props {
   items: any;
@@ -42,6 +43,8 @@ const DropDown: React.FC<Props> = ({
     };
   }, []);
 
+  const { lang } = useParams();
+  // console.log(items)
   return (
     <div className={`${className} dropdown`} style={style} ref={dropdownRef}>
       <Button
@@ -67,14 +70,20 @@ const DropDown: React.FC<Props> = ({
               key={i}
               onClick={() => {
                 if (type === "i") {
-                  setItem(i, item.name);
+                  setItem(i, item[`name_${lang || "ru"}`]);
                 } else if (type === "type") {
                   setItem(item.type);
-                } else setItem(item);
+                } else {
+                  console.log(item);
+                  setItem((prev: any) => ({
+                    ...prev,
+                    data: item,
+                  }));
+                }
                 setOpenDropdown(false);
               }}
             >
-              {item.name}
+              {item[`name_${lang || "ru"}`]}
             </button>
           ))}
         </div>

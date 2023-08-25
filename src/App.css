@@ -71,7 +71,7 @@ h2 {
     flex-direction: column;
   }
   .btns,
-  .btn {
+  .btn:not(.lang) {
     width: 100% !important;
   }
   .App {

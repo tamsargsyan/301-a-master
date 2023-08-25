@@ -11,6 +11,7 @@ import FollowUs from "../../components/FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import BG from "../../assets/info/main-page-bg.svg";
 import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg";
+import { useParams } from "react-router";
 
 interface MainProps {
   landOfWisdom: any;
@@ -18,9 +19,26 @@ interface MainProps {
   lang: string;
 }
 
+export interface txtTypes {
+  title_am: string;
+  title_en: string;
+  title_ru: string;
+}
+
+export const become301 = {
+  title_am: "Դարձի՛ր 301-ից մեկը",
+  title_ru: "Стань одним из 301",
+  title_en: "Become one of 301",
+};
+
 const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
   const windowSize = useWindowSize();
-
+  
+  const wholeProject = {
+    title_ru: "Весь проект",
+    title_am: "Ամբողջ նախագիծը",
+    title_en: "Whole project",
+  };
   return (
     <Background
       pattern1={windowSize.width < 975 ? SIDE_PATTERN_MOBILE : SIDE_PATTERN}
@@ -45,7 +63,10 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
         title={landOfWisdom[`title_${lang}`]}
         icon={""}
         description={landOfWisdom[`description_${lang}`]}
-        btns={["Стань одним из 301", "Весь проект"]}
+        btns={[
+          become301[`title_${lang || "ru"}` as keyof txtTypes],
+          wholeProject[`title_${lang || "ru"}` as keyof txtTypes],
+        ]}
         btnStyles={[
           {
             background: "#DD264E",

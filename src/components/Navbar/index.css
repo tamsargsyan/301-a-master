@@ -59,7 +59,7 @@
     overflow: hidden;
   }
   .link,
-  .navbarContainer .btn {
+  .navbarContainer .btn:not(.lang) {
     display: none;
   }
   .navbarContainer {
@@ -158,6 +158,14 @@
   }
   .openedMobileMenu .sidePattern2 {
     bottom: 0;
+  }
+  .langsWrapper {
+    flex-direction: row-reverse;
+    width: 20px;
+  }
+  .langsWrapper:has(.openedLang) {
+    width: 100px;
+    transition: 0.3s ease;
   }
 }
 

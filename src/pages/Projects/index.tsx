@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { txtTypes } from "../Main";
 
 interface ProjectsProps {
   OurProjects: any;
@@ -101,7 +102,11 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   //   title_ru,
   //   title_en,
   // } = OurProjects[0];
-
+  const otherProjects = {
+    title_am: "Այլ նախագծեր",
+    title_ru: "Другие проекты",
+    title_en: "Other projects",
+  };
   return (
     <>
       <div className="separatedPart"></div>
@@ -182,7 +187,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
           </div>
           <div className="btns">
             <Button
-              text="Другие проекты"
+              text={otherProjects[`title_${lang || "ru"}` as keyof txtTypes]}
               style={{
                 background: "#DD264E",
                 boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",

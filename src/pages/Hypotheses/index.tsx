@@ -23,7 +23,9 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
     data: dataHypotheses[0],
     id: 1,
   });
+  // console.log(activeItem)
   const windowSize = useWindowSize();
+  // console.log(dataHypotheses);
   return (
     <div className="aboutContainer">
       <div className="aboutInner">
@@ -41,7 +43,7 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
             >
               <Button
                 active={i + 1 === activeItem.id}
-                text={data[`name_${lang}`]}
+                text={data[`name_${lang || "ru"}`]}
                 style={btnStyle}
                 link={true}
                 to=""
@@ -55,7 +57,7 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
             items={dataHypotheses}
             setItem={setActiveItem}
             type="item"
-            text={activeItem.data[`name_${lang}`]}
+            text={activeItem.data[`name_${lang || "ru"}`]}
             itemsStyle={{ top: "50%", zIndex: 1, paddingTop: "40px" }}
             className="homePageHeader"
           />

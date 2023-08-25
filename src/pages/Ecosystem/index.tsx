@@ -22,6 +22,7 @@ import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { become301, txtTypes } from "../Main";
 
 interface EcosystemProps {
   ourEcosystem: any;
@@ -34,6 +35,42 @@ interface EcosystemProps {
   partners: any;
   foundationFriends: any;
 }
+
+export const learnMore = {
+  title_am: "Իմացիր ավելին",
+  title_ru: "Узнать больше",
+  title_en: "Learn More",
+};
+
+const becomeAmbassador = {
+  title_am: "Դարձեք դեսպան",
+  title_ru: "Стать амбассадором",
+  title_en: "Become an Ambassador",
+};
+
+const becomeExpert = {
+  title_am: "Դարձեք փորձագետ",
+  title_ru: "Стать экспертом",
+  title_en: "Become an expert",
+};
+
+const becomePartner = {
+  title_am: "Դարձեք գործընկեր",
+  title_ru: "Стать партнером",
+  title_en: "Become a partner",
+};
+
+const allPartners = {
+  title_am: "Դարձեք գործընկեր",
+  title_ru: "Все партнеры",
+  title_en: "Բոլոր գործընկերները",
+};
+
+const fund = {
+  title_am: "Դարձի՛ր հիմնադրամի ընկեր",
+  title_ru: "Стать другом фонда",
+  title_en: "Become a friend of the fund",
+};
 
 const Ecosystem: React.FC<EcosystemProps> = ({
   ourEcosystem,
@@ -53,7 +90,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: SagesIcon,
       description: sages[0][`description_${lang}`],
       mainImg: SAGES,
-      btn: ["Узнать больше"],
+      btn: [learnMore[`title_${lang || "ru"}` as keyof txtTypes]],
       btnStyle: [
         {
           padding: "13px 40px",
@@ -66,7 +103,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: ClubIcon,
       description: club301[0][`description_${lang}`],
       mainImg: CLUB,
-      btn: ["Become one of 301", "Узнать больше"],
+      btn: [
+        become301[`title_${lang || "ru"}` as keyof txtTypes],
+        learnMore[`title_${lang || "ru"}` as keyof txtTypes],
+      ],
       btnStyle: [
         {
           background: "#189387",
@@ -87,7 +127,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: AmbassadorIcon,
       description: ambassadors[0][`description_${lang}`],
       mainImg: AMBASSDOR,
-      btn: ["Стать амбассадором"],
+      btn: [becomeAmbassador[`title_${lang || "ru"}` as keyof txtTypes]],
       btnStyle: [
         {
           background: "#EE8842",
@@ -121,7 +161,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: ExpertIcon,
       description: experts[0][`description_${lang}`],
       mainImg: EXPERT,
-      btn: ["Стать экспертом "],
+      btn: [becomeExpert[`title_${lang || "ru"}` as keyof txtTypes]],
       btnStyle: [
         {
           background: " #42CFEE",
@@ -138,7 +178,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: PartnersIcon,
       description: partners[0][`description_${lang}`],
       mainImg: PARTNERS,
-      btn: ["Стать партнером", "Все партнеры"],
+      btn: [
+        becomePartner[`title_${lang || "ru"}` as keyof txtTypes],
+        allPartners[`title_${lang || "ru"}` as keyof txtTypes],
+      ],
       btnStyle: [
         {
           background: "#C12DD9",
@@ -176,7 +219,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: FriendsIcon,
       description: foundationFriends[0][`description_${lang}`],
       mainImg: FRIENDS,
-      btn: ["Стать другом фонда"],
+      btn: [fund[`title_${lang || "ru"}` as keyof txtTypes]],
       btnStyle: [
         {
           background: "#6442EE",

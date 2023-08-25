@@ -11,6 +11,7 @@ import "./index.css";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { txtTypes } from "../Main";
 
 interface newsTypes {
   id: number;
@@ -38,8 +39,14 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
   const handleNext = () => {
     activeNews < 3 && setActiveNews((prevIndex) => prevIndex + 1);
   };
-  
+
   const windowSize = useWindowSize();
+
+  const allNews = {
+    title_am: "Բոլոր նորությունները",
+    title_ru: "Все новости",
+    title_en: "All news",
+  };
 
   return (
     <>
@@ -109,7 +116,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
           style={{ margin: 0, padding: "0 20px", marginBottom: "40px" }}
         >
           <Button
-            text="Все новости"
+            text={allNews[`title_${lang}` as keyof txtTypes]}
             style={{
               color: "#DD264E",
               boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",

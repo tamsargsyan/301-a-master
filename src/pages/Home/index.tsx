@@ -1,9 +1,9 @@
-import Main from "../Main";
+import Main, { txtTypes } from "../Main";
 import Background from "../../components/Background";
 import Header from "../../components/Header";
 import About from "../Hypotheses";
 import Projects from "../Projects";
-import Ecosystem from "../Ecosystem";
+import Ecosystem, { learnMore } from "../Ecosystem";
 import News from "../News";
 import Contact from "../Contact";
 import Footer from "../Footer";
@@ -70,8 +70,8 @@ const Home = () => {
   };
   const ourMissionShortDesc =
     ourMission &&
-    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`])
-  console.log(ourMissionShortDesc)
+    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`]);
+
   const sections = [
     {
       id: 1,
@@ -79,7 +79,7 @@ const Home = () => {
       shortDescription:
         ourMission && ourMission[0][`short_description_${lang || "ru"}`],
       description: ourMission && ourMission[0][`description_${lang || "ru"}`],
-      btn: ["Узнать больше"],
+      btn: [learnMore[`title_${lang || "ru"}` as keyof txtTypes]],
       icon: ICON_1,
       pattern1: undefined,
       pattern2: SMALL_PATTERN_2,
