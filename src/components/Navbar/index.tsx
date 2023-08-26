@@ -5,10 +5,15 @@ import SIDE_PATTERN from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useTranslation } from "react-i18next";
-// import { useTranslation } from 'react-i18next';
+import { createBrowserHistory } from "history";
+import i18next from "i18next";
+import { useDispatch } from "react-redux";
+import { languageDitactor } from "../../actions/language";
+
+const history = createBrowserHistory(); // Create a history instance
 
 export const menu = [
   {
@@ -19,7 +24,7 @@ export const menu = [
   {
     id: 2,
     name: "projects",
-    link: "/projects",
+    link: "/301/build/projects",
   },
   {
     id: 3,
@@ -55,18 +60,18 @@ const Navbar = () => {
   }, [openMenu]);
 
   const langs = ["en", "ru", "am"];
-  const [lang, setLang] = useState({
-    open: false,
-    activeLang: "ru",
-  });
-
-  const copyLangs = langs.filter((item) => item !== lang.activeLang);
-
+  const [openLangs, setOpenLangs] = useState(false);
+  const lang = i18next.language;
+  const copyLangs = langs.filter((item) => item !== lang);
   const { i18n, t } = useTranslation();
-
+  const location = useLocation();
+  const dispatch = useDispatch();
   const handleLanguageChange = (language: string) => {
     i18n.changeLanguage(language);
-    // history.push(`/${language}`); // Update URL with new language
+    const newPath = `/${language}${location.pathname}`;
+    history.replace(newPath);
+    dispatch(languageDitactor(language));
+    setOpenLangs(false);
   };
 
   return (
@@ -135,34 +140,20 @@ const Navbar = () => {
         </div>
         <div className="langsWrapper">
           <Button
-            text={lang.activeLang}
-            link={true}
-            to={`${lang.activeLang}`}
+            text={lang}
+            link={false}
+            to={""}
             className="activeLang lang"
-            onClick={() =>
-              setLang((prev) => ({
-                ...prev,
-                open: !lang.open,
-              }))
-            }
+            onClick={() => setOpenLangs(!openLangs)}
           />
-          {copyLangs.map((item, i) => (
+          {copyLangs.map((lang, i) => (
             <Fragment key={i}>
               <Button
-                text={item}
-                link={true}
-                to={`${item}`}
-                className={`${lang.open && "openedLang"} lang`}
-                onClick={() => {
-                  {
-                    setLang((prev) => ({
-                      ...prev,
-                      open: !lang.open,
-                      activeLang: item,
-                    }));
-                    handleLanguageChange(item);
-                  }
-                }}
+                text={lang}
+                link={false}
+                to={""}
+                className={`${openLangs && "openedLang"} lang`}
+                onClick={() => handleLanguageChange(lang)}
               />
             </Fragment>
           ))}

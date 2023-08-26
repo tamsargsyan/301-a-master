@@ -20,7 +20,11 @@
     "all-partners": "All partners",
     "become-fund-friend": "Become a friend of the fund",
     "all-news": "All news",
-    "send": "Send"
+    "send": "Send",
+    "view": "View",
+    "save-project": "Save project",
+    "download-pdf": "download presentation pdf",
+    "donate": "Donate"
   },
   "contact": {
     "title": "Write to us",
@@ -40,5 +44,10 @@
       "fund-friends": "Foundation Friends"
     },
     "address": "Yerevan, st. Moskovyan 24"
+  },
+  "project-details": {
+    "problem": "Problem",
+    "road-map": "Road Map",
+    "partners": "Partners"
   }
 }

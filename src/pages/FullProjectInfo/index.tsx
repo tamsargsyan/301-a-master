@@ -43,6 +43,8 @@ import ICON from "../../assets/info/4.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import Header from "../../components/Header";
 import { Spin } from "antd";
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   viewedProject?: ProjectTypes | undefined;
@@ -50,6 +52,8 @@ interface Props {
 }
 
 const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
+  const { t } = useTranslation();
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const arr = [
     {
       id: 1,
@@ -154,8 +158,6 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     dispatch(fetchingProjectDetails(`project-details/${id}`));
   }, [dispatch]);
 
-  const { lang } = useParams();
-
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
@@ -204,7 +206,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
         <>
           <div className="filteringWrapper">
             <Header
-              title={ourProject[0][`title_${lang || "ru"}`]}
+              title={ourProject[0][`title_${lang}`]}
               description={ourProject[0][`description_${lang || "ru"}`]}
               icon={ICON}
             />
@@ -300,7 +302,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     </div>
                     {windowSize.width > 600 && (
                       <button className="download_pdf">
-                        <span>download presentation pdf</span>
+                        <span>{t("btns.download-pdf")}</span>
                         <img src={PDF} alt="Pdf" />
                       </button>
                     )}
@@ -503,7 +505,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                       className="donationBtn"
                     />
                     <Button
-                      text="Donate"
+                      text={t("btns.donate")}
                       link={false}
                       to={""}
                       style={{

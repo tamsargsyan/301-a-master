@@ -24,6 +24,8 @@ import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import i18next from "i18next";
+import i18n from "../../i18n";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -36,8 +38,8 @@ const Home = () => {
     dispatch(fetchingHome("home"));
   }, [dispatch]);
 
-  const { lang } = useParams(); // Get the current language from URL
-
+  const lang = i18n.language;
+    
   const { loading, data } = useSelector((state: RootState) => state.homeData);
 
   if (loading)

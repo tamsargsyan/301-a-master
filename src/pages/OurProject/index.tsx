@@ -11,14 +11,14 @@ import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import DropDown from "../../components/Dropdown";
 import "./index.css";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Footer from "../Footer";
 import ARROW_NEXT from "../../assets/arrow-next.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchingProjects } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
+// import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
 import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 
 const OurProjects = () => {
@@ -105,7 +105,7 @@ const OurProjects = () => {
     dispatch(fetchingProjects("project"));
   }, [dispatch]);
 
-  const { lang } = useParams();
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.projectData
