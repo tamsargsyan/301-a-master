@@ -61,7 +61,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
         style={{ flexDirection: "column", padding: "0" }}
       >
         <Header
-          title='Новости "301"'
+          title={t("news-301")}
           icon={HeaderIcon}
           style={{
             paddingTop: "40px",

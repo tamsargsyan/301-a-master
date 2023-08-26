@@ -42,91 +42,19 @@ interface Props {
 const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  const arr = [
-    {
-      id: 1,
-      day: "01",
-      month: "Apr",
-      color: "#DD264E",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 2,
-      day: "02",
-      month: "May",
-      color: "#189387",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 3,
-      day: "03",
-      month: "Jun",
-      color: "#C5D92D",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 4,
-      day: "01",
-      month: "Apr",
-      color: "#2DD9B0",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 5,
-      day: "02",
-      month: "May",
-      color: "#D9562D",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 5,
-      day: "03",
-      month: "Jun",
-      color: "#D92DD2",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 6,
-      day: "01",
-      month: "Apr",
-      color: "#EB407A",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 7,
-      day: "02",
-      month: "May",
-      color: "#87B63B",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 8,
-      day: "03",
-      month: "Jun",
-      color: "#7BA8FF",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 9,
-      day: "01",
-      month: "Apr",
-      color: "#EB4040",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 10,
-      day: "02",
-      month: "May",
-      color: "#CFA81F",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
-    {
-      id: 11,
-      day: "03",
-      month: "Jun",
-      color: "#7BD7FF",
-      desc: "Lorem ipsum dolor sit amet, consectetuer, adipiscing elit, sed diam nonummy nibh",
-    },
+  const colors = [
+    "#DD264E",
+    "#189387",
+    "#C5D92D",
+    "#2DD9B0",
+    "#D9562D",
+    "#D92DD2",
+    "#EB407A",
+    "#87B63B",
+    "#7BA8FF",
+    "#EB4040",
+    "#CFA81F",
+    "#7BD7FF",
   ];
 
   const windowSize = useWindowSize();
@@ -175,7 +103,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     }
   }, [project]);
   const navigate = useNavigate();
-
+  console.log(project);
   if (loading)
     return (
       <div className="loadingContainer">
@@ -189,7 +117,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
       sidePatter2Style={{ display: "none" }}
       style={{ flexDirection: "column", padding: "0" }}
     >
-      {project && (
+      {project && ourProject && (
         <>
           <div className="filteringWrapper">
             <Header
@@ -317,19 +245,25 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     <div className="fullProject_slider">
                       <div className="chartContainer">
                         <div className="chart_line"></div>
-                        {arr.map((info, i) => {
+                        {project?.month_data.map((month: any, i: number) => {
                           return (
                             <div className="chart" key={i}>
                               <div className="chart_info">
-                                <h1>{info.day}</h1>
-                                <p>{info.desc}</p>
+                                <h1>{month.month}</h1>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html: month[`month_description_${lang}`],
+                                  }}
+                                />
                               </div>
                               <div className="chart_month">
                                 <div
                                   className="month_circle"
-                                  style={{ backgroundColor: info.color }}
+                                  style={{ backgroundColor: colors[i] }}
                                 ></div>
-                                <div className="month">{info.month}</div>
+                                <div className="month">
+                                  {month[`month_${lang}`]}
+                                </div>
                               </div>
                             </div>
                           );
@@ -349,7 +283,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                       </div>
                       <div className="remaining">
                         <img src={REMAINING} alt="Remaining" />
-                        <span>Collected</span>
+                        <span>Remaining</span>
                         <h2>{project.remaining_price}$</h2>
                       </div>
                     </div>

@@ -64,7 +64,6 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
         <div
           className="aboutContent"
           dangerouslySetInnerHTML={{
-            //@ts-ignore
             __html: activeItem.data[`description_${lang}`],
           }}
         ></div>
