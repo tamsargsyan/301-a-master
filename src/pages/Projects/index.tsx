@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 interface ProjectsProps {
   OurProjects: any;
@@ -19,6 +20,7 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
+  const { t } = useTranslation();
   const windowSize = useWindowSize();
   const projects = [
     {
@@ -182,7 +184,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
           </div>
           <div className="btns">
             <Button
-              text="Другие проекты"
+              text={t("btns.other-projects")}
               style={{
                 background: "#DD264E",
                 boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",

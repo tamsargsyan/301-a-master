@@ -23,11 +23,13 @@ import { useDispatch } from "react-redux";
 import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const windowSize = useWindowSize();
   // const [data, setData] = useState<any>(null);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     //@ts-ignore
@@ -68,10 +70,14 @@ const Home = () => {
   const removeHtmlTags = (text: string) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   };
+  // const getLocalizedText = (text: string, fallbackLang: any = "ru") => {
+  //   return text && text[lang || fallbackLang];
+  // };
+
   const ourMissionShortDesc =
     ourMission &&
-    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`])
-  console.log(ourMissionShortDesc)
+    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`]);
+
   const sections = [
     {
       id: 1,
@@ -79,7 +85,7 @@ const Home = () => {
       shortDescription:
         ourMission && ourMission[0][`short_description_${lang || "ru"}`],
       description: ourMission && ourMission[0][`description_${lang || "ru"}`],
-      btn: ["Узнать больше"],
+      btn: [t("btns.learn-more")],
       icon: ICON_1,
       pattern1: undefined,
       pattern2: SMALL_PATTERN_2,

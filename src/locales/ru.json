@@ -1,0 +1,44 @@
+{
+  "navbar": {
+    "our-menu": "НАШЕ МЕНЮ",
+    "home": "Главная",
+    "projects": "Проекты",
+    "media": "Медиа",
+    "calendar": "Календарь",
+    "about-us": "О нас",
+    "contact": "Контакт",
+    "sign-in": "Войти"
+  },
+  "btns": {
+    "become-301": "Стань одним из 301",
+    "whole-project": "Весь проект",
+    "learn-more": "Узнать больше",
+    "other-projects": "Другие проекты",
+    "become-ambassador": "Стать амбассадором",
+    "become-expert": "Стать экспертом",
+    "become-partner": "Стать партнером",
+    "all-partners": "Все партнеры",
+    "become-fund-friend": "Стать другом фонда",
+    "all-news": "Все новости",
+    "send": "Отправлять"
+  },
+  "contact": {
+    "title": "Напишите нам",
+    "your-name": "Ваше имя",
+    "your-email": "Ваша почта",
+    "write": "Написать"
+  },
+  "footer": {
+    "ecosystem": {
+      "title": "НАША ЭКОСИСТЕМА",
+      "sage": "Мудрец",
+      "club301": "Клуб 301",
+      "ambassadors": "Амбассадоры",
+      "volunteers": "Волонтеры",
+      "experts": "Эксперты",
+      "partners": "Партнеры",
+      "fund-friends": "Друзья фонда"
+    },
+    "address": "Ереван, ул. Московяна 24"
+  }
+}

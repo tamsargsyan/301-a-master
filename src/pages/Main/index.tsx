@@ -11,6 +11,7 @@ import FollowUs from "../../components/FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import BG from "../../assets/info/main-page-bg.svg";
 import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg";
+import { useTranslation } from "react-i18next";
 
 interface MainProps {
   landOfWisdom: any;
@@ -20,6 +21,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
   const windowSize = useWindowSize();
+  const { t } = useTranslation();
 
   return (
     <Background
@@ -45,7 +47,7 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
         title={landOfWisdom[`title_${lang}`]}
         icon={""}
         description={landOfWisdom[`description_${lang}`]}
-        btns={["Стань одним из 301", "Весь проект"]}
+        btns={[t("btns.become-301"), t("btns.whole-project")]}
         btnStyles={[
           {
             background: "#DD264E",

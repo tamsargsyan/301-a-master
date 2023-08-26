@@ -1,32 +1,42 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 
-// Import your translation files
-// import enTranslation from './locales/en.json'; // Sample translation file
-// import frTranslation from './locales/fr.json'; // Sample translation file
+import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
+import i18n from "i18next";
+import en from "./locales/en.json";
+import am from "./locales/am.json";
+import ru from "./locales/ru.json";
+
+const resources = {
+  en: {
+    translation: en,
+  },
+  am: {
+    translation: am,
+  },
+  ru: {
+    translation: ru
+  }
+};
 
 i18n
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: 'ru', // Default language
-    fallbackLng: 'ru', // Fallback language in case translation is missing
-    debug: true, // Enable debug mode for development
-
-    // Add your resources (translation files) here
-    resources: {
-      en: {
-        // translation: enTranslation, // English translations
-      },
-      ru: {
-        // translation: frTranslation, // French translations
-      },
-      am: {
-        // translation: frTranslation, // French translations
-      },
-      // Add more language resources as needed
+    lng: 'ru',
+    fallbackLng: "ru",
+    resources,
+    detection: {
+      order: [
+        "querystring",
+        "cookie",
+        "localStorage",
+        "navigator",
+        "htmlTag",
+        "path",
+        "subdomain",
+      ],
+      caches: ["cookie"],
     },
-
-    // You can add more i18n options here
   });
 
-export default i18n;
+  export default i18n;

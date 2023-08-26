@@ -7,37 +7,38 @@ import Button from "../Button";
 import "./index.css";
 import { NavLink } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
+import { useTranslation } from "react-i18next";
 // import { useTranslation } from 'react-i18next';
 
 export const menu = [
   {
     id: 1,
-    name: "Home",
+    name: "home",
     link: "/301/build",
   },
   {
     id: 2,
-    name: "Projects",
+    name: "projects",
     link: "/projects",
   },
   {
     id: 3,
-    name: "Media",
+    name: "media",
     link: "/media",
   },
   {
     id: 4,
-    name: "Calendar",
+    name: "calendar",
     link: "/calendar",
   },
   {
     id: 5,
-    name: "About us",
+    name: "about-us",
     link: "/about",
   },
   {
     id: 6,
-    name: "Contact",
+    name: "contact",
     link: "/contact",
   },
 ];
@@ -61,13 +62,12 @@ const Navbar = () => {
 
   const copyLangs = langs.filter((item) => item !== lang.activeLang);
 
-  // const a = useTranslation();
+  const { i18n, t } = useTranslation();
 
-  // const handleLanguageChange = (language: string) => {
-  //   console.log(a)
-  //   // i18n.changeLanguage(language);
-  //   // history.push(`/${language}`); // Update URL with new language
-  // };
+  const handleLanguageChange = (language: string) => {
+    i18n.changeLanguage(language);
+    // history.push(`/${language}`); // Update URL with new language
+  };
 
   return (
     <div className="navbarContainer">
@@ -104,7 +104,7 @@ const Navbar = () => {
                       to={link.link}
                       style={{ animationDelay: `${i * 0.1}s` }}
                     >
-                      {link.name}
+                      {t(`navbar.${link.name}`)}
                     </NavLink>
                   ))}
                 </div>
@@ -129,7 +129,7 @@ const Navbar = () => {
         <div className="link">
           {menu.map((link, i) => (
             <NavLink key={i} to={link.link} onClick={scrollToTop}>
-              {link.name}
+              {t(`navbar.${link.name}`)}
             </NavLink>
           ))}
         </div>
@@ -154,18 +154,21 @@ const Navbar = () => {
                 to={`${item}`}
                 className={`${lang.open && "openedLang"} lang`}
                 onClick={() => {
-                  setLang((prev) => ({
-                    ...prev,
-                    open: !lang.open,
-                    activeLang: item,
-                  }));
+                  {
+                    setLang((prev) => ({
+                      ...prev,
+                      open: !lang.open,
+                      activeLang: item,
+                    }));
+                    handleLanguageChange(item);
+                  }
                 }}
               />
             </Fragment>
           ))}
         </div>
       </div>
-      <Button text="Sign In" link={true} to="" />
+      <Button text={t(`navbar.sign-in`)} link={true} to="" />
     </div>
   );
 };

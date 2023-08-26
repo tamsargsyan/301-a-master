@@ -11,6 +11,7 @@ import "./index.css";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 interface newsTypes {
   id: number;
@@ -38,8 +39,9 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
   const handleNext = () => {
     activeNews < 3 && setActiveNews((prevIndex) => prevIndex + 1);
   };
-  
+
   const windowSize = useWindowSize();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -109,7 +111,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
           style={{ margin: 0, padding: "0 20px", marginBottom: "40px" }}
         >
           <Button
-            text="Все новости"
+            text={t("btns.all-news")}
             style={{
               color: "#DD264E",
               boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
