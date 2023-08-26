@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Background from "../../components/Background";
-import Header from "../../components/Header";
+import Background from "../Background";
+import Header from "../Header";
 import EMAIL from "../../assets/email.svg";
 import "./index.css";
-import Button from "../../components/Button";
+import Button from "../Button";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";

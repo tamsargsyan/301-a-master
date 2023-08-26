@@ -1,4 +1,4 @@
-import Header from "../../components/Header";
+import Header from "../Header";
 import EcosystemIcon from "../../assets/info/5.svg";
 import SagesIcon from "../../assets/info/6.svg";
 import ClubIcon from "../../assets/info/7.svg";
@@ -17,7 +17,7 @@ import FRIENDS from "../../assets/info/fond.svg";
 import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
 import BETCONSTRUCT from "../../assets/info/betconstruct.png";
 import DIGITAIN from "../../assets/info/digitain.png";
-import Background from "../../components/Background";
+import Background from "../Background";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import "./index.css";

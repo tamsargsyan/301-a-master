@@ -10,7 +10,7 @@ import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import DropDown from "../../components/Dropdown";
 import "./index.css";
-import Footer from "../Footer";
+import Footer from "../../components/Footer";
 import ARROW_NEXT from "../../assets/arrow-next.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchingProjects } from "../../actions/apiActions";

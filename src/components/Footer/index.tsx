@@ -1,11 +1,11 @@
-import { menu } from "../../components/Navbar";
+import { menu } from "../Navbar";
 import LOCATION from "../../assets/location.svg";
 import PHONE from "../../assets/phone.svg";
 import EMAIL from "../../assets/email-white.svg";
 import LOGO from "../../assets/301-footer.png";
 import LOGO_MOBILE from "../../assets/301-footer-mobile.png";
 import "./index.css";
-import FollowUs from "../../components/FollowUs";
+import FollowUs from "../FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 

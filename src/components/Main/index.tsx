@@ -1,5 +1,5 @@
-import Background from "../../components/Background";
-import Header from "../../components/Header";
+import Background from "../Background";
+import Header from "../Header";
 import SIDE_PATTERN from "../../assets/patterns/side-1.svg";
 import SIDE_PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import SMALL_PATTERN from "../../assets/patterns/small-1.svg";
@@ -7,7 +7,7 @@ import BIG_PATTERN from "../../assets/patterns/big-1.svg";
 import LOGO from "../../assets/301.png";
 import LOGO_MOBILE from "../../assets/301-mobile.png";
 import "./index.css";
-import FollowUs from "../../components/FollowUs";
+import FollowUs from "../FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import BG from "../../assets/info/main-page-bg.svg";
 import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg";

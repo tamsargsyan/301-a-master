@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Button from "../../components/Button";
+import Button from "../Button";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import DropDown from "../../components/Dropdown";
+import DropDown from "../Dropdown";
 
 const btnStyle = {
   dropShadow: "-6px 6px 16px rgba(49, 58, 75, 0.11)",

@@ -1,5 +1,5 @@
-import Background from "../../components/Background";
-import Header from "../../components/Header";
+import Background from "../Background";
+import Header from "../Header";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import SMALL_PATTERN_1 from "../../assets/patterns/small-1.svg";
@@ -9,7 +9,7 @@ import FLAG from "../../assets/flag.svg";
 import "./index.css";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import Button from "../../components/Button";
+import Button from "../Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 

@@ -24,7 +24,7 @@ import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import FULL_PROJECT_1 from "../../assets/projectAuthor/project-full-1.svg";
 import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
 import { useNavigate, useParams } from "react-router";
-import Footer from "../Footer";
+import Footer from "../../components/Footer";
 import Background from "../../components/Background";
 import DropDown from "../../components/Dropdown";
 import PATTERN_SIDE from "../../assets/patterns/side-2.svg";
