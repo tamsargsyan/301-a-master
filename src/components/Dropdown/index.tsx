@@ -2,25 +2,29 @@ import { useState, useEffect, useRef } from "react";
 import ARROW from "../../assets/info/dropdown-arrow.svg";
 import Button from "../Button";
 import "./index.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
 
 interface Props {
   items: any;
-  setItem: any;
+  onClickItem: any;
   type: string;
   text: string;
   style?: Object;
   itemsStyle?: Object;
   className?: string;
+  objKey: string;
 }
 
 const DropDown: React.FC<Props> = ({
   items,
-  setItem,
+  onClickItem,
   text,
   type,
   style,
   itemsStyle,
   className,
+  objKey,
 }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -41,7 +45,7 @@ const DropDown: React.FC<Props> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   return (
     <div className={`${className} dropdown`} style={style} ref={dropdownRef}>
       <Button
@@ -66,15 +70,22 @@ const DropDown: React.FC<Props> = ({
             <button
               key={i}
               onClick={() => {
-                if (type === "i") {
-                  setItem(i, item.name);
-                } else if (type === "type") {
-                  setItem(item.type);
-                } else setItem(item);
+                if (type === "hypotheses") {
+                  onClickItem((prev: any) => ({
+                    ...prev,
+                    data: item,
+                    id: i + 1,
+                  }));
+                } else if (
+                  type === "projectCategory" ||
+                  type === "projectStatus"
+                ) {
+                  onClickItem(item.id, "");
+                }
                 setOpenDropdown(false);
               }}
             >
-              {item.name}
+              {item[`${objKey}_${lang}`]}
             </button>
           ))}
         </div>

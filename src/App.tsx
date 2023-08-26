@@ -4,7 +4,6 @@ import { scrollToTop } from "./globalFunctions/scrollToTop";
 import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
-import i18n from "./i18n";
 
 function App() {
   const location = useLocation();

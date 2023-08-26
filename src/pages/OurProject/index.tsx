@@ -5,13 +5,11 @@ import PATTERN from "../../assets/patterns/side-2.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import ICON from "../../assets/info/4.svg";
 import Project from "../../components/Project";
-import { ProjectTypes, projectsData, typeBtn } from "./projectsData";
 import { Spin } from "antd";
 import Button from "../../components/Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import DropDown from "../../components/Dropdown";
 import "./index.css";
-import { useLocation, useNavigate, useParams } from "react-router";
 import Footer from "../Footer";
 import ARROW_NEXT from "../../assets/arrow-next.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,81 +21,6 @@ import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
-  const [activeProjects, setActiveProjects] = useState({
-    i: 0,
-    filteringName: "Project Ideas we offer",
-  });
-  const [typedProject, setTypedProject] = useState("all");
-  const [filteredData, setFilteredData] = useState(
-    projectsData[activeProjects.i]
-  );
-
-  const handleClick = (i: number, filteringName: string) => {
-    setActiveProjects((prev) => ({
-      ...prev,
-      i,
-      filteringName,
-    }));
-  };
-  useEffect(() => {
-    if (typedProject === "all") {
-      setFilteredData(projectsData[activeProjects.i]);
-    } else {
-      const filteredProjects = projectsData[activeProjects.i].projects?.filter(
-        (category) => category.type === typedProject
-      );
-      setFilteredData({
-        ...projectsData[activeProjects.i],
-        projects: filteredProjects,
-      });
-    }
-  }, [typedProject, activeProjects]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 5;
-  const indexOfLastProject = currentPage * projectsPerPage;
-  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = filteredData.projects?.slice(
-    indexOfFirstProject,
-    indexOfLastProject
-  );
-  const totalPages =
-    filteredData.projects &&
-    new Array(Math.ceil(filteredData.projects?.length / projectsPerPage)).fill(
-      0
-    );
-  const heartit = (id: number) => {
-    setFilteredData((prevData) => {
-      const updatedProjects = prevData.projects?.map((project) =>
-        project.id === id ? { ...project, isSaved: !project.isSaved } : project
-      );
-      return { ...prevData, projects: updatedProjects };
-    });
-  };
-  const [isView, setIsView] = useState(false);
-  useEffect(() => {
-    const handlePopstate = () => {
-      setIsView(false);
-    };
-
-    window.addEventListener("popstate", handlePopstate);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopstate);
-    };
-  }, []);
-  const [viewedProject, setViewedProject] = useState<
-    ProjectTypes | undefined
-  >();
-  const view = (id: number) => {
-    const viewedProject = currentProjects?.find((project) => project.id === id);
-    //@ts-ignore
-    setViewedProject(viewedProject);
-  };
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   !isView && navigate("/projects");
-  // }, [isView, navigate]);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -110,7 +33,34 @@ const OurProjects = () => {
   const { data, loading } = useSelector(
     (state: RootState) => state.projectData
   );
-  const { ourProject, projectCategory, projectStatus, projects } = data;
+  const { ourProject, projects, projectCategory, projectStatus } = data;
+
+  const [projectCategory_id, setProjectCategory_id] = useState(1);
+  const [projectStatus_id, setProjectStatus_id] = useState(1);
+  const filteredProjects = projects?.filter(
+    (project: any) =>
+      project.project_category_id === projectCategory_id &&
+      project.project_status_id === projectStatus_id
+  );
+
+  const handleProjectCategory_id = (id: number) => {
+    setProjectCategory_id(id);
+  };
+
+  const handleProjectStatus_id = (id: number) => {
+    setProjectStatus_id(id);
+  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 5;
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects?.slice(
+    indexOfFirstProject,
+    indexOfLastProject
+  );
+  const totalPages =
+    filteredProjects &&
+    new Array(Math.ceil(filteredProjects?.length / projectsPerPage)).fill(0);
 
   if (loading)
     return (
@@ -129,32 +79,37 @@ const OurProjects = () => {
         <>
           <div className="filteringWrapper">
             <Header
-              title={ourProject[0][`title_${lang || "ru"}`]}
-              description={ourProject[0][`description_${lang || "ru"}`]}
+              title={ourProject[0][`title_${lang}`]}
+              description={ourProject[0][`description_${lang}`]}
               icon={ICON}
             />
             {windowSize.width > 800 ? (
               <div className="filteringBtnsWrapper">
                 {projectCategory.map((category: any, i: number) => (
                   <button
-                    disabled={isView}
+                    disabled={false}
                     key={i}
                     className={`${
-                      activeProjects.i === i && "activeProjectBtn"
+                      projectCategory_id === category.id && "activeProjectBtn"
                     }`}
-                    onClick={() => handleClick(i, category.name_am)}
+                    onClick={() => handleProjectCategory_id(category.id)}
                   >
-                    {category[`name_${lang || "ru"}`]}
+                    {category[`name_${lang}`]}
                   </button>
                 ))}
               </div>
             ) : (
               <DropDown
-                items={projectsData}
-                setItem={handleClick}
-                type="i"
-                text={activeProjects.filteringName}
+                items={projectCategory}
+                onClickItem={handleProjectCategory_id}
+                type="projectCategory"
+                text={
+                  projectCategory.find(
+                    (category: any) => category.id === projectCategory_id
+                  )[`name_${lang}`]
+                }
                 style={{ marginBottom: "20px" }}
+                objKey="name"
               />
             )}
             {windowSize.width > 800 ? (
@@ -162,16 +117,16 @@ const OurProjects = () => {
                 {projectStatus.map((status: any) => (
                   <Fragment key={status.id}>
                     <Button
-                      text={status[`name_${lang || "ru"}`]}
+                      text={status[`name_${lang}`]}
                       link={false}
-                      // active={typedProject === btn.type}
+                      active={projectStatus_id === status.id}
                       to={""}
                       style={{
                         padding: "12px 22px",
                         border: "none",
                       }}
-                      // onClick={() => setTypedProject(btn.type)}
-                      disabled={isView}
+                      onClick={() => handleProjectStatus_id(status.id)}
+                      disabled={false}
                       className="typedBtn"
                     />
                   </Fragment>
@@ -179,29 +134,32 @@ const OurProjects = () => {
               </div>
             ) : (
               <DropDown
-                items={typeBtn}
-                setItem={setTypedProject}
-                type="type"
-                text={typedProject}
+                items={projectStatus}
+                onClickItem={handleProjectStatus_id}
+                type="projectStatus"
+                text={
+                  projectStatus.find(
+                    (status: any) => status.id === projectStatus_id
+                  )[`name_${lang}`]
+                }
                 style={{ width: "50vw", marginRight: "auto" }}
+                objKey="name"
               />
             )}
           </div>
-          {projects?.length ? (
-            projects?.map((project: any) => (
+          {currentProjects.length ? (
+            currentProjects?.map((project: any) => (
               <Fragment key={project.id}>
                 <Project
                   author="Peter Nemoy"
                   authorImg={AUTHOR_1}
-                  title={project[`project_name_${lang || "ru"}`]}
+                  title={project[`project_name_${lang}`]}
                   flag={15}
-                  desc={project[`problem_description_${lang || "ru"}`]}
+                  desc={project[`problem_description_${lang}`]}
                   projectImg={PROJECT_1}
-                  heartit={() => heartit(project.id)}
+                  // heartit={() => heartit(project.id)}
                   isSaved={false}
                   id={project.id}
-                  setIsView={setIsView}
-                  view={view}
                 />
               </Fragment>
             ))
@@ -226,7 +184,7 @@ const OurProjects = () => {
                 className="pagination_backBtn"
               />
               <div className="paginationBtnWrapper">
-                {totalPages.map((_, i) => (
+                {totalPages.map((_: any, i: number) => (
                   <button
                     key={i}
                     className={`${

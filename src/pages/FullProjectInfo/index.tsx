@@ -21,19 +21,8 @@ import {
 } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import FULL_PROJECT_1 from "../../assets/projectAuthor/project-full-1.svg";
 import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
-import BETCONSTRUCT from "../../assets/info/betconstruct.png";
-import DIGITAIN from "../../assets/info/digitain.png";
-import ROSE_CIRCLE from "../../assets/projectAuthor/rose-circle.png";
-import GREEN_CIRCLE from "../../assets/projectAuthor/green-circle.png";
-import ORANGE_CIRCLE from "../../assets/projectAuthor/orange-circle.png";
-import YELLOW_CIRCLE from "../../assets/projectAuthor/yellow-circle.png";
-import BLUE_CIRCLE from "../../assets/projectAuthor/blue-circle.png";
-import PURPLE_CIRCLE from "../../assets/projectAuthor/purple-circle.png";
-import PERSON_1 from "../../assets/projectAuthor/person-1.svg";
-import PERSON_2 from "../../assets/projectAuthor/person-2.png";
 import { useNavigate, useParams } from "react-router";
 import Footer from "../Footer";
 import Background from "../../components/Background";
@@ -43,7 +32,6 @@ import ICON from "../../assets/info/4.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import Header from "../../components/Header";
 import { Spin } from "antd";
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -156,7 +144,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     dispatch(fetchingProjects("project"));
     //@ts-ignore
     dispatch(fetchingProjectDetails(`project-details/${id}`));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
@@ -165,7 +153,6 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
   const { ourProject } = useSelector(
     (state: RootState) => state.projectData.data
   );
-
   useEffect(() => {
     if (project) {
       const observer = new IntersectionObserver((entries) => {
@@ -207,7 +194,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
           <div className="filteringWrapper">
             <Header
               title={ourProject[0][`title_${lang}`]}
-              description={ourProject[0][`description_${lang || "ru"}`]}
+              description={ourProject[0][`description_${lang}`]}
               icon={ICON}
             />
             {windowSize.width > 800 ? (
@@ -221,17 +208,18 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     // }`}
                     // onClick={() => handleClick(i, category.name_am)}
                   >
-                    {category[`name_${lang || "ru"}`]}
+                    {category[`name_${lang}`]}
                   </button>
                 ))}
               </div>
             ) : (
               <DropDown
                 items={projectsData}
-                setItem={() => {}}
+                onClickItem={() => {}}
                 type="i"
                 text="All"
                 style={{ marginBottom: "20px" }}
+                objKey={""}
               />
             )}
             {windowSize.width > 800 ? (
@@ -239,7 +227,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                 {projectStatus.map((status: any) => (
                   <Fragment key={status.id}>
                     <Button
-                      text={status[`name_${lang || "ru"}`]}
+                      text={status[`name_${lang}`]}
                       link={false}
                       // active={typedProject === btn.type}
                       to={""}
@@ -247,7 +235,6 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                         padding: "12px 22px",
                         border: "none",
                       }}
-                      // onClick={() => setTypedProject(btn.type)}
                       disabled={true}
                       className="typedBtn"
                     />
@@ -257,10 +244,11 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
             ) : (
               <DropDown
                 items={[]}
-                setItem={() => {}}
+                onClickItem={() => {}}
                 type="type"
                 text={"All"}
                 style={{ width: "50vw", marginRight: "auto" }}
+                objKey={""}
               />
             )}
           </div>
@@ -277,13 +265,13 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                   className="bgImg"
                 />
                 <h1 className="fullProjectBg_title">
-                  {project[`project_name_${lang || "ru"}`]}
+                  {project[`project_name_${lang}`]}
                 </h1>
               </div>
               <div className="fullProject_inner">
                 <div className="fullProject_titleInner">
                   <div className="titlePart">
-                    <h2>{project[`project_name_${lang || "ru"}`]}</h2>
+                    <h2>{project[`project_name_${lang}`]}</h2>
                     <div className="flag">
                       <img src={FLAG} alt="Flag" />
                       <span>{15}</span>
@@ -310,7 +298,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                   <div
                     className="problem_inner"
                     dangerouslySetInnerHTML={{
-                      __html: project[`problem_description_${lang || "ru"}`],
+                      __html: project[`problem_description_${lang}`],
                     }}
                   />
                   {windowSize.width < 600 && (

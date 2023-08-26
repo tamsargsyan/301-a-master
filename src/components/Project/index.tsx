@@ -1,9 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import FLAG from "../../assets/flag.svg";
 import Button from "../Button";
 import "./index.css";
 import { fetchingProjectDetails } from "../../actions/apiActions";
-import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
 
 interface ProjectProps {
@@ -13,11 +12,8 @@ interface ProjectProps {
   flag: number;
   desc: string;
   projectImg: string;
-  heartit: () => void;
   isSaved: boolean;
   id: number;
-  setIsView: (arg: boolean) => void;
-  view: (arg: number) => void;
 }
 
 const Project: React.FC<ProjectProps> = ({
@@ -27,11 +23,8 @@ const Project: React.FC<ProjectProps> = ({
   flag,
   desc,
   projectImg,
-  heartit,
   isSaved,
   id,
-  setIsView,
-  view,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -69,15 +62,15 @@ const Project: React.FC<ProjectProps> = ({
               fontWeight: "500",
             }}
             onClick={() => {
-              setIsView(true);
-              view(id);
+              // setIsView(true);
+              // view(id);
               //@ts-ignore
               dispatch(fetchingProjectDetails(`project-details/${id}`));
             }}
           />
           <button
             className={`heart-btn ${isSaved ? "liked" : ""}`}
-            onClick={heartit}
+            // onClick={heartit}
           >
             <span>{t("btns.save-project")}</span>
             <div className="heartWrapper">

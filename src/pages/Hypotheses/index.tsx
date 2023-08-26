@@ -53,11 +53,12 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
         {windowSize.width < 1100 && (
           <DropDown
             items={dataHypotheses}
-            setItem={setActiveItem}
-            type="item"
+            onClickItem={setActiveItem}
+            type="hypotheses"
             text={activeItem.data[`name_${lang}`]}
             itemsStyle={{ top: "50%", zIndex: 1, paddingTop: "40px" }}
             className="homePageHeader"
+            objKey="name"
           />
         )}
         <div

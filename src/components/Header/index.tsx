@@ -1,8 +1,10 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
 import { useEffect, useState } from "react";
+import { RootState } from "../../store/configureStore";
+import { useSelector } from "react-redux";
 
 interface HeaderProps {
   title: string;
@@ -35,12 +37,11 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const windowSize = useWindowSize();
   const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
-  const ourMissionLink = ourMissionDesc && ourMissionDesc[1];
   const [ourMission, setOurMission] = useState({
     txt: "Наша миссия — ",
     link: "формирование онтологической безопасности Армении.",
   });
-  const { lang } = useParams();
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   useEffect(() => {
     if (lang === "en") {
@@ -51,8 +52,8 @@ const Header: React.FC<HeaderProps> = ({
     } else if (lang === "am") {
       setOurMission({
         txt: "Մեր առաքելությունը ",
-        link: "Հայաստանի գոյաբանական անվտանգության ձևավորումն է:"
-      })
+        link: "Հայաստանի գոյաբանական անվտանգության ձևավորումն է:",
+      });
     }
   }, [lang]);
 

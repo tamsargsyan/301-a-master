@@ -22,10 +22,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
-import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import i18next from "i18next";
-import i18n from "../../i18n";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -38,8 +35,8 @@ const Home = () => {
     dispatch(fetchingHome("home"));
   }, [dispatch]);
 
-  const lang = i18n.language;
-    
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+
   const { loading, data } = useSelector((state: RootState) => state.homeData);
 
   if (loading)
@@ -72,21 +69,17 @@ const Home = () => {
   const removeHtmlTags = (text: string) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   };
-  // const getLocalizedText = (text: string, fallbackLang: any = "ru") => {
-  //   return text && text[lang || fallbackLang];
-  // };
 
   const ourMissionShortDesc =
-    ourMission &&
-    removeHtmlTags(ourMission[0][`short_description_${lang || "ru"}`]);
+    ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
 
   const sections = [
     {
       id: 1,
-      title: ourMission && ourMission[0][`title_${lang || "ru"}`],
+      title: ourMission && ourMission[0][`title_${lang}`],
       shortDescription:
-        ourMission && ourMission[0][`short_description_${lang || "ru"}`],
-      description: ourMission && ourMission[0][`description_${lang || "ru"}`],
+        ourMission && ourMission[0][`short_description_${lang}`],
+      description: ourMission && ourMission[0][`description_${lang}`],
       btn: [t("btns.learn-more")],
       icon: ICON_1,
       pattern1: undefined,
@@ -97,10 +90,9 @@ const Home = () => {
     },
     {
       id: 2,
-      title: whyImportant && whyImportant[0][`title_${lang || "ru"}`],
+      title: whyImportant && whyImportant[0][`title_${lang}`],
       shortDescription: "",
-      description:
-        whyImportant && whyImportant[0][`description_${lang || "ru"}`],
+      description: whyImportant && whyImportant[0][`description_${lang}`],
       btn: undefined,
       icon: ICON_2,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -112,12 +104,11 @@ const Home = () => {
     {
       id: 3,
       title:
-        hypothesesForTheFuture &&
-        hypothesesForTheFuture[0][`title_${lang || "ru"}`],
+        hypothesesForTheFuture && hypothesesForTheFuture[0][`title_${lang}`],
       shortDescription: "",
       description:
         hypothesesForTheFuture &&
-        hypothesesForTheFuture[0][`description_${lang || "ru"}`],
+        hypothesesForTheFuture[0][`description_${lang}`],
       btn: undefined,
       icon: ICON_3,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -132,11 +123,7 @@ const Home = () => {
     <>
       {data && landOfWisdom && (
         <>
-          <Main
-            followUs={followUs}
-            landOfWisdom={landOfWisdom}
-            lang={lang || "ru"}
-          />
+          <Main followUs={followUs} landOfWisdom={landOfWisdom} lang={lang} />
           {sections.map((section) => (
             <Fragment key={section.id}>
               <div className="separatedPart"></div>
@@ -160,15 +147,11 @@ const Home = () => {
               </Background>
             </Fragment>
           ))}
-          <About dataHypotheses={dataHypotheses} lang={lang || "ru"} />
-          <Projects
-            OurProjects={OurProjects}
-            lang={lang || "ru"}
-            projects={projects}
-          />
+          <About dataHypotheses={dataHypotheses} lang={lang} />
+          <Projects OurProjects={OurProjects} lang={lang} projects={projects} />
           <Ecosystem
             ourEcosystem={ourEcosystem}
-            lang={lang || "ru"}
+            lang={lang}
             sages={sages}
             club301={club301}
             ambassadors={ambassadors}
@@ -177,7 +160,7 @@ const Home = () => {
             partners={partners}
             foundationFriends={foundationFriends}
           />
-          <News news={news} lang={lang || "ru"} />
+          <News news={news} lang={lang} />
           <Contact />
           <Footer followUs={followUs} />
         </>
