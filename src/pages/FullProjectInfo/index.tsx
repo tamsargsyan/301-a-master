@@ -103,7 +103,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     }
   }, [project]);
   const navigate = useNavigate();
-  console.log(project);
+
   if (loading)
     return (
       <div className="loadingContainer">

@@ -159,7 +159,12 @@ const Navbar = () => {
           ))}
         </div>
       </div>
-      <Button text={t(`navbar.sign-in`)} link={true} to="" />
+      <Button
+        text={t(`navbar.sign-in`)}
+        link={true}
+        to=""
+        className="signIn-btn"
+      />
     </div>
   );
 };

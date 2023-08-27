@@ -61,17 +61,13 @@ const Project: React.FC<ProjectProps> = ({
               color: "#fff",
               fontWeight: "500",
             }}
+            className="view-btn"
             onClick={() => {
-              // setIsView(true);
-              // view(id);
               //@ts-ignore
               dispatch(fetchingProjectDetails(`project-details/${id}`));
             }}
           />
-          <button
-            className={`heart-btn ${isSaved ? "liked" : ""}`}
-            // onClick={heartit}
-          >
+          <button className={`heart-btn ${isSaved ? "liked" : ""}`}>
             <span>{t("btns.save-project")}</span>
             <div className="heartWrapper">
               <svg className="heart" viewBox="0 0 32 29.6">
