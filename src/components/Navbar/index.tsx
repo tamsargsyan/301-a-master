@@ -48,7 +48,11 @@ export const menu = [
   },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  setOpenModal: (arg: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -161,9 +165,10 @@ const Navbar = () => {
       </div>
       <Button
         text={t(`navbar.sign-in`)}
-        link={true}
+        link={false}
         to=""
         className="signIn-btn"
+        onClick={() => setOpenModal(true)}
       />
     </div>
   );

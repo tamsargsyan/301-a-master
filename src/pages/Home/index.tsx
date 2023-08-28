@@ -65,7 +65,7 @@ const Home = () => {
     landOfWisdom,
     followUs,
   } = data;
-  console.log(data);
+
   const removeHtmlTags = (text: string) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   };
@@ -118,7 +118,7 @@ const Home = () => {
       innerClassName: "hypothesesInner",
     },
   ];
-
+  
   return (
     <>
       {data && landOfWisdom && (

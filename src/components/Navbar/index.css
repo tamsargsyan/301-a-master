@@ -121,9 +121,6 @@
   .lang {
     font-size: 12px;
   }
-  body.no-scroll {
-    overflow: hidden;
-  }
   .link,
   .navbarContainer .btn:not(.lang) {
     display: none;

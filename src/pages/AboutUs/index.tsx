@@ -92,7 +92,7 @@ const AboutUs = () => {
   ];
 
   const { followUs } = useSelector((state: RootState) => state.homeData.data);
-  console.log(followUs);
+  
   return (
     <>
       <Background
