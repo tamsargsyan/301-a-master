@@ -444,7 +444,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
               </div>
             </div>
           </div>
-          <Footer followUs={undefined} />
+          <Footer followUs={undefined} separatedPart={true} />
         </>
       )}
     </Background>
