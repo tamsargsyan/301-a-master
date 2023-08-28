@@ -1,6 +1,6 @@
-import { FETCH_START } from "../utils/actionTypes";
-import { FETCH_SUCCESS } from "../utils/actionTypes";
-import { FETCH_ERROR } from "../utils/actionTypes";
+import { FETCH_START } from "../utils/action.types";
+import { FETCH_SUCCESS } from "../utils/action.types";
+import { FETCH_ERROR } from "../utils/action.types";
 
 interface ProjectsState {
   data: any;

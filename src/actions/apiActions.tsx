@@ -4,9 +4,9 @@ import {
   PROJECT_FETCH_ERROR,
   PROJECT_FETCH_START,
   PROJECT_FETCH_SUCCESS,
-} from "../utils/actionTypes";
-import { FETCH_SUCCESS } from "../utils/actionTypes";
-import { FETCH_ERROR } from "../utils/actionTypes";
+} from "../utils/action.types";
+import { FETCH_SUCCESS } from "../utils/action.types";
+import { FETCH_ERROR } from "../utils/action.types";
 
 // interface FetchStartAction {
 //     type: ActionTypes.FETCH_START;

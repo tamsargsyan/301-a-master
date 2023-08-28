@@ -1,4 +1,4 @@
-import { LANGUAGE_DITACTOR } from "../utils/actionTypes";
+import { LANGUAGE_DITACTOR } from "../utils/action.types";
 
 export const languageDitactor = (lang: string) => ({
   type: LANGUAGE_DITACTOR,

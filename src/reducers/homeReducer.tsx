@@ -1,20 +1,21 @@
-import { FETCH_START } from "../utils/actionTypes";
-import { FETCH_SUCCESS } from "../utils/actionTypes";
-import { FETCH_ERROR } from "../utils/actionTypes";
+import { FETCH_START } from "../utils/action.types";
+import { FETCH_SUCCESS } from "../utils/action.types";
+import { FETCH_ERROR } from "../utils/action.types";
+import { HomeData } from "../utils/homeData.types";
 
-interface ProjectsState {
-  data: any;
+interface HomeState {
+  data: HomeData;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: ProjectsState = {
-  data: [],
+const initialState: HomeState = {
+  data: {} as HomeData,
   loading: false,
   error: null,
 };
 
-const homeReducer = (state = initialState, action: any): ProjectsState => {
+const homeReducer = (state = initialState, action: any): HomeState => {
   switch (action.type) {
     case FETCH_START:
       return { ...state, loading: true, error: null };

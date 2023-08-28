@@ -59,7 +59,7 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
             background: "rgba(255, 255, 255, 0.12)",
           },
         ]}
-        style={{ padding: 0, width: "40vw" }}
+        style={{ padding: 0, width: "30vw" }}
         className="mainPageHeader homePageHeader"
       />
       {windowSize.width > 975 && (
