@@ -39,7 +39,7 @@ export const menu = [
   {
     id: 5,
     name: "about-us",
-    link: "/about-us",
+    link: "/301/build/about-us",
   },
   {
     id: 6,

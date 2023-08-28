@@ -5,12 +5,18 @@ interface ModalProps {
   children: ReactNode;
   setOpenModal: (arg: boolean) => void;
   openModal: boolean;
+  className?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, setOpenModal, openModal }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  setOpenModal,
+  openModal,
+  className,
+}) => {
   return (
     <div
-      className={`${openModal && "overlay_opened"} overlay`}
+      className={`${openModal && "overlay_opened"} ${className} overlay`}
       onClick={() => setOpenModal(false)}
     >
       <div

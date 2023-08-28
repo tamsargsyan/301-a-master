@@ -36,7 +36,7 @@ const pagesData: routerType[] = [
     title: "Project",
   },
   {
-    path: "/about-us",
+    path: "/301/build/about-us",
     element: <AboutUs />,
     title: "About Us",
   },

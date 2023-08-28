@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
+import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -65,10 +66,6 @@ const Home = () => {
     landOfWisdom,
     followUs,
   } = data;
-
-  const removeHtmlTags = (text: string) => {
-    return text.replace(/<\/?[^>]+(>|$)/g, "");
-  };
 
   const ourMissionShortDesc =
     ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
@@ -118,7 +115,7 @@ const Home = () => {
       innerClassName: "hypothesesInner",
     },
   ];
-  
+
   return (
     <>
       {data && landOfWisdom && (

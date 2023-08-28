@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
 import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 function App() {
   const location = useLocation();
@@ -13,20 +14,30 @@ function App() {
     scrollToTop();
   }, [location]);
 
-  const [openModal, setOpenModal] = useState(false);
+  const [signIn, setSignIn] = useState(false);
+  const [signUp, setSignUp] = useState(false);
 
   useEffect(() => {
-    document.body.classList.toggle("no-scroll", openModal);
+    document.body.classList.toggle("no-scroll", signIn);
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [openModal]);
+  }, [signIn]);
+
+  useEffect(() => {
+    signUp && setSignIn(false);
+  }, [signUp]);
 
   return (
     <div className="container">
-      <Navbar setOpenModal={setOpenModal} />
+      <Navbar setOpenModal={setSignIn} />
       <Router />
-      <SignIn openModal={openModal} setOpenModal={setOpenModal} />
+      <SignIn
+        openModal={signIn}
+        setOpenModal={setSignIn}
+        setSignUp={setSignUp}
+      />
+      <SignUp signUp={signUp} setSignUp={setSignUp} setSignIn={setSignIn} />
     </div>
   );
 }

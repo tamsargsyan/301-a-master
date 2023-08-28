@@ -5,9 +5,9 @@ import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import PATTERN from "../../assets/projectAuthor/pattern.svg";
 import PDF from "../../assets/projectAuthor/pdf.svg";
-import BUDGET from "../../assets/projectAuthor/budget.svg";
-import COLLECTED from "../../assets/projectAuthor/collected.svg";
-import REMAINING from "../../assets/projectAuthor/remaining.svg";
+import BUDGET from "../../assets/projectAuthor/budget.png";
+import COLLECTED from "../../assets/projectAuthor/collected.png";
+// import REMAINING from "../../assets/projectAuthor/remaining.svg";
 import HEART from "../../assets/projectAuthor/heart.svg";
 import ARROW_MEMBER_LEFT from "../../assets/arrow-left-team-member.svg";
 import ARROW_MEMBER_RIGHT from "../../assets/info/arrow-right-team-member.svg";
@@ -33,6 +33,7 @@ import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import Header from "../../components/Header";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
+import YouTube from "react-youtube";
 
 interface Props {
   viewedProject?: ProjectTypes | undefined;
@@ -103,6 +104,16 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     }
   }, [project]);
   const navigate = useNavigate();
+
+  const opts = {
+    width: "100%",
+    height: 500,
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
+  const videoId = "cZxQchlBDN8";
 
   if (loading)
     return (
@@ -236,6 +247,9 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     </button>
                   )}
                 </div>
+                <div className="videoContainer _inner">
+                  <YouTube videoId={videoId} opts={opts} />
+                </div>
                 <div className="roadMapContainer">
                   <div className="roadMap_heading problem_heading">
                     <img src={PATTERN} alt="Pattern" />
@@ -273,19 +287,25 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     <div className="budgetContainer">
                       <div className="budget">
                         <img src={BUDGET} alt="Budget" />
-                        <span>Budget</span>
-                        <h2>{project.budget_price}$</h2>
+                        <div className="budgetPrice">
+                          <span>Budget</span>
+                          {/* <h2>{project.budget_price}$</h2> */}
+                          <h2>500$</h2>
+                        </div>
                       </div>
                       <div className="collected">
                         <img src={COLLECTED} alt="Collected" />
-                        <span>Collected</span>
-                        <h2>{project.collected_price}$</h2>
+                        <div className="collectedPrice">
+                          <span>Collected</span>
+                          {/* <h2>{project.collected_price}$</h2> */}
+                          <h2>500$</h2>
+                        </div>
                       </div>
-                      <div className="remaining">
+                      {/* <div className="remaining">
                         <img src={REMAINING} alt="Remaining" />
                         <span>Remaining</span>
                         <h2>{project.remaining_price}$</h2>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

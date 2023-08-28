@@ -12,6 +12,10 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { fetchingProjects } from "../../actions/apiActions";
+import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 
 interface ProjectsProps {
   OurProjects: any;
@@ -22,57 +26,57 @@ interface ProjectsProps {
 const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   const { t } = useTranslation();
   const windowSize = useWindowSize();
-  const projects = [
-    {
-      id: 1,
-      name: "Имя проекта",
-      culture: "Культура",
-      author: "Виктор Браун",
-      flag: 5,
-    },
-    {
-      id: 2,
-      name: "Имя проекта",
-      culture: "Культура",
-      author: "Виктор Браун",
-      flag: 5,
-    },
-    {
-      id: 3,
-      name: "Имя проекта",
-      culture: "Культура",
-      author: "Виктор Браун",
-      flag: 5,
-    },
-    {
-      id: 4,
-      name: "Имя проекта",
-      culture: "Культура",
-      author: "Виктор Браун",
-      flag: 5,
-    },
-    // {
-    //   id: 5,
-    //   name: "Имя проекта",
-    //   culture: "Культура",
-    //   author: "Виктор Браун",
-    //   flag: 5,
-    // },
-    // {
-    //   id: 6,
-    //   name: "Имя проекта",
-    //   culture: "Культура",
-    //   author: "Виктор Браун",
-    //   flag: 5,
-    // },
-    // {
-    //   id: 7,
-    //   name: "Имя проекта",
-    //   culture: "Культура",
-    //   author: "Виктор Браун",
-    //   flag: 5,
-    // },
-  ];
+  // const projects = [
+  //   {
+  //     id: 1,
+  //     name: "Имя проекта",
+  //     culture: "Культура",
+  //     author: "Виктор Браун",
+  //     flag: 5,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Имя проекта",
+  //     culture: "Культура",
+  //     author: "Виктор Браун",
+  //     flag: 5,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Имя проекта",
+  //     culture: "Культура",
+  //     author: "Виктор Браун",
+  //     flag: 5,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Имя проекта",
+  //     culture: "Культура",
+  //     author: "Виктор Браун",
+  //     flag: 5,
+  //   },
+  //   // {
+  //   //   id: 5,
+  //   //   name: "Имя проекта",
+  //   //   culture: "Культура",
+  //   //   author: "Виктор Браун",
+  //   //   flag: 5,
+  //   // },
+  //   // {
+  //   //   id: 6,
+  //   //   name: "Имя проекта",
+  //   //   culture: "Культура",
+  //   //   author: "Виктор Браун",
+  //   //   flag: 5,
+  //   // },
+  //   // {
+  //   //   id: 7,
+  //   //   name: "Имя проекта",
+  //   //   culture: "Культура",
+  //   //   author: "Виктор Браун",
+  //   //   flag: 5,
+  //   // },
+  // ];
   const [width, setWidth] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef<HTMLDivElement | null>(null);
@@ -103,100 +107,116 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   //   title_ru,
   //   title_en,
   // } = OurProjects[0];
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchingProjects("project"));
+  }, [dispatch]);
+  const { projects } = useSelector(
+    (state: RootState) => state.projectData.data
+  );
+  // console.log(projects1);
   return (
     <>
-      <div className="separatedPart"></div>
-      <Background
-        pattern1={
-          windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
-        }
-        pattern2={SMALL_PATTERN_1}
-        shoudHaveSidePattern={false}
-        style={{ padding: "60px 0" }}
-      >
-        <div className="projectsContainer" id="projects">
-          <Header
-            title={OurProjects[0][`title_${lang}`]}
-            description={OurProjects[0][`description_${lang}`]}
-            icon={ICON}
-            className="differedHeaderContainer"
-            style={{ width: "100%" }}
-          />
-          <div className="slider">
-            <button className="leftBtn" onClick={handleBack}>
-              <img src={ARROW} alt="Arrow" />
-            </button>
-            <button className="rightBtn" onClick={handleNext}>
-              <img src={ARROW} alt="Arrow" />
-            </button>
-            {windowSize.width > 975 ? (
-              <motion.div ref={carousel} className="carousel">
-                <motion.div
-                  className="innerCarousel"
-                  initial={{ x: 0 }}
-                  animate={{
-                    x: -width * currentIndex,
-                  }}
-                >
-                  {projects.map((project) => {
-                    return (
-                      <motion.div className="project" key={project.id}>
-                        <div className="projectImg"></div>
-                        <div className="projectInfo">
-                          <h1>{project.name}</h1>
-                          <span>{project.culture}</span>
-                          <div className="author">
-                            <span>{project.author}</span>
-                            <span className="flag">
-                              <img src={FLAG} alt="Flag" />
-                              {project.flag}
-                            </span>
+      {projects && (
+        <>
+          <div className="separatedPart"></div>
+          <Background
+            pattern1={
+              windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
+            }
+            pattern2={SMALL_PATTERN_1}
+            shoudHaveSidePattern={false}
+            style={{ padding: "60px 0" }}
+          >
+            <div className="projectsContainer" id="projects">
+              <Header
+                title={OurProjects[0][`title_${lang}`]}
+                description={OurProjects[0][`description_${lang}`]}
+                icon={ICON}
+                className="differedHeaderContainer"
+                style={{ width: "100%" }}
+              />
+              <div className="slider">
+                <button className="leftBtn" onClick={handleBack}>
+                  <img src={ARROW} alt="Arrow" />
+                </button>
+                <button className="rightBtn" onClick={handleNext}>
+                  <img src={ARROW} alt="Arrow" />
+                </button>
+                {windowSize.width > 975 ? (
+                  <motion.div ref={carousel} className="carousel">
+                    <motion.div
+                      className="innerCarousel"
+                      initial={{ x: 0 }}
+                      animate={{
+                        x: -width * currentIndex,
+                      }}
+                    >
+                      {projects.map((project: any) => {
+                        return (
+                          <motion.div className="project" key={project.id}>
+                            <div className="projectImg"></div>
+                            <div className="projectInfo">
+                              <h1>{project[`project_name_${lang}`]}</h1>
+                              <span>
+                                {removeHtmlTags(project[`description_${lang}`])}
+                              </span>
+                              <div className="author">
+                                <span>{project[`sector_${lang}`]}</span>
+                                <span className="flag">
+                                  <img src={FLAG} alt="Flag" />
+                                  {/* {project.flag} */}
+                                  15
+                                </span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </motion.div>
+                  </motion.div>
+                ) : (
+                  <div className="innerCarousel">
+                    {projects.map((project: any) => {
+                      return (
+                        <div className="project" key={project.id}>
+                          <div className="projectImg"></div>
+                          <div className="projectInfo">
+                            <h1>{project[`project_name_${lang}`]}</h1>
+                            <span>{project[`description_${lang}`]}</span>
+                            <div className="author">
+                              <span>{project[`sector_${lang}`]}</span>
+                              <span className="flag">
+                                <img src={FLAG} alt="Flag" />
+                                {/* {project.flag} */}
+                                15
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-              </motion.div>
-            ) : (
-              <div className="innerCarousel">
-                {projects.map((project) => {
-                  return (
-                    <div className="project" key={project.id}>
-                      <div className="projectImg"></div>
-                      <div className="projectInfo">
-                        <h1>{project.name}</h1>
-                        <span className="culture">{project.culture}</span>
-                        <div className="author">
-                          <span>{project.author}</span>
-                          <span className="flag">
-                            <img src={FLAG} alt="Flag" />
-                            {project.flag}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <div className="btns">
-            <Button
-              text={t("btns.other-projects")}
-              style={{
-                background: "#DD264E",
-                boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
-                color: "#fff",
-              }}
-              link={true}
-              to="/301/build/projects"
-              className="homePage_btn"
-            />
-          </div>
-        </div>
-      </Background>
+              <div className="btns">
+                <Button
+                  text={t("btns.other-projects")}
+                  style={{
+                    background: "#DD264E",
+                    boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
+                    color: "#fff",
+                  }}
+                  link={true}
+                  to="/301/build/projects"
+                  className="homePage_btn"
+                />
+              </div>
+            </div>
+          </Background>
+        </>
+      )}
     </>
   );
 };

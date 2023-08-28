@@ -62,6 +62,11 @@ const OurProjects = () => {
     filteredProjects &&
     new Array(Math.ceil(filteredProjects?.length / projectsPerPage)).fill(0);
 
+  const [projectId, setProjectId] = useState<number | null>(null);
+  const heartit = (id: number) => {
+    setProjectId(id);
+  };
+
   if (loading)
     return (
       <div className="loadingContainer">
@@ -157,8 +162,8 @@ const OurProjects = () => {
                   flag={15}
                   desc={project[`problem_description_${lang}`]}
                   projectImg={PROJECT_1}
-                  // heartit={() => heartit(project.id)}
-                  isSaved={false}
+                  heartit={() => heartit(project.id)}
+                  isSaved={project.id === projectId}
                   id={project.id}
                 />
               </Fragment>
