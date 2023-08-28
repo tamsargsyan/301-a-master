@@ -121,33 +121,12 @@
 .workTeamContainer .roadMap_heading {
   border: 1px solid rgba(49, 58, 75, 0.27);
 }
-
-.terms {
-  border-radius: 46px;
-  border: 1px solid rgba(0, 0, 0, 0.18);
-  width: 250px;
-  display: flex;
-}
 ._inner {
   padding: 40px 30px;
   overflow: hidden;
   border-radius: 3px;
   background: #fff;
   box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.07);
-}
-.terms button {
-  padding: 0;
-  width: 100%;
-  padding: 12px 18px;
-  border-radius: inherit;
-  font-weight: 600;
-  height: 100%;
-  color: var(--text-color);
-}
-.terms button:first-child {
-  background: #189387;
-  color: #fff;
-  font-family: Montserrat;
 }
 .month_circle {
   width: 12px;
@@ -161,9 +140,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.chart {
-  margin-top: 50px;
 }
 .chart_info h1 {
   font-size: clamp(1.2375rem, 0.0003rem + 1.031vw, 3.711875rem);
@@ -229,7 +205,7 @@
 }
 .chartContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
 }
@@ -312,15 +288,20 @@ a.fx-Revolve:focus:before {
   font-size: clamp(1.5rem, 0rem + 1.25vw, 4.5rem);
 }
 .dontaionBtnsFixed {
+  z-index: 999;
+}
+.dontaionBtnsFixed .btn:last-child {
   flex-direction: row;
   position: fixed;
   left: 50%;
   bottom: 15px;
   transform: translateX(-50%);
-  z-index: 999;
 }
 .dontaionBtns .btn {
   font-size: clamp(1rem, 0rem + 0.8333vw, 3rem);
+}
+.ourProject__projectInfo {
+  width: 100%;
 }
 @media screen and (max-width: 1920px) {
   .titlePart,
@@ -498,6 +479,9 @@ a.fx-Revolve:focus:before {
   .dontaionBtns .btn {
     font-size: clamp(0.416875rem, 0.0002rem + 0.8333vw, 0.573125rem);
   }
+  .dontaionBtnsFixed .btn:last-child {
+    width: 40vw !important;
+  }
 }
 @media screen and (max-width: 800px) {
   .titlePart,
@@ -556,10 +540,13 @@ a.fx-Revolve:focus:before {
     height: 35px;
   }
   .dontaionBtns .btn {
-    font-size: clamp(0.3125rem, -0.0006rem + 0.835vw, 0.416875rem);
+    font-size: clamp(1.640625rem, 0rem + 4.375vw, 2.1875rem);
   }
   .member_name {
     font-size: clamp(1rem, 0rem + 5vw, 1.875rem);
+  }
+  .dontaionBtnsFixed .btn:last-child {
+    width: 50vw !important;
   }
 }
 @media screen and (max-width: 600px) {
@@ -636,7 +623,6 @@ a.fx-Revolve:focus:before {
   }
   .dontaionBtns .btn {
     font-size: clamp(0.875rem, 0rem + 4.375vw, 1.640625rem);
-    font-size: 13px;
     padding: 10px 30px !important;
   }
 }

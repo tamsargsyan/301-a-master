@@ -1,5 +1,5 @@
-import Background from "../../components/Background";
-import Header from "../../components/Header";
+import Background from "../Background";
+import Header from "../Header";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import SMALL_PATTERN_1 from "../../assets/patterns/small-1.svg";
@@ -9,10 +9,18 @@ import FLAG from "../../assets/flag.svg";
 import "./index.css";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import Button from "../../components/Button";
+import Button from "../Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
-const Projects = () => {
+interface ProjectsProps {
+  OurProjects: any;
+  lang: string;
+  projects: any;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
+  const { t } = useTranslation();
   const windowSize = useWindowSize();
   const projects = [
     {
@@ -86,6 +94,16 @@ const Projects = () => {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
+
+  // const {
+  //   description_am,
+  //   description_ru,
+  //   description_en,
+  //   title_am,
+  //   title_ru,
+  //   title_en,
+  // } = OurProjects[0];
+
   return (
     <>
       <div className="separatedPart"></div>
@@ -99,10 +117,8 @@ const Projects = () => {
       >
         <div className="projectsContainer" id="projects">
           <Header
-            h1="НАШИ ПРОЕКТЫ"
-            p={[
-              "За несколько лет работы фонда «301. Земля мудрости» мы запустили ряд важных проектов по направлениям образования, культуры, науки и инноваций и целостного развития территории. ",
-            ]}
+            title={OurProjects[0][`title_${lang}`]}
+            description={OurProjects[0][`description_${lang}`]}
             icon={ICON}
             className="differedHeaderContainer"
             style={{ width: "100%" }}
@@ -168,14 +184,14 @@ const Projects = () => {
           </div>
           <div className="btns">
             <Button
-              text="Другие проекты"
+              text={t("btns.other-projects")}
               style={{
                 background: "#DD264E",
                 boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
                 color: "#fff",
               }}
               link={true}
-              to="/projects"
+              to="/301/build/projects"
               className="homePage_btn"
             />
           </div>

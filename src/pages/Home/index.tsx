@@ -1,12 +1,12 @@
-import Main from "../Main";
+import Main from "../../components/Main";
 import Background from "../../components/Background";
 import Header from "../../components/Header";
-import About from "../About";
-import Projects from "../Projects";
-import Ecosystem from "../Ecosystem";
-import News from "../News";
-import Contact from "../Contact";
-import Footer from "../Footer";
+import About from "../../components/Hypotheses";
+import Projects from "../../components/Projects";
+import Ecosystem from "../../components/Ecosystem";
+import News from "../../components/News";
+import Contact from "../../components/Contact";
+import Footer from "../../components/Footer";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
@@ -16,19 +16,71 @@ import BIG_PATTERN_3 from "../../assets/patterns/big-3.svg";
 import ICON_1 from "../../assets/info/1.svg";
 import ICON_2 from "../../assets/info/2.svg";
 import ICON_3 from "../../assets/info/3.svg";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { Spin } from "antd";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchingHome } from "../../actions/apiActions";
+import { RootState } from "../../store/configureStore";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const windowSize = useWindowSize();
+  // const [data, setData] = useState<any>(null);
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchingHome("home"));
+  }, [dispatch]);
+
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+
+  const { loading, data } = useSelector((state: RootState) => state.homeData);
+
+  if (loading)
+    return (
+      <div className="loadingContainer">
+        <Spin size="large" />
+      </div>
+    );
+
+  const {
+    OurProjects,
+    ambassadors,
+    club301,
+    experts,
+    foundationFriends,
+    dataHypotheses,
+    news,
+    ourEcosystem,
+    ourMission,
+    partners,
+    projects,
+    sages,
+    volunteers,
+    whyImportant,
+    hypothesesForTheFuture,
+    landOfWisdom,
+    followUs,
+  } = data;
+  console.log(data)
+  const removeHtmlTags = (text: string) => {
+    return text.replace(/<\/?[^>]+(>|$)/g, "");
+  };
+
+  const ourMissionShortDesc =
+    ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
+
   const sections = [
     {
       id: 1,
-      h1: "НАША МИССИЯ",
-      h2: "Наша миссия — обеспечить онтологическую безопасность Армении.",
-      p: [
-        "Мы запускаем научные проекты, реализовываем культурные инициативы, строим образовательную среду, формируем экспертное сообщество  — это актуализирует систему привычных ценностей и позволяет менять сценарий будущего. Мы верим, что именно такой подход сможет укрепить место армян как носителей уникального  культурного кода в современном мире. Мы выстраиваем те границы Армении, которые никому не под силу нарушить. Мы создаем будущее, в котором армянская цивилизация  уникальна и ценна для мира.",
-      ],
-      btn: ["Узнать больше"],
+      title: ourMission && ourMission[0][`title_${lang}`],
+      shortDescription:
+        ourMission && ourMission[0][`short_description_${lang}`],
+      description: ourMission && ourMission[0][`description_${lang}`],
+      btn: [t("btns.learn-more")],
       icon: ICON_1,
       pattern1: undefined,
       pattern2: SMALL_PATTERN_2,
@@ -38,14 +90,9 @@ const Home = () => {
     },
     {
       id: 2,
-      h1: "ПОЧЕМУ ЭТО ВАЖНО?",
-      h2: "",
-      p: [
-        "Можем ли мы назвать ныне живущих представителей армянской культуры, известных по всему миру? Нет — Армении нет на современной культурной карте. Многие армяне достигли успеха в области культуры в других странах, однако культура, которую они представляют — американская, французская, русская, но не армянская.",
-        "В Армении также наблюдается кризис образования; отсутствие общественного договора и системы национальных ценностей, что может вести к необратимым последствиям — потере идентичности, а позже и государственности. ",
-        "Мы верим, что выстраивание границ онтологической безопасности сможет этому противостоять. Для этого нужно определить, чем Армения уникальна для мира. Каким органом на теле планеты может стать наша страна: совестью, памятью, руками, голосом? А может быть быть нейронами или мозжечком? ",
-        "Ответив на этот вопрос, армянская цивилизация сумеет сохранить себя и сможет стать важной большому миру.",
-      ],
+      title: whyImportant && whyImportant[0][`title_${lang}`],
+      shortDescription: "",
+      description: whyImportant && whyImportant[0][`description_${lang}`],
       btn: undefined,
       icon: ICON_2,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -56,11 +103,12 @@ const Home = () => {
     },
     {
       id: 3,
-      h1: "ГИПОТЕЗЫ БУДУЩЕГО",
-      h2: "",
-      p: [
-        "Мы разработали четыре основные гипотезы, согласно которым Армения может развиваться и позиционировать себя на карте планеты.",
-      ],
+      title:
+        hypothesesForTheFuture && hypothesesForTheFuture[0][`title_${lang}`],
+      shortDescription: "",
+      description:
+        hypothesesForTheFuture &&
+        hypothesesForTheFuture[0][`description_${lang}`],
       btn: undefined,
       icon: ICON_3,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -70,37 +118,53 @@ const Home = () => {
       innerClassName: "hypothesesInner",
     },
   ];
+
   return (
     <>
-      <Main />
-      {sections.map((section) => (
-        <Fragment key={section.id}>
-          <div className="separatedPart"></div>
-          <Background
-            pattern1={section.pattern1}
-            pattern2={section.pattern2}
-            pattern3={section.pattern3}
-            shoudHaveSidePattern={section.shoudHaveSidePattern}
-            style={{ padding: "60px 0" }}
-          >
-            <Header
-              h1={section.h1}
-              h2={section.h2}
-              p={section.p}
-              btns={section.btn}
-              icon={section.icon}
-              innerClassName={section.innerClassName}
-              className="differedHeaderContainer homePageHeader"
-            />
-          </Background>
-        </Fragment>
-      ))}
-      <About />
-      <Projects />
-      <Ecosystem />
-      <News />
-      <Contact />
-      <Footer />
+      {data && landOfWisdom && (
+        <>
+          <Main followUs={followUs} landOfWisdom={landOfWisdom} lang={lang} />
+          {sections.map((section) => (
+            <Fragment key={section.id}>
+              <div className="separatedPart"></div>
+              <Background
+                pattern1={section.pattern1}
+                pattern2={section.pattern2}
+                pattern3={section.pattern3}
+                shoudHaveSidePattern={section.shoudHaveSidePattern}
+                style={{ padding: "60px 0" }}
+              >
+                <Header
+                  title={section.title}
+                  shortDescription={section.shortDescription}
+                  description={section.description}
+                  btns={section.btn}
+                  icon={section.icon}
+                  innerClassName={section.innerClassName}
+                  className="differedHeaderContainer homePageHeader"
+                  ourMissionDesc={section.id === 1 && ourMissionShortDesc}
+                />
+              </Background>
+            </Fragment>
+          ))}
+          <About dataHypotheses={dataHypotheses} lang={lang} />
+          <Projects OurProjects={OurProjects} lang={lang} projects={projects} />
+          <Ecosystem
+            ourEcosystem={ourEcosystem}
+            lang={lang}
+            sages={sages}
+            club301={club301}
+            ambassadors={ambassadors}
+            volunteers={volunteers}
+            experts={experts}
+            partners={partners}
+            foundationFriends={foundationFriends}
+          />
+          <News news={news} lang={lang} />
+          <Contact />
+          <Footer followUs={followUs} />
+        </>
+      )}
     </>
   );
 };

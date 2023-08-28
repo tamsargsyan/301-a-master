@@ -1,6 +1,9 @@
+import { useDispatch } from "react-redux";
 import FLAG from "../../assets/flag.svg";
 import Button from "../Button";
 import "./index.css";
+import { fetchingProjectDetails } from "../../actions/apiActions";
+import { useTranslation } from "react-i18next";
 
 interface ProjectProps {
   author: string;
@@ -9,11 +12,8 @@ interface ProjectProps {
   flag: number;
   desc: string;
   projectImg: string;
-  heartit: () => void;
   isSaved: boolean;
   id: number;
-  setIsView: (arg: boolean) => void;
-  view: (arg: number) => void;
 }
 
 const Project: React.FC<ProjectProps> = ({
@@ -23,12 +23,12 @@ const Project: React.FC<ProjectProps> = ({
   flag,
   desc,
   projectImg,
-  heartit,
   isSaved,
   id,
-  setIsView,
-  view,
 }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   return (
     <div className="ourProject__project">
       <div className="ourProject__projectInner">
@@ -44,13 +44,14 @@ const Project: React.FC<ProjectProps> = ({
               <span>{flag}</span>
             </div>
           </div>
-          <div className="ourProject__desc">
-            <p>{desc}</p>
-          </div>
+          <div
+            className="ourProject__desc"
+            dangerouslySetInnerHTML={{ __html: desc }}
+          />
         </div>
         <div className="btns" style={{ width: "100%" }}>
           <Button
-            text="Wiev"
+            text={t("btns.view")}
             link={true}
             to={`${id}`}
             style={{
@@ -60,16 +61,14 @@ const Project: React.FC<ProjectProps> = ({
               color: "#fff",
               fontWeight: "500",
             }}
+            className="view-btn"
             onClick={() => {
-              setIsView(true);
-              view(id);
+              //@ts-ignore
+              dispatch(fetchingProjectDetails(`project-details/${id}`));
             }}
           />
-          <button
-            className={`heart-btn ${isSaved ? "liked" : ""}`}
-            onClick={heartit}
-          >
-            <span>Saved project</span>
+          <button className={`heart-btn ${isSaved ? "liked" : ""}`}>
+            <span>{t("btns.save-project")}</span>
             <div className="heartWrapper">
               <svg className="heart" viewBox="0 0 32 29.6">
                 <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />

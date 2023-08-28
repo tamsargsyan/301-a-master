@@ -1,14 +1,17 @@
 import { useState } from "react";
-import Background from "../../components/Background";
-import Header from "../../components/Header";
+import Background from "../Background";
+import Header from "../Header";
 import EMAIL from "../../assets/email.svg";
 import "./index.css";
-import Button from "../../components/Button";
+import Button from "../Button";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,7 +29,7 @@ const Contact = () => {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
   };
-  // console.log("Form Data:", formData);
+
   const windowSize = useWindowSize();
   return (
     <>
@@ -45,7 +48,7 @@ const Contact = () => {
         style={{ flexDirection: "column", padding: "0" }}
       >
         <Header
-          h1="Напишите нам"
+          title={t("contact.title")}
           icon={EMAIL}
           style={{
             paddingTop: "40px",
@@ -63,7 +66,7 @@ const Contact = () => {
                   type="text"
                   name="name"
                   id="name"
-                  placeholder="Ваше имя"
+                  placeholder={t("contact.your-name")}
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -76,7 +79,7 @@ const Contact = () => {
                   type="text"
                   name="email"
                   id="email"
-                  placeholder="Ваша почта"
+                  placeholder={t("contact.your-email")}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -89,7 +92,7 @@ const Contact = () => {
               <textarea
                 id="message"
                 name="message"
-                placeholder="Написать"
+                placeholder={t("contact.write")}
                 rows={4}
                 cols={80}
                 value={formData.message}
@@ -100,7 +103,7 @@ const Contact = () => {
           </div>
           <div className="btns">
             <Button
-              text="Send"
+              text={t("btns.send")}
               style={{
                 padding: "15px 70px",
                 background: "#DD264E",

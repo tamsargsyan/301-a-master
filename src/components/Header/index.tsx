@@ -1,11 +1,15 @@
+import { NavLink } from "react-router-dom";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
+import { useEffect, useState } from "react";
+import { RootState } from "../../store/configureStore";
+import { useSelector } from "react-redux";
 
 interface HeaderProps {
-  h1: string;
-  h2?: string;
-  p?: string[];
+  title: string;
+  shortDescription?: string;
+  description?: any;
   btns?: string[];
   style?: Object;
   btnStyles?: React.CSSProperties[];
@@ -14,12 +18,13 @@ interface HeaderProps {
   className?: string;
   isEcosystem?: boolean;
   innerClassName?: string;
+  ourMissionDesc?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  h1,
-  h2,
-  p,
+  title,
+  shortDescription,
+  description,
   btns,
   icon,
   style,
@@ -28,8 +33,29 @@ const Header: React.FC<HeaderProps> = ({
   className,
   isEcosystem,
   innerClassName,
+  ourMissionDesc,
 }) => {
   const windowSize = useWindowSize();
+  const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
+  const [ourMission, setOurMission] = useState({
+    txt: "Наша миссия — ",
+    link: "формирование онтологической безопасности Армении.",
+  });
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+
+  useEffect(() => {
+    if (lang === "en") {
+      setOurMission({
+        txt: "Our mission is ",
+        link: "the formation of the ontological security of Armenia.",
+      });
+    } else if (lang === "am") {
+      setOurMission({
+        txt: "Մեր առաքելությունը ",
+        link: "Հայաստանի գոյաբանական անվտանգության ձևավորումն է:",
+      });
+    }
+  }, [lang]);
 
   return (
     <div className={`${className} headerContainer`} style={style}>
@@ -45,19 +71,28 @@ const Header: React.FC<HeaderProps> = ({
               <img src={icon} alt="Ecosystem" />
             </div>
           )}
-          <h1>{h1}</h1>
-          {h2 && <h2>{h2}</h2>}
+          <h1>{title}</h1>
+          {shortDescription &&
+            (ourMissionTxt ? (
+              <p>
+                {ourMission.txt}
+                <NavLink to="" style={{ color: "var(--main-color)" }}>
+                  {ourMission.link}
+                </NavLink>
+              </p>
+            ) : (
+              <h2 dangerouslySetInnerHTML={{ __html: shortDescription }}></h2>
+            ))}
         </div>
         {windowSize.width < 975 && mainImg && (
           <div className="mainImgHeader">
             <img src={mainImg} alt="Main" />
           </div>
         )}
-        <div className={`${innerClassName} inner`}>
-          {p?.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </div>
+        <div
+          className={`${innerClassName} inner`}
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
         {btns && (
           <div className="btns">
             {btns.map((btnText, index) => (

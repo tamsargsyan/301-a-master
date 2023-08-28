@@ -8,11 +8,13 @@
   align-items: center;
   justify-content: center;
   padding: 100px 0;
+  height: 50rem;
 }
 .aboutInner {
   display: flex;
   gap: 60px;
   width: 55vw;
+  height: 40rem;
 }
 .aboutContent {
   width: 70%;
@@ -98,6 +100,7 @@
 @media screen and (max-width: 975px) {
   .aboutContainer {
     padding: 50px;
+    height: auto;
   }
   .aboutInner {
     gap: 20px;

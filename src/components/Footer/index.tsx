@@ -1,48 +1,54 @@
-import { menu } from "../../components/Navbar";
+import { menu } from "../Navbar";
 import LOCATION from "../../assets/location.svg";
 import PHONE from "../../assets/phone.svg";
 import EMAIL from "../../assets/email-white.svg";
 import LOGO from "../../assets/301-footer.png";
 import LOGO_MOBILE from "../../assets/301-footer-mobile.png";
 import "./index.css";
-import FollowUs from "../../components/FollowUs";
+import FollowUs from "../FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
-const Footer = () => {
+interface FooterProps {
+  followUs: any;
+}
+
+const Footer: React.FC<FooterProps> = ({ followUs }) => {
+  const { t } = useTranslation();
   const ecosystem = [
     {
       id: 1,
-      name: "Sage",
+      name: "sage",
     },
     {
       id: 2,
-      name: "Club 301",
+      name: "club301",
     },
     {
       id: 3,
-      name: "Ambassadors",
+      name: "ambassadors",
     },
     {
       id: 4,
-      name: "Volunteers",
+      name: "volunteers",
     },
     {
       id: 5,
-      name: "Experts",
+      name: "experts",
     },
     {
       id: 6,
-      name: "Partners",
+      name: "partners",
     },
     {
       id: 7,
-      name: "Fund friends",
+      name: "fund-friends",
     },
   ];
   const contactInfo = [
     {
       id: 1,
-      info: "Ереван, ул. Московяна 24",
+      info: t("footer.address"),
       icon: LOCATION,
     },
     {
@@ -57,6 +63,7 @@ const Footer = () => {
     },
   ];
   const windowSize = useWindowSize();
+
   return (
     <>
       <div className="separatedPart"></div>
@@ -71,19 +78,21 @@ const Footer = () => {
         <div className="footerInfo">
           <div className="ecosystemMenu">
             <div className="footerFirstPart">
-              <h2>OUR ECOSYSTEM</h2>
+              <h2>{t("footer.ecosystem.title")}</h2>
               <div className="list">
                 {ecosystem.map((system) => (
-                  <span key={system.id}>{system.name}</span>
+                  <span key={system.id}>
+                    {t(`footer.ecosystem.${system.name}`)}
+                  </span>
                 ))}
               </div>
             </div>
             <div className="footerSecondPart">
-              <h2>OUR MENU</h2>
+              <h2>{t("navbar.our-menu")}</h2>
               <div className="list">
                 {menu.map((menu) => (
                   <a href="#projects" key={menu.id}>
-                    {menu.name}
+                    {t(`navbar.${menu.name}`)}
                   </a>
                 ))}
               </div>
@@ -105,7 +114,7 @@ const Footer = () => {
             )}
           </div>
           <div className="footerForthtPart">
-            <FollowUs />
+            <FollowUs links={followUs} />
           </div>
           {windowSize.width < 875 && (
             <div className="logo301Footer">

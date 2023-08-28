@@ -1,0 +1,49 @@
+{
+  "navbar": {
+    "our-menu": "ՄԵՐ ՄԵՆՅՈՒՆ",
+    "home": "Գլխավոր էջ",
+    "projects": "Նախագծեր",
+    "media": "Մեդիա",
+    "calendar": "Օրացույց",
+    "about-us": "Մեր մասին",
+    "contact": "Կապ",
+    "sign-in": "Մուտք գործել"
+  },
+  "btns": {
+    "become-301": "Դարձի՛ր 301-ից մեկը",
+    "whole-project": "Ամբողջ նախագիծը",
+    "learn-more": "Իմանալ ավելին",
+    "other-projects": "Այլ նախագծեր",
+    "become-ambassador": "Դարձեք դեսպան",
+    "become-expert": "Դարձեք փորձագետ",
+    "become-partner": "Դարձեք գործընկեր",
+    "all-partners": "Բոլոր գործընկերները",
+    "become-fund-friend": "Դարձի՛ր հիմնադրամի ընկեր",
+    "all-news": "Բոլոր նորությունները",
+    "send": "Ուղարկել",
+    "view": "Դիտել",
+    "save-project": "Պահպանել նախագիծը",
+    "download-pdf": "ներբեռնել pdf տարբերակը",
+    "donate": "Նվիրաբերել"
+  },
+  "contact": {
+    "title": "Գրեք մեզ",
+    "your-name": "Ձեր անունը",
+    "your-email": "Ձեր փոստը",
+    "write": "Գրել"
+  },
+  "news-301": "Լուրեր «301»",
+  "footer": {
+    "ecosystem": {
+      "title": "ՄԵՐ ԷԿՈՀԱՄԱԿԱՐԳԸ",
+      "sage": "Իմաստուն",
+      "club301": "Ակումբ 301",
+      "ambassadors": "Դեսպաններ",
+      "volunteers": "Կամավորներ",
+      "experts": "Փորձագետներ",
+      "partners": "Գործընկերներ",
+      "fund-friends": "Հիմնադրամի ընկերներ"
+    },
+    "address": "Երեւան, փ. Մոսկովյան 24"
+  }
+}

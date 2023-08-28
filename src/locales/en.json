@@ -1,0 +1,54 @@
+{
+  "navbar": {
+    "our-menu": "OUR MENU",
+    "home": "Home",
+    "projects": "Projects",
+    "media": "Media",
+    "calendar": "Calendar",
+    "about-us": "About Us",
+    "contact": "Contact",
+    "sign-in": "Sign In"
+  },
+  "btns": {
+    "become-301": "Become one of 301",
+    "whole-project": "Whole project",
+    "learn-more": "Learn more",
+    "other-projects": "Other projects",
+    "become-ambassador": "Become an Ambassador",
+    "become-expert": "Become an expert",
+    "become-partner": "Become a partner",
+    "all-partners": "All partners",
+    "become-fund-friend": "Become a friend of the fund",
+    "all-news": "All news",
+    "send": "Send",
+    "view": "View",
+    "save-project": "Save project",
+    "download-pdf": "download presentation pdf",
+    "donate": "Donate"
+  },
+  "contact": {
+    "title": "Write to us",
+    "your-name": "Your name",
+    "your-email": "Your email",
+    "write": "Write"
+  },
+  "news-301": "News '301'",
+  "footer": {
+    "ecosystem": {
+      "title": "OUR ECOSYSTEM",
+      "sage": "Sage",
+      "club301": "Club 301",
+      "ambassadors": "Ambassadors",
+      "volunteers": "Volunteers",
+      "experts": "Experts",
+      "partners": "Partners",
+      "fund-friends": "Foundation Friends"
+    },
+    "address": "Yerevan, st. Moskovyan 24"
+  },
+  "project-details": {
+    "problem": "Problem",
+    "road-map": "Road Map",
+    "partners": "Partners"
+  }
+}
