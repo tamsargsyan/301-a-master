@@ -9,7 +9,11 @@ import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 
-const Contact = () => {
+interface ContactProps {
+  separatedPart?: Boolean;
+}
+
+const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
@@ -33,7 +37,7 @@ const Contact = () => {
   const windowSize = useWindowSize();
   return (
     <>
-      <div className="separatedPart"></div>
+      {separatedPart && <div className="separatedPart"></div>}
       <Background
         pattern1={
           windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2

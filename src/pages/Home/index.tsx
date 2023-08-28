@@ -65,7 +65,7 @@ const Home = () => {
     landOfWisdom,
     followUs,
   } = data;
-  console.log(data)
+  console.log(data);
   const removeHtmlTags = (text: string) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   };
@@ -161,8 +161,8 @@ const Home = () => {
             foundationFriends={foundationFriends}
           />
           <News news={news} lang={lang} />
-          <Contact />
-          <Footer followUs={followUs} />
+          <Contact separatedPart={true} />
+          <Footer followUs={followUs} separatedPart={true} />
         </>
       )}
     </>
