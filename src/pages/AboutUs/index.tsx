@@ -1,98 +1,45 @@
 import Background from "../../components/Background";
 import SIDE_PATTERN from "../../assets/patterns/side-about-us.svg";
 import Header from "../../components/Header";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Footer from "../../components/Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import Contact from "../../components/Contact";
 import PATTERN_1 from "../../assets/patterns/about-us/big-pattern-1.svg";
 import PATTERN_2 from "../../assets/patterns/about-us/big-pattern-2.svg";
 import PATTERN_3 from "../../assets/patterns/about-us/big-pattern-3.svg";
-
+import { fetchingAboutUs } from "../../actions/apiActions";
+import { Spin } from "antd";
 import "./index.css";
 
 const AboutUs = () => {
-  const infos = [
-    {
-      id: 1,
-      title_ru: "O  НАС",
-      title_en: "",
-      title_am: "",
-      description_ru: `<p>Фонд «301. Земля Мудрости» существует с 2020 года. Мы работаем над обеспечением онтологической безопасности Армении и армянского мира.</p>
-                            <p>Мы запускаем проекты по направлениям: культура, образование, инновации, наука, целостное развитие территории.</p>
-                            <p>К нам присоединяются эксперты, доноры, партнеры и неравнодушные друзья, , мы развиваем свою экосистему, наш «мицелий» растет и развивается.</p>
-                            `,
-      description_en: "",
-      description_am: "",
-    },
-    {
-      id: 2,
-      title_ru: "КАК ВСЕ НАЧАЛОСЬ?",
-      title_en: "",
-      title_am: "",
-      description_ru: `<p>В 2020-м году весь армянский мир был потрясен войной. Мысли о судьбе и безопасности армянского народа занимали и людей, которые позже сформировали  команду фонда «301».</p>
-                            <p>У нас возник вопрос: как помочь Армении?</p>
-                            <p>Ответом на него стало рождение фонда «301. Земля мудрости»</p>
-                            `,
-      description_en: "",
-      description_am: "",
-    },
-    {
-      id: 3,
-      title_ru: "КТО МЫ?",
-      title_en: "",
-      title_am: "",
-      description_ru: `<p>Сообщество «301» — это люди, вовлеченные в жизнь Армении и неравнодушные к проблемам армянского мира. Мы ежедневно делаем маленькие дела, которые приводят к большим победам. Мы реализовываем проекты, строим систему связей и взаимоотношений, собираем вместе экспертов, друзей и единомышленников.</p>
-                        <p>Однако, рождение фонда — дело наших учредителей.</p>
-                        <p>Гор Нахапетян — предприниматель, инвестор и филантроп. Гор Нахапетян является одним из «отцов-основателей» нашего фонда и членом попечительского совета, он также почетный профессор бизнес-практики и почетный член Ассоциации содействия развитию Школы управления СКОЛКОВО, сооснователь “Sensemakers”. Гор Борисович также поддерживает современное искусство и увлекается психологией.</p>
-                        <p>Петр Немой — футуролог, исследователь новой антропологии и мудрец фонда «301.Земля мудрости». Петр — сердце и душа фонда «301», он ежедневно придумывает идеи, продюсирует проекты и объединяет вокруг себя уникальных носителей ключей армянского мира. Петр Немой — режиссер и театральный деятель, а также один из создателей проекта «Матур» — лаборатории изучения армянской средневековой духовной музыки и поэзии.</p>
-                        <p>Егише Киракосян — юрист, представитель Армении по международным правовым вопросам. Егише Киракосян — член попечительского совета фонда «301». Каждый день Егише защищает интересы Армении и армянского народа в правовом поле, а также активно участвует в деятельности благотворительных и других фондов.</p>
-                        `,
-      description_en: "",
-      description_am: "",
-    },
-    {
-      id: 4,
-      title_ru: "ЧТО МЫ ДЕЛАЕМ ?",
-      title_en: "",
-      title_am: "",
-      description_ru: `<p>Наша миссия — обеспечить онтологическую безопасность Армении и армянского мира. Для этого мы в Фонде «301. Земля мудрости» запустили множество важных проектов. Однако самый важный — проект «Мудрецы».Мудрецы — это мыслители и деятели, люди с острым умом, самобытным мышлением и незаурядным взглядом на жизнь. Проект «Мудрецы» позволит нам пригласить в Армению таких людей и обеспечить им комфортную среду для работы с местными мудрецами и носителями знаний. А также для реализации совместных проектов в таких онтологически важных областях, как  образование, культура, наука и инновации.</p>
-                        <p>Сейчас в Армении живут и ведут активную деятельность пятеро мудрецов:</p>
-                        <p>Петр Немой — футуролог, исследователь, продюсер и режиссер.</p>
-                        <p>Камиль Чалаев — музыковед, дирижер и певец, а также специалист по музыкальному образованию особенных детей.</p>
-                        <p>Алекс Календер — психотерапевт, биоэнергетик и один из 10-и учеников Берта Хеллингера.</p>
-                        <p>Игорь Гурович — графический дизайнер, сооснователь дизайн-бюро Ostengruppe, активный участник международных конкурсов и биеннале.</p>
-                        <p>Наринэ Тютчева — архитектор, реставратор, эксперт ИКОМОС, профессор школы МАРШ, основатель «Ре-школы» и первая женщина-мудрец фонда «301».</br>Стать одним из нас</br>Фонд «301. Земля мудрости» — это в первую очередь объединение неравнодушных и активных людей, друзей и союзников. И вы можете стать одним из нас, вступив в Клуб 301.</p>
-                        `,
-      description_en: "",
-      description_am: "",
-    },
-    {
-      id: 5,
-      title_ru: "НАША МИССИЯ",
-      title_en: "",
-      title_am: "",
-      description_ru:
-        "<p>Мы запускаем научные проекты, реализовываем культурные инициативы, строим образовательную среду, формируем экспертное сообщество — это актуализирует систему привычных ценностей и позволяет менять сценарий будущего. Мы верим, что именно такой подход сможет укрепить место армян как носителей уникального  культурного кода в современном мире. Мы выстраиваем те границы Армении, которые никому не под силу нарушить. Мы создаем будущее, в котором армянская цивилизация  уникальна и ценна для мира.</p>",
-      description_en: "",
-      description_am: "",
-      short_description_ru:
-        "Наша миссия — обеспечить онтологическую безопасность Армении.",
-      short_description_am: "",
-      short_description_en: "",
-    },
-  ];
-
-  const data = [
+  const data1 = [
     "Соглашение условий *",
     "КОДЕКС ЭТИКИ КЛУБА 301*",
     "Форма поддержки",
     "Terms of Services and Privacy Policy",
   ];
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchingAboutUs("about-us"));
+  }, [dispatch]);
+
+  const { data, loading } = useSelector((state: RootState) => state.aboutUs);
   const { followUs } = useSelector((state: RootState) => state.homeData.data);
-  
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+
+  if (loading)
+    return (
+      <div className="loadingContainer">
+        <Spin size="large" />
+      </div>
+    );
+
+  const infos = Object.values(data);
+
   return (
     <>
       <Background
@@ -108,19 +55,19 @@ const AboutUs = () => {
         <div className="aboutUs-bigPattern-3">
           <img src={PATTERN_3} alt="Pattern" />
         </div>
-        {infos.map((info) => (
-          <Fragment key={info.id}>
+        {infos.map((info: any, i: number) => (
+          <Fragment key={i}>
             <Header
-              title={info.title_ru}
-              shortDescription={info.short_description_ru}
-              description={info.description_ru}
-              ourMissionDesc={info.short_description_ru}
+              title={info[`title_${lang}`]}
+              shortDescription={info[`short_description_${lang}`]}
+              description={info[`description_${lang}`]}
+              ourMissionDesc={info[`short_description_${lang}`]}
             />
           </Fragment>
         ))}
         <div className="aboutUs_dashedLine" />
         <div className="inner aboutUs_privacy">
-          {data.map((item, i) => (
+          {data1.map((item, i) => (
             <p key={i}>{item}</p>
           ))}
         </div>

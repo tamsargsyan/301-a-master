@@ -40,6 +40,11 @@ const pagesData: routerType[] = [
     element: <AboutUs />,
     title: "About Us",
   },
+  {
+    path: "/:lang/301/about-us",
+    element: <AboutUs />,
+    title: "About Us",
+  },
 ];
 
 export default pagesData;
