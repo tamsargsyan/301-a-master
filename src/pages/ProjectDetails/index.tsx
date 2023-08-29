@@ -1,5 +1,5 @@
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { ProjectTypes, projectsData } from "../OurProject/projectsData";
+import { projectsData } from "../OurProject/projectsData";
 import Button from "../../components/Button";
 import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
@@ -36,12 +36,7 @@ import { useTranslation } from "react-i18next";
 import YouTube from "react-youtube";
 import { motion } from "framer-motion";
 
-interface Props {
-  viewedProject?: ProjectTypes | undefined;
-  setIsView?: (arg: boolean) => void;
-}
-
-const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
+const ProjectDetails = () => {
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const colors = [
@@ -79,7 +74,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
-  const { project, projectCategory, projectStatus } = data;
+  const { partners, project, projectCategory, projectStatus } = data;
   const { ourProject } = useSelector(
     (state: RootState) => state.projectData.data
   );
@@ -105,10 +100,9 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     }
   }, [project]);
   const navigate = useNavigate();
-  const partners = new Array(18).fill("");
   const carousel = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(0);
-  
+
   useEffect(() => {
     if (data && carousel.current) {
       setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
@@ -478,11 +472,11 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
               </div>
             </div>
           </div>
-          <Footer followUs={undefined} separatedPart={true} />
+          <Footer separatedPart={true} />
         </>
       )}
     </Background>
   );
 };
 
-export default FullProjectInfo;
+export default ProjectDetails;

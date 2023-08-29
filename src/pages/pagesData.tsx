@@ -1,6 +1,6 @@
 import { routerType } from "../utils/router.types";
 import AboutUs from "./AboutUs";
-import FullProjectInfo from "./FullProjectInfo";
+import ProjectDetails from "./ProjectDetails";
 import Home from "./Home";
 import OurProjects from "./OurProject";
 
@@ -27,12 +27,12 @@ const pagesData: routerType[] = [
   },
   {
     path: "/301/projects/:id",
-    element: <FullProjectInfo />,
+    element: <ProjectDetails />,
     title: "Project",
   },
   {
     path: "/:lang/301/projects/:id",
-    element: <FullProjectInfo />,
+    element: <ProjectDetails />,
     title: "Project",
   },
   {

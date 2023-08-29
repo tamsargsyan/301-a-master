@@ -11,20 +11,6 @@ import {
 import { FETCH_SUCCESS } from "../utils/action.types";
 import { FETCH_ERROR } from "../utils/action.types";
 
-// interface FetchStartAction {
-//     type: ActionTypes.FETCH_START;
-//   }
-
-//   interface FetchSuccessAction {
-//     type: ActionTypes.FETCH_SUCCESS;
-//     payload: any[]; // Define the payload type
-//   }
-
-//   interface FetchErrorAction {
-//     type: ActionTypes.FETCH_ERROR;
-//     payload: string; // Define the payload type
-//   }
-
 export const fetchingHome = (data: string) => async (dispatch: any) => {
   dispatch({ type: FETCH_START });
   try {

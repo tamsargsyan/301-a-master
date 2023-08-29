@@ -12,71 +12,21 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
-import { fetchingProjects } from "../../actions/apiActions";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
+import { HeaderTypes, ProjectsTypes } from "../../utils/api.types";
+import { HeaderKeyOf, ProjectKeyOf } from "../../utils/keyof.type";
 
 interface ProjectsProps {
-  OurProjects: any;
+  OurProjects: HeaderTypes[];
   lang: string;
-  projects: any;
+  projects: ProjectsTypes[];
 }
 
 const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   const { t } = useTranslation();
   const windowSize = useWindowSize();
-  // const projects = [
-  //   {
-  //     id: 1,
-  //     name: "Имя проекта",
-  //     culture: "Культура",
-  //     author: "Виктор Браун",
-  //     flag: 5,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Имя проекта",
-  //     culture: "Культура",
-  //     author: "Виктор Браун",
-  //     flag: 5,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Имя проекта",
-  //     culture: "Культура",
-  //     author: "Виктор Браун",
-  //     flag: 5,
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Имя проекта",
-  //     culture: "Культура",
-  //     author: "Виктор Браун",
-  //     flag: 5,
-  //   },
-  //   // {
-  //   //   id: 5,
-  //   //   name: "Имя проекта",
-  //   //   culture: "Культура",
-  //   //   author: "Виктор Браун",
-  //   //   flag: 5,
-  //   // },
-  //   // {
-  //   //   id: 6,
-  //   //   name: "Имя проекта",
-  //   //   culture: "Культура",
-  //   //   author: "Виктор Браун",
-  //   //   flag: 5,
-  //   // },
-  //   // {
-  //   //   id: 7,
-  //   //   name: "Имя проекта",
-  //   //   culture: "Культура",
-  //   //   author: "Виктор Браун",
-  //   //   flag: 5,
-  //   // },
-  // ];
   const [width, setWidth] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef<HTMLDivElement | null>(null);
@@ -99,23 +49,8 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
     }
   };
 
-  // const {
-  //   description_am,
-  //   description_ru,
-  //   description_en,
-  //   title_am,
-  //   title_ru,
-  //   title_en,
-  // } = OurProjects[0];
-  const dispatch = useDispatch();
-  useEffect(() => {
-    //@ts-ignore
-    dispatch(fetchingProjects("project"));
-  }, [dispatch]);
-  const { projects } = useSelector(
-    (state: RootState) => state.projectData.data
-  );
-  // console.log(projects1);
+  const { projects } = useSelector((state: RootState) => state.homeData.data);
+
   return (
     <>
       {projects && (
@@ -131,8 +66,10 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
           >
             <div className="projectsContainer" id="projects">
               <Header
-                title={OurProjects[0][`title_${lang}`]}
-                description={OurProjects[0][`description_${lang}`]}
+                title={OurProjects[0][`title_${lang}` as keyof HeaderKeyOf]}
+                description={
+                  OurProjects[0][`description_${lang}` as keyof HeaderKeyOf]
+                }
                 icon={ICON}
                 className="differedHeaderContainer"
                 style={{ width: "100%" }}
@@ -157,17 +94,33 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                         x: -width * currentIndex,
                       }}
                     >
-                      {projects.map((project: any) => {
+                      {projects.map((project) => {
                         return (
                           <motion.div className="project" key={project.id}>
                             <div className="projectImg"></div>
                             <div className="projectInfo">
-                              <h1>{project[`project_name_${lang}`]}</h1>
+                              <h1>
+                                {
+                                  project[
+                                    `project_name_${lang}` as keyof ProjectKeyOf
+                                  ]
+                                }
+                              </h1>
                               <span>
-                                {removeHtmlTags(project[`description_${lang}`])}
+                                {removeHtmlTags(
+                                  project[
+                                    `description_${lang}` as keyof ProjectKeyOf
+                                  ]
+                                )}
                               </span>
                               <div className="author">
-                                <span>{project[`sector_${lang}`]}</span>
+                                <span>
+                                  {
+                                    project[
+                                      `sector_${lang}` as keyof ProjectKeyOf
+                                    ]
+                                  }
+                                </span>
                                 <span className="flag">
                                   <img src={FLAG} alt="Flag" />
                                   {/* {project.flag} */}
@@ -182,17 +135,33 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                   </motion.div>
                 ) : (
                   <div className="innerCarousel">
-                    {projects.map((project: any) => {
+                    {projects.map((project) => {
                       return (
                         <div className="project" key={project.id}>
                           <div className="projectImg"></div>
                           <div className="projectInfo">
-                            <h1>{project[`project_name_${lang}`]}</h1>
+                            <h1>
+                              {
+                                project[
+                                  `project_name_${lang}` as keyof ProjectKeyOf
+                                ]
+                              }
+                            </h1>
                             <span>
-                              {removeHtmlTags(project[`description_${lang}`])}
+                              {removeHtmlTags(
+                                project[
+                                  `description_${lang}` as keyof ProjectKeyOf
+                                ]
+                              )}
                             </span>
                             <div className="author">
-                              <span>{project[`sector_${lang}`]}</span>
+                              <span>
+                                {
+                                  project[
+                                    `sector_${lang}` as keyof ProjectKeyOf
+                                  ]
+                                }
+                              </span>
                               <span className="flag">
                                 <img src={FLAG} alt="Flag" />
                                 {/* {project.flag} */}

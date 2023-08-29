@@ -216,7 +216,7 @@ const OurProjects = () => {
               />
             </div>
           )}
-          <Footer followUs={undefined} separatedPart={true} />
+          <Footer separatedPart={true} />
         </>
       )}
     </Background>

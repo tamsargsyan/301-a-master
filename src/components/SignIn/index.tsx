@@ -51,8 +51,7 @@ const SignIn: React.FC<SignInProps> = ({
             validationSchema={signInSchema}
             initialValues={{ email: "", password: "" }}
             onSubmit={(values) => {
-              // console.log(JSON.stringify(values));
-              console.log(values);
+              alert(JSON.stringify(values));
             }}
           >
             {({

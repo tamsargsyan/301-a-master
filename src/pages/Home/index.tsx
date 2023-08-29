@@ -24,6 +24,8 @@ import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
+import { HeaderTypes } from "../../utils/api.types";
+import { HeaderKeyOf } from "../../utils/keyof.type";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -49,24 +51,13 @@ const Home = () => {
 
   const {
     OurProjects,
-    ambassadors,
-    club301,
-    experts,
-    foundationFriends,
     dataHypotheses,
-    news,
-    ourEcosystem,
     ourMission,
-    partners,
     projects,
-    sages,
-    volunteers,
     whyImportant,
     hypothesesForTheFuture,
     landOfWisdom,
-    followUs,
   } = data;
-
   const ourMissionShortDesc =
     ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
 
@@ -87,9 +78,12 @@ const Home = () => {
     },
     {
       id: 2,
-      title: whyImportant && whyImportant[0][`title_${lang}`],
+      title:
+        whyImportant && whyImportant[0][`title_${lang}` as keyof HeaderKeyOf],
       shortDescription: "",
-      description: whyImportant && whyImportant[0][`description_${lang}`],
+      description:
+        whyImportant &&
+        whyImportant[0][`description_${lang}` as keyof HeaderKeyOf],
       btn: undefined,
       icon: ICON_2,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -101,11 +95,12 @@ const Home = () => {
     {
       id: 3,
       title:
-        hypothesesForTheFuture && hypothesesForTheFuture[0][`title_${lang}`],
+        hypothesesForTheFuture &&
+        hypothesesForTheFuture[0][`title_${lang}` as keyof HeaderTypes],
       shortDescription: "",
       description:
         hypothesesForTheFuture &&
-        hypothesesForTheFuture[0][`description_${lang}`],
+        hypothesesForTheFuture[0][`description_${lang}` as keyof HeaderTypes],
       btn: undefined,
       icon: ICON_3,
       pattern1: windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2,
@@ -120,7 +115,7 @@ const Home = () => {
     <>
       {data && landOfWisdom && (
         <>
-          <Main followUs={followUs} landOfWisdom={landOfWisdom} lang={lang} />
+          <Main lang={lang} />
           {sections.map((section) => (
             <Fragment key={section.id}>
               <div className="separatedPart"></div>
@@ -146,20 +141,10 @@ const Home = () => {
           ))}
           <About dataHypotheses={dataHypotheses} lang={lang} />
           <Projects OurProjects={OurProjects} lang={lang} projects={projects} />
-          <Ecosystem
-            ourEcosystem={ourEcosystem}
-            lang={lang}
-            sages={sages}
-            club301={club301}
-            ambassadors={ambassadors}
-            volunteers={volunteers}
-            experts={experts}
-            partners={partners}
-            foundationFriends={foundationFriends}
-          />
-          <News news={news} lang={lang} />
+          <Ecosystem lang={lang} />
+          <News lang={lang} />
           <Contact separatedPart={true} />
-          <Footer followUs={followUs} separatedPart={true} />
+          <Footer separatedPart={true} />
         </>
       )}
     </>

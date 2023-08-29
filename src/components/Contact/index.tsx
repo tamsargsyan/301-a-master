@@ -53,6 +53,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
       >
         <Header
           title={t("contact.title")}
+          description=""
           icon={EMAIL}
           style={{
             paddingTop: "40px",

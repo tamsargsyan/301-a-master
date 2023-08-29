@@ -23,38 +23,33 @@ import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { HeaderTypes } from "../../utils/api.types";
+import { HeaderKeyOf } from "../../utils/keyof.type";
 
 interface EcosystemProps {
-  ourEcosystem: any;
   lang: string;
-  sages: any;
-  club301: any;
-  ambassadors: any;
-  volunteers: any;
-  experts: any;
-  partners: any;
-  foundationFriends: any;
 }
 
-const Ecosystem: React.FC<EcosystemProps> = ({
-  ourEcosystem,
-  lang,
-  sages,
-  club301,
-  ambassadors,
-  volunteers,
-  experts,
-  partners,
-  foundationFriends,
-}) => {
+const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
   const { t } = useTranslation();
-
+  const {
+    ourEcosystem,
+    sages,
+    club301,
+    ambassadors,
+    // volunteers,
+    experts,
+    partners,
+    foundationFriends,
+  } = useSelector((state: RootState) => state.homeData.data);
   const data = [
     {
       id: 1,
-      title: sages[0][`title_${lang}`],
+      title: sages[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: SagesIcon,
-      description: sages[0][`description_${lang}`],
+      description: sages[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: SAGES,
       btn: [t("btns.learn-more")],
       btnStyle: [
@@ -65,9 +60,9 @@ const Ecosystem: React.FC<EcosystemProps> = ({
     },
     {
       id: 2,
-      title: club301[0][`title_${lang}`],
+      title: club301[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: ClubIcon,
-      description: club301[0][`description_${lang}`],
+      description: club301[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: CLUB,
       btn: [t("btns.become-301"), t("btns.learn-more")],
       btnStyle: [
@@ -86,9 +81,9 @@ const Ecosystem: React.FC<EcosystemProps> = ({
     },
     {
       id: 3,
-      title: ambassadors[0][`title_${lang}`],
+      title: ambassadors[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: AmbassadorIcon,
-      description: ambassadors[0][`description_${lang}`],
+      description: ambassadors[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: AMBASSDOR,
       btn: [t("btns.become-ambassador")],
       btnStyle: [
@@ -120,9 +115,9 @@ const Ecosystem: React.FC<EcosystemProps> = ({
     // },
     {
       id: 5,
-      title: experts[0][`title_${lang}`],
+      title: experts[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: ExpertIcon,
-      description: experts[0][`description_${lang}`],
+      description: experts[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: EXPERT,
       btn: [t("btns.become-expert")],
       btnStyle: [
@@ -175,9 +170,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({
     },
     {
       id: 7,
-      title: foundationFriends[0][`title_${lang}`],
+      title: foundationFriends[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: FriendsIcon,
-      description: foundationFriends[0][`description_${lang}`],
+      description:
+        foundationFriends[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: FRIENDS,
       btn: [t("btns.become-fund-friend")],
       btnStyle: [
@@ -203,8 +199,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({
         style={{ flexDirection: "column", padding: "60px 0" }}
       >
         <Header
-          title={ourEcosystem[0][`title_${lang}`]}
-          description={ourEcosystem[0][`description_${lang}`]}
+          title={ourEcosystem[0][`title_${lang}` as keyof HeaderKeyOf]}
+          description={
+            ourEcosystem[0][`description_${lang}` as keyof HeaderKeyOf]
+          }
           icon={EcosystemIcon}
           style={{ marginBottom: "80px" }}
           className="differedHeaderContainer"

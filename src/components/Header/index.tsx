@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 interface HeaderProps {
   title: string;
   shortDescription?: string;
-  description?: any;
+  description: string;
   btns?: string[];
   style?: Object;
   btnStyles?: React.CSSProperties[];
@@ -89,10 +89,12 @@ const Header: React.FC<HeaderProps> = ({
             <img src={mainImg} alt="Main" />
           </div>
         )}
-        <div
-          className={`${innerClassName} inner`}
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+        {description !== "" && (
+          <div
+            className={`${innerClassName} inner`}
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        )}
         {btns && (
           <div className="btns">
             {btns.map((btnText, index) => (

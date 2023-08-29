@@ -28,7 +28,6 @@ const AboutUs = () => {
   }, [dispatch]);
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
-  const { followUs } = useSelector((state: RootState) => state.homeData.data);
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   if (loading)
@@ -73,7 +72,7 @@ const AboutUs = () => {
         </div>
       </Background>
       <Contact />
-      <Footer followUs={followUs} />
+      <Footer />
     </>
   );
 };

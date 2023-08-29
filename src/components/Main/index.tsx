@@ -12,16 +12,20 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import BG from "../../assets/info/main-page-bg.svg";
 import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { HeaderKeyOf } from "../../utils/keyof.type";
 
 interface MainProps {
-  landOfWisdom: any;
-  followUs: any;
   lang: string;
 }
 
-const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
+const Main: React.FC<MainProps> = ({ lang }) => {
   const windowSize = useWindowSize();
   const { t } = useTranslation();
+  const { landOfWisdom } = useSelector(
+    (state: RootState) => state.homeData.data
+  );
 
   return (
     <Background
@@ -44,9 +48,9 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
         <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt="Background" />
       </div>
       <Header
-        title={landOfWisdom[`title_${lang}`]}
+        title={landOfWisdom[`title_${lang}` as keyof HeaderKeyOf]}
         icon={""}
-        description={landOfWisdom[`description_${lang}`]}
+        description={landOfWisdom[`description_${lang}` as keyof HeaderKeyOf]}
         btns={[t("btns.become-301"), t("btns.whole-project")]}
         btnStyles={[
           {
@@ -67,7 +71,7 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
           <img src={LOGO} alt="301" />
         </div>
       )}
-      <FollowUs className="mainFollowUs" links={followUs} />
+      <FollowUs className="mainFollowUs" />
     </Background>
   );
 };

@@ -1,7 +1,7 @@
 import { FETCH_START } from "../utils/action.types";
 import { FETCH_SUCCESS } from "../utils/action.types";
 import { FETCH_ERROR } from "../utils/action.types";
-import { HomeData } from "../utils/homeData.types";
+import { HomeData } from "../utils/api.types";
 
 interface HomeState {
   data: HomeData;

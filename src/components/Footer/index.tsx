@@ -10,11 +10,10 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 
 interface FooterProps {
-  followUs: any;
   separatedPart?: Boolean;
 }
 
-const Footer: React.FC<FooterProps> = ({ followUs, separatedPart }) => {
+const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
   const { t } = useTranslation();
   const ecosystem = [
     {
@@ -115,7 +114,7 @@ const Footer: React.FC<FooterProps> = ({ followUs, separatedPart }) => {
             )}
           </div>
           <div className="footerForthtPart">
-            <FollowUs links={followUs} />
+            <FollowUs />
           </div>
           {windowSize.width < 875 && (
             <div className="logo301Footer">
