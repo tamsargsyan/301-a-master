@@ -46,6 +46,9 @@
   border-radius: 46px;
   border: 1px solid var(--text-color-2);
   box-shadow: -20px 8px 20px 0px rgba(21, 29, 39, 0.06);
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 14px; 
 }
 .signIn_formFields .form::placeholder {
   color: var(--text-color-2);

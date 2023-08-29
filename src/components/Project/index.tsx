@@ -57,7 +57,7 @@ const Project: React.FC<ProjectProps> = ({
             link={true}
             to={`${id}`}
             style={{
-              padding: "0 30px",
+              padding: "20px 30px",
               height: "35px",
               background: "#DD264E",
               color: "#fff",

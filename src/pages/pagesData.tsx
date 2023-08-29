@@ -6,37 +6,37 @@ import OurProjects from "./OurProject";
 
 const pagesData: routerType[] = [
   {
-    path: "/301/build",
+    path: "/301",
     element: <Home />,
     title: "home",
   },
   {
-    path: "/:lang/301/build",
+    path: "/:lang/301",
     element: <Home />,
     title: "home",
   },
   {
-    path: "/301/build/projects",
+    path: "/301/projects",
     element: <OurProjects />,
     title: "Projects",
   },
   {
-    path: "/:lang/301/build/projects",
+    path: "/:lang/301/projects",
     element: <OurProjects />,
     title: "Projects",
   },
   {
-    path: "/301/build/projects/:id",
+    path: "/301/projects/:id",
     element: <FullProjectInfo />,
     title: "Project",
   },
   {
-    path: "/:lang/301/build/projects/:id",
+    path: "/:lang/301/projects/:id",
     element: <FullProjectInfo />,
     title: "Project",
   },
   {
-    path: "/301/build/about-us",
+    path: "/301/about-us",
     element: <AboutUs />,
     title: "About Us",
   },

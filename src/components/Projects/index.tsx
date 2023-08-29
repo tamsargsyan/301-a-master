@@ -138,12 +138,16 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                 style={{ width: "100%" }}
               />
               <div className="slider">
-                <button className="leftBtn" onClick={handleBack}>
-                  <img src={ARROW} alt="Arrow" />
-                </button>
-                <button className="rightBtn" onClick={handleNext}>
-                  <img src={ARROW} alt="Arrow" />
-                </button>
+                {windowSize.width < 1360 && projects.length <= 2 && (
+                  <>
+                    <button className="leftBtn" onClick={handleBack}>
+                      <img src={ARROW} alt="Arrow" />
+                    </button>
+                    <button className="rightBtn" onClick={handleNext}>
+                      <img src={ARROW} alt="Arrow" />
+                    </button>
+                  </>
+                )}
                 {windowSize.width > 975 ? (
                   <motion.div ref={carousel} className="carousel">
                     <motion.div
@@ -184,7 +188,9 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                           <div className="projectImg"></div>
                           <div className="projectInfo">
                             <h1>{project[`project_name_${lang}`]}</h1>
-                            <span>{project[`description_${lang}`]}</span>
+                            <span>
+                              {removeHtmlTags(project[`description_${lang}`])}
+                            </span>
                             <div className="author">
                               <span>{project[`sector_${lang}`]}</span>
                               <span className="flag">
@@ -209,7 +215,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                     color: "#fff",
                   }}
                   link={true}
-                  to="/301/build/projects"
+                  to="/301/projects"
                   className="homePage_btn"
                 />
               </div>
