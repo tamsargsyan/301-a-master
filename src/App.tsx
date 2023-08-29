@@ -18,11 +18,11 @@ function App() {
   const [signUp, setSignUp] = useState(false);
 
   useEffect(() => {
-    document.body.classList.toggle("no-scroll", signIn);
+    document.body.classList.toggle("no-scroll", signIn || signUp);
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [signIn]);
+  }, [signIn, signUp]);
 
   useEffect(() => {
     signUp && setSignIn(false);

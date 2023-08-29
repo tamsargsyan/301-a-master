@@ -34,6 +34,7 @@ import Header from "../../components/Header";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
 import YouTube from "react-youtube";
+import { motion } from "framer-motion";
 
 interface Props {
   viewedProject?: ProjectTypes | undefined;
@@ -78,7 +79,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
-  const { partners, project, projectCategory, projectStatus } = data;
+  const { project, projectCategory, projectStatus } = data;
   const { ourProject } = useSelector(
     (state: RootState) => state.projectData.data
   );
@@ -104,6 +105,15 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     }
   }, [project]);
   const navigate = useNavigate();
+  const partners = new Array(18).fill("");
+  const carousel = useRef<HTMLDivElement | null>(null);
+  const [width, setWidth] = useState(0);
+  
+  useEffect(() => {
+    if (data && carousel.current) {
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    }
+  }, [data, windowSize.width]);
 
   const opts = {
     width: "100%",
@@ -414,15 +424,19 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     <img src={PATTERN} alt="Pattern" />
                     <h2>Partners</h2>
                   </div>
-                  <div className="partners _inner">
-                    <div className="innerPartners">
+                  <motion.div className="partners _inner" ref={carousel}>
+                    <motion.div
+                      drag="x"
+                      dragConstraints={{ right: 0, left: -width }}
+                      className="innerPartners"
+                    >
                       {partners.map((partner: any) => (
-                        <div className="partner" key={partner.id}>
+                        <motion.div className="partner" key={partner.id}>
                           <img src={ROSGOSTRAKH} alt={partner.name} />
-                        </div>
+                        </motion.div>
                       ))}
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 </div>
                 <div className="_inner dontaionBtns_wrapper" ref={donationsRef}>
                   <div
