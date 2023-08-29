@@ -5,6 +5,8 @@ import FB from "../../assets/logo/fb.svg";
 import GMAIL from "../../assets/logo/gmail.svg";
 import PATTERN_1 from "../../assets/patterns/login-small.svg";
 import PATTERN_2 from "../../assets/patterns/login-big.svg";
+import { signInSchema } from "../../Validation";
+import { Formik } from "formik";
 import "./index.css";
 
 interface SignInProps {
@@ -45,29 +47,75 @@ const SignIn: React.FC<SignInProps> = ({
               </p>
             )}
           </div>
-          <div className="signIn_form">
-            <div className="signIn_formFields">
-              <input placeholder="Email" type="text" className="form" />
-              {!forgetPassword && (
-                <input
-                  placeholder="Password"
-                  type="password"
-                  className="form"
+          <Formik
+            validationSchema={signInSchema}
+            initialValues={{ email: "", password: "" }}
+            onSubmit={(values) => {
+              // console.log(JSON.stringify(values));
+              console.log(values);
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+            }) => (
+              <form noValidate onSubmit={handleSubmit} className="signIn_form">
+                <div className="signIn_formFields">
+                  <input
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="form"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  />
+                  <p className="error">
+                    {errors.email && touched.email && errors.email}
+                  </p>
+                  {!forgetPassword && (
+                    <>
+                      <input
+                        placeholder="Password"
+                        type="password"
+                        name="password"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.password}
+                        className="form"
+                      />
+                      <p className="error">
+                        {errors.password && touched.password && errors.password}
+                      </p>
+                    </>
+                  )}
+                </div>
+                {!forgetPassword && (
+                  <div className="forgetPassword">
+                    <button onClick={handleForgetPassword}>
+                      Forget password?
+                    </button>
+                  </div>
+                )}
+                <Button
+                  text={forgetPassword ? "Send" : "Log In"}
+                  link={false}
+                  to={""}
+                  style={{
+                    background: "#DD264E",
+                    color: "#fff",
+                    width: "100%",
+                  }}
+                  type="submit"
                 />
-              )}
-            </div>
-            {!forgetPassword && (
-              <div className="forgetPassword">
-                <button onClick={handleForgetPassword}>Forget password?</button>
-              </div>
+              </form>
             )}
-            <Button
-              text={forgetPassword ? "Send" : "Log In"}
-              link={false}
-              to={""}
-              style={{ background: "#DD264E", color: "#fff", width: "100%" }}
-            />
-          </div>
+          </Formik>
           {!forgetPassword ? (
             <div className="signIn_another">
               <div className="signIn_another_title">
