@@ -120,7 +120,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
               color: "#DD264E",
               boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
               margin: windowSize.width < 975 ? 0 : "50px 0",
-              padding: "15px 30px",
+              // padding: "15px 30px",
             }}
             link={true}
             to={""}

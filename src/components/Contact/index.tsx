@@ -128,7 +128,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
                 )
               }
               style={{
-                padding: "15px 70px",
+                // padding: "15px 70px",
                 background: "#DD264E",
                 boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
                 color: "#fff",

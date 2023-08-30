@@ -190,7 +190,7 @@ const ProjectDetails = () => {
                 onClickItem={() => {}}
                 type="type"
                 text={"All"}
-                style={{ width: "50vw", marginRight: "auto" }}
+                style={{ width: "55vw", marginRight: "auto" }}
                 objKey={""}
               />
             )}

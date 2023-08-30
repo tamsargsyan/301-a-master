@@ -58,7 +58,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       ],
       btnStyle: [
         {
-          padding: "13px 40px",
+          // padding: "13px 40px",
+          color: "#000",
         },
       ],
     },
@@ -82,13 +83,14 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           background: "#189387",
           color: "#fff",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           boxShadow: "-21px 16px 38px 0px rgba(24, 147, 135, 0.38)",
           border: "none",
         },
         {
           border: "1px solid #189387",
-          padding: "13px 40px",
+          // padding: "13px 40px",
+          color: "#000",
         },
       ],
     },
@@ -108,7 +110,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           background: "#EE8842",
           color: "#fff",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           border: "none",
           boxShadow: " -21px 16px 38px 0px rgba(238, 136, 66, 0.42)",
         },
@@ -130,7 +132,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           background: " #42CFEE",
           border: "none",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           color: "#fff",
           boxShadow: "-21px 16px 38px 0px rgba(66, 207, 238, 0.36)",
         },
@@ -156,13 +158,14 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           background: "#C12DD9",
           color: "#fff",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           border: "none",
           boxShadow: "-21px 16px 38px 0px rgba(193, 45, 217, 0.32)",
         },
         {
           border: "1px solid #C12DD9",
-          padding: "13px 40px",
+          // padding: "13px 40px",
+          color: "#000",
         },
       ],
       partners: [
@@ -199,7 +202,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btnStyle: [
         {
           background: "#6442EE",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           border: "none",
           color: "#fff",
           boxShadow: "-21px 16px 38px 0px rgba(100, 66, 238, 0.37)",

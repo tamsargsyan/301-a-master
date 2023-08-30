@@ -1,6 +1,6 @@
 .ecosystemContainer {
   padding-bottom: 0;
-  width: 50vw;
+  width: 55vw;
 }
 .ecosystem {
   margin-bottom: 150px;
@@ -34,6 +34,12 @@
   align-items: center;
   justify-content: center;
   width: 200px;
+}
+.ecosystemContainer .partners {
+  justify-content: center;
+}
+.ecosystemContainer .partners .partner {
+  width: 12vw;
 }
 .partner img {
   width: 100%;
@@ -77,5 +83,8 @@
   }
   .ecosystem {
     margin: 60px 0;
+  }
+  .ecosystemContainer .partners .partner {
+    width: 26vw;
   }
 }

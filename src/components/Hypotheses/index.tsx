@@ -10,8 +10,8 @@ const btnStyle = {
   background: "#fff",
   border: "none",
   textTransform: "uppercase",
-  width: "300px",
-  height: "70px",
+  width: "250px",
+  padding: "20px 30px"
 };
 
 interface HypothesesProps {
@@ -44,7 +44,7 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
                 active={i + 1 === activeItem.id}
                 text={data[`name_${lang}` as keyof DataHypotheses]}
                 style={btnStyle}
-                link={true}
+                link={false}
                 to=""
                 onClick={(e) => e.preventDefault()}
               />

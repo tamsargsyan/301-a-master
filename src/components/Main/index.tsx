@@ -54,7 +54,7 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         btns={[
           {
             name: t("btns.become-301"),
-            link: ""
+            link: "",
           },
           {
             name: t("btns.whole-project"),
