@@ -50,7 +50,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       headerIcon: SagesIcon,
       description: sages[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: SAGES,
-      btn: [t("btns.learn-more")],
+      btn: [
+        {
+          name: t("btns.learn-more"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           padding: "13px 40px",
@@ -63,7 +68,16 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       headerIcon: ClubIcon,
       description: club301[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: CLUB,
-      btn: [t("btns.become-301"), t("btns.learn-more")],
+      btn: [
+        {
+          name: t("btns.become-301"),
+          link: "",
+        },
+        {
+          name: t("btns.learn-more"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#189387",
@@ -84,7 +98,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       headerIcon: AmbassadorIcon,
       description: ambassadors[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: AMBASSDOR,
-      btn: [t("btns.become-ambassador")],
+      btn: [
+        {
+          name: t("btns.become-ambassador"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#EE8842",
@@ -101,7 +120,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       headerIcon: ExpertIcon,
       description: experts[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: EXPERT,
-      btn: [t("btns.become-expert")],
+      btn: [
+        {
+          name: t("btns.become-expert"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: " #42CFEE",
@@ -118,7 +142,16 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       headerIcon: PartnersIcon,
       description: partners[0][`description_${lang}`],
       mainImg: PARTNERS,
-      btn: [t("btns.become-partner"), t("btns.all-partners")],
+      btn: [
+        {
+          name: t("btns.become-partner"),
+          link: "",
+        },
+        {
+          name: t("btns.all-partners"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#C12DD9",
@@ -157,7 +190,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       description:
         foundationFriends[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: FRIENDS,
-      btn: [t("btns.become-fund-friend")],
+      btn: [
+        {
+          name: t("btns.become-fund-friend"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#6442EE",

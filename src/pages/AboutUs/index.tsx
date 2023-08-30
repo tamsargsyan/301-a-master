@@ -1,7 +1,7 @@
 import Background from "../../components/Background";
 import SIDE_PATTERN from "../../assets/patterns/side-about-us.svg";
 import Header from "../../components/Header";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
@@ -29,6 +29,16 @@ const AboutUs = () => {
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const whatAreWeDoingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      window.location.hash === "#what-are-we-doing" &&
+      whatAreWeDoingRef.current
+    ) {
+      whatAreWeDoingRef.current.scrollIntoView();
+    }
+  }, [whatAreWeDoingRef]);
 
   if (loading)
     return (
@@ -55,14 +65,24 @@ const AboutUs = () => {
           <img src={PATTERN_3} alt="Pattern" />
         </div>
         {infos.map((info: any, i: number) => (
-          <Fragment key={i}>
+          <div
+            key={i}
+            ref={
+              info.title_en === "WHAT ARE WE DOING ?" ? whatAreWeDoingRef : null
+            }
+          >
             <Header
               title={info[`title_${lang}`]}
               shortDescription={info[`short_description_${lang}`]}
               description={info[`description_${lang}`]}
               ourMissionDesc={info[`short_description_${lang}`]}
+              id={
+                info.title_en === "WHAT ARE WE DOING ?"
+                  ? "#what-are-we-doing"
+                  : ""
+              }
             />
-          </Fragment>
+          </div>
         ))}
         <div className="aboutUs_dashedLine" />
         <div className="inner aboutUs_privacy">

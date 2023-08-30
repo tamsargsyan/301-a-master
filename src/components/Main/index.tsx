@@ -51,7 +51,16 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         title={landOfWisdom[`title_${lang}` as keyof HeaderKeyOf]}
         icon={""}
         description={landOfWisdom[`description_${lang}` as keyof HeaderKeyOf]}
-        btns={[t("btns.become-301"), t("btns.whole-project")]}
+        btns={[
+          {
+            name: t("btns.become-301"),
+            link: ""
+          },
+          {
+            name: t("btns.whole-project"),
+            link: "/301/projects",
+          },
+        ]}
         btnStyles={[
           {
             background: "#DD264E",
