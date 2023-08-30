@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Background from "../Background";
 import Header from "../Header";
 import EMAIL from "../../assets/email.svg";
@@ -8,6 +8,8 @@ import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { usePostRequest } from "../../actions/apiActions";
+import { Spin } from "antd";
 
 interface ContactProps {
   separatedPart?: Boolean;
@@ -29,12 +31,21 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
       [name]: value,
     }));
   };
-
+  const { postRequest, postLoading } = usePostRequest("write-to-us", formData);
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
+    postRequest();
   };
-
+  useEffect(() => {
+    !postLoading &&
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+  }, [postLoading]);
   const windowSize = useWindowSize();
+
   return (
     <>
       {separatedPart && <div className="separatedPart"></div>}
@@ -102,13 +113,20 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
                 cols={80}
                 value={formData.message}
                 onChange={handleChange}
+                required
                 className="form"
               />
             </div>
           </div>
           <div className="btns">
             <Button
-              text={t("btns.send")}
+              text={
+                postLoading ? (
+                  <Spin size="small" className="btn_spinner" />
+                ) : (
+                  t("btns.send")
+                )
+              }
               style={{
                 padding: "15px 70px",
                 background: "#DD264E",
@@ -118,6 +136,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
               link={false}
               to=""
               className="homePage_btn"
+              type="submit"
             />
           </div>
         </form>

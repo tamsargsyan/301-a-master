@@ -1,7 +1,7 @@
 import { NavLink, To } from "react-router-dom";
 import "./index.css";
 interface ButtonProps {
-  text: string;
+  text: string | any;
   style?: Object;
   active?: boolean;
   link: boolean;

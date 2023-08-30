@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 45px;
   border-radius: 6px;
   color: #fff;
   position: relative;
@@ -40,10 +40,11 @@
   gap: 20px;
   background-color: #fff;
   padding: 100px 20px;
-  max-height: 40rem;
+  max-height: 440px;
   overflow: hidden;
   overflow-y: auto;
   position: relative;
+  border-radius: 6px;
 }
 .accountType_header,
 .accountType {
@@ -87,6 +88,9 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 35rem;
+}
+.account_type p {
+  margin: 0;
 }
 /* @media screen and (max-width: 1920px) {
   .signUp_content_header {
@@ -155,3 +159,29 @@
     font-size: clamp(0.27375rem, 0.0019rem + 0.725vw, 0.364375rem);
   }
 } */
+@media screen and (max-width: 1440px) {
+  .accountType_header {
+    font-size: 17px;
+  }
+  .signUp_content_accountTypes {
+    padding: 60px 20px;
+  }
+  .signUp_content_header {
+    font-size: 25px;
+    padding: 35px;
+  }
+  .close {
+    width: 25px;
+    height: 25px;
+  }
+  .accountTYpes_pattern {
+    width: 25rem;
+  }
+  .accountType_btn {
+    font-size: 10px;
+  }
+  .accountType {
+    width: 200px;
+    height: 345px;
+  }
+}
