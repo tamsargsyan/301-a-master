@@ -118,6 +118,5 @@ export interface HomeData {
   partners: any;
   projects: ProjectsTypes[];
   sages: OurEcosystemData[];
-  volunteers: OurEcosystemData[];
   whyImportant: HeaderTypes[];
 }

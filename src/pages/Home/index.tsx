@@ -29,7 +29,6 @@ import { HeaderKeyOf } from "../../utils/keyof.type";
 
 const Home = () => {
   const windowSize = useWindowSize();
-  // const [data, setData] = useState<any>(null);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

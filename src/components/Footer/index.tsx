@@ -29,10 +29,6 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
       name: "ambassadors",
     },
     {
-      id: 4,
-      name: "volunteers",
-    },
-    {
       id: 5,
       name: "experts",
     },
@@ -91,7 +87,7 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
               <h2>{t("navbar.our-menu")}</h2>
               <div className="list">
                 {menu.map((menu) => (
-                  <a href="#projects" key={menu.id}>
+                  <a href={menu.link} key={menu.id}>
                     {t(`navbar.${menu.name}`)}
                   </a>
                 ))}
