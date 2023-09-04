@@ -1,7 +1,7 @@
 import { NavLink, To } from "react-router-dom";
 import "./index.css";
 interface ButtonProps {
-  text: string;
+  text: string | any;
   style?: Object;
   active?: boolean;
   link: boolean;
@@ -10,6 +10,7 @@ interface ButtonProps {
   onClick?: (arg: any) => void;
   disabled?: boolean;
   className?: string;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled,
   className,
+  type,
 }) => {
   return (
     <>
@@ -40,6 +42,7 @@ const Button: React.FC<ButtonProps> = ({
           onClick={onClick}
           className={`${active && "activeBtn"} ${className} btn`}
           style={style}
+          type={type}
         >
           {text}
           {icon && <img className="btn_icon" src={icon} alt="Icon" />}

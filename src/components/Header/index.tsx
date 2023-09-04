@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 interface HeaderProps {
   title: string;
   shortDescription?: string;
-  description?: any;
-  btns?: string[];
+  description: string;
+  btns?: any;
   style?: Object;
   btnStyles?: React.CSSProperties[];
   icon?: string;
@@ -19,6 +19,7 @@ interface HeaderProps {
   isEcosystem?: boolean;
   innerClassName?: string;
   ourMissionDesc?: string;
+  id?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -34,6 +35,7 @@ const Header: React.FC<HeaderProps> = ({
   isEcosystem,
   innerClassName,
   ourMissionDesc,
+  id,
 }) => {
   const windowSize = useWindowSize();
   const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
@@ -58,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({
   }, [lang]);
 
   return (
-    <div className={`${className} headerContainer`} style={style}>
+    <div className={`${className} headerContainer`} id={id} style={style}>
       {icon && !isEcosystem && (
         <div className="icon">
           <img src={icon} alt="Icon" />
@@ -76,7 +78,10 @@ const Header: React.FC<HeaderProps> = ({
             (ourMissionTxt ? (
               <p>
                 {ourMission.txt}
-                <NavLink to="" style={{ color: "var(--main-color)" }}>
+                <NavLink
+                  to="/301/about-us/#what-are-we-doing"
+                  style={{ color: "var(--main-color)" }}
+                >
                   {ourMission.link}
                 </NavLink>
               </p>
@@ -89,19 +94,21 @@ const Header: React.FC<HeaderProps> = ({
             <img src={mainImg} alt="Main" />
           </div>
         )}
-        <div
-          className={`${innerClassName} inner`}
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+        {description !== "" && (
+          <div
+            className={`${innerClassName} inner`}
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        )}
         {btns && (
           <div className="btns">
-            {btns.map((btnText, index) => (
+            {btns.map((btn: any, index: number) => (
               <Button
                 key={index}
-                text={btnText}
+                text={btn.name}
                 style={btnStyles && btnStyles[index]}
-                link={true}
-                to=""
+                link={btn.link !== ""}
+                to={btn.link}
                 className={
                   className?.includes("homePageHeader")
                     ? "homePage_btn"

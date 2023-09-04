@@ -1,13 +1,13 @@
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { ProjectTypes, projectsData } from "../OurProject/projectsData";
+import { projectsData } from "../OurProject/projectsData";
 import Button from "../../components/Button";
 import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import PATTERN from "../../assets/projectAuthor/pattern.svg";
 import PDF from "../../assets/projectAuthor/pdf.svg";
-import BUDGET from "../../assets/projectAuthor/budget.svg";
-import COLLECTED from "../../assets/projectAuthor/collected.svg";
-import REMAINING from "../../assets/projectAuthor/remaining.svg";
+import BUDGET from "../../assets/projectAuthor/budget.png";
+import COLLECTED from "../../assets/projectAuthor/collected.png";
+// import REMAINING from "../../assets/projectAuthor/remaining.svg";
 import HEART from "../../assets/projectAuthor/heart.svg";
 import ARROW_MEMBER_LEFT from "../../assets/arrow-left-team-member.svg";
 import ARROW_MEMBER_RIGHT from "../../assets/info/arrow-right-team-member.svg";
@@ -33,13 +33,10 @@ import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import Header from "../../components/Header";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
+import YouTube from "react-youtube";
+import { motion } from "framer-motion";
 
-interface Props {
-  viewedProject?: ProjectTypes | undefined;
-  setIsView?: (arg: boolean) => void;
-}
-
-const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
+const ProjectDetails = () => {
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const colors = [
@@ -103,6 +100,24 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
     }
   }, [project]);
   const navigate = useNavigate();
+  const carousel = useRef<HTMLDivElement | null>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    if (data && carousel.current) {
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    }
+  }, [data, windowSize.width]);
+
+  const opts = {
+    width: "100%",
+    height: 500,
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
+  const videoId = "cZxQchlBDN8";
 
   if (loading)
     return (
@@ -175,7 +190,7 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                 onClickItem={() => {}}
                 type="type"
                 text={"All"}
-                style={{ width: "50vw", marginRight: "auto" }}
+                style={{ width: "55vw", marginRight: "auto" }}
                 objKey={""}
               />
             )}
@@ -236,6 +251,9 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     </button>
                   )}
                 </div>
+                <div className="videoContainer _inner">
+                  <YouTube videoId={videoId} opts={opts} />
+                </div>
                 <div className="roadMapContainer">
                   <div className="roadMap_heading problem_heading">
                     <img src={PATTERN} alt="Pattern" />
@@ -273,19 +291,25 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     <div className="budgetContainer">
                       <div className="budget">
                         <img src={BUDGET} alt="Budget" />
-                        <span>Budget</span>
-                        <h2>{project.budget_price}$</h2>
+                        <div className="budgetPrice">
+                          <span>Budget</span>
+                          {/* <h2>{project.budget_price}$</h2> */}
+                          <h2>500$</h2>
+                        </div>
                       </div>
                       <div className="collected">
                         <img src={COLLECTED} alt="Collected" />
-                        <span>Collected</span>
-                        <h2>{project.collected_price}$</h2>
+                        <div className="collectedPrice">
+                          <span>Collected</span>
+                          {/* <h2>{project.collected_price}$</h2> */}
+                          <h2>500$</h2>
+                        </div>
                       </div>
-                      <div className="remaining">
+                      {/* <div className="remaining">
                         <img src={REMAINING} alt="Remaining" />
                         <span>Remaining</span>
                         <h2>{project.remaining_price}$</h2>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -394,15 +418,19 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
                     <img src={PATTERN} alt="Pattern" />
                     <h2>Partners</h2>
                   </div>
-                  <div className="partners _inner">
-                    <div className="innerPartners">
+                  <motion.div className="partners _inner" ref={carousel}>
+                    <motion.div
+                      drag="x"
+                      dragConstraints={{ right: 0, left: -width }}
+                      className="innerPartners"
+                    >
                       {partners.map((partner: any) => (
-                        <div className="partner" key={partner.id}>
+                        <motion.div className="partner" key={partner.id}>
                           <img src={ROSGOSTRAKH} alt={partner.name} />
-                        </div>
+                        </motion.div>
                       ))}
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 </div>
                 <div className="_inner dontaionBtns_wrapper" ref={donationsRef}>
                   <div
@@ -444,11 +472,11 @@ const FullProjectInfo: React.FC<Props> = ({ viewedProject, setIsView }) => {
               </div>
             </div>
           </div>
-          <Footer followUs={undefined} separatedPart={true} />
+          <Footer separatedPart={true} />
         </>
       )}
     </Background>
   );
 };
 
-export default FullProjectInfo;
+export default ProjectDetails;

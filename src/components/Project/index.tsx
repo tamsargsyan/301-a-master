@@ -14,6 +14,7 @@ interface ProjectProps {
   projectImg: string;
   isSaved: boolean;
   id: number;
+  heartit: () => void;
 }
 
 const Project: React.FC<ProjectProps> = ({
@@ -25,6 +26,7 @@ const Project: React.FC<ProjectProps> = ({
   projectImg,
   isSaved,
   id,
+  heartit,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -55,7 +57,7 @@ const Project: React.FC<ProjectProps> = ({
             link={true}
             to={`${id}`}
             style={{
-              padding: "0 30px",
+              padding: "20px 30px",
               height: "35px",
               background: "#DD264E",
               color: "#fff",
@@ -67,7 +69,10 @@ const Project: React.FC<ProjectProps> = ({
               dispatch(fetchingProjectDetails(`project-details/${id}`));
             }}
           />
-          <button className={`heart-btn ${isSaved ? "liked" : ""}`}>
+          <button
+            className={`heart-btn ${isSaved ? "liked" : ""}`}
+            onClick={heartit}
+          >
             <span>{t("btns.save-project")}</span>
             <div className="heartWrapper">
               <svg className="heart" viewBox="0 0 32 29.6">

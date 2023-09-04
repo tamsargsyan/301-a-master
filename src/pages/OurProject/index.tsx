@@ -62,6 +62,11 @@ const OurProjects = () => {
     filteredProjects &&
     new Array(Math.ceil(filteredProjects?.length / projectsPerPage)).fill(0);
 
+  const [projectId, setProjectId] = useState<number | null>(null);
+  const heartit = (id: number) => {
+    setProjectId(id);
+  };
+
   if (loading)
     return (
       <div className="loadingContainer">
@@ -142,7 +147,7 @@ const OurProjects = () => {
                     (status: any) => status.id === projectStatus_id
                   )[`name_${lang}`]
                 }
-                style={{ width: "50vw", marginRight: "auto" }}
+                style={{ width: "55vw", marginRight: "auto" }}
                 objKey="name"
               />
             )}
@@ -157,8 +162,8 @@ const OurProjects = () => {
                   flag={15}
                   desc={project[`problem_description_${lang}`]}
                   projectImg={PROJECT_1}
-                  // heartit={() => heartit(project.id)}
-                  isSaved={false}
+                  heartit={() => heartit(project.id)}
+                  isSaved={project.id === projectId}
                   id={project.id}
                 />
               </Fragment>
@@ -211,7 +216,7 @@ const OurProjects = () => {
               />
             </div>
           )}
-          <Footer followUs={undefined} separatedPart={true} />
+          <Footer separatedPart={true} />
         </>
       )}
     </Background>

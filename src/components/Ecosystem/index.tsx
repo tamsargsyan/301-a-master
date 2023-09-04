@@ -23,113 +23,116 @@ import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { HeaderTypes } from "../../utils/api.types";
+import { HeaderKeyOf } from "../../utils/keyof.type";
 
 interface EcosystemProps {
-  ourEcosystem: any;
   lang: string;
-  sages: any;
-  club301: any;
-  ambassadors: any;
-  volunteers: any;
-  experts: any;
-  partners: any;
-  foundationFriends: any;
 }
 
-const Ecosystem: React.FC<EcosystemProps> = ({
-  ourEcosystem,
-  lang,
-  sages,
-  club301,
-  ambassadors,
-  volunteers,
-  experts,
-  partners,
-  foundationFriends,
-}) => {
+const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
   const { t } = useTranslation();
-
+  const {
+    ourEcosystem,
+    sages,
+    club301,
+    ambassadors,
+    experts,
+    partners,
+    foundationFriends,
+  } = useSelector((state: RootState) => state.homeData.data);
   const data = [
     {
       id: 1,
-      title: sages[0][`title_${lang}`],
+      title: sages[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: SagesIcon,
-      description: sages[0][`description_${lang}`],
+      description: sages[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: SAGES,
-      btn: [t("btns.learn-more")],
+      btn: [
+        {
+          name: t("btns.learn-more"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
-          padding: "13px 40px",
+          // padding: "13px 40px",
+          color: "#000",
         },
       ],
     },
     {
       id: 2,
-      title: club301[0][`title_${lang}`],
+      title: club301[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: ClubIcon,
-      description: club301[0][`description_${lang}`],
+      description: club301[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: CLUB,
-      btn: [t("btns.become-301"), t("btns.learn-more")],
+      btn: [
+        {
+          name: t("btns.become-301"),
+          link: "",
+        },
+        {
+          name: t("btns.learn-more"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#189387",
           color: "#fff",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           boxShadow: "-21px 16px 38px 0px rgba(24, 147, 135, 0.38)",
           border: "none",
         },
         {
           border: "1px solid #189387",
-          padding: "13px 40px",
+          // padding: "13px 40px",
+          color: "#000",
         },
       ],
     },
     {
       id: 3,
-      title: ambassadors[0][`title_${lang}`],
+      title: ambassadors[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: AmbassadorIcon,
-      description: ambassadors[0][`description_${lang}`],
+      description: ambassadors[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: AMBASSDOR,
-      btn: [t("btns.become-ambassador")],
+      btn: [
+        {
+          name: t("btns.become-ambassador"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#EE8842",
           color: "#fff",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           border: "none",
           boxShadow: " -21px 16px 38px 0px rgba(238, 136, 66, 0.42)",
         },
       ],
     },
-    // {
-    //   id: 4,
-    //   title: volunteers[0][`title_${lang}`],
-    //   headerIcon: VolunteersIcon,
-    //   p: volunteers[0][`description_${lang}`],
-    //   mainImg: VOLUNTEERS,
-    //   btn: ["Стать волонтером"],
-    //   btnStyle: [
-    //     {
-    //       background: "#C5D92D",
-    //       border: "none",
-    //       color: "#fff",
-    //       padding: "13px 40px",
-    //       boxShadow: "-21px 16px 38px 0px rgba(197, 217, 45, 0.29)",
-    //     },
-    //   ],
-    // },
     {
       id: 5,
-      title: experts[0][`title_${lang}`],
+      title: experts[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: ExpertIcon,
-      description: experts[0][`description_${lang}`],
+      description: experts[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: EXPERT,
-      btn: [t("btns.become-expert")],
+      btn: [
+        {
+          name: t("btns.become-expert"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: " #42CFEE",
           border: "none",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           color: "#fff",
           boxShadow: "-21px 16px 38px 0px rgba(66, 207, 238, 0.36)",
         },
@@ -141,18 +144,28 @@ const Ecosystem: React.FC<EcosystemProps> = ({
       headerIcon: PartnersIcon,
       description: partners[0][`description_${lang}`],
       mainImg: PARTNERS,
-      btn: [t("btns.become-partner"), t("btns.all-partners")],
+      btn: [
+        {
+          name: t("btns.become-partner"),
+          link: "",
+        },
+        {
+          name: t("btns.all-partners"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#C12DD9",
           color: "#fff",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           border: "none",
           boxShadow: "-21px 16px 38px 0px rgba(193, 45, 217, 0.32)",
         },
         {
           border: "1px solid #C12DD9",
-          padding: "13px 40px",
+          // padding: "13px 40px",
+          color: "#000",
         },
       ],
       partners: [
@@ -175,15 +188,21 @@ const Ecosystem: React.FC<EcosystemProps> = ({
     },
     {
       id: 7,
-      title: foundationFriends[0][`title_${lang}`],
+      title: foundationFriends[0][`title_${lang}` as keyof HeaderTypes],
       headerIcon: FriendsIcon,
-      description: foundationFriends[0][`description_${lang}`],
+      description:
+        foundationFriends[0][`description_${lang}` as keyof HeaderTypes],
       mainImg: FRIENDS,
-      btn: [t("btns.become-fund-friend")],
+      btn: [
+        {
+          name: t("btns.become-fund-friend"),
+          link: "",
+        },
+      ],
       btnStyle: [
         {
           background: "#6442EE",
-          padding: "13px 40px",
+          // padding: "13px 40px",
           border: "none",
           color: "#fff",
           boxShadow: "-21px 16px 38px 0px rgba(100, 66, 238, 0.37)",
@@ -203,8 +222,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({
         style={{ flexDirection: "column", padding: "60px 0" }}
       >
         <Header
-          title={ourEcosystem[0][`title_${lang}`]}
-          description={ourEcosystem[0][`description_${lang}`]}
+          title={ourEcosystem[0][`title_${lang}` as keyof HeaderKeyOf]}
+          description={
+            ourEcosystem[0][`description_${lang}` as keyof HeaderKeyOf]
+          }
           icon={EcosystemIcon}
           style={{ marginBottom: "80px" }}
           className="differedHeaderContainer"

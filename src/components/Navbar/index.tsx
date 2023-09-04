@@ -19,12 +19,12 @@ export const menu = [
   {
     id: 1,
     name: "home",
-    link: "/301/build",
+    link: "/301",
   },
   {
     id: 2,
     name: "projects",
-    link: "/301/build/projects",
+    link: "/301/projects",
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ export const menu = [
   {
     id: 5,
     name: "about-us",
-    link: "/about-us",
+    link: "/301/about-us",
   },
   {
     id: 6,
@@ -48,7 +48,11 @@ export const menu = [
   },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  setOpenModal: (arg: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -161,9 +165,10 @@ const Navbar = () => {
       </div>
       <Button
         text={t(`navbar.sign-in`)}
-        link={true}
+        link={false}
         to=""
         className="signIn-btn"
+        onClick={() => setOpenModal(true)}
       />
     </div>
   );

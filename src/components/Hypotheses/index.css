@@ -108,4 +108,7 @@
   .aboutInner {
     width: 100%;
   }
+  .aboutInner {
+    height: auto;
+  }
 }

@@ -1,6 +1,6 @@
 .aboutUs_dashedLine,
 .aboutUs_privacy {
-  width: 50vw;
+  width: 55vw;
 }
 .aboutUs_dashedLine {
   border: 1px dashed #000;
@@ -9,7 +9,7 @@
   margin: 0;
   line-height: 155%;
   font-weight: 500;
-  color: #1877f2;
+  color: var(--mention-color);
 }
 .aboutUs-bigPattern-1,
 .aboutUs-bigPattern-2,

@@ -30,7 +30,7 @@
   font-size: clamp(1.375rem, 0rem + 1.1458vw, 4.125rem);
 }
 .noProject,
-.ant-spin {
+.ant-spin:not(.btn_spinner) {
   margin-top: 60px;
   margin-bottom: 100px;
 }
@@ -40,6 +40,9 @@
 }
 .ant-spin-dot-item {
   background-color: #dd264e !important;
+}
+.btn_spinner .ant-spin-dot-item {
+  background-color: #fff !important;
 }
 .pagination {
   margin-top: 30px;
@@ -76,7 +79,7 @@
   margin-bottom: 20px;
 }
 .filteringWrapper .ant-dropdown-trigger:nth-of-type(2) {
-  width: 50vw;
+  width: 55vw;
   margin-right: auto;
 }
 .paginationBtnWrapper {
