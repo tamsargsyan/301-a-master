@@ -3,6 +3,7 @@
   gap: 20px;
   width: 55vw;
   z-index: 2;
+  position: relative;
 }
 .header {
   color: #151c26;
