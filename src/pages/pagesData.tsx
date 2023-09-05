@@ -3,6 +3,7 @@ import AboutUs from "./AboutUs";
 import ProjectDetails from "./ProjectDetails";
 import Home from "./Home";
 import OurProjects from "./OurProject";
+import EcoSystemDetails from "./EcosystemDetails";
 
 const pagesData: routerType[] = [
   {
@@ -44,6 +45,16 @@ const pagesData: routerType[] = [
     path: "/:lang/301/about-us",
     element: <AboutUs />,
     title: "About Us",
+  },
+  {
+    path: "/301/:ecosystem",
+    element: <EcoSystemDetails />,
+    title: "Ecosystem Details",
+  },
+  {
+    path: "/:lang/301/:ecosystem",
+    element: <EcoSystemDetails />,
+    title: "Ecosystem Details",
   },
 ];
 

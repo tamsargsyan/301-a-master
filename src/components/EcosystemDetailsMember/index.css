@@ -1,0 +1,162 @@
+.memberHeader {
+  background: #fff;
+  box-shadow: -15px 15px 46px 0px rgba(39, 78, 151, 0.12);
+  text-align: center;
+  padding: 35px 0;
+  position: relative;
+  font-size: clamp(2rem, 0rem + 1.6667vw, 6rem);
+  font-weight: 600;
+}
+.memberImg_container {
+  position: absolute;
+  top: -50%;
+  left: 0;
+}
+.memberImg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.memberElipse {
+  width: 190px;
+  height: 190px;
+}
+.memberContent p {
+  margin: 0;
+  color: rgba(49, 58, 75, 0.7);
+  font-weight: 500;
+}
+.memberContent {
+  padding: 60px 30px 40px 30px;
+  background: #fff;
+  box-shadow: -15px 15px 46px 0px rgba(39, 78, 151, 0.12);
+}
+.memberProjectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.memberProjectHeader .btns {
+  margin: 0;
+}
+.memberProjectHeader .btns button {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--main-color);
+  padding: 10px;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+.memberProjectHeader .btns button:first-child {
+  transform: rotate(180deg);
+}
+.memberProjectHeader .btns button img {
+  filter: brightness(0) invert(1);
+  width: 15px;
+  height: 15px;
+}
+.memberProjectHeader p {
+  color: var(--text-color);
+  font-size: clamp(1.5rem, 0rem + 1.25vw, 4.5rem);
+}
+.memberProjects {
+  margin-top: 50px;
+}
+.project {
+  width: min-content;
+  background: #fff;
+}
+.projectInfo_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ecoSystemDetailsMember .projectImg {
+  height: 130px;
+  width: 280px;
+  background-image: url(../../assets/projectAuthor/project-1.svg);
+}
+.ecoSystemDetailsMember {
+  background: #fff;
+  box-shadow: -15px 15px 46px 0px rgba(39, 78, 151, 0.12);
+  position: relative;
+}
+.otherProjects_link {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--main-color);
+  width: fit-content;
+  margin-left: auto;
+  margin-top: 30px;
+}
+.ecoSystemDetailsMember .projects {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  z-index: 2;
+  position: relative;
+}
+.memberProjects_separatedPart {
+  height: 10px;
+  width: 100%;
+  background-color: rgba(21, 28, 38, 0.03);
+  position: absolute;
+  bottom: 200px;
+  left: 0;
+}
+@media screen and (max-width: 1920px) {
+  .memberHeader {
+    font-size: clamp(1.666875rem, 0.0013rem + 1.6656vw, 2rem);
+  }
+  .memberProjectHeader p {
+    font-size: clamp(1.25rem, 0rem + 1.25vw, 1.5rem);
+  }
+}
+@media screen and (max-width: 1600px) {
+  .memberHeader {
+    font-size: clamp(1.458125rem, -0.0031rem + 1.67vw, 1.666875rem);
+  }
+  .memberProjectHeader p {
+    font-size: clamp(1.09375rem, 0rem + 1.25vw, 1.25rem);
+  }
+}
+@media screen and (max-width: 1400px) {
+  .memberHeader {
+    font-size: clamp(1.333125rem, -0.0002rem + 1.6667vw, 1.458125rem);
+  }
+  .memberImg {
+    width: 130px;
+    height: 130px;
+  }
+  .memberElipse {
+    width: 160px;
+    height: 160px;
+  }
+  .memberProjectHeader p {
+    font-size: clamp(1rem, 0rem + 1.25vw, 1.09375rem);
+  }
+}
+@media screen and (max-width: 1280px) {
+  .memberHeader {
+    font-size: clamp(1.145625rem, -0.0002rem + 1.6667vw, 1.333125rem);
+  }
+  .memberProjectHeader p {
+    font-size: clamp(0.859375rem, 0rem + 1.25vw, 1rem);
+  }
+}
+@media screen and (max-width: 1100px) {
+  .memberHeader {
+    font-size: clamp(0.833125rem, -0.0002rem + 1.6667vw, 1.145625rem);
+  }
+  .memberProjectHeader p {
+    font-size: clamp(0.625rem, 0rem + 1.25vw, 0.859375rem);
+  }
+}

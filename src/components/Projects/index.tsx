@@ -39,13 +39,13 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
 
   const handleBack = () => {
     if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
+      setCurrentIndex(prevIndex => prevIndex - 1);
     }
   };
 
   const handleNext = () => {
     if (currentIndex < 1) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
+      setCurrentIndex(prevIndex => prevIndex + 1);
     }
   };
 
@@ -55,50 +55,48 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
     <>
       {projects && (
         <>
-          <div className="separatedPart"></div>
+          <div className='separatedPart'></div>
           <Background
             pattern1={
               windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
             }
             pattern2={SMALL_PATTERN_1}
             shoudHaveSidePattern={false}
-            style={{ padding: "60px 0" }}
-          >
-            <div className="projectsContainer" id="projects">
+            style={{ padding: "60px 0" }}>
+            <div className='projectsContainer' id='projects'>
               <Header
                 title={OurProjects[0][`title_${lang}` as keyof HeaderKeyOf]}
                 description={
                   OurProjects[0][`description_${lang}` as keyof HeaderKeyOf]
                 }
                 icon={ICON}
-                className="differedHeaderContainer"
+                className='differedHeaderContainer'
                 style={{ width: "100%" }}
               />
-              <div className="slider">
-                {windowSize.width < 1360 && projects.length <= 2 && (
+              <div className='slider'>
+                {windowSize.width < 1840 && (
                   <>
-                    <button className="leftBtn" onClick={handleBack}>
-                      <img src={ARROW} alt="Arrow" />
+                    <button className='leftBtn' onClick={handleBack}>
+                      <img src={ARROW} alt='Arrow' />
                     </button>
-                    <button className="rightBtn" onClick={handleNext}>
-                      <img src={ARROW} alt="Arrow" />
+                    <button className='rightBtn' onClick={handleNext}>
+                      <img src={ARROW} alt='Arrow' />
                     </button>
                   </>
                 )}
                 {windowSize.width > 975 ? (
-                  <motion.div ref={carousel} className="carousel">
+                  <motion.div ref={carousel} className='carousel'>
                     <motion.div
-                      className="innerCarousel"
+                      className='innerCarousel'
                       initial={{ x: 0 }}
                       animate={{
                         x: -width * currentIndex,
-                      }}
-                    >
-                      {projects.map((project) => {
+                      }}>
+                      {projects.map(project => {
                         return (
-                          <motion.div className="project" key={project.id}>
-                            <div className="projectImg"></div>
-                            <div className="projectInfo">
+                          <motion.div className='project' key={project.id}>
+                            <div className='projectImg'></div>
+                            <div className='projectInfo'>
                               <h1>
                                 {
                                   project[
@@ -113,7 +111,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                   ]
                                 )}
                               </span>
-                              <div className="author">
+                              <div className='author'>
                                 <span>
                                   {
                                     project[
@@ -121,8 +119,8 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                     ]
                                   }
                                 </span>
-                                <span className="flag">
-                                  <img src={FLAG} alt="Flag" />
+                                <span className='flag'>
+                                  <img src={FLAG} alt='Flag' />
                                   {/* {project.flag} */}
                                   15
                                 </span>
@@ -134,12 +132,12 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                     </motion.div>
                   </motion.div>
                 ) : (
-                  <div className="innerCarousel">
-                    {projects.map((project) => {
+                  <div className='innerCarousel'>
+                    {projects.map(project => {
                       return (
-                        <div className="project" key={project.id}>
-                          <div className="projectImg"></div>
-                          <div className="projectInfo">
+                        <div className='project' key={project.id}>
+                          <div className='projectImg'></div>
+                          <div className='projectInfo'>
                             <h1>
                               {
                                 project[
@@ -154,7 +152,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                 ]
                               )}
                             </span>
-                            <div className="author">
+                            <div className='author'>
                               <span>
                                 {
                                   project[
@@ -162,8 +160,8 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                   ]
                                 }
                               </span>
-                              <span className="flag">
-                                <img src={FLAG} alt="Flag" />
+                              <span className='flag'>
+                                <img src={FLAG} alt='Flag' />
                                 {/* {project.flag} */}
                                 15
                               </span>
@@ -175,7 +173,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                   </div>
                 )}
               </div>
-              <div className="btns">
+              <div className='btns'>
                 <Button
                   text={t("btns.other-projects")}
                   style={{
@@ -184,8 +182,8 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                     color: "#fff",
                   }}
                   link={true}
-                  to="/301/projects"
-                  className="homePage_btn"
+                  to='/301/projects'
+                  className='homePage_btn'
                 />
               </div>
             </div>

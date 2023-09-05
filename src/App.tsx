@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { scrollToTop } from "./globalFunctions/scrollToTop";
+// import { useLocation } from "react-router-dom";
+// import { scrollToTop } from "./globalFunctions/scrollToTop";
 import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
@@ -8,11 +8,11 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 
 function App() {
-  const location = useLocation();
+  // const location = useLocation();
 
-  useEffect(() => {
-    scrollToTop();
-  }, [location]);
+  // useEffect(() => {
+  //   scrollToTop();
+  // }, [location]);
 
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
@@ -29,7 +29,7 @@ function App() {
   }, [signUp]);
 
   return (
-    <div className="container">
+    <div className='container'>
       <Navbar setOpenModal={setSignIn} />
       <Router />
       <SignIn
