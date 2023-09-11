@@ -1,0 +1,111 @@
+.signUp_form {
+  background-color: #fff;
+  padding: 40px 70px;
+  height: 500px;
+  overflow-y: auto;
+}
+.signUp_formInputs {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: center;
+}
+.signUp_formGroup {
+  display: flex;
+  flex-direction: column;
+  /* width: 200px; */
+}
+.signUp_formGroup label:not(.signUp_radio) {
+  padding-left: 20px;
+  color: rgba(49, 58, 75, 0.57);
+  font-weight: 500;
+  line-height: 172.222%;
+}
+.signUp_formGroup .signUp_input {
+  outline: none;
+  padding: 5px 20px;
+  border-radius: 46px;
+  border: 2px solid rgba(0, 0, 0, 0.14);
+  box-shadow: -20px 8px 20px 0px rgba(21, 29, 39, 0.06);
+}
+.ant-select-dropdown {
+  z-index: 99999;
+}
+.signUp_selector .ant-select-selector {
+  /* height: 37px !important; */
+  /* align-items: center; */
+  border-radius: 46px;
+  border: 2px solid rgba(0, 0, 0, 0.14);
+  box-shadow: -20px 8px 20px 0px rgba(21, 29, 39, 0.06);
+}
+.signUp_form2nd .signUp_formGroup:first-child {
+  margin-bottom: 35px;
+}
+:where(.css-dev-only-do-not-override-17a39f8).ant-checkbox-checked
+  .ant-checkbox-inner,
+:where(.css-dev-only-do-not-override-17a39f8).ant-checkbox-wrapper:not(
+    .ant-checkbox-wrapper-disabled
+  ):hover
+  .ant-checkbox-checked:not(.ant-checkbox-disabled)
+  .ant-checkbox-inner {
+  background-color: var(--text-color);
+  border-color: var(--text-color);
+}
+.signUp_tel {
+  display: flex;
+}
+.signUp_tel .signUp_selector .ant-select-selector {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.signUp_tel .signUp_input {
+  width: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.signUp_btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.signUp_btns p {
+  text-align: center;
+  font-size: 12px;
+}
+.signUp_info {
+  display: flex;
+  align-items: center;
+}
+.signUp_info img {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+.signUp_formGroup:last-child {
+  margin-top: 30px;
+}
+:where(.css-dev-only-do-not-override-17a39f8).ant-popconfirm {
+  z-index: 99999 !important;
+}
+.ant-popconfirm {
+  width: 380px !important;
+}
+:where(.css-dev-only-do-not-override-17a39f8).ant-btn-default {
+  display: none;
+}
+:where(.css-dev-only-do-not-override-17a39f8).ant-btn-primary {
+  background: transparent;
+  color: var(--mention-color);
+  font-weight: 700;
+  box-shadow: unset;
+}
+.ant-popconfirm-message {
+  text-align: justify;
+}
+.signUp_form1st,
+.signUp_form2nd,
+.signUp_form3rd {
+  width: 100%;
+}

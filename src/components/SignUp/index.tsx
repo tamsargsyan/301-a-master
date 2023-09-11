@@ -1,5 +1,4 @@
 import Modal from "../Modal";
-import CLOSE from "../../assets/sign-up-close.svg";
 import DONOR from "../../assets/signup-account-types/donor.svg";
 import AMBASSADOR from "../../assets/signup-account-types/ambassador.svg";
 import EXPERTS from "../../assets/signup-account-types/expert.svg";
@@ -13,20 +12,37 @@ import FRIENDS_MAIN from "../../assets/signup-account-types/friends-main.svg";
 import PATTERN from "../../assets/signup-account-types/bg-pattern.svg";
 import "./index.css";
 import Button from "../Button";
+import EcosystemModal from "../EcosystemModal";
+import { useState } from "react";
 
 interface SignUpProps {
   signUp: boolean;
   setSignUp: (arg: boolean) => void;
   setSignIn: (arg: boolean) => void;
+  setAccountType: (arg: boolean) => void;
 }
 
-const SignUp: React.FC<SignUpProps> = ({ signUp, setSignUp, setSignIn }) => {
-  const handleSignIn = () => {
+interface AccountType {
+  id: number;
+  name: string;
+  icon: string;
+  mainImg: string;
+  btn: string;
+  btnStyle: React.CSSProperties;
+}
+
+const SignUp: React.FC<SignUpProps> = ({
+  signUp,
+  setSignUp,
+  setSignIn,
+  setAccountType,
+}) => {
+  const handleCloseSignUp = () => {
     setSignUp(false);
     setSignIn(true);
   };
 
-  const accountTypes = [
+  const accountTypes: AccountType[] = [
     {
       id: 1,
       name: "доноры «301»",
@@ -84,49 +100,48 @@ const SignUp: React.FC<SignUpProps> = ({ signUp, setSignUp, setSignIn }) => {
     },
   ];
 
+  // const [accountType, setAccountType] = useState({
+  //   openEcosystemModal: false,
+  //   id: 0,
+  //   name: "",
+  // });
+  const handleAccountType = (id: number, name: string) => {
+    setAccountType(true);
+    setSignUp(false);
+  };
   return (
     <Modal
-      setOpenModal={handleSignIn}
+      setOpenModal={handleCloseSignUp}
       openModal={signUp}
-      className="signUp_overlay"
-    >
-      <div className="signUp_bg">
-        <div className="signUp_content">
-          <div className="signUp_content_header">
-            <button className="close" onClick={handleSignIn}>
-              <img src={CLOSE} alt="Close" />
-            </button>
-            <div className="account_type">
-              <p>select account type</p>
-            </div>
-          </div>
-          <div className="signUp_content_accountTypes">
-            <img src={PATTERN} alt="Pattern" className="accountTYpes_pattern" />
-            {accountTypes.map((account) => (
-              <div className="accountType" key={account.id}>
-                <div className="accountType_header">
-                  <img src={account.icon} alt="Account" />
-                  <span>{account.name}</span>
-                </div>
-                <div className="accountType_mainImg">
-                  <img src={account.mainImg} alt="Account Main" />
-                </div>
-                <Button
-                  text={account.btn}
-                  style={{
-                    ...account.btnStyle,
-                    color: "#fff",
-                    border: "none",
-                  }}
-                  className="accountType_btn"
-                  link={false}
-                  to={""}
-                />
+      className='signUp_overlay'>
+      <EcosystemModal onClose={handleCloseSignUp} header='select account type'>
+        <div className='signUp_content_accountTypes'>
+          <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
+          {accountTypes.map(account => (
+            <div className='accountType' key={account.id}>
+              <div className='accountType_header'>
+                <img src={account.icon} alt='Account' />
+                <span>{account.name}</span>
               </div>
-            ))}
-          </div>
+              <div className='accountType_mainImg'>
+                <img src={account.mainImg} alt='Account Main' />
+              </div>
+              <Button
+                text={account.btn}
+                style={{
+                  ...account.btnStyle,
+                  color: "#fff",
+                  border: "none",
+                }}
+                className='accountType_btn'
+                link={false}
+                to={""}
+                onClick={() => handleAccountType(account.id, account.name)}
+              />
+            </div>
+          ))}
         </div>
-      </div>
+      </EcosystemModal>
     </Modal>
   );
 };
