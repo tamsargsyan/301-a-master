@@ -113,6 +113,7 @@
 .mentioned_txt {
   color: var(--mention-color);
   font-weight: 600;
+  cursor: pointer;
 }
 .signIn_another {
   margin-top: 20px;

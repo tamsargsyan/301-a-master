@@ -18,10 +18,7 @@
   flex-wrap: wrap;
   gap: 20px;
   background-color: #fff;
-  padding: 100px 20px;
-  max-height: 440px;
-  overflow: hidden;
-  overflow-y: auto;
+  padding: 85px 20px;
   position: relative;
   border-radius: 6px;
 }
@@ -37,9 +34,9 @@
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 4px 16px 0px rgba(49, 58, 75, 0.12);
-  padding: 9px;
+  padding: 20px 9px;
   width: 224px;
-  height: 380px;
+  /* height: 380px; */
   gap: 35px;
   z-index: 2;
   position: relative;
@@ -52,10 +49,10 @@
 .accountType_header {
   color: var(--text-color);
   font-weight: 700;
-  font-size: clamp(1.25rem, 0rem + 1.0417vw, 3.75rem);
+  /* font-size: clamp(1.25rem, 0rem + 1.0417vw, 3.75rem); */
 }
 .accountType_btn {
-  font-size: 14px;
+  font-size: 12px;
   padding: 9px 24px !important;
 }
 .accountTYpes_pattern {
@@ -63,7 +60,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 35rem;
+  width: 25rem;
 }
 @media screen and (max-width: 1440px) {
   .accountType_header {
@@ -84,6 +81,53 @@
   }
   .accountType {
     width: 200px;
-    height: 345px;
+    /* height: 345px; */
+  }
+}
+@media screen and (max-width: 1290px) {
+  .accountType_mainImg img {
+    width: 75px;
+    height: 143px;
+  }
+  .signUp_content_accountTypes {
+    padding: 60px 0;
+  }
+  .accountType {
+    width: 180px;
+    /* height: 40vh; */
+  }
+  .accountType_header {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .accountType_mainImg img {
+    width: 45px;
+    height: 113px;
+  }
+  .accountType_header,
+  .accountType {
+    gap: 10px;
+  }
+  .accountType_header {
+    font-size: 10px;
+  }
+  .accountType {
+    width: 150px;
+  }
+  .accountType_header img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+  .accountType_header:first-child img {
+    width: 15px;
+    height: 15px;
+  }
+  .accountType_btn {
+    font-size: 7px;
+  }
+  .accountTYpes_pattern {
+    width: 20rem;
   }
 }

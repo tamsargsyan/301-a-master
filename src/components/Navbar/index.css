@@ -11,7 +11,8 @@
   background-color: #fff;
   box-shadow: -6px 6px 16px rgba(8, 31, 66, 0.11);
   padding: 20px 0;
-  justify-content: space-evenly;
+  gap: 30px;
+  /* justify-content: space-evenly; */
   position: sticky;
   z-index: 99999;
   width: 100%;
@@ -26,6 +27,7 @@
 
 .link a {
   color: var(--text-color);
+  font-weight: 500;
 }
 
 .lang {

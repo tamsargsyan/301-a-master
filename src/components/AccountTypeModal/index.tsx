@@ -11,6 +11,7 @@ interface AccountTypeModalProps {
   setSignUp: (arg: boolean) => void;
   setAccountType: (arg: boolean) => void;
   setAgreementTerms: (arg: boolean) => void;
+  setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
 }
 
 const filterOption = (
@@ -23,6 +24,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   setSignUp,
   setAccountType,
   setAgreementTerms,
+  setPrivacy,
 }) => {
   const handleClose = () => {
     setSignUp(true);
@@ -39,6 +41,11 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
 
   const confirm = (e: React.MouseEvent<HTMLElement>) => {
     setAgreementTerms(true);
+    setAccountType(false);
+  };
+
+  const handlePrivacy = (privacy: string) => {
+    setPrivacy({ modal: true, privacy });
     setAccountType(false);
   };
 
@@ -167,25 +174,27 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     filterOption={filterOption}
                     options={[
                       {
-                        value: "jack",
-                        label: "Jack",
+                        value: "arm",
+                        label: "+374",
                       },
                       {
-                        value: "lucy",
-                        label: "Lucy",
+                        value: "usa",
+                        label: "+1",
                       },
                       {
-                        value: "tom",
-                        label: "Tom",
+                        value: "ru",
+                        label: "+7",
                       },
                     ]}
                   />
-                  <input
-                    type='text'
-                    id='signUp_tel'
-                    name='signUp'
-                    className='signUp_input'
-                  />
+                  <div className='signUp_telWrapper'>
+                    <input
+                      type='number'
+                      id='signUp_tel'
+                      name='signUp'
+                      className='signUp_input'
+                    />
+                  </div>
                 </div>
               </div>
               <div className='signUp_formGroup'>
@@ -206,7 +215,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   className='signUp_input'
                 />
               </div>
-              <div className='signUp_formGroup'>
+              <div className='signUp_formGroup terms_formGroup'>
                 <div className='signUp_info'>
                   <Checkbox className='signUp_radio'>
                     Соглашение условий*
@@ -248,8 +257,17 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
             />
             <p>
               By continuing, you agree 301’s <br></br>
-              <span className='mentioned_txt'>Terms of Services</span> and
-              <span className='mentioned_txt'> Privacy Policy</span>
+              <span
+                className='mentioned_txt'
+                onClick={() => handlePrivacy("Terms of Services")}>
+                Terms of Services
+              </span>{" "}
+              and{" "}
+              <span
+                className='mentioned_txt'
+                onClick={() => handlePrivacy("Privacy Policy")}>
+                Privacy Policy
+              </span>
             </p>
           </div>
         </form>

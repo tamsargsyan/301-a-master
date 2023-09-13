@@ -8,6 +8,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import AccountTypeModal from "./components/AccountTypeModal";
 import AgreementTermsModal from "./components/AgreementTermsModal";
+import Privacy from "./components/Privacy";
 
 function App() {
   // const location = useLocation();
@@ -20,16 +21,20 @@ function App() {
   const [signUp, setSignUp] = useState(false);
   const [accountType, setAccountType] = useState(false);
   const [agreementTerms, setAgreementTerms] = useState(false);
+  const [privacy, setPrivacy] = useState({
+    modal: false,
+    privacy: "",
+  });
 
   useEffect(() => {
     document.body.classList.toggle(
       "no-scroll",
-      signIn || signUp || accountType || agreementTerms
+      signIn || signUp || accountType || agreementTerms || privacy.modal
     );
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [signIn, signUp, accountType, agreementTerms]);
+  }, [signIn, signUp, accountType, agreementTerms, privacy.modal]);
 
   useEffect(() => {
     signUp && setSignIn(false);
@@ -55,11 +60,17 @@ function App() {
         setSignUp={setSignUp}
         setAccountType={setAccountType}
         setAgreementTerms={setAgreementTerms}
+        setPrivacy={setPrivacy}
       />
       <AgreementTermsModal
         agreementTerms={agreementTerms}
         setAccountType={setAccountType}
         setAgreementTerms={setAgreementTerms}
+      />
+      <Privacy
+        privacy={privacy}
+        setPrivacy={setPrivacy}
+        setAccountType={setAccountType}
       />
     </div>
   );

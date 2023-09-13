@@ -31,17 +31,17 @@ const SignIn: React.FC<SignInProps> = ({
 
   return (
     <Modal setOpenModal={setOpenModal} openModal={openModal}>
-      <div className="modal_signIn">
-        <div className="modal_signIn_leftSide">
-          <img src={PATTERN_1} alt="Pattern" />
-          <img src={PATTERN_2} alt="Pattern" />
-          <img src={PATTERN_1} alt="Pattern" />
+      <div className='modal_signIn'>
+        <div className='modal_signIn_leftSide'>
+          <img src={PATTERN_1} alt='Pattern' />
+          <img src={PATTERN_2} alt='Pattern' />
+          <img src={PATTERN_1} alt='Pattern' />
         </div>
-        <div className="modal_signIn_rightSide">
-          <div className="modal_signIn_title">
+        <div className='modal_signIn_rightSide'>
+          <div className='modal_signIn_title'>
             <p>{forgetPassword ? "Forgot your password?" : "Welcome !"}</p>
             {forgetPassword && (
-              <p className="forgetPass_desc">
+              <p className='forgetPass_desc'>
                 Please, enter your email and we will send you a link to reset a
                 password.
               </p>
@@ -50,10 +50,9 @@ const SignIn: React.FC<SignInProps> = ({
           <Formik
             validationSchema={signInSchema}
             initialValues={{ email: "", password: "" }}
-            onSubmit={(values) => {
+            onSubmit={values => {
               alert(JSON.stringify(values));
-            }}
-          >
+            }}>
             {({
               values,
               errors,
@@ -62,40 +61,40 @@ const SignIn: React.FC<SignInProps> = ({
               handleBlur,
               handleSubmit,
             }) => (
-              <form noValidate onSubmit={handleSubmit} className="signIn_form">
-                <div className="signIn_formFields">
+              <form noValidate onSubmit={handleSubmit} className='signIn_form'>
+                <div className='signIn_formFields'>
                   <input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="form"
+                    placeholder='Email'
+                    type='email'
+                    name='email'
+                    id='email'
+                    className='form'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
                   />
-                  <p className="error">
+                  <p className='error'>
                     {errors.email && touched.email && errors.email}
                   </p>
                   {!forgetPassword && (
                     <>
                       <input
-                        placeholder="Password"
-                        type="password"
-                        name="password"
+                        placeholder='Password'
+                        type='password'
+                        name='password'
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}
-                        className="form"
+                        className='form'
                       />
-                      <p className="error">
+                      <p className='error'>
                         {errors.password && touched.password && errors.password}
                       </p>
                     </>
                   )}
                 </div>
                 {!forgetPassword && (
-                  <div className="forgetPassword">
+                  <div className='forgetPassword'>
                     <button onClick={handleForgetPassword}>
                       Forget password?
                     </button>
@@ -110,46 +109,47 @@ const SignIn: React.FC<SignInProps> = ({
                     color: "#fff",
                     width: "100%",
                   }}
-                  type="submit"
+                  type='submit'
                 />
               </form>
             )}
           </Formik>
           {!forgetPassword ? (
-            <div className="signIn_another">
-              <div className="signIn_another_title">
-                <div className="line"></div>
+            <div className='signIn_another'>
+              <div className='signIn_another_title'>
+                <div className='line'></div>
                 <p>Log in with</p>
-                <div className="line"></div>
+                <div className='line'></div>
               </div>
-              <div className="signIn_another_icons">
-                <a href="gmail.com">
-                  <img src={GMAIL} alt="Gmail" />
+              <div className='signIn_another_icons'>
+                <a href='gmail.com'>
+                  <img src={GMAIL} alt='Gmail' />
                 </a>
-                <a href="gmail.com">
-                  <img src={FB} alt="Facebook" />
+                <a href='gmail.com'>
+                  <img src={FB} alt='Facebook' />
                 </a>
               </div>
-              <div className="signIn_another_privacy">
+              <div className='signIn_another_privacy'>
                 <p>
                   By continuing, you agree 301’s <br></br>
-                  <span className="mentioned_txt">Terms of Services</span> and
-                  <span className="mentioned_txt"> Privacy Policy</span>
+                  <button className='mentioned_txt'>Terms of Services</button>
+                  and
+                  <button className='mentioned_txt'> Privacy Policy</button>
                 </p>
               </div>
             </div>
           ) : (
-            <div className="signIn_another_privacy">
+            <div className='signIn_another_privacy'>
               <p>
                 If you need help, contact our
-                <span className="mentioned_txt"> Support team</span>
+                <span className='mentioned_txt'> Support team</span>
               </p>
             </div>
           )}
-          <div className="signIn_signUp">
+          <div className='signIn_signUp'>
             <p>
               Don't have an account?
-              <button className="mentioned_txt" onClick={() => setSignUp(true)}>
+              <button className='mentioned_txt' onClick={() => setSignUp(true)}>
                 Sign Up
               </button>
             </p>

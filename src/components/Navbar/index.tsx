@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
   const langs = ["en", "ru", "am"];
   const [openLangs, setOpenLangs] = useState(false);
   const lang = i18next.language;
-  const copyLangs = langs.filter((item) => item !== lang);
+  const copyLangs = langs.filter(item => item !== lang);
   const { i18n, t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -79,30 +79,29 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
   };
 
   return (
-    <div className="navbarContainer">
+    <div className='navbarContainer'>
       {windowSize.width < 975 && (
-        <div className="mobileMenu">
+        <div className='mobileMenu'>
           <div
             className={`${openMenu && "openedHamburger"} hamburger`}
-            onClick={() => setOpenMenu(!openMenu)}
-          >
-            <div className="line"></div>
-            <div className="line"></div>
-            <div className="line"></div>
+            onClick={() => setOpenMenu(!openMenu)}>
+            <div className='line'></div>
+            <div className='line'></div>
+            <div className='line'></div>
           </div>
           {openMenu && (
-            <div className="openedMobileMenu">
-              <div className="bigPatternNav">
-                <img src={BIG_PATTERN} alt="Pattern" />
+            <div className='openedMobileMenu'>
+              <div className='bigPatternNav'>
+                <img src={BIG_PATTERN} alt='Pattern' />
               </div>
-              <div className="sidePattern1">
-                <img src={SIDE_PATTERN} alt="Pattern" />
+              <div className='sidePattern1'>
+                <img src={SIDE_PATTERN} alt='Pattern' />
               </div>
-              <div className="sidePattern2">
-                <img src={SIDE_PATTERN} alt="Pattern" />
+              <div className='sidePattern2'>
+                <img src={SIDE_PATTERN} alt='Pattern' />
               </div>
-              <div className="menu">
-                <div className="link">
+              <div className='menu'>
+                <div className='link'>
                   {menu.map((link, i) => (
                     <NavLink
                       onClick={() => {
@@ -111,14 +110,13 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
                       }}
                       key={i}
                       to={link.link}
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    >
+                      style={{ animationDelay: `${i * 0.1}s` }}>
                       {t(`navbar.${link.name}`)}
                     </NavLink>
                   ))}
                 </div>
-                <div className="link logout">
-                  <a href="/">Log out</a>
+                <div className='link logout'>
+                  <a href='/'>Log out</a>
                 </div>
               </div>
             </div>
@@ -126,28 +124,28 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
         </div>
       )}
       {openMenu ? (
-        <div className="logo">
+        <div className='logo'>
           <span>Меню</span>
         </div>
       ) : (
-        <button className="logo" onClick={scrollToTop}>
-          <img src={LOGO} alt="Logo" />
+        <button className='logo' onClick={scrollToTop}>
+          <img src={LOGO} alt='Logo' />
         </button>
       )}
-      <div className="menu">
-        <div className="link">
+      <div className='menu'>
+        <div className='link'>
           {menu.map((link, i) => (
             <NavLink key={i} to={link.link} onClick={scrollToTop}>
               {t(`navbar.${link.name}`)}
             </NavLink>
           ))}
         </div>
-        <div className="langsWrapper">
+        <div className='langsWrapper'>
           <Button
             text={lang}
             link={false}
             to={""}
-            className="activeLang lang"
+            className='activeLang lang'
             onClick={() => setOpenLangs(!openLangs)}
           />
           {copyLangs.map((lang, i) => (
@@ -163,13 +161,39 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal }) => {
           ))}
         </div>
       </div>
-      <Button
-        text={t(`navbar.sign-in`)}
-        link={false}
-        to=""
-        className="signIn-btn"
-        onClick={() => setOpenModal(true)}
-      />
+      {windowSize.width > 800 ? (
+        <div className='btns' style={{ margin: 0 }}>
+          <Button
+            text={t(`btns.donate`)}
+            link={false}
+            to=''
+            className='signIn-btn'
+            onClick={() => setOpenModal(true)}
+            style={{
+              padding: "9px 23px",
+              background: "var(--main-color)",
+              color: "#fff  ",
+            }}
+          />
+          <Button
+            text={t(`navbar.sign-in`)}
+            link={false}
+            to=''
+            className='signIn-btn'
+            onClick={() => setOpenModal(true)}
+            style={{ padding: "9px 23px" }}
+          />
+        </div>
+      ) : (
+        <Button
+          text={t(`navbar.sign-in`)}
+          link={false}
+          to=''
+          className='signIn-btn'
+          onClick={() => setOpenModal(true)}
+          style={{ padding: "9px 23px" }}
+        />
+      )}
     </div>
   );
 };
