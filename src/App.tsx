@@ -19,7 +19,11 @@ function App() {
 
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
-  const [accountType, setAccountType] = useState(false);
+  const [accountType, setAccountType] = useState({
+    open: false,
+    id: 0,
+    name: "",
+  });
   const [agreementTerms, setAgreementTerms] = useState(false);
   const [privacy, setPrivacy] = useState({
     modal: false,
@@ -29,12 +33,12 @@ function App() {
   useEffect(() => {
     document.body.classList.toggle(
       "no-scroll",
-      signIn || signUp || accountType || agreementTerms || privacy.modal
+      signIn || signUp || accountType.open || agreementTerms || privacy.modal
     );
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [signIn, signUp, accountType, agreementTerms, privacy.modal]);
+  }, [signIn, signUp, accountType.open, agreementTerms, privacy.modal]);
 
   useEffect(() => {
     signUp && setSignIn(false);

@@ -13,13 +13,12 @@ import PATTERN from "../../assets/signup-account-types/bg-pattern.svg";
 import "./index.css";
 import Button from "../Button";
 import EcosystemModal from "../EcosystemModal";
-import { useState } from "react";
 
 interface SignUpProps {
   signUp: boolean;
   setSignUp: (arg: boolean) => void;
   setSignIn: (arg: boolean) => void;
-  setAccountType: (arg: boolean) => void;
+  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
 }
 
 interface AccountType {
@@ -99,14 +98,12 @@ const SignUp: React.FC<SignUpProps> = ({
       },
     },
   ];
-
-  // const [accountType, setAccountType] = useState({
-  //   openEcosystemModal: false,
-  //   id: 0,
-  //   name: "",
-  // });
   const handleAccountType = (id: number, name: string) => {
-    setAccountType(true);
+    setAccountType({
+      open: true,
+      id,
+      name,
+    });
     setSignUp(false);
   };
   return (

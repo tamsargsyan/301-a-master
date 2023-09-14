@@ -19,7 +19,7 @@
   padding-left: 20px;
   color: rgba(49, 58, 75, 0.57);
   font-weight: 500;
-  line-height: 172.222%;
+  margin: 8px 0;
 }
 .signUp_formGroup .signUp_input {
   outline: none;
@@ -38,10 +38,12 @@
   border: 2px solid rgba(0, 0, 0, 0.14);
   box-shadow: -20px 8px 20px 0px rgba(21, 29, 39, 0.06);
 }
-.signUp_form2nd .signUp_formGroup:first-child {
+.signUp_form2nd .signUp_formGroup {
   margin-bottom: 35px;
 }
-
+.signUp_form2nd .signUp_formGroup:last-child {
+  margin: 0;
+}
 .signUp_tel {
   display: flex;
 }
@@ -93,7 +95,7 @@
   height: 15px;
   cursor: pointer;
 }
-:where(.css-dev-only-do-not-override-17a39f8).ant-popconfirm {
+.ant-popconfirm {
   z-index: 99999 !important;
 }
 .ant-popconfirm {
@@ -145,4 +147,23 @@
 }
 .terms_formGroup {
   margin-top: 30px;
+}
+.ant-select-item {
+  padding: 0 !important;
+  padding-left: 10px !important;
+  align-items: center !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #ddd !important;
+}
+.ant-select-item:not(.ant-select-item-option-selected):hover {
+  background: #fff !important;
+}
+.ant-select-item-option-selected {
+  border-radius: 46px !important;
+  border: 2px solid rgba(0, 0, 0, 0.14) !important;
+  background: var(--mention-color) !important;
+  color: #fff !important;
+}
+.ant-select-dropdown {
+  padding: 0;
 }

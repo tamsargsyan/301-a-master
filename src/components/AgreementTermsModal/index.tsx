@@ -4,7 +4,7 @@ import EcosystemModal from "../EcosystemModal";
 import "./index.css";
 
 interface AgreementTermsModalProps {
-  setAccountType: (arg: boolean) => void;
+  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   setAgreementTerms: (arg: boolean) => void;
   agreementTerms: boolean;
 }
@@ -16,12 +16,19 @@ const AgreementTermsModal: React.FC<AgreementTermsModalProps> = ({
 }) => {
   const handleClose = () => {
     setAgreementTerms(false);
-    setAccountType(true);
+    setAccountType({
+      name: "donor",
+      id: 1,
+      open: true,
+    });
   };
 
   return (
     <Modal setOpenModal={handleClose} openModal={agreementTerms}>
-      <EcosystemModal onClose={handleClose} header='Соглашение условий'>
+      <EcosystemModal
+        onClose={handleClose}
+        header='Соглашение условий'
+        className='modal_back'>
         <div className='agreementTerms'>
           <p>
             КОДЕКС ЭТИКИ КЛУБА 301

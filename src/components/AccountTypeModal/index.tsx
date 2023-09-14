@@ -7,9 +7,9 @@ import INFO_ICON from "../../assets/info-icon.svg";
 import countries from "../../locales/countries.json";
 
 interface AccountTypeModalProps {
-  accountType: boolean;
+  accountType: { open: boolean; id: number; name: string };
   setSignUp: (arg: boolean) => void;
-  setAccountType: (arg: boolean) => void;
+  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   setAgreementTerms: (arg: boolean) => void;
   setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
 }
@@ -28,7 +28,11 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
 }) => {
   const handleClose = () => {
     setSignUp(true);
-    setAccountType(false);
+    setAccountType({
+      open: false,
+      id: 0,
+      name: "",
+    });
   };
 
   const onChange = (value: string) => {
@@ -41,20 +45,31 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
 
   const confirm = (e: React.MouseEvent<HTMLElement>) => {
     setAgreementTerms(true);
-    setAccountType(false);
+    setAccountType({
+      open: false,
+      id: 0,
+      name: "",
+    });
   };
 
   const handlePrivacy = (privacy: string) => {
     setPrivacy({ modal: true, privacy });
-    setAccountType(false);
+    setAccountType({
+      open: false,
+      id: 0,
+      name: "",
+    });
   };
 
   return (
     <Modal
       setOpenModal={handleClose}
-      openModal={accountType}
+      openModal={accountType.open}
       className='signUp_overlay'>
-      <EcosystemModal onClose={handleClose} header='donor'>
+      <EcosystemModal
+        onClose={handleClose}
+        header={accountType.name}
+        className='modal_back'>
         <form className='signUp_form'>
           <div className='signUp_formInputs'>
             <div className='signUp_form1st'>
@@ -126,6 +141,37 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   ]}
                 />
               </div>
+              {accountType.id === 3 && (
+                <div className='signUp_formGroup'>
+                  <label htmlFor='signUp_recommendation'>
+                    С кем из мудрецов 301 Вы бы хотели сотрудничать?*
+                  </label>
+                  <Select
+                    className='signUp_selector'
+                    showSearch
+                    placeholder='Select a recommendation'
+                    optionFilterProp='children'
+                    onChange={onChange}
+                    onSearch={onSearch}
+                    //@ts-ignore
+                    filterOption={filterOption}
+                    options={[
+                      {
+                        value: "jack",
+                        label: "Jack",
+                      },
+                      {
+                        value: "lucy",
+                        label: "Lucy",
+                      },
+                      {
+                        value: "tom",
+                        label: "Tom",
+                      },
+                    ]}
+                  />
+                </div>
+              )}
             </div>
             <div className='signUp_form2nd'>
               <div className='signUp_formGroup'>
@@ -149,6 +195,16 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                 </Checkbox>
                 <Checkbox className='signUp_radio'>Образование</Checkbox>
               </div>
+              {accountType.id === 3 && (
+                <div className='signUp_formGroup'>
+                  <label htmlFor='signUp_fund'>Форма участия*</label>
+                  <Checkbox className='signUp_radio'>Консультации</Checkbox>
+                  <Checkbox className='signUp_radio'>
+                    Проектная деятельность
+                  </Checkbox>
+                  <Checkbox className='signUp_radio'>оба варианта</Checkbox>
+                </div>
+              )}
             </div>
             <div className='signUp_form3rd'>
               <div className='signUp_formGroup'>

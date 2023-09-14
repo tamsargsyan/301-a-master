@@ -1,15 +1,3 @@
-.close {
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  left: 50px;
-  padding: 0;
-  background-color: transparent;
-}
-.close img {
-  width: 100%;
-  height: 100%;
-}
 .signUp_content_accountTypes {
   margin-top: 20px;
   display: flex;

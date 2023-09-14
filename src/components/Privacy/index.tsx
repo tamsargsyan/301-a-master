@@ -4,7 +4,7 @@ import EcosystemModal from "../EcosystemModal";
 interface PrivacyProps {
   privacy: any;
   setPrivacy: any;
-  setAccountType: any;
+  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
 }
 
 const Privacy: React.FC<PrivacyProps> = ({
@@ -17,11 +17,18 @@ const Privacy: React.FC<PrivacyProps> = ({
       modal: false,
       privacy: "",
     });
-    setAccountType(true);
+    setAccountType({
+      name: "donor",
+      id: 1,
+      open: true,
+    });
   };
   return (
     <Modal setOpenModal={handleClose} openModal={privacy.modal}>
-      <EcosystemModal onClose={handleClose} header={privacy.privacy}>
+      <EcosystemModal
+        onClose={handleClose}
+        header={privacy.privacy}
+        className='modal_back'>
         <div
           className='agreementTerms'
           style={{ fontFamily: "Montserrat Arm" }}>
