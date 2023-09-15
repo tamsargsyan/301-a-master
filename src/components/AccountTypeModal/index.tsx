@@ -5,6 +5,10 @@ import "./index.css";
 import Button from "../Button";
 import INFO_ICON from "../../assets/info-icon.svg";
 import countries from "../../locales/countries.json";
+import country_dial from "../../locales/country_dial.json";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+
+const { Option } = Select;
 
 interface AccountTypeModalProps {
   accountType: { open: boolean; id: number; name: string };
@@ -60,6 +64,8 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
       name: "",
     });
   };
+
+  console.log(country_dial);
 
   return (
     <Modal
@@ -228,21 +234,21 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     onSearch={onSearch}
                     //@ts-ignore
                     filterOption={filterOption}
-                    options={[
-                      {
-                        value: "arm",
-                        label: "+374",
-                      },
-                      {
-                        value: "usa",
-                        label: "+1",
-                      },
-                      {
-                        value: "ru",
-                        label: "+7",
-                      },
-                    ]}
-                  />
+                    // options={country_dial}
+                  >
+                    {country_dial.map(country => (
+                      <Option key={country.value} value={country.value}>
+                        <div
+                          className='custom-option'
+                          style={{ display: "flex", gap: "6px" }}>
+                          <span
+                            className={`fi fi-${country.value.toLowerCase()}`}
+                          />
+                          {country.label}
+                        </div>
+                      </Option>
+                    ))}
+                  </Select>
                   <div className='signUp_telWrapper'>
                     <input
                       type='number'
