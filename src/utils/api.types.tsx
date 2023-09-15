@@ -119,4 +119,5 @@ export interface HomeData {
   projects: ProjectsTypes[];
   sages: OurEcosystemData[];
   whyImportant: HeaderTypes[];
+  partnerInfo: any;
 }

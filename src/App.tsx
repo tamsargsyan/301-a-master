@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp";
 import AccountTypeModal from "./components/AccountTypeModal";
 import AgreementTermsModal from "./components/AgreementTermsModal";
 import Privacy from "./components/Privacy";
+import Donation from "./components/Donation";
 
 function App() {
   // const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
     modal: false,
     privacy: "",
   });
+  const [donation, setDonation] = useState(false);
 
   useEffect(() => {
     document.body.classList.toggle(
@@ -46,7 +48,7 @@ function App() {
 
   return (
     <div className='container'>
-      <Navbar setOpenModal={setSignIn} />
+      <Navbar setOpenModal={setSignIn} setDonation={setDonation} />
       <Router />
       <SignIn
         openModal={signIn}
@@ -75,6 +77,11 @@ function App() {
         privacy={privacy}
         setPrivacy={setPrivacy}
         setAccountType={setAccountType}
+      />
+      <Donation
+        setSignUp={setSignUp}
+        donation={donation}
+        setDonation={setDonation}
       />
     </div>
   );

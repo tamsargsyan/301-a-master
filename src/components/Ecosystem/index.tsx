@@ -40,9 +40,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     club301,
     ambassadors,
     experts,
-    partners,
+    partnerInfo,
     foundationFriends,
   } = useSelector((state: RootState) => state.homeData.data);
+  console.log(partnerInfo);
   const data = [
     {
       id: 1,
@@ -140,9 +141,9 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     },
     {
       id: 6,
-      title: partners[0][`title_${lang}`],
+      title: partnerInfo[0][`title_${lang}`],
       headerIcon: PartnersIcon,
-      description: partners[0][`description_${lang}`],
+      description: partnerInfo[0][`description_${lang}`],
       mainImg: PARTNERS,
       btn: [
         {

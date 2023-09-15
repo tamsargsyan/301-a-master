@@ -65,8 +65,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     });
   };
 
-  console.log(country_dial);
-
   return (
     <Modal
       setOpenModal={handleClose}

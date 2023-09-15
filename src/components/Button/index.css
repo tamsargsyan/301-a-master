@@ -64,7 +64,7 @@
 }
 @media screen and (max-width: 975px) {
   .homePage_btn {
-    font-size: clamp(0.9375rem, -0.0004rem + 4.6893vw, 1.758125rem) !important;
+    font-size: 15px !important;
     /* padding: 17px !important; */
   }
 }

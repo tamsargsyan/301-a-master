@@ -40,11 +40,11 @@ const Home = () => {
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   const { loading, data } = useSelector((state: RootState) => state.homeData);
-
+  console.log(data);
   if (loading)
     return (
-      <div className="loadingContainer">
-        <Spin size="large" />
+      <div className='loadingContainer'>
+        <Spin size='large' />
       </div>
     );
 
@@ -59,7 +59,7 @@ const Home = () => {
   } = data;
   const ourMissionShortDesc =
     ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
-
+  
   const sections = [
     {
       id: 1,
