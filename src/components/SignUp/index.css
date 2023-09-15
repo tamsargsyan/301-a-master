@@ -28,6 +28,25 @@
   gap: 35px;
   z-index: 2;
   position: relative;
+  transition: 0.3s ease;
+}
+.accountType:hover {
+  transform: translateY(-15px);
+}
+#accountType-1:hover {
+  box-shadow: 0px 4px 16px 0px rgba(24, 147, 135, 0.3);
+}
+#accountType-2:hover {
+  box-shadow: 0px 4px 16px 0px rgba(238, 136, 66, 0.3);
+}
+#accountType-3:hover {
+  box-shadow: 0px 4px 16px 0px rgba(66, 207, 238, 0.3);
+}
+#accountType-4:hover {
+  box-shadow: 0px 4px 16px 0px rgba(193, 45, 217, 0.3);
+}
+#accountType-5:hover {
+  box-shadow: 0 4px 16px 0 rgb(100, 66, 238);
 }
 .accountType_header img {
   width: 40px;

@@ -115,7 +115,10 @@ const SignUp: React.FC<SignUpProps> = ({
         <div className='signUp_content_accountTypes'>
           <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
           {accountTypes.map(account => (
-            <div className='accountType' key={account.id}>
+            <div
+              className='accountType'
+              key={account.id}
+              id={`accountType-${account.id}`}>
               <div className='accountType_header'>
                 <img src={account.icon} alt='Account' />
                 <span>{account.name}</span>
