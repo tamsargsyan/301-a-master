@@ -14,8 +14,8 @@
 }
 .memberImg {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 48%;
+  left: 50.5%;
   transform: translate(-50%, -50%);
   width: 150px;
   height: 150px;
@@ -69,6 +69,11 @@
 .memberProjects {
   margin-top: 50px;
 }
+.memberProjects span p,
+.memberProjects .flag {
+  font-weight: 500;
+  color: var(--text-color);
+}
 .project {
   background: #fff;
 }
@@ -111,12 +116,30 @@
   bottom: 200px;
   left: 0;
 }
+.memberProjects span p {
+  font-size: clamp(0.75rem, 0rem + 0.625vw, 2.25rem);
+}
+.memberProjects .projectInfo h1,
+.memberProjects .flag {
+  font-size: clamp(0.875rem, 0rem + 0.7292vw, 2.625rem);
+}
+.memberProjects .flag img {
+  padding-top: 1px;
+  width: 0.5403645833333334vw;
+}
 @media screen and (max-width: 1920px) {
   .memberHeader {
     font-size: clamp(1.666875rem, 0.0013rem + 1.6656vw, 2rem);
   }
   .memberProjectHeader p {
     font-size: clamp(1.25rem, 0rem + 1.25vw, 1.5rem);
+  }
+  .memberProjects span p {
+    font-size: clamp(0.625rem, 0rem + 0.625vw, 0.75rem);
+  }
+  .memberProjects .projectInfo h1,
+  .memberProjects .flag {
+    font-size: clamp(0.729375rem, 0.0012rem + 0.7281vw, 0.875rem);
   }
 }
 @media screen and (max-width: 1600px) {
@@ -125,6 +148,13 @@
   }
   .memberProjectHeader p {
     font-size: clamp(1.09375rem, 0rem + 1.25vw, 1.25rem);
+  }
+  .memberProjects span p {
+    font-size: clamp(0.546875rem, 0rem + 0.625vw, 0.625rem);
+  }
+  .memberProjects .projectInfo h1,
+  .memberProjects .flag {
+    font-size: clamp(0.638125rem, -0.0006rem + 0.73vw, 0.729375rem);
   }
 }
 @media screen and (max-width: 1400px) {
@@ -142,6 +172,13 @@
   .memberProjectHeader p {
     font-size: clamp(1rem, 0rem + 1.25vw, 1.09375rem);
   }
+  .memberProjects span p {
+    font-size: clamp(0.5rem, 0rem + 0.625vw, 0.546875rem);
+  }
+  .memberProjects .projectInfo h1,
+  .memberProjects .flag {
+    font-size: clamp(0.583125rem, -0.0035rem + 0.7333vw, 0.638125rem);
+  }
 }
 @media screen and (max-width: 1280px) {
   .memberHeader {
@@ -150,6 +187,13 @@
   .memberProjectHeader p {
     font-size: clamp(0.859375rem, 0rem + 1.25vw, 1rem);
   }
+  .memberProjects span p {
+    font-size: clamp(0.43rem, 0.0022rem + 0.6222vw, 0.5rem);
+  }
+  .memberProjects .projectInfo h1,
+  .memberProjects .flag {
+    font-size: clamp(0.50125rem, 0.0009rem + 0.7278vw, 0.583125rem);
+  }
 }
 @media screen and (max-width: 1100px) {
   .memberHeader {
@@ -157,5 +201,12 @@
   }
   .memberProjectHeader p {
     font-size: clamp(0.625rem, 0rem + 1.25vw, 0.859375rem);
+  }
+  .memberProjects span p {
+    font-size: clamp(0.3125rem, -0.0008rem + 0.6267vw, 0.43rem);
+  }
+  .memberProjects .projectInfo h1,
+  .memberProjects .flag {
+    font-size: clamp(0.364375rem, -0.0006rem + 0.73vw, 0.50125rem);
   }
 }

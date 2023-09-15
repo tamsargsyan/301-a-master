@@ -83,6 +83,10 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+.mentioned_link {
+  color: var(--main-color);
+  font-weight: 700;
+}
 @media screen and (max-width: 975px) {
   .btns {
     flex-direction: column;

@@ -33,8 +33,9 @@ import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import Header from "../../components/Header";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
-import YouTube from "react-youtube";
 import { motion } from "framer-motion";
+import ReactPlayer from "react-player";
+import { storageBase } from "../../utils/storage";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
@@ -56,7 +57,7 @@ const ProjectDetails = () => {
 
   const windowSize = useWindowSize();
   const isThereAnotherMember = projectsData[0].projects[0]?.workTeam.find(
-    (member) => member.img.length > 1
+    member => member.img.length > 1
   );
   const [nextMember, setNextMember] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -80,7 +81,7 @@ const ProjectDetails = () => {
   );
   useEffect(() => {
     if (project) {
-      const observer = new IntersectionObserver((entries) => {
+      const observer = new IntersectionObserver(entries => {
         const entry = entries[0];
         const isIntersectingFromBottom = entry.isIntersecting;
         setIsVisible(isIntersectingFromBottom);
@@ -109,20 +110,10 @@ const ProjectDetails = () => {
     }
   }, [data, windowSize.width]);
 
-  const opts = {
-    width: "100%",
-    height: 500,
-    playerVars: {
-      autoplay: 0,
-    },
-  };
-
-  const videoId = "cZxQchlBDN8";
-
   if (loading)
     return (
-      <div className="loadingContainer">
-        <Spin size="large" />
+      <div className='loadingContainer'>
+        <Spin size='large' />
       </div>
     );
 
@@ -130,18 +121,17 @@ const ProjectDetails = () => {
     <Background
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN_SIDE}
       sidePatter2Style={{ display: "none" }}
-      style={{ flexDirection: "column", padding: "0" }}
-    >
+      style={{ flexDirection: "column", padding: "0" }}>
       {project && ourProject && (
         <>
-          <div className="filteringWrapper">
+          <div className='filteringWrapper'>
             <Header
               title={ourProject[0][`title_${lang}`]}
               description={ourProject[0][`description_${lang}`]}
               icon={ICON}
             />
             {windowSize.width > 800 ? (
-              <div className="filteringBtnsWrapper">
+              <div className='filteringBtnsWrapper'>
                 {projectCategory.map((category: any, i: number) => (
                   <button
                     disabled={true}
@@ -159,14 +149,14 @@ const ProjectDetails = () => {
               <DropDown
                 items={projectsData}
                 onClickItem={() => {}}
-                type="i"
-                text="All"
+                type='i'
+                text='All'
                 style={{ marginBottom: "20px" }}
                 objKey={""}
               />
             )}
             {windowSize.width > 800 ? (
-              <div className="typedBtnsWrapper">
+              <div className='typedBtnsWrapper'>
                 {projectStatus.map((status: any) => (
                   <Fragment key={status.id}>
                     <Button
@@ -179,7 +169,7 @@ const ProjectDetails = () => {
                         border: "none",
                       }}
                       disabled={true}
-                      className="typedBtn"
+                      className='typedBtn'
                     />
                   </Fragment>
                 ))}
@@ -188,85 +178,89 @@ const ProjectDetails = () => {
               <DropDown
                 items={[]}
                 onClickItem={() => {}}
-                type="type"
+                type='type'
                 text={"All"}
                 style={{ width: "55vw", marginRight: "auto" }}
                 objKey={""}
               />
             )}
           </div>
-          <div className="fullProjectContainer">
-            <div className="fullProjectInner">
-              <div className="fullProjectBg">
-                <div className="overlay"></div>
-                <button className="backBtn" onClick={() => navigate(-1)}>
-                  <img src={ARROW} alt="Back Button" />
+          <div className='fullProjectContainer'>
+            <div className='fullProjectInner'>
+              <div className='fullProjectBg'>
+                <div className='overlay'></div>
+                <button className='backBtn' onClick={() => navigate(-1)}>
+                  <img src={ARROW} alt='Back Button' />
                 </button>
                 <img
                   src={FULL_PROJECT_1}
-                  alt="Project Background"
-                  className="bgImg"
+                  alt='Project Background'
+                  className='bgImg'
                 />
-                <h1 className="fullProjectBg_title">
+                <h1 className='fullProjectBg_title'>
                   {project[`project_name_${lang}`]}
                 </h1>
               </div>
-              <div className="fullProject_inner">
-                <div className="fullProject_titleInner">
-                  <div className="titlePart">
+              <div className='fullProject_inner'>
+                <div className='fullProject_titleInner'>
+                  <div className='titlePart'>
                     <h2>{project[`project_name_${lang}`]}</h2>
-                    <div className="flag">
-                      <img src={FLAG} alt="Flag" />
+                    <div className='flag'>
+                      <img src={FLAG} alt='Flag' />
                       <span>{15}</span>
                     </div>
                   </div>
-                  <div className="ourProject__author">
-                    <img src={AUTHOR_1} alt="Author" />
+                  <div className='ourProject__author'>
+                    <img src={AUTHOR_1} alt='Author' />
                     <span>Peter Nemoy</span>
                   </div>
                 </div>
-                <div className="fullProject_problemInner">
-                  <div className="problem_header">
-                    <div className="problem_heading">
-                      <img src={PATTERN} alt="Pattern" />
+                <div className='fullProject_problemInner'>
+                  <div className='problem_header'>
+                    <div className='problem_heading'>
+                      <img src={PATTERN} alt='Pattern' />
                       <h2>Problem</h2>
                     </div>
                     {windowSize.width > 600 && (
-                      <button className="download_pdf">
+                      <button className='download_pdf'>
                         <span>{t("btns.download-pdf")}</span>
-                        <img src={PDF} alt="Pdf" />
+                        <img src={PDF} alt='Pdf' />
                       </button>
                     )}
                   </div>
                   <div
-                    className="problem_inner"
+                    className='problem_inner'
                     dangerouslySetInnerHTML={{
                       __html: project[`problem_description_${lang}`],
                     }}
                   />
                   {windowSize.width < 600 && (
-                    <button className="download_pdf">
+                    <button className='download_pdf'>
                       <span>dawload presentation pdf</span>
-                      <img src={PDF} alt="Pdf" />
+                      <img src={PDF} alt='Pdf' />
                     </button>
                   )}
                 </div>
-                <div className="videoContainer _inner">
-                  <YouTube videoId={videoId} opts={opts} />
+                <div className='videoContainer _inner'>
+                  <ReactPlayer
+                    url={`${storageBase}/${project.video}`}
+                    width='100%'
+                    controls
+                  />
                 </div>
-                <div className="roadMapContainer">
-                  <div className="roadMap_heading problem_heading">
-                    <img src={PATTERN} alt="Pattern" />
+                <div className='roadMapContainer'>
+                  <div className='roadMap_heading problem_heading'>
+                    <img src={PATTERN} alt='Pattern' />
                     <h2>Road Map</h2>
                   </div>
-                  <div className="roadMap_inner _inner">
-                    <div className="fullProject_slider">
-                      <div className="chartContainer">
-                        <div className="chart_line"></div>
+                  <div className='roadMap_inner _inner'>
+                    <div className='fullProject_slider'>
+                      <div className='chartContainer'>
+                        <div className='chart_line'></div>
                         {project?.month_data.map((month: any, i: number) => {
                           return (
-                            <div className="chart" key={i}>
-                              <div className="chart_info">
+                            <div className='chart' key={i}>
+                              <div className='chart_info'>
                                 <h1>{month.month}</h1>
                                 <div
                                   dangerouslySetInnerHTML={{
@@ -274,12 +268,11 @@ const ProjectDetails = () => {
                                   }}
                                 />
                               </div>
-                              <div className="chart_month">
+                              <div className='chart_month'>
                                 <div
-                                  className="month_circle"
-                                  style={{ backgroundColor: colors[i] }}
-                                ></div>
-                                <div className="month">
+                                  className='month_circle'
+                                  style={{ backgroundColor: colors[i] }}></div>
+                                <div className='month'>
                                   {month[`month_${lang}`]}
                                 </div>
                               </div>
@@ -288,18 +281,18 @@ const ProjectDetails = () => {
                         })}
                       </div>
                     </div>
-                    <div className="budgetContainer">
-                      <div className="budget">
-                        <img src={BUDGET} alt="Budget" />
-                        <div className="budgetPrice">
+                    <div className='budgetContainer'>
+                      <div className='budget'>
+                        <img src={BUDGET} alt='Budget' />
+                        <div className='budgetPrice'>
                           <span>Budget</span>
                           {/* <h2>{project.budget_price}$</h2> */}
                           <h2>500$</h2>
                         </div>
                       </div>
-                      <div className="collected">
-                        <img src={COLLECTED} alt="Collected" />
-                        <div className="collectedPrice">
+                      <div className='collected'>
+                        <img src={COLLECTED} alt='Collected' />
+                        <div className='collectedPrice'>
                           <span>Collected</span>
                           {/* <h2>{project.collected_price}$</h2> */}
                           <h2>500$</h2>
@@ -313,39 +306,38 @@ const ProjectDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className="workTeamContainer">
-                  <div className="roadMap_heading problem_heading">
-                    <img src={PATTERN} alt="Pattern" />
+                <div className='workTeamContainer'>
+                  <div className='roadMap_heading problem_heading'>
+                    <img src={PATTERN} alt='Pattern' />
                     <h2>Work Team</h2>
                   </div>
-                  <div className="teamMembers _inner">
-                    <div className="firstTeam">
+                  <div className='teamMembers _inner'>
+                    <div className='firstTeam'>
                       {projectsData[0].projects[0].workTeam
                         ?.slice(0, 3)
                         .map((team, i) => (
-                          <div className="memberWrapper" key={team.id}>
-                            <div className="memberWrapper_withoutName">
+                          <div className='memberWrapper' key={team.id}>
+                            <div className='memberWrapper_withoutName'>
                               {isThereAnotherMember?.id === team.id && (
                                 <button
-                                  className="arrowBtn_teamMember"
+                                  className='arrowBtn_teamMember'
                                   onClick={() =>
                                     nextMember > 0 &&
-                                    setNextMember((prev) => prev - 1)
-                                  }
-                                >
-                                  <img src={ARROW_MEMBER_LEFT} alt="Arrow" />
+                                    setNextMember(prev => prev - 1)
+                                  }>
+                                  <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
                                 </button>
                               )}
-                              <div className="member">
+                              <div className='member'>
                                 <img
                                   src={team.bgImg}
-                                  alt="Team Member"
-                                  className="teamMember_bgImg"
+                                  alt='Team Member'
+                                  className='teamMember_bgImg'
                                 />
                                 <img
                                   src={team.img[nextMember] || team.img[0]}
-                                  alt="Team Member"
-                                  className="teamMember_img"
+                                  alt='Team Member'
+                                  className='teamMember_img'
                                 />
                                 <RevolveText
                                   span={50}
@@ -357,41 +349,40 @@ const ProjectDetails = () => {
                               </div>
                               {isThereAnotherMember?.id === team.id && (
                                 <button
-                                  className="arrowBtn_teamMember"
+                                  className='arrowBtn_teamMember'
                                   onClick={() =>
                                     nextMember < team.img.length &&
-                                    setNextMember((prev) => prev + 1)
-                                  }
-                                >
-                                  <img src={ARROW_MEMBER_RIGHT} alt="Arrow" />
+                                    setNextMember(prev => prev + 1)
+                                  }>
+                                  <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
                                 </button>
                               )}
                             </div>
-                            <p className="member_name">{team.name}</p>
+                            <p className='member_name'>{team.name}</p>
                           </div>
                         ))}
                     </div>
-                    <div className="secondTeam">
+                    <div className='secondTeam'>
                       {projectsData[0].projects[0].workTeam
                         ?.slice(3)
-                        .map((team) => (
-                          <div className="memberWrapper" key={team.id}>
-                            <div className="memberWrapper_withoutName">
+                        .map(team => (
+                          <div className='memberWrapper' key={team.id}>
+                            <div className='memberWrapper_withoutName'>
                               {isThereAnotherMember?.id === team.id && (
-                                <button className="arrowBtn_teamMember">
-                                  <img src={ARROW_MEMBER_LEFT} alt="Arrow" />
+                                <button className='arrowBtn_teamMember'>
+                                  <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
                                 </button>
                               )}
-                              <div className="member">
+                              <div className='member'>
                                 <img
                                   src={team.bgImg}
-                                  alt="Team Member"
-                                  className="teamMember_bgImg"
+                                  alt='Team Member'
+                                  className='teamMember_bgImg'
                                 />
                                 <img
                                   src={team.img[nextMember] || team.img[0]}
-                                  alt="Team Member"
-                                  className="teamMember_img"
+                                  alt='Team Member'
+                                  className='teamMember_img'
                                 />
                                 <RevolveText
                                   span={50}
@@ -402,47 +393,45 @@ const ProjectDetails = () => {
                                 />
                               </div>
                               {isThereAnotherMember?.id === team.id && (
-                                <button className="arrowBtn_teamMember">
-                                  <img src={ARROW_MEMBER_RIGHT} alt="Arrow" />
+                                <button className='arrowBtn_teamMember'>
+                                  <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
                                 </button>
                               )}
                             </div>
-                            <p className="member_name">{team.name}</p>
+                            <p className='member_name'>{team.name}</p>
                           </div>
                         ))}
                     </div>
                   </div>
                 </div>
-                <div className="partnersContainer">
-                  <div className="roadMap_heading problem_heading">
-                    <img src={PATTERN} alt="Pattern" />
+                <div className='partnersContainer'>
+                  <div className='roadMap_heading problem_heading'>
+                    <img src={PATTERN} alt='Pattern' />
                     <h2>Partners</h2>
                   </div>
-                  <motion.div className="partners _inner" ref={carousel}>
+                  <motion.div className='partners _inner' ref={carousel}>
                     <motion.div
-                      drag="x"
+                      drag='x'
                       dragConstraints={{ right: 0, left: -width }}
-                      className="innerPartners"
-                    >
+                      className='innerPartners'>
                       {partners.map((partner: any) => (
-                        <motion.div className="partner" key={partner.id}>
+                        <motion.div className='partner' key={partner.id}>
                           <img src={ROSGOSTRAKH} alt={partner.name} />
                         </motion.div>
                       ))}
                     </motion.div>
                   </motion.div>
                 </div>
-                <div className="_inner dontaionBtns_wrapper" ref={donationsRef}>
+                <div className='_inner dontaionBtns_wrapper' ref={donationsRef}>
                   <div
                     className={`${
                       !isVisible && "dontaionBtnsFixed"
                     } dontaionBtns`}
-                    style={{ position: isVisible ? "static" : "fixed" }}
-                  >
+                    style={{ position: isVisible ? "static" : "fixed" }}>
                     <Button
-                      text="add to interesting"
+                      text='add to interesting'
                       link={false}
-                      to=""
+                      to=''
                       icon={HEART}
                       style={{
                         color: "#717883",
@@ -452,7 +441,7 @@ const ProjectDetails = () => {
                         fontWeight: 600,
                         width: "100%",
                       }}
-                      className="donationBtn"
+                      className='donationBtn'
                     />
                     <Button
                       text={t("btns.donate")}
@@ -465,7 +454,7 @@ const ProjectDetails = () => {
                         padding: "12px 35px",
                         width: !isVisible ? "auto" : "100%",
                       }}
-                      className="donationBtn"
+                      className='donationBtn'
                     />
                   </div>
                 </div>

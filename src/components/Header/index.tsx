@@ -20,6 +20,7 @@ interface HeaderProps {
   innerClassName?: string;
   ourMissionDesc?: string;
   id?: string;
+  faqDesc?: any;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -36,6 +37,7 @@ const Header: React.FC<HeaderProps> = ({
   innerClassName,
   ourMissionDesc,
   id,
+  faqDesc,
 }) => {
   const windowSize = useWindowSize();
   const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
@@ -62,15 +64,15 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <div className={`${className} headerContainer`} id={id} style={style}>
       {icon && !isEcosystem && (
-        <div className="icon">
-          <img src={icon} alt="Icon" />
+        <div className='icon'>
+          <img src={icon} alt='Icon' />
         </div>
       )}
-      <div className="headerContent">
+      <div className='headerContent'>
         <div className={`${isEcosystem && "header_ecosystem"} header`}>
           {isEcosystem && (
-            <div className="ecosystemImg">
-              <img src={icon} alt="Ecosystem" />
+            <div className='ecosystemImg'>
+              <img src={icon} alt='Ecosystem' />
             </div>
           )}
           <h1>{title}</h1>
@@ -79,9 +81,8 @@ const Header: React.FC<HeaderProps> = ({
               <p>
                 {ourMission.txt}
                 <NavLink
-                  to="/301/about-us/#what-are-we-doing"
-                  style={{ color: "var(--main-color)" }}
-                >
+                  to='/301/about-us/#what-are-we-doing'
+                  style={{ color: "var(--main-color)" }}>
                   {ourMission.link}
                 </NavLink>
               </p>
@@ -90,8 +91,8 @@ const Header: React.FC<HeaderProps> = ({
             ))}
         </div>
         {windowSize.width < 975 && mainImg && (
-          <div className="mainImgHeader">
-            <img src={mainImg} alt="Main" />
+          <div className='mainImgHeader'>
+            <img src={mainImg} alt='Main' />
           </div>
         )}
         {description !== "" && (
@@ -100,8 +101,16 @@ const Header: React.FC<HeaderProps> = ({
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}
+        {faqDesc &&
+          faqDesc.map((desc: string, i: number) => (
+            <div
+              key={i}
+              className={`${innerClassName} inner`}
+              dangerouslySetInnerHTML={{ __html: desc }}
+            />
+          ))}
         {btns && (
-          <div className="btns">
+          <div className='btns'>
             {btns.map((btn: any, index: number) => (
               <Button
                 key={index}
