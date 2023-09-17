@@ -16,6 +16,8 @@ interface AccountTypeModalProps {
   setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   setAgreementTerms: (arg: boolean) => void;
   setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
+  handleClose: () => void;
+  setModalName: (arg: string) => void;
 }
 
 const filterOption = (
@@ -29,16 +31,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   setAccountType,
   setAgreementTerms,
   setPrivacy,
+  handleClose,
+  setModalName,
 }) => {
-  const handleClose = () => {
-    setSignUp(true);
-    setAccountType({
-      open: false,
-      id: 0,
-      name: "",
-    });
-  };
-
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
   };
@@ -63,6 +58,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
       id: 0,
       name: "",
     });
+    setModalName("accountTypeModal");
   };
 
   return (

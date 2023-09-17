@@ -43,7 +43,6 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     partnerInfo,
     foundationFriends,
   } = useSelector((state: RootState) => state.homeData.data);
-  console.log(partnerInfo);
   const data = [
     {
       id: 1,

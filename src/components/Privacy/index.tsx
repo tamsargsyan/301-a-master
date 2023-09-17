@@ -5,24 +5,15 @@ interface PrivacyProps {
   privacy: any;
   setPrivacy: any;
   setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
+  handleClose: () => void;
 }
 
 const Privacy: React.FC<PrivacyProps> = ({
   privacy,
   setPrivacy,
   setAccountType,
+  handleClose,
 }) => {
-  const handleClose = () => {
-    setPrivacy({
-      modal: false,
-      privacy: "",
-    });
-    setAccountType({
-      name: "donor",
-      id: 1,
-      open: true,
-    });
-  };
   return (
     <Modal setOpenModal={handleClose} openModal={privacy.modal}>
       <EcosystemModal

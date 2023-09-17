@@ -36,6 +36,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import ReactPlayer from "react-player";
 import { storageBase } from "../../utils/storage";
+import { scrollToTop } from "../../globalFunctions/scrollToTop";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
@@ -71,6 +72,10 @@ const ProjectDetails = () => {
     //@ts-ignore
     dispatch(fetchingProjectDetails(`project-details/${id}`));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
@@ -193,7 +198,7 @@ const ProjectDetails = () => {
                   <img src={ARROW} alt='Back Button' />
                 </button>
                 <img
-                  src={FULL_PROJECT_1}
+                  src={`${storageBase}/${project.image}`}
                   alt='Project Background'
                   className='bgImg'
                 />

@@ -1,0 +1,10 @@
+.oneTimeDonation {
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+.oneTimeDonation form {
+  width: 300px;
+}

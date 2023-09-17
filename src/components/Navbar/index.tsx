@@ -51,9 +51,14 @@ export const menu = [
 interface NavbarProps {
   setOpenModal: (arg: boolean) => void;
   setDonation: (arg: boolean) => void;
+  setModalName: (arg: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ setOpenModal, setDonation }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  setOpenModal,
+  setDonation,
+  setModalName,
+}) => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -169,7 +174,10 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, setDonation }) => {
             link={false}
             to=''
             className='signIn-btn'
-            onClick={() => setDonation(true)}
+            onClick={() => {
+              setDonation(true);
+              setModalName("donate");
+            }}
             style={{
               padding: "9px 23px",
               background: "var(--main-color)",
@@ -181,7 +189,10 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, setDonation }) => {
             link={false}
             to=''
             className='signIn-btn'
-            onClick={() => setOpenModal(true)}
+            onClick={() => {
+              setOpenModal(true);
+              setModalName("signIn");
+            }}
             style={{ padding: "9px 23px" }}
           />
         </div>

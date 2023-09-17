@@ -19,6 +19,7 @@ interface SignUpProps {
   setSignUp: (arg: boolean) => void;
   setSignIn: (arg: boolean) => void;
   setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
+  handleClose: () => void;
 }
 
 interface AccountType {
@@ -35,12 +36,8 @@ const SignUp: React.FC<SignUpProps> = ({
   setSignUp,
   setSignIn,
   setAccountType,
+  handleClose,
 }) => {
-  const handleCloseSignUp = () => {
-    setSignUp(false);
-    setSignIn(true);
-  };
-
   const accountTypes: AccountType[] = [
     {
       id: 1,
@@ -108,10 +105,10 @@ const SignUp: React.FC<SignUpProps> = ({
   };
   return (
     <Modal
-      setOpenModal={handleCloseSignUp}
+      setOpenModal={handleClose}
       openModal={signUp}
       className='signUp_overlay'>
-      <EcosystemModal onClose={handleCloseSignUp} header='select account type'>
+      <EcosystemModal onClose={handleClose} header='select account type'>
         <div className='signUp_content_accountTypes'>
           <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
           {accountTypes.map(account => (

@@ -40,7 +40,6 @@ const Home = () => {
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   const { loading, data } = useSelector((state: RootState) => state.homeData);
-  console.log(data);
   if (loading)
     return (
       <div className='loadingContainer'>

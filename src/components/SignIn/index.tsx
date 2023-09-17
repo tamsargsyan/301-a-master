@@ -10,15 +10,19 @@ import { Formik } from "formik";
 import "./index.css";
 
 interface SignInProps {
-  openModal: boolean;
-  setOpenModal: (arg: boolean) => void;
+  signIn: boolean;
+  setSignIn: (arg: boolean) => void;
   setSignUp: (arg: boolean) => void;
+  setPrivacy: any;
+  setModalName: (arg: string) => void;
 }
 
 const SignIn: React.FC<SignInProps> = ({
-  openModal,
-  setOpenModal,
+  signIn,
+  setSignIn,
   setSignUp,
+  setPrivacy,
+  setModalName,
 }) => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const handleForgetPassword = () => {
@@ -26,11 +30,17 @@ const SignIn: React.FC<SignInProps> = ({
   };
 
   useEffect(() => {
-    !openModal && setForgetPassword(false);
-  }, [openModal]);
+    !signIn && setForgetPassword(false);
+  }, [signIn]);
+
+  const handlePrivacy = (privacy: string) => {
+    setPrivacy({ modal: true, privacy });
+    setSignIn(false);
+    setModalName("signInModal");
+  };
 
   return (
-    <Modal setOpenModal={setOpenModal} openModal={openModal}>
+    <Modal setOpenModal={setSignIn} openModal={signIn}>
       <div className='modal_signIn'>
         <div className='modal_signIn_leftSide'>
           <img src={PATTERN_1} alt='Pattern' />
@@ -132,9 +142,17 @@ const SignIn: React.FC<SignInProps> = ({
               <div className='signIn_another_privacy'>
                 <p>
                   By continuing, you agree 301’s <br></br>
-                  <button className='mentioned_txt'>Terms of Services</button>
+                  <button
+                    className='mentioned_txt'
+                    onClick={() => handlePrivacy("Terms of Services")}>
+                    Terms of Services
+                  </button>
                   and
-                  <button className='mentioned_txt'> Privacy Policy</button>
+                  <button
+                    className='mentioned_txt'
+                    onClick={() => handlePrivacy("Privacy Policy")}>
+                    Privacy Policy
+                  </button>
                 </p>
               </div>
             </div>

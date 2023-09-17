@@ -9,12 +9,14 @@ interface DonationProps {
   setSignUp: (arg: boolean) => void;
   setDonation: (arg: boolean) => void;
   donation: boolean;
+  setOneTimeDonation: (arg: boolean) => void;
 }
 
 const Donation: React.FC<DonationProps> = ({
   setSignUp,
   setDonation,
   donation,
+  setOneTimeDonation,
 }) => {
   const donations_cards = [
     {
@@ -39,12 +41,13 @@ const Donation: React.FC<DonationProps> = ({
 
   const handleCard = (id: number) => {
     id === 3 && setSignUp(true);
+    id === 1 && setOneTimeDonation(true);
     setDonation(false);
   };
 
   return (
     <Modal setOpenModal={setDonation} openModal={donation}>
-      <EcosystemModal onClose={() => console.log("asd")} header='donate'>
+      <EcosystemModal onClose={() => setDonation(false)} header='donate'>
         <div className='donationWrapper'>
           <div className='donation'>
             <div className='donation_info'>
