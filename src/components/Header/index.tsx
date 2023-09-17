@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({
               <p>
                 {ourMission.txt}
                 <NavLink
-                  to='/301/about-us/#what-are-we-doing'
+                  to='/301/about-us/#faq'
                   style={{ color: "var(--main-color)" }}>
                   {ourMission.link}
                 </NavLink>

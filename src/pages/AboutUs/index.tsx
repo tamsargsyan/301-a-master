@@ -33,17 +33,13 @@ const AboutUs = () => {
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  const whatAreWeDoingRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (
-      data &&
-      window.location.hash === "#what-are-we-doing" &&
-      whatAreWeDoingRef.current
-    ) {
-      whatAreWeDoingRef.current.scrollIntoView();
+    if (data && window.location.hash === "#faq" && faqRef.current) {
+      faqRef.current.scrollIntoView();
     }
-  }, [whatAreWeDoingRef, data]);
+  }, [faqRef, data]);
 
   if (loading)
     return (
@@ -83,7 +79,7 @@ const AboutUs = () => {
             )
           );
         })}
-        <div ref={whatAreWeDoingRef} className='faq_qesutions'>
+        <div ref={faqRef} className='faq_qesutions'>
           {faq &&
             //@ts-ignore
             faq.map((f, i) => (
