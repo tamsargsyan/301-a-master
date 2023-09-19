@@ -10,6 +10,7 @@ interface DonationProps {
   setDonation: (arg: boolean) => void;
   donation: boolean;
   setOneTimeDonation: (arg: boolean) => void;
+  setDonateProjects: (arg: boolean) => void;
 }
 
 const Donation: React.FC<DonationProps> = ({
@@ -17,6 +18,7 @@ const Donation: React.FC<DonationProps> = ({
   setDonation,
   donation,
   setOneTimeDonation,
+  setDonateProjects,
 }) => {
   const donations_cards = [
     {
@@ -40,8 +42,9 @@ const Donation: React.FC<DonationProps> = ({
   ];
 
   const handleCard = (id: number) => {
-    id === 3 && setSignUp(true);
     id === 1 && setOneTimeDonation(true);
+    id == 2 && setDonateProjects(true);
+    id === 3 && setSignUp(true);
     setDonation(false);
   };
 

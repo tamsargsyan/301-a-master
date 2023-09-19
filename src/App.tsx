@@ -11,6 +11,8 @@ import AgreementTermsModal from "./components/AgreementTermsModal";
 import Privacy from "./components/Privacy";
 import Donation from "./components/Donation";
 import OneTimeDonation from "./components/OneTimeDonation";
+import DonationProjectsModal from "./components/DonationProjectsModal";
+import DonateToTheProject from "./components/DonateToTheProject";
 
 function App() {
   // const location = useLocation();
@@ -34,6 +36,8 @@ function App() {
   const [donation, setDonation] = useState(false);
   const [modalName, setModalName] = useState("");
   const [oneTimeDonation, setOneTimeDonation] = useState(false);
+  const [donateProjects, setDonateProjects] = useState(false);
+  const [donateSingleProject, setDonateSingleProject] = useState(false);
 
   useEffect(() => {
     document.body.classList.toggle(
@@ -44,7 +48,9 @@ function App() {
         agreementTerms ||
         privacy.modal ||
         donation ||
-        oneTimeDonation
+        oneTimeDonation ||
+        donateProjects ||
+        donateSingleProject
     );
     return () => {
       document.body.classList.remove("no-scroll");
@@ -57,6 +63,8 @@ function App() {
     privacy.modal,
     donation,
     oneTimeDonation,
+    donateProjects,
+    donateSingleProject,
   ]);
 
   useEffect(() => {
@@ -118,16 +126,15 @@ function App() {
             modal: false,
             privacy: "",
           });
-          if (modalName === "oneTimeDonation") {
-            setOneTimeDonation(true);
-          } else if (modalName === "signInModal") {
-            setSignIn(true);
-          } else if (modalName === "accountTypeModal")
+          if (modalName === "oneTimeDonation") setOneTimeDonation(true);
+          if (modalName === "signInModal") setSignIn(true);
+          if (modalName === "accountTypeModal")
             setAccountType({
               name: "donor",
               id: 1,
               open: true,
             });
+          if (modalName === "donateToProject") setDonateSingleProject(true);
         }}
       />
       <Donation
@@ -135,6 +142,7 @@ function App() {
         donation={donation}
         setDonation={setDonation}
         setOneTimeDonation={setOneTimeDonation}
+        setDonateProjects={setDonateProjects}
       />
       <OneTimeDonation
         oneTimeDonation={oneTimeDonation}
@@ -145,6 +153,19 @@ function App() {
           setOneTimeDonation(false);
           setDonation(true);
         }}
+      />
+      <DonationProjectsModal
+        donateProjects={donateProjects}
+        setDonateProjects={setDonateProjects}
+        setDonation={setDonation}
+        setDonateSingleProject={setDonateSingleProject}
+      />
+      <DonateToTheProject
+        setDonateSingleProject={setDonateSingleProject}
+        setDonateProjects={setDonateProjects}
+        donateSingleProject={donateSingleProject}
+        setPrivacy={setPrivacy}
+        setModalName={setModalName}
       />
     </div>
   );

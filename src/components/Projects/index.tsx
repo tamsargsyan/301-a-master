@@ -8,7 +8,7 @@ import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import "./index.css";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ import { RootState } from "../../store/configureStore";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { HeaderTypes, ProjectsTypes } from "../../utils/api.types";
 import { HeaderKeyOf, ProjectKeyOf } from "../../utils/keyof.type";
+import SingleProjectBox from "../SingleProjectBox";
 
 interface ProjectsProps {
   OurProjects: HeaderTypes[];
@@ -94,39 +95,24 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                       }}>
                       {projects.map(project => {
                         return (
-                          <motion.div className='project' key={project.id}>
-                            <div className='projectImg'></div>
-                            <div className='projectInfo'>
-                              <h1>
-                                {
-                                  project[
-                                    `project_name_${lang}` as keyof ProjectKeyOf
-                                  ]
-                                }
-                              </h1>
-                              <span>
-                                {removeHtmlTags(
-                                  project[
-                                    `description_${lang}` as keyof ProjectKeyOf
-                                  ]
-                                )}
-                              </span>
-                              <div className='author'>
-                                <span>
-                                  {
-                                    project[
-                                      `sector_${lang}` as keyof ProjectKeyOf
-                                    ]
-                                  }
-                                </span>
-                                <span className='flag'>
-                                  <img src={FLAG} alt='Flag' />
-                                  {/* {project.flag} */}
-                                  15
-                                </span>
-                              </div>
-                            </div>
-                          </motion.div>
+                          <Fragment key={project.id}>
+                            <SingleProjectBox
+                              title={
+                                project[
+                                  `project_name_${lang}` as keyof ProjectKeyOf
+                                ]
+                              }
+                              description={removeHtmlTags(
+                                project[
+                                  `description_${lang}` as keyof ProjectKeyOf
+                                ]
+                              )}
+                              flag={10}
+                              author={
+                                project[`sector_${lang}` as keyof ProjectKeyOf]
+                              }
+                            />
+                          </Fragment>
                         );
                       })}
                     </motion.div>
