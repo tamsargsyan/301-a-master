@@ -121,3 +121,7 @@ export interface HomeData {
   whyImportant: HeaderTypes[];
   partnerInfo: any;
 }
+
+export interface PrivactPolicy {
+  privacyPolicy: HeaderTypes;
+}

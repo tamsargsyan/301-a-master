@@ -2,15 +2,18 @@ import { useState } from "react";
 import { apiService } from "../services/apiService";
 import {
   FETCH_START,
+  FETCH_SUCCESS,
+  FETCH_ERROR,
   PROJECT_FETCH_ERROR,
   PROJECT_FETCH_START,
   PROJECT_FETCH_SUCCESS,
   FETCH_ABOUT_US_START,
   FETCH_ABOUT_US_SUCCESS,
   FETCH_ABOUT_US_ERROR,
+  FETCH_PRIVACY_POLICY_START,
+  FETCH_PRIVACY_POLICY_SUCCESS,
+  FETCH_PRIVACY_POLICY_ERROR,
 } from "../utils/action.types";
-import { FETCH_SUCCESS } from "../utils/action.types";
-import { FETCH_ERROR } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
   dispatch({ type: FETCH_START });
@@ -52,6 +55,17 @@ export const fetchingAboutUs = (data: string) => async (dispatch: any) => {
     dispatch({ type: FETCH_ABOUT_US_ERROR, payload: error.message });
   }
 };
+
+export const fetchingPrivacyPolicy =
+  (data: string) => async (dispatch: any) => {
+    dispatch({ type: FETCH_PRIVACY_POLICY_START });
+    try {
+      const response = await apiService.get(data);
+      dispatch({ type: FETCH_PRIVACY_POLICY_SUCCESS, payload: response });
+    } catch (error: any) {
+      dispatch({ type: FETCH_PRIVACY_POLICY_ERROR, payload: error.message });
+    }
+  };
 
 export const usePostRequest = (endpoint: string, data: Object) => {
   const [postLoading, setLoading] = useState(false);

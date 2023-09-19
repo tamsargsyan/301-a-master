@@ -1,5 +1,5 @@
 .agreementTerms {
-  height: 400px;
+  height: 65vh;
   overflow-y: auto;
   color: #313a4b;
   text-align: justify;
@@ -8,6 +8,11 @@
   font-size: clamp(1.25rem, 0rem + 1.0417vw, 3.75rem);
   background: #fff;
   padding: 40px;
+}
+.agreementTerms_loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 @media screen and (max-width: 1920px) {
   .agreementTerms {
