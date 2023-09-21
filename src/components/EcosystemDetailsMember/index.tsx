@@ -1,5 +1,5 @@
 import PERSON from "../../assets/ecosystemDetails/person1.png";
-import ELIPSE from "../../assets/ecosystemDetails/elipse.svg";
+import ELIPSE from "../../assets/ecosystemDetails/elipse-sages.svg";
 import ARROW from "../../assets/ecosystemDetails/arrow-red.svg";
 import FLAG from "../../assets/flag.svg";
 import "./index.css";
@@ -8,7 +8,19 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
-const EcoSystemDetailsMember = () => {
+interface EcoSystemDetailsMemberProps {
+  expertProject?: {
+    name: string;
+    color: string;
+    colorWeak: string;
+    icon: string;
+    elipse: string;
+  };
+}
+
+const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
+  expertProject,
+}) => {
   const arr = new Array(6).fill("");
   const windowSize = useWindowSize();
   const [width, setWidth] = useState(0);
@@ -36,7 +48,11 @@ const EcoSystemDetailsMember = () => {
     <div className='ecoSystemDetailsMember'>
       <div className='memberHeader'>
         <div className='memberImg_container'>
-          <img src={ELIPSE} alt='Elipse' className='memberElipse' />
+          <img
+            src={expertProject?.elipse}
+            alt='Elipse'
+            className='memberElipse'
+          />
           <img src={PERSON} alt='Member' className='memberImg' />
         </div>
         <span>Alex KALENDEROĞLU</span>
@@ -58,14 +74,20 @@ const EcoSystemDetailsMember = () => {
               <button
                 onClick={handleBack}
                 style={{
-                  background: currentIndex === 0 ? "#DD264E99" : "#DD264E",
+                  background:
+                    currentIndex === 0
+                      ? expertProject?.colorWeak
+                      : expertProject?.color,
                 }}>
                 <img src={ARROW} alt='Arrow' />
               </button>
               <button
                 onClick={handleNext}
                 style={{
-                  background: currentIndex === 1 ? "#DD264E99" : "#DD264E",
+                  background:
+                    currentIndex === 1
+                      ? expertProject?.colorWeak
+                      : expertProject?.color,
                 }}>
                 <img src={ARROW} alt='Arrow' />
               </button>
@@ -101,8 +123,22 @@ const EcoSystemDetailsMember = () => {
               ))}
             </motion.div>
           </motion.div>
-          <NavLink to='/301/projects' className='otherProjects_link'>
-            Other Projects <img src={ARROW} alt='Arrow' />
+          <NavLink
+            to='/301/projects'
+            className='otherProjects_link'
+            style={{ color: expertProject?.color }}>
+            Other Projects
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='9'
+              height='16'
+              viewBox='0 0 9 16'
+              fill='none'>
+              <path
+                d='M8.70711 8.70711C9.09763 8.31658 9.09763 7.68342 8.70711 7.29289L2.34314 0.928934C1.95262 0.53841 1.31945 0.53841 0.928928 0.928935C0.538404 1.31946 0.538405 1.95262 0.928929 2.34315L6.58579 8L0.928935 13.6569C0.538411 14.0474 0.538411 14.6805 0.928936 15.0711C1.31946 15.4616 1.95263 15.4616 2.34315 15.0711L8.70711 8.70711ZM6 9L8 9L8 7L6 7L6 9Z'
+                fill={expertProject?.color}
+              />
+            </svg>
           </NavLink>
         </div>
       </div>

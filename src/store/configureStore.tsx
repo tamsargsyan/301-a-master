@@ -5,6 +5,7 @@ import projectDetailsReducer from "../reducers/projectDetailsReducer";
 import languageDitactorReducer from "../reducers/languageReducer";
 import aboutUsReducer from "../reducers/aboutUsReducer";
 import privacyPolicyReducer from "../reducers/privacyPolicyReducer";
+import expertProjectReducer from "../reducers/expertProjectReducer";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     languageDitactor: languageDitactorReducer,
     aboutUs: aboutUsReducer,
     privacyPolicy: privacyPolicyReducer,
+    expertProject: expertProjectReducer,
     // Add other reducers here
   },
 });

@@ -13,6 +13,9 @@ import {
   FETCH_PRIVACY_POLICY_START,
   FETCH_PRIVACY_POLICY_SUCCESS,
   FETCH_PRIVACY_POLICY_ERROR,
+  FETCH_EXPERT_PROJECT_START,
+  FETCH_EXPERT_PROJECT_SUCCESS,
+  FETCH_EXPERT_PROJECT_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -64,6 +67,17 @@ export const fetchingPrivacyPolicy =
       dispatch({ type: FETCH_PRIVACY_POLICY_SUCCESS, payload: response });
     } catch (error: any) {
       dispatch({ type: FETCH_PRIVACY_POLICY_ERROR, payload: error.message });
+    }
+  };
+
+export const fetchingExpertProject =
+  (data: string) => async (dispatch: any) => {
+    dispatch({ type: FETCH_EXPERT_PROJECT_START });
+    try {
+      const response = await apiService.get(data);
+      dispatch({ type: FETCH_EXPERT_PROJECT_SUCCESS, payload: response });
+    } catch (error: any) {
+      dispatch({ type: FETCH_EXPERT_PROJECT_ERROR, payload: error.message });
     }
   };
 

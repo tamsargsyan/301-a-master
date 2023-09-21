@@ -5,6 +5,7 @@ import projectDetailsReducer from "./projectDetailsReducer";
 import languageDitactorReducer from "./languageReducer";
 import aboutUsReducer from "./aboutUsReducer";
 import privacyPolicyReducer from "./privacyPolicyReducer";
+import expertProjectReducer from "./expertProjectReducer";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   languageDitactor: languageDitactorReducer,
   aboutUs: aboutUsReducer,
   privacyPolicy: privacyPolicyReducer,
+  expertProject: expertProjectReducer,
 });
 
 export default rootReducer;
