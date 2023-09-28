@@ -8,6 +8,7 @@ import PATTERN_2 from "../../assets/patterns/login-big.svg";
 import { signInSchema } from "../../Validation";
 import { Formik } from "formik";
 import "./index.css";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface SignInProps {
   signIn: boolean;
@@ -39,16 +40,23 @@ const SignIn: React.FC<SignInProps> = ({
     setModalName("signInModal");
   };
 
+  const windowSize = useWindowSize();
+
   return (
     <Modal setOpenModal={setSignIn} openModal={signIn}>
       <div className='modal_signIn'>
-        <div className='modal_signIn_leftSide'>
-          <img src={PATTERN_1} alt='Pattern' />
-          <img src={PATTERN_2} alt='Pattern' />
-          <img src={PATTERN_1} alt='Pattern' />
-        </div>
+        {windowSize.width > 600 && (
+          <div className='modal_signIn_leftSide'>
+            <img src={PATTERN_1} alt='Pattern' />
+            <img src={PATTERN_2} alt='Pattern' />
+            <img src={PATTERN_1} alt='Pattern' />
+          </div>
+        )}
         <div className='modal_signIn_rightSide'>
-          <div className='modal_signIn_title'>
+          <div
+            className={`${
+              forgetPassword && "modal_signIn_title_forgetPass"
+            } modal_signIn_title`}>
             <p>{forgetPassword ? "Forgot your password?" : "Welcome !"}</p>
             {forgetPassword && (
               <p className='forgetPass_desc'>
@@ -120,6 +128,7 @@ const SignIn: React.FC<SignInProps> = ({
                     width: "100%",
                   }}
                   type='submit'
+                  className='signIn-btn'
                 />
               </form>
             )}
@@ -157,7 +166,10 @@ const SignIn: React.FC<SignInProps> = ({
               </div>
             </div>
           ) : (
-            <div className='signIn_another_privacy'>
+            <div
+              className={`${
+                forgetPassword && "signIn_another_privacy_forgetPass"
+              } signIn_another_privacy`}>
               <p>
                 If you need help, contact our
                 <span className='mentioned_txt'> Support team</span>

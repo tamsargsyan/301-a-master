@@ -16,6 +16,9 @@ import {
   FETCH_EXPERT_PROJECT_START,
   FETCH_EXPERT_PROJECT_SUCCESS,
   FETCH_EXPERT_PROJECT_ERROR,
+  DETAILS_PROJECT_FETCH_START,
+  DETAILS_PROJECT_FETCH_SUCCESS,
+  DETAILS_PROJECT_FETCH_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -40,12 +43,12 @@ export const fetchingProjects = (data: string) => async (dispatch: any) => {
 
 export const fetchingProjectDetails =
   (data: string) => async (dispatch: any) => {
-    dispatch({ type: FETCH_START });
+    dispatch({ type: DETAILS_PROJECT_FETCH_START });
     try {
       const response = await apiService.get(data);
-      dispatch({ type: FETCH_SUCCESS, payload: response });
+      dispatch({ type: DETAILS_PROJECT_FETCH_SUCCESS, payload: response });
     } catch (error: any) {
-      dispatch({ type: FETCH_ERROR, payload: error.message });
+      dispatch({ type: DETAILS_PROJECT_FETCH_ERROR, payload: error.message });
     }
   };
 

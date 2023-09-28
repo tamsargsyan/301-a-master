@@ -111,9 +111,10 @@
   font-weight: 500;
   line-height: 155%;
 }
-/* .faq_collapse .faq_a {
-  border-top: 1px solid rgba(49, 58, 75, 0.36);
-} */
+.faq_a_4 .faq_a span {
+  color: #313a4b !important;
+  font-weight: 500 !important;
+}
 @media screen and (max-width: 975px) {
   .aboutUs_privacy {
     width: 100%;

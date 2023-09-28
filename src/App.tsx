@@ -13,6 +13,9 @@ import Donation from "./components/Donation";
 import OneTimeDonation from "./components/OneTimeDonation";
 import DonationProjectsModal from "./components/DonationProjectsModal";
 import DonateToTheProject from "./components/DonateToTheProject";
+import { useDispatch, useSelector } from "react-redux";
+import { openDonateModal } from "./actions/donateAction";
+import { RootState } from "./store/configureStore";
 
 function App() {
   // const location = useLocation();
@@ -33,11 +36,16 @@ function App() {
     modal: false,
     privacy: "",
   });
-  const [donation, setDonation] = useState(false);
+  // const [donation, setDonation] = useState(false);
   const [modalName, setModalName] = useState("");
   const [oneTimeDonation, setOneTimeDonation] = useState(false);
   const [donateProjects, setDonateProjects] = useState(false);
   const [donateSingleProject, setDonateSingleProject] = useState(false);
+
+  const dispatch = useDispatch();
+  const { isDonateModal } = useSelector(
+    (state: RootState) => state.projectDetails
+  );
 
   useEffect(() => {
     document.body.classList.toggle(
@@ -47,7 +55,7 @@ function App() {
         accountType.open ||
         agreementTerms ||
         privacy.modal ||
-        donation ||
+        isDonateModal ||
         oneTimeDonation ||
         donateProjects ||
         donateSingleProject
@@ -61,7 +69,7 @@ function App() {
     accountType.open,
     agreementTerms,
     privacy.modal,
-    donation,
+    isDonateModal,
     oneTimeDonation,
     donateProjects,
     donateSingleProject,
@@ -75,7 +83,7 @@ function App() {
     <div className='container'>
       <Navbar
         setOpenModal={setSignIn}
-        setDonation={setDonation}
+        // setDonation={setDonation}
         setModalName={setModalName}
       />
       <Router />
@@ -93,7 +101,9 @@ function App() {
         setAccountType={setAccountType}
         handleClose={() => {
           setSignUp(false);
-          modalName === "signIn" ? setSignIn(true) : setDonation(true);
+          modalName === "signIn"
+            ? setSignIn(true)
+            : dispatch(openDonateModal(true));
         }}
       />
       <AccountTypeModal
@@ -139,8 +149,8 @@ function App() {
       />
       <Donation
         setSignUp={setSignUp}
-        donation={donation}
-        setDonation={setDonation}
+        // donation={donation}
+        // setDonation={setDonation}
         setOneTimeDonation={setOneTimeDonation}
         setDonateProjects={setDonateProjects}
       />
@@ -151,13 +161,14 @@ function App() {
         setOneTimeDonation={setOneTimeDonation}
         handleClose={() => {
           setOneTimeDonation(false);
-          setDonation(true);
+          // setDonation(true);
+          dispatch(openDonateModal(true));
         }}
       />
       <DonationProjectsModal
         donateProjects={donateProjects}
         setDonateProjects={setDonateProjects}
-        setDonation={setDonation}
+        // setDonation={setDonation}
         setDonateSingleProject={setDonateSingleProject}
       />
       <DonateToTheProject

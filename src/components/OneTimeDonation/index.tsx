@@ -52,7 +52,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                 <Select
                   className='signUp_selector'
                   showSearch
-                  placeholder='Select a tel'
+                  placeholder='Select a sum'
                   optionFilterProp='children'
                   onChange={onChange}
                   onSearch={onSearch}

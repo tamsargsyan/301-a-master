@@ -4,19 +4,22 @@ import ONE_TIME_DONATION from "../../assets/donation-one-time.svg";
 import PROJECT_DONATION from "../../assets/donation-project.svg";
 import DONATION_301 from "../../assets/donation-301.svg";
 import "./index.css";
+import { useDispatch, useSelector } from "react-redux";
+import { openDonateModal } from "../../actions/donateAction";
+import { RootState } from "../../store/configureStore";
 
 interface DonationProps {
   setSignUp: (arg: boolean) => void;
-  setDonation: (arg: boolean) => void;
-  donation: boolean;
+  // setDonation: (arg: boolean) => void;
+  // donation: boolean;
   setOneTimeDonation: (arg: boolean) => void;
   setDonateProjects: (arg: boolean) => void;
 }
 
 const Donation: React.FC<DonationProps> = ({
   setSignUp,
-  setDonation,
-  donation,
+  // setDonation,
+  // donation,
   setOneTimeDonation,
   setDonateProjects,
 }) => {
@@ -41,16 +44,27 @@ const Donation: React.FC<DonationProps> = ({
     },
   ];
 
+  const dispatch = useDispatch();
+
   const handleCard = (id: number) => {
     id === 1 && setOneTimeDonation(true);
-    id == 2 && setDonateProjects(true);
+    id === 2 && setDonateProjects(true);
     id === 3 && setSignUp(true);
-    setDonation(false);
+    // setDonation(false);
+    dispatch(openDonateModal(false));
   };
 
+  const { isDonateModal } = useSelector(
+    (state: RootState) => state.projectDetails
+  );
+
   return (
-    <Modal setOpenModal={setDonation} openModal={donation}>
-      <EcosystemModal onClose={() => setDonation(false)} header='donate'>
+    <Modal
+      setOpenModal={() => dispatch(openDonateModal(false))}
+      openModal={isDonateModal}>
+      <EcosystemModal
+        onClose={() => dispatch(openDonateModal(false))}
+        header='donate'>
         <div className='donationWrapper'>
           <div className='donation'>
             <div className='donation_info'>

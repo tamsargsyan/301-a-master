@@ -21,7 +21,7 @@ import {
 } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-import FULL_PROJECT_1 from "../../assets/projectAuthor/project-full-1.svg";
+// import FULL_PROJECT_1 from "../../assets/projectAuthor/project-full-1.svg";
 import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
 import { useNavigate, useParams } from "react-router";
 import Footer from "../../components/Footer";
@@ -37,6 +37,7 @@ import { motion } from "framer-motion";
 import ReactPlayer from "react-player";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
+import { openDonateModal } from "../../actions/donateAction";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
@@ -246,13 +247,15 @@ const ProjectDetails = () => {
                     </button>
                   )}
                 </div>
-                <div className='videoContainer _inner'>
-                  <ReactPlayer
-                    url={`${storageBase}/${project.video}`}
-                    width='100%'
-                    controls
-                  />
-                </div>
+                {project.video && (
+                  <div className='videoContainer _inner'>
+                    <ReactPlayer
+                      url={`${storageBase}/${project.video}`}
+                      width='100%'
+                      controls
+                    />
+                  </div>
+                )}
                 <div className='roadMapContainer'>
                   <div className='roadMap_heading problem_heading'>
                     <img src={PATTERN} alt='Pattern' />
@@ -459,6 +462,7 @@ const ProjectDetails = () => {
                         padding: "12px 35px",
                         width: !isVisible ? "auto" : "100%",
                       }}
+                      onClick={() => dispatch(openDonateModal(true))}
                       className='donationBtn'
                     />
                   </div>

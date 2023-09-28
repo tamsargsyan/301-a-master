@@ -84,7 +84,7 @@ const AboutUs = () => {
             //@ts-ignore
             faq.map((f, i) => (
               <div className='faq_question' key={i}>
-                <h1>{f["title_ru"]}</h1>
+                <h1>{f[`title_ru`]}</h1>
                 {f.id > 1 ? (
                   <Collapse
                     accordion
@@ -109,19 +109,29 @@ const AboutUs = () => {
                   </Collapse>
                 ) : (
                   //@ts-ignore
-                  f.question_answer.map((q, i) => (
-                    <Fragment key={i}>
-                      <p className='faq_q'>
-                        {removeHtmlTags(q[`question_ru`])}
-                      </p>
-                      <span
-                        className='faq_a'
-                        dangerouslySetInnerHTML={{
-                          __html: q[`answer_ru`],
-                        }}
-                      />
-                    </Fragment>
-                  ))
+                  f.question_answer.map((q, i) => {
+                    const answer = q[`answer_${lang}`].split("</p>");
+                    return (
+                      <Fragment key={i}>
+                        <p className='faq_q'>
+                          {removeHtmlTags(q[`question_ru`])}
+                        </p>
+                        {answer.map((paragraph: string, index: number) => (
+                          <div key={index} className={`faq_a_${index + 1}`}>
+                            <p className='faq_a'>
+                              <span
+                                style={{ color: "#dd264e", fontWeight: 700 }}>
+                                {removeHtmlTags(paragraph.split(" ")[0])}{" "}
+                              </span>
+                              {removeHtmlTags(
+                                paragraph.substring(paragraph.indexOf(" ") + 1)
+                              )}
+                            </p>
+                          </div>
+                        ))}
+                      </Fragment>
+                    );
+                  })
                 )}
               </div>
             ))}

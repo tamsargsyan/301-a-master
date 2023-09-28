@@ -143,3 +143,41 @@
     margin-top: 0;
   }
 }
+@media screen and (max-width: 790px) {
+  .modal_signIn {
+    width: 100vw;
+  }
+  .signIn_formFields .form {
+    padding: 12px;
+    padding-left: 23px;
+  }
+  .signIn_another_title {
+    font-size: 16px;
+  }
+  .signIn_another_privacy,
+  .signIn_another_privacy .mentioned_txt,
+  .forgetPass_desc {
+    font-size: 14px;
+  }
+  .modal_signIn_title_forgetPass {
+    margin-bottom: 80px;
+  }
+  .signIn_another_privacy_forgetPass {
+    margin-top: 36px;
+  }
+  .signIn_another_privacy_forgetPass p {
+    text-align: initial;
+  }
+  .signIn_another_privacy_forgetPass p .mentioned_txt {
+    display: block;
+  }
+}
+@media screen and (max-width: 600px) {
+  .modal_signIn_rightSide {
+    width: 100%;
+    padding: 23px;
+  }
+  .modal_signIn {
+    height: 100%;
+  }
+}

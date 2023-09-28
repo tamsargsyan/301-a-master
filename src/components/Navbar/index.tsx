@@ -12,6 +12,7 @@ import { createBrowserHistory } from "history";
 import i18next from "i18next";
 import { useDispatch } from "react-redux";
 import { languageDitactor } from "../../actions/language";
+import { openDonateModal } from "../../actions/donateAction";
 
 const history = createBrowserHistory(); // Create a history instance
 
@@ -50,13 +51,13 @@ export const menu = [
 
 interface NavbarProps {
   setOpenModal: (arg: boolean) => void;
-  setDonation: (arg: boolean) => void;
+  // setDonation: (arg: boolean) => void;
   setModalName: (arg: string) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   setOpenModal,
-  setDonation,
+  // setDonation,
   setModalName,
 }) => {
   const windowSize = useWindowSize();
@@ -175,7 +176,8 @@ const Navbar: React.FC<NavbarProps> = ({
             to=''
             className='signIn-btn'
             onClick={() => {
-              setDonation(true);
+              // setDonation(true);
+              dispatch(openDonateModal(true));
               setModalName("donate");
             }}
             style={{

@@ -25,3 +25,27 @@
   opacity: 1;
   transform: translate(-50%, -50%) rotateX(0);
 }
+@media screen and (max-width: 600px) {
+  .modal {
+    height: 100%;
+  }
+  .modal_close_mobile {
+    position: relative;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 23px;
+    color: #151c26;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+  }
+  .modal_close_mobile button {
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+  }
+}

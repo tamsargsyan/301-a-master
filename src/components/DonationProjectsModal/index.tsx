@@ -5,24 +5,28 @@ import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import "./index.css";
 import { Fragment } from "react";
+import { useDispatch } from "react-redux";
+import { openDonateModal } from "../../actions/donateAction";
 
 interface DonationProjectsModalProps {
   donateProjects: boolean;
   setDonateProjects: (arg: boolean) => void;
-  setDonation: (arg: boolean) => void;
+  // setDonation: (arg: boolean) => void;
   setDonateSingleProject: (arg: boolean) => void;
 }
 
 const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   donateProjects,
   setDonateProjects,
-  setDonation,
+  // setDonation,
   setDonateSingleProject,
 }) => {
   const arr = new Array(6).fill("");
+  const dispatch = useDispatch();
 
   const handleClose = () => {
-    setDonation(true);
+    // setDonation(true);
+    dispatch(openDonateModal(true));
     setDonateProjects(false);
   };
 

@@ -7,6 +7,7 @@ import SingleProjectBox from "../SingleProjectBox";
 import Button from "../Button";
 import { Select } from "antd";
 import country_currency from "../../locales/country_currency.json";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 import "./index.css";
 
 interface DonateToTheProjectProps {
@@ -75,7 +76,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                 <Select
                   className='signUp_selector'
                   showSearch
-                  placeholder='Select a tel'
+                  placeholder='Select a sum'
                   optionFilterProp='children'
                   onChange={onChange}
                   onSearch={onSearch}

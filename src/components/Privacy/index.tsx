@@ -16,17 +16,25 @@ interface PrivacyProps {
 
 const Privacy: React.FC<PrivacyProps> = ({ privacy, handleClose }) => {
   const dispatch = useDispatch();
+  const endpoint = privacy?.privacy?.toLowerCase().split(" ").join("-");
+
+  const toCamelCase = (input: string) => {
+    return input
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+(.)/g, (_, char) => char.toUpperCase());
+  };
 
   useEffect(() => {
     //@ts-ignore
-    dispatch(fetchingPrivacyPolicy("privacy-policy"));
-  }, [dispatch, privacy.modal]);
+    endpoint && dispatch(fetchingPrivacyPolicy(endpoint));
+  }, [dispatch, privacy.modal, endpoint]);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.privacyPolicy
   );
-
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  //@ts-ignore
+  const jsonData = data[toCamelCase(privacy.privacy)];
 
   return (
     <Modal setOpenModal={handleClose} openModal={privacy.modal}>
@@ -39,16 +47,14 @@ const Privacy: React.FC<PrivacyProps> = ({ privacy, handleClose }) => {
           style={{
             fontFamily: lang === "am" ? "Montserrat Arm" : "Montserrat",
           }}>
-          {loading ? (
+          {loading && data ? (
             <Spin size='large' />
           ) : (
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  data.privacyPolicy &&
-                  data.privacyPolicy[
-                    `description_${lang}` as keyof HeaderKeyOf
-                  ],
+                  jsonData &&
+                  jsonData[`description_${lang}` as keyof HeaderKeyOf],
               }}
             />
           )}
