@@ -61,6 +61,25 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
       </motion.div>
     );
   }
+  if (className?.includes("personal_project")) {
+    return (
+      <motion.div className={`${className} project`} onClick={onClick}>
+        <div
+          className='projectImg'
+          style={{ backgroundImage: `url(${projectImg})` }}></div>
+        <div className='projectInfo'>
+          <div className='author'>
+            <h1>301 Land of Wisdom</h1>
+            <span className='flag'>
+              <img src={FLAG} alt='Flag' />
+              {flag}
+            </span>
+          </div>
+          <span className='donationProject_desc'>{description}</span>
+        </div>
+      </motion.div>
+    );
+  }
   return (
     <motion.div className='project'>
       <div className='projectImg'></div>

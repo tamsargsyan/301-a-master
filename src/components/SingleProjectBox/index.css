@@ -1,9 +1,9 @@
 .project {
   border-radius: 20px;
   box-shadow: -15px 6px 28px rgba(34, 43, 60, 0.12);
+  width: 300px;
 }
 .projectImg {
-  width: 300px;
   height: 200px;
   background: url(../../assets/project.jpg);
   background-position: center;
@@ -56,6 +56,9 @@
 .ourProject__title {
   margin-bottom: 0;
   gap: 10px;
+}
+.personal_project {
+  height: fit-content;
 }
 .progress {
   width: 100%;

@@ -133,7 +133,7 @@
   background: transparent !important;
 }
 .ant-select-selector {
-  height: 39px !important;
+  height: 100% !important;
   font-family: "Montserrat" !important;
   font-weight: 500 !important;
   color: var(--text-color) !important;
@@ -166,4 +166,40 @@
 }
 .ant-select-dropdown {
   padding: 0;
+}
+.onTheWeb {
+  color: #313a4b;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 30px 0 !important;
+}
+.socialMedia_inputs,
+.socialMedia_inputs div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.socialMedia_inputs {
+  color: rgba(49, 58, 75, 0.7);
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 15px;
+  padding-left: 0;
+  border-bottom: 1px solid rgba(49, 58, 75, 0.36);
+}
+.socialMedia_inputs div {
+  gap: 14px;
+}
+.socialMedia_inputs button {
+  padding: 0;
+}
+.socialMedia_input {
+  border: none;
+  outline: none;
+  font-weight: inherit;
+  font-size: inherit;
+  color: inherit;
 }
