@@ -9,6 +9,7 @@ import { signInSchema } from "../../Validation";
 import { Formik } from "formik";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 interface SignInProps {
   signIn: boolean;
@@ -41,6 +42,7 @@ const SignIn: React.FC<SignInProps> = ({
   };
 
   const windowSize = useWindowSize();
+  const { t } = useTranslation();
 
   return (
     <Modal setOpenModal={setSignIn} openModal={signIn}>
@@ -57,7 +59,11 @@ const SignIn: React.FC<SignInProps> = ({
             className={`${
               forgetPassword && "modal_signIn_title_forgetPass"
             } modal_signIn_title`}>
-            <p>{forgetPassword ? "Forgot your password?" : "Welcome !"}</p>
+            <p>
+              {forgetPassword
+                ? t("forget-pass.forget-pass")
+                : t("sign-in.welcome")}
+            </p>
             {forgetPassword && (
               <p className='forgetPass_desc'>
                 Please, enter your email and we will send you a link to reset a
@@ -82,7 +88,7 @@ const SignIn: React.FC<SignInProps> = ({
               <form noValidate onSubmit={handleSubmit} className='signIn_form'>
                 <div className='signIn_formFields'>
                   <input
-                    placeholder='Email'
+                    placeholder={t("sign-in.email")}
                     type='email'
                     name='email'
                     id='email'
@@ -97,7 +103,7 @@ const SignIn: React.FC<SignInProps> = ({
                   {!forgetPassword && (
                     <>
                       <input
-                        placeholder='Password'
+                        placeholder={t("sign-in.pass")}
                         type='password'
                         name='password'
                         onChange={handleChange}
@@ -114,12 +120,14 @@ const SignIn: React.FC<SignInProps> = ({
                 {!forgetPassword && (
                   <div className='forgetPassword'>
                     <button onClick={handleForgetPassword}>
-                      Forget password?
+                      {t("sign-in.forget-pass")}
                     </button>
                   </div>
                 )}
                 <Button
-                  text={forgetPassword ? "Send" : "Log In"}
+                  text={
+                    forgetPassword ? t("forget-pass.send") : t("navbar.sign-in")
+                  }
                   link={false}
                   to={""}
                   style={{
@@ -137,7 +145,7 @@ const SignIn: React.FC<SignInProps> = ({
             <div className='signIn_another'>
               <div className='signIn_another_title'>
                 <div className='line'></div>
-                <p>Log in with</p>
+                <p>{t("sign-in.login-with")}</p>
                 <div className='line'></div>
               </div>
               <div className='signIn_another_icons'>
@@ -150,17 +158,18 @@ const SignIn: React.FC<SignInProps> = ({
               </div>
               <div className='signIn_another_privacy'>
                 <p>
-                  By continuing, you agree 301’s <br></br>
+                  {t("privacy.1")}
+                  <br></br>
                   <button
                     className='mentioned_txt'
                     onClick={() => handlePrivacy("Terms of Services")}>
-                    Terms of Services
+                    {t("privacy.terms")}
                   </button>
-                  and
+                  {t("privacy.and")}
                   <button
                     className='mentioned_txt'
                     onClick={() => handlePrivacy("Privacy Policy")}>
-                    Privacy Policy
+                    {t("privacy.privacy")}
                   </button>
                 </p>
               </div>
@@ -171,16 +180,18 @@ const SignIn: React.FC<SignInProps> = ({
                 forgetPassword && "signIn_another_privacy_forgetPass"
               } signIn_another_privacy`}>
               <p>
-                If you need help, contact our
-                <span className='mentioned_txt'> Support team</span>
+                {t("forget-pass.need-help")}
+                <span className='mentioned_txt'>
+                  {t("forget-pass.support")}
+                </span>
               </p>
             </div>
           )}
           <div className='signIn_signUp'>
             <p>
-              Don't have an account?
+              {t("sign-in.notHavingAcc")}
               <button className='mentioned_txt' onClick={() => setSignUp(true)}>
-                Sign Up
+                {t("sign-in.sign-up")}
               </button>
             </p>
           </div>

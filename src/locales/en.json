@@ -50,5 +50,27 @@
     "problem": "Problem",
     "road-map": "Road Map",
     "partners": "Partners"
+  },
+  "sign-in": {
+    "welcome": "Welcome !",
+    "email": "Email",
+    "pass": "Password",
+    "forget-pass": "Forget Password ?",
+    "login-with": "Log In With",
+    "notHavingAcc": "Don't have an account?",
+    "sign-up": "Sign Up"
+  },
+  "forget-pass": {
+    "forget-pass": "Forgot your password?",
+    "enter-email": "Please, enter your email and we will send you a link to reset a password.",
+    "send": "Send",
+    "need-help": "If you need help, contact our",
+    "support": " Support team"
+  },
+  "privacy": {
+    "1": "By continuing, you agree 301’s",
+    "terms": "Terms of Services",
+    "and": "and",
+    "privacy": "Privacy Policy"
   }
 }

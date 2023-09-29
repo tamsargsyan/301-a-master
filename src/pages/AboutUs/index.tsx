@@ -50,103 +50,108 @@ const AboutUs = () => {
 
   const infos = Object.values(data);
   const faq = infos[5];
-
-  return (
-    <>
-      <Background
-        pattern1={SIDE_PATTERN}
-        style={{ flexDirection: "column", gap: "90px" }}>
-        <div className='aboutUs-bigPattern-1'>
-          <img src={PATTERN_1} alt='Pattern' />
-        </div>
-        <div className='aboutUs-bigPattern-2'>
-          <img src={PATTERN_2} alt='Pattern' />
-        </div>
-        <div className='aboutUs-bigPattern-3'>
-          <img src={PATTERN_3} alt='Pattern' />
-        </div>
-        {infos.map((info: any, i: number) => {
-          return (
-            i < 5 && (
-              <div key={i}>
-                <Header
-                  title={info[`title_${lang}`]}
-                  shortDescription={info[`short_description_${lang}`]}
-                  description={info[`description_${lang}`]}
-                  ourMissionDesc={info[`short_description_${lang}`]}
-                />
-              </div>
-            )
-          );
-        })}
-        <div ref={faqRef} className='faq_qesutions'>
-          {faq &&
-            //@ts-ignore
-            faq.map((f, i) => (
-              <div className='faq_question' key={i}>
-                <h1>{f[`title_ru`]}</h1>
-                {f.id > 1 ? (
-                  <Collapse
-                    accordion
-                    bordered={false}
-                    className='faq_collapse'
-                    expandIcon={({ isActive }) => (
-                      <Img rotate={isActive ? -180 : 0} size='large' />
-                    )}>
-                    {
+      console.log(faq);
+      return (
+        <>
+          <Background
+            pattern1={SIDE_PATTERN}
+            style={{ flexDirection: "column", gap: "90px" }}>
+            <div className='aboutUs-bigPattern-1'>
+              <img src={PATTERN_1} alt='Pattern' />
+            </div>
+            <div className='aboutUs-bigPattern-2'>
+              <img src={PATTERN_2} alt='Pattern' />
+            </div>
+            <div className='aboutUs-bigPattern-3'>
+              <img src={PATTERN_3} alt='Pattern' />
+            </div>
+            {infos.map((info: any, i: number) => {
+              return (
+                i < 5 && (
+                  <div key={i}>
+                    <Header
+                      title={info[`title_${lang}`]}
+                      shortDescription={info[`short_description_${lang}`]}
+                      description={info[`description_${lang}`]}
+                      ourMissionDesc={info[`short_description_${lang}`]}
+                    />
+                  </div>
+                )
+              );
+            })}
+            <div ref={faqRef} className='faq_qesutions'>
+              {faq &&
+                //@ts-ignore
+                faq.map((f, i) => (
+                  <div className='faq_question' key={i}>
+                    <h1>{f[`title_${lang}`]}</h1>
+                    {f.id > 1 ? (
+                      <Collapse
+                        accordion
+                        bordered={false}
+                        className='faq_collapse'
+                        expandIcon={({ isActive }) => (
+                          <Img rotate={isActive ? -180 : 0} size='large' />
+                        )}>
+                        {
+                          //@ts-ignore
+                          f.question_answer.map((q, i) => (
+                            <Panel
+                              header={removeHtmlTags(q[`question_${lang}`])}
+                              key={i}
+                              className='faq_q'>
+                              <p className='faq_a'>
+                                {removeHtmlTags(q[`answer_${lang}`])}
+                              </p>
+                            </Panel>
+                          ))
+                        }
+                      </Collapse>
+                    ) : (
                       //@ts-ignore
-                      f.question_answer.map((q, i) => (
-                        <Panel
-                          header={removeHtmlTags(q[`question_ru`])}
-                          key={i}
-                          className='faq_q'>
-                          <p className='faq_a'>
-                            {removeHtmlTags(q[`answer_ru`])}
-                          </p>
-                        </Panel>
-                      ))
-                    }
-                  </Collapse>
-                ) : (
-                  //@ts-ignore
-                  f.question_answer.map((q, i) => {
-                    const answer = q[`answer_${lang}`].split("</p>");
-                    return (
-                      <Fragment key={i}>
-                        <p className='faq_q'>
-                          {removeHtmlTags(q[`question_ru`])}
-                        </p>
-                        {answer.map((paragraph: string, index: number) => (
-                          <div key={index} className={`faq_a_${index + 1}`}>
-                            <p className='faq_a'>
-                              <span
-                                style={{ color: "#dd264e", fontWeight: 700 }}>
-                                {removeHtmlTags(paragraph.split(" ")[0])}{" "}
-                              </span>
-                              {removeHtmlTags(
-                                paragraph.substring(paragraph.indexOf(" ") + 1)
-                              )}
+                      f.question_answer.map((q, i) => {
+                        const answer = q[`answer_${lang}`].split("</p>");
+                        return (
+                          <Fragment key={i}>
+                            <p className='faq_q'>
+                              {removeHtmlTags(q[`question_${lang}`])}
                             </p>
-                          </div>
-                        ))}
-                      </Fragment>
-                    );
-                  })
-                )}
-              </div>
-            ))}
-        </div>
-        <div className='aboutUs_dashedLine' />
-        <div className='inner aboutUs_privacy'>
-          {data1.map((item, i) => (
-            <p key={i}>{item}</p>
-          ))}
-        </div>
-      </Background>
-      <Contact />
-      <Footer />
-    </>
-  );
+                            {answer.map((paragraph: string, index: number) => (
+                              <div key={index} className={`faq_a_${index + 1}`}>
+                                <p className='faq_a'>
+                                  <span
+                                    style={{
+                                      color: "#dd264e",
+                                      fontWeight: 700,
+                                    }}>
+                                    {removeHtmlTags(paragraph.split(" ")[0])}{" "}
+                                  </span>
+                                  {removeHtmlTags(
+                                    paragraph.substring(
+                                      paragraph.indexOf(" ") + 1
+                                    )
+                                  )}
+                                </p>
+                              </div>
+                            ))}
+                          </Fragment>
+                        );
+                      })
+                    )}
+                  </div>
+                ))}
+            </div>
+            <div className='aboutUs_dashedLine' />
+            <div className='inner aboutUs_privacy'>
+              {data1.map((item, i) => (
+                <p key={i}>{item}</p>
+              ))}
+            </div>
+          </Background>
+          <Contact />
+          <Footer />
+        </>
+      );
 };
 
 export default AboutUs;

@@ -10,6 +10,7 @@
 *:after {
   box-sizing: border-box;
   /* scroll-behavior: smooth; */
+  font-family: Montserrat, sans-serif;
 }
 
 body::-webkit-scrollbar {
@@ -22,7 +23,6 @@ a {
 }
 
 button {
-  font-family: Montserrat, sans-serif;
   background-color: #fff;
   outline: none;
   border: none;
