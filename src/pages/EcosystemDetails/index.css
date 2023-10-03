@@ -54,3 +54,11 @@
     font-size: clamp(0.390625rem, 0.0006rem + 1.04vw, 0.520625rem);
   }
 } */
+@media screen and (max-width: 600px) {
+  .ecosystemDetails {
+    width: 90vw;
+  }
+  .ecosystemDetails-content, .memberContent {
+    font-size: 14px;
+  }
+}

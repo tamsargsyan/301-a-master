@@ -27,12 +27,15 @@
   align-items: center;
   gap: 7px;
 }
-
+.flag {
+  font-weight: 500;
+}
 .flag img {
   padding-top: 5px;
 }
 
 .projectInfo h1,
+.flag,
 .projectInfo span,
 .author {
   font-size: 1vw;
@@ -98,6 +101,18 @@
 }
 .donation_project.project .projectInfo .flag img {
   width: 1vw !important;
+}
+.personal_project .flag img {
+  padding-top: 0;
+  width: 15px;
+  height: 15px;
+}
+.personal_project .author,
+.personal_project .flag {
+  font-size: 14px;
+}
+.personal_project .donationProject_desc {
+  font-size: 12px;
 }
 @media screen and (max-width: 975px) {
   .projectImg {

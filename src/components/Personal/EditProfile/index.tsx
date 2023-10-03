@@ -1,15 +1,11 @@
-import { Select, Spin } from "antd";
+import { Select } from "antd";
 import "./index.css";
 import { useTranslation } from "react-i18next";
-import countries from "../../../locales/countries.json";
 import country_dial from "../../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import CLOUD from "../../../assets/cloud.svg";
 import PROF_PIC from "../../../assets/prof-pic.png";
 import Button from "../../Button";
-import EDIT from "../../../assets/edit.svg";
-import SMS from "../../../assets/personal-sms.svg";
-import TEL from "../../../assets/tel.svg";
 import FACEBOOK from "../../../assets/personal-fb.svg";
 import INSTAGRAM from "../../../assets/personal-instagram.svg";
 import LINKEDIN from "../../../assets/personal-linkedIn.svg";
@@ -20,9 +16,9 @@ const { Option } = Select;
 
 const EditProfile = () => {
   const { t } = useTranslation();
-  const handleSubmit = () => {
-    console.log("submit");
-  };
+  // const handleSubmit = () => {
+  //   console.log("submit");
+  // };
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
   };
@@ -64,7 +60,7 @@ const EditProfile = () => {
             </div>
           </div>
           <div className='pic'>
-            <img src={PROF_PIC} alt='Profile Picture' />
+            <img src={PROF_PIC} alt='Profile' />
             <p>
               <img src={CLOUD} alt='Cloud' />
               Replace
@@ -253,7 +249,8 @@ const EditProfile = () => {
                 id='personal_linkTitle'
                 name='signUp'
                 className='signUp_input'
-                value='Peter'
+                placeholder='Enter link title'
+                // value='Peter'
               />
             </div>
             <div className='signUp_formGroup'>
@@ -263,7 +260,8 @@ const EditProfile = () => {
                 id='personal_url'
                 name='signUp'
                 className='signUp_input'
-                value='Peter'
+                placeholder='Enter URL'
+                // value='Peter'
               />
             </div>
             <div className='signUp_btns'>

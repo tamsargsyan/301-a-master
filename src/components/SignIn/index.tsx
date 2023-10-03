@@ -128,8 +128,8 @@ const SignIn: React.FC<SignInProps> = ({
                   text={
                     forgetPassword ? t("forget-pass.send") : t("navbar.sign-in")
                   }
-                  link={false}
-                  to={""}
+                  link={true}
+                  to='/301/personal/personal-info'
                   style={{
                     background: "#DD264E",
                     color: "#fff",
@@ -137,6 +137,7 @@ const SignIn: React.FC<SignInProps> = ({
                   }}
                   type='submit'
                   className='signIn-btn'
+                  onClick={() => setSignIn(false)}
                 />
               </form>
             )}

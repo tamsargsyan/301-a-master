@@ -1,5 +1,5 @@
 .person_wrapper {
-  width: 356px;
+  width: 355px;
   height: 515px;
   border-radius: 20px;
   background: #fff;
@@ -104,7 +104,7 @@
 }
 .personal_bar {
   width: 355px;
-  height: 642px;
+  height: 1100px;
   border-radius: 20px;
   background: #fff;
   box-shadow: -15px 15px 38px 0px rgba(39, 78, 151, 0.07);
@@ -136,4 +136,40 @@
 .personal_bar_item.active {
   font-weight: 700;
   color: var(--main-color);
+}
+@media screen and (max-width: 1600px) {
+  .person_wrapper,
+  .personal_bar {
+    width: 300px;
+  }
+  .person_wrapper {
+    height: 440px;
+  }
+  .person_bg::after {
+    border-left: 46rem solid var(--main-color);
+    border-bottom: 16rem solid transparent;
+  }
+  .person_profile {
+    width: 230px;
+    height: 230px;
+    top: 55px;
+  }
+  .prof_name {
+    font-size: 22px;
+    padding-top: 295px;
+  }
+  .prof_sms,
+  .personal_bar_item {
+    font-size: 18px;
+  }
+  .sms_img {
+    width: 22px;
+  }
+  .sms_notif {
+    width: 15px;
+    height: 15px;
+    top: -10px;
+    right: -10px;
+    font-size: 7px;
+  }
 }

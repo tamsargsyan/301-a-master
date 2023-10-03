@@ -14,6 +14,9 @@ import { useParams } from "react-router";
 import { RootState } from "../../store/configureStore";
 import { fetchingExpertProject } from "../../actions/apiActions";
 import { Spin } from "antd";
+import PATTERN from "../../assets/patterns/side-1.svg";
+import PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const EcoSystemDetails = () => {
   const arr = new Array(3).fill("");
@@ -52,13 +55,9 @@ const EcoSystemDetails = () => {
   );
   //@ts-ignore
   const header = data[ecosystem];
-  const value2 = data[`${ecosystem}Project`];
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-
-  console.log(header);
-  console.log(value2);
-
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
+  const windowSize = useWindowSize();
 
   if (loading)
     return (
@@ -71,7 +70,9 @@ const EcoSystemDetails = () => {
     <>
       {header && (
         <>
-          <Background style={{ flexDirection: "column" }}>
+          <Background
+            style={{ flexDirection: "column" }}
+            pattern1={windowSize.width < 975 ? PATTERN_MOBILE : PATTERN}>
             <div className='ecosystemDetails'>
               <div className='ecosystemDetails-header'>
                 <div className='ecosystemDetails-title'>
@@ -95,6 +96,7 @@ const EcoSystemDetails = () => {
                     marginLeft: "auto",
                     border: "none",
                   }}
+                  className='recommented'
                 />
               </div>
               {arr.map((_, i) => (

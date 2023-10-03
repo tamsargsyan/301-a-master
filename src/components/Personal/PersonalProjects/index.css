@@ -4,3 +4,8 @@
   font-weight: 500;
   margin-bottom: 42px !important;
 }
+@media screen and (max-width: 1600px) {
+  .personalInfo_event_content {
+    font-size: 14px;
+  }
+}

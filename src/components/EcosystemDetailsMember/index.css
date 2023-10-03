@@ -160,14 +160,6 @@
   .memberHeader {
     font-size: clamp(1.333125rem, -0.0002rem + 1.6667vw, 1.458125rem);
   }
-  .memberImg {
-    width: 130px;
-    height: 130px;
-  }
-  .memberElipse {
-    width: 160px;
-    height: 160px;
-  }
   .memberProjectHeader p {
     font-size: clamp(1rem, 0rem + 1.25vw, 1.09375rem);
   }
@@ -207,5 +199,32 @@
   .memberProjects .projectInfo h1,
   .memberProjects .flag {
     font-size: clamp(0.364375rem, -0.0006rem + 0.73vw, 0.50125rem);
+  }
+}
+@media screen and (max-width: 600px) {
+  .memberImg {
+    width: 100px;
+    height: 100px;
+  }
+  .memberElipse {
+    width: 130px;
+    height: 130px;
+  }
+  .memberImg_container {
+    top: -20%;
+  }
+  .memberHeader {
+    padding-left: 80px;
+  }
+  .memberProjectHeader p {
+    font-size: 16px;
+  }
+  .ecosystemDetails_projects {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .ecoSystemDetailsMember .projectImg {
+    width: 146px;
+    height: 134px;
   }
 }

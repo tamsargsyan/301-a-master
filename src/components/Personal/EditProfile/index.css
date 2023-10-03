@@ -49,3 +49,16 @@
 .personal_form .socialMedia_addLink .signUp_formGroup label:not(.signUp_radio) {
   color: #313a4b;
 }
+@media screen and (max-width: 1600px) {
+  .personal_form .signUp_formGroup .signUp_input,
+  .signUp_textarea,
+  .socialMedia_inputs {
+    font-size: 14px !important;
+  }
+  .personal_form .signUp_formGroup label:not(.signUp_radio) {
+    font-size: 12px;
+  }
+  .onTheWeb {
+    font-size: 18px;
+  }
+}
