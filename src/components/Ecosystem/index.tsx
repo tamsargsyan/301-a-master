@@ -127,6 +127,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           name: t("btns.become-expert"),
           link: "",
         },
+        {
+          name: t("btns.learn-more"),
+          link: "experts",
+        },
       ],
       btnStyle: [
         {
@@ -135,6 +139,11 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           // padding: "13px 40px",
           color: "#fff",
           boxShadow: "-21px 16px 38px 0px rgba(66, 207, 238, 0.36)",
+        },
+        {
+          // padding: "13px 40px",
+          color: "#000",
+          borderColor: "#42CFEE",
         },
       ],
     },
@@ -213,14 +222,13 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
   const windowSize = useWindowSize();
   return (
     <>
-      <div className="separatedPart"></div>
+      <div className='separatedPart'></div>
       <Background
         pattern1={
           windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
         }
         shoudHaveSidePattern={false}
-        style={{ flexDirection: "column", padding: "60px 0" }}
-      >
+        style={{ flexDirection: "column", padding: "60px 0" }}>
         <Header
           title={ourEcosystem[0][`title_${lang}` as keyof HeaderKeyOf]}
           description={
@@ -228,12 +236,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           }
           icon={EcosystemIcon}
           style={{ marginBottom: "80px" }}
-          className="differedHeaderContainer"
+          className='differedHeaderContainer'
         />
-        <div className="ecosystemContainer">
-          {data.map((data) => (
-            <div className="ecosystem" key={data.id}>
-              <div className="ecosystemInner">
+        <div className='ecosystemContainer'>
+          {data.map(data => (
+            <div className='ecosystem' key={data.id}>
+              <div className='ecosystemInner'>
                 <Header
                   title={data.title}
                   description={data.description}
@@ -243,17 +251,17 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                   style={{ padding: 0 }}
                   mainImg={data.mainImg}
                   isEcosystem={true}
-                  className="homePageHeader"
+                  className='homePageHeader'
                 />
-                <div className="img">
-                  <img src={data.mainImg} alt="Icon" />
+                <div className='img'>
+                  <img src={data.mainImg} alt='Icon' />
                 </div>
               </div>
               {data.partners && (
-                <div className="partners">
-                  <div className="innerPartners">
-                    {data.partners.map((partner) => (
-                      <div className="partner" key={partner.id}>
+                <div className='partners'>
+                  <div className='innerPartners'>
+                    {data.partners.map(partner => (
+                      <div className='partner' key={partner.id}>
                         <img src={partner.img} alt={partner.name} />
                       </div>
                     ))}

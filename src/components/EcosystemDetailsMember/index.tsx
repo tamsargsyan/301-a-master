@@ -51,7 +51,9 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
   return (
     <div className='ecoSystemDetailsMember'>
       <div className='memberHeader'>
-        <div className='memberImg_container'>
+        <div
+          className='memberImg_container'
+          style={{ backgroundImage: `url(${expertProject?.elipse})` }}>
           {/* <img
             src={expertProject?.elipse}
             alt='Elipse'

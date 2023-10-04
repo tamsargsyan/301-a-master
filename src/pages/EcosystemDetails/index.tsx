@@ -2,8 +2,12 @@ import { Fragment, useEffect } from "react";
 import Background from "../../components/Background";
 import SAGES from "../../assets/info/1.svg";
 import EXPERTS from "../../assets/info/10.svg";
+import AMBASSADOR from "../../assets/signup-account-types/ambassador.svg";
+import FRIENDS from "../../assets/signup-account-types/friends.svg";
 import ELIPSE_SAGES from "../../assets/ecosystemDetails/elipse-sages.svg";
 import ELIPSE_EXPERTS from "../../assets/ecosystemDetails/elipse-experts.svg";
+import ELIPSE_AMBASSADORS from "../../assets/ecosystemDetails/elipse-ambassadors.svg";
+import ELIPSE_FRIENDS from "../../assets/ecosystemDetails/elipse-friends.svg";
 import Button from "../../components/Button";
 import "./index.css";
 import EcoSystemDetailsMember from "../../components/EcosystemDetailsMember";
@@ -39,6 +43,20 @@ const EcoSystemDetails = () => {
       colorWeak: "#42CFEE99",
       icon: EXPERTS,
       elipse: ELIPSE_EXPERTS,
+    },
+    {
+      name: "ambassadors",
+      color: "",
+      colorWeak: "",
+      icon: AMBASSADOR,
+      elipse: ELIPSE_AMBASSADORS,
+    },
+    {
+      name: "friends",
+      color: "",
+      colorWeak: "",
+      icon: FRIENDS,
+      elipse: ELIPSE_FRIENDS,
     },
   ];
 
