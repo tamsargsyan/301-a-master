@@ -26,11 +26,10 @@ const EditProfile = () => {
   const onSearch = (value: string) => {
     console.log("search:", value);
   };
-
-  const filterOption = (
+  const filterOptionTel = (
     input: string,
     option: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  ) => (option?.value ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
     <div className='personalInfo_wrapper'>
@@ -92,12 +91,11 @@ const EditProfile = () => {
               onChange={onChange}
               onSearch={onSearch}
               //@ts-ignore
-              filterOption={filterOption}
-              defaultValue='+374'
+              filterOption={filterOptionTel}
               // options={country_dial}
             >
               {country_dial.map(country => (
-                <Option key={country.value} value={country.value}>
+                <Option key={country.value} value={country.label}>
                   <div
                     className='custom-option'
                     style={{ display: "flex", gap: "6px" }}>

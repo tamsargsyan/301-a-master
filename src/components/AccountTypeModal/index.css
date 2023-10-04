@@ -32,8 +32,8 @@
   z-index: 99999;
 }
 .signUp_selector .ant-select-selector {
-  /* height: 37px !important; */
-  /* align-items: center; */
+  height: 39.5px !important;
+  align-items: center;
   border-radius: 46px;
   border: 2px solid rgba(0, 0, 0, 0.14);
   box-shadow: -20px 8px 20px 0px rgba(21, 29, 39, 0.06);

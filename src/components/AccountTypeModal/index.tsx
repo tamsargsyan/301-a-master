@@ -25,9 +25,13 @@ const filterOption = (
   option: { label: string; value: string }
 ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
+const filterOptionTel = (
+  input: string,
+  option: { label: string; value: string }
+) => (option?.value ?? "").toLowerCase().includes(input.toLowerCase());
+
 const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   accountType,
-  setSignUp,
   setAccountType,
   setAgreementTerms,
   setPrivacy,
@@ -227,11 +231,11 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     onChange={onChange}
                     onSearch={onSearch}
                     //@ts-ignore
-                    filterOption={filterOption}
+                    filterOption={filterOptionTel}
                     // options={country_dial}
                   >
                     {country_dial.map(country => (
-                      <Option key={country.value} value={country.value}>
+                      <Option key={country.value} value={country.label}>
                         <div
                           className='custom-option'
                           style={{ display: "flex", gap: "6px" }}>
