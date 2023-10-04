@@ -21,6 +21,7 @@ import { Spin } from "antd";
 import PATTERN from "../../assets/patterns/side-1.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 const EcoSystemDetails = () => {
   const arr = new Array(3).fill("");
@@ -73,9 +74,11 @@ const EcoSystemDetails = () => {
   );
   //@ts-ignore
   const header = data[ecosystem];
+  const project = data[`${ecosystem}Project`];
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
+  const {t} = useTranslation()
 
   if (loading)
     return (
@@ -106,7 +109,7 @@ const EcoSystemDetails = () => {
                     />
                   </div>
                   <Button
-                    text='recommented'
+                    text={t("btns.recommended")}
                     link={false}
                     to={""}
                     style={{
@@ -119,11 +122,10 @@ const EcoSystemDetails = () => {
                   />
                 </div>
               </div>
-              {arr.map((_, i) => (
-                <Fragment key={i}>
-                  <EcoSystemDetailsMember expertProject={ecosystemResult} />
-                </Fragment>
-              ))}
+              <EcoSystemDetailsMember
+                expertProject={ecosystemResult}
+                project={project}
+              />
             </div>
           </Background>
           <Footer />

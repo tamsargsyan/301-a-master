@@ -24,7 +24,8 @@
     "view": "View",
     "save-project": "Save project",
     "download-pdf": "download presentation pdf",
-    "donate": "Donate"
+    "donate": "Donate",
+    "recommended": "recommended"
   },
   "contact": {
     "title": "Write to us",

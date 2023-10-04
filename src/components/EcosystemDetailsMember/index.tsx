@@ -5,12 +5,16 @@ import FLAG from "../../assets/flag.svg";
 import "./index.css";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import SingleProjectBox from "../SingleProjectBox";
 import PROJECT from "../../assets/projectAuthor/project-1.svg";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
+import { storageBase } from "../../utils/storage";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { useTranslation } from "react-i18next";
 
 interface EcoSystemDetailsMemberProps {
   expertProject?: {
@@ -20,16 +24,19 @@ interface EcoSystemDetailsMemberProps {
     icon: string;
     elipse: string;
   };
+  project: any;
 }
 
 const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
   expertProject,
+  project,
 }) => {
   const arr = new Array(6).fill("");
   const windowSize = useWindowSize();
   const [width, setWidth] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef<HTMLDivElement | null>(null);
+  console.log(project);
 
   useEffect(() => {
     carousel.current &&
@@ -48,30 +55,28 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
       setCurrentIndex(prevIndex => prevIndex + 1);
     }
   };
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const { name, last_name } = project[0].user;
+  const { t } = useTranslation();
+
   return (
     <div className='ecoSystemDetailsMember'>
       <div className='memberHeader'>
         <div
           className='memberImg_container'
           style={{ backgroundImage: `url(${expertProject?.elipse})` }}>
-          {/* <img
-            src={expertProject?.elipse}
-            alt='Elipse'
-            className='memberElipse'
-          /> */}
           <img src={PERSON} alt='Member' className='memberImg' />
         </div>
-        <span>Peter Nemoy</span>
+        <span>
+          {name} {last_name}
+        </span>
       </div>
       <div className='memberContent'>
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in
-        </p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: project[0].user[`about_me_${lang}`],
+          }}
+        />
         {windowSize.width > 600 && (
           <div className='memberProjects_separatedPart'></div>
         )}
@@ -112,6 +117,26 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                   x: -width * currentIndex,
                 }}>
                 {arr.map((_, i) => (
+                  <Fragment key={i}>
+                    <SingleProjectBox
+                      title='301 Land of Wisdom'
+                      description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+                      flag={10}
+                      author='Peter Nemoy'
+                      authorImg={AUTHOR_1}
+                      sum='20.000'
+                      percent={80}
+                      projectImg={PROJECT_1}
+                      className='personal_project ecosystemDetails_project'
+                    />
+                  </Fragment>
+                ))}
+              </motion.div>
+            </motion.div>
+          ) : (
+            <div className='ecosystemDetails_projects'>
+              {arr.map((_, i) => (
+                <Fragment key={i}>
                   <SingleProjectBox
                     title='301 Land of Wisdom'
                     description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
@@ -122,51 +147,8 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                     percent={80}
                     projectImg={PROJECT_1}
                     className='personal_project ecosystemDetails_project'
-                    // onClick={handleSingleProject}
                   />
-                  // <motion.div className='project' key={i}>
-                  //   <div className='projectImg'></div>
-                  //   <div className='projectInfo'>
-                  //     <div className='projectInfo_header'>
-                  //       <h1>301 Land of Wisdom</h1>
-                  //       <span className='flag'>
-                  //         <img src={FLAG} alt='Flag' />
-                  //         {/* {project.flag} */}
-                  //         15
-                  //       </span>
-                  //     </div>
-                  //     <span>
-                  //       <p>
-                  //         Lorem Ipsum is simply dummy text of the printing and
-                  //         typesetting industry.
-                  //       </p>
-                  //     </span>
-                  //   </div>
-                  // </motion.div>
-                  // <SingleProjectBox
-                  //   title="Land of Wisdom"
-                  //   description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                  //   flag={10}
-                  //   author="Pt"
-                  // />
-                ))}
-              </motion.div>
-            </motion.div>
-          ) : (
-            <div className='ecosystemDetails_projects'>
-              {arr.map((_, i) => (
-                <SingleProjectBox
-                  title='301 Land of Wisdom'
-                  description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                  flag={10}
-                  author='Peter Nemoy'
-                  authorImg={AUTHOR_1}
-                  sum='20.000'
-                  percent={80}
-                  projectImg={PROJECT_1}
-                  className='personal_project ecosystemDetails_project'
-                  // onClick={handleSingleProject}
-                />
+                </Fragment>
               ))}
             </div>
           )}
@@ -174,7 +156,7 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
             to='/301/projects'
             className='otherProjects_link'
             style={{ color: expertProject?.color }}>
-            Other Projects
+            {t("btns.other-projects")}
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='9'
