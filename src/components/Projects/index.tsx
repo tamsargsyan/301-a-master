@@ -18,6 +18,7 @@ import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { HeaderTypes, ProjectsTypes } from "../../utils/api.types";
 import { HeaderKeyOf, ProjectKeyOf } from "../../utils/keyof.type";
 import SingleProjectBox from "../SingleProjectBox";
+import PROJECT_1 from "../../assets/project.jpg";
 
 interface ProjectsProps {
   OurProjects: HeaderTypes[];
@@ -111,6 +112,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                               author={
                                 project[`sector_${lang}` as keyof ProjectKeyOf]
                               }
+                              projectImg={PROJECT_1}
                             />
                           </Fragment>
                         );
@@ -121,39 +123,21 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                   <div className='innerCarousel'>
                     {projects.map(project => {
                       return (
-                        <div className='project' key={project.id}>
-                          <div className='projectImg'></div>
-                          <div className='projectInfo'>
-                            <h1>
-                              {
-                                project[
-                                  `project_name_${lang}` as keyof ProjectKeyOf
-                                ]
-                              }
-                            </h1>
-                            <span>
-                              {removeHtmlTags(
-                                project[
-                                  `description_${lang}` as keyof ProjectKeyOf
-                                ]
-                              )}
-                            </span>
-                            <div className='author'>
-                              <span>
-                                {
-                                  project[
-                                    `sector_${lang}` as keyof ProjectKeyOf
-                                  ]
-                                }
-                              </span>
-                              <span className='flag'>
-                                <img src={FLAG} alt='Flag' />
-                                {/* {project.flag} */}
-                                15
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                        <SingleProjectBox
+                          title={
+                            project[
+                              `project_name_${lang}` as keyof ProjectKeyOf
+                            ]
+                          }
+                          description={removeHtmlTags(
+                            project[`description_${lang}` as keyof ProjectKeyOf]
+                          )}
+                          flag={10}
+                          author={
+                            project[`sector_${lang}` as keyof ProjectKeyOf]
+                          }
+                          projectImg={PROJECT_1}
+                        />
                       );
                     })}
                   </div>

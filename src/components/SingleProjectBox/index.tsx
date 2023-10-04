@@ -82,7 +82,9 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
   }
   return (
     <motion.div className='project'>
-      <div className='projectImg'></div>
+      <div
+        className='projectImg'
+        style={{ backgroundImage: `url(${projectImg})` }}></div>
       <div className='projectInfo'>
         <h1>{title}</h1>
         <span>{description}</span>

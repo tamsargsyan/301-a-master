@@ -2,23 +2,36 @@
   background: #fff;
   box-shadow: -15px 15px 46px 0px rgba(39, 78, 151, 0.12);
   text-align: center;
-  padding: 35px 0;
+  /* padding: 35px 0; */
   position: relative;
-  font-size: clamp(2rem, 0rem + 1.6667vw, 6rem);
+  /* font-size: clamp(2rem, 0rem + 1.6667vw, 6rem); */
+  font-size: 36px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14%;
+  height: 107px;
 }
 .memberImg_container {
-  position: absolute;
+  background: url(../../assets/ecosystemDetails/elipse-sages.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  /* position: absolute;
   top: -50%;
-  left: 0;
+  left: 0; */
 }
 .memberImg {
   position: absolute;
-  top: 48%;
-  left: 50.5%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
+  width: 80%;
+  height: 80%;
   border-radius: 50%;
 }
 .memberElipse {
@@ -64,7 +77,7 @@
 }
 .memberProjectHeader p {
   color: var(--text-color);
-  font-size: clamp(1.5rem, 0rem + 1.25vw, 4.5rem);
+  /* font-size: clamp(1.5rem, 0rem + 1.25vw, 4.5rem); */
 }
 .memberProjects {
   margin-top: 50px;
@@ -84,7 +97,7 @@
 }
 .ecoSystemDetailsMember .projectImg {
   height: 130px;
-  width: 280px;
+  width: 236px;
   background-image: url(../../assets/projectAuthor/project-1.svg);
 }
 .ecoSystemDetailsMember {
@@ -116,115 +129,93 @@
   left: 0;
 }
 .memberProjects span p {
-  font-size: clamp(0.75rem, 0rem + 0.625vw, 2.25rem);
+  /* font-size: clamp(0.75rem, 0rem + 0.625vw, 2.25rem); */
 }
 .memberProjects .projectInfo h1,
 .memberProjects .flag {
-  font-size: clamp(0.875rem, 0rem + 0.7292vw, 2.625rem);
+  /* font-size: clamp(0.875rem, 0rem + 0.7292vw, 2.625rem); */
 }
 .memberProjects .flag img {
   padding-top: 1px;
-  width: 0.5403645833333334vw;
+  /* width: 0.5403645833333334vw; */
 }
-@media screen and (max-width: 1920px) {
-  .memberHeader {
-    font-size: clamp(1.666875rem, 0.0013rem + 1.6656vw, 2rem);
-  }
-  .memberProjectHeader p {
-    font-size: clamp(1.25rem, 0rem + 1.25vw, 1.5rem);
-  }
-  .memberProjects span p {
-    font-size: clamp(0.625rem, 0rem + 0.625vw, 0.75rem);
-  }
-  .memberProjects .projectInfo h1,
-  .memberProjects .flag {
-    font-size: clamp(0.729375rem, 0.0012rem + 0.7281vw, 0.875rem);
-  }
-}
+/* .memberHeader span {
+  padding-left: 100px;
+} */
 @media screen and (max-width: 1600px) {
   .memberHeader {
-    font-size: clamp(1.458125rem, -0.0031rem + 1.67vw, 1.666875rem);
+    font-size: 26px;
   }
-  .memberProjectHeader p {
-    font-size: clamp(1.09375rem, 0rem + 1.25vw, 1.25rem);
-  }
-  .memberProjects span p {
-    font-size: clamp(0.546875rem, 0rem + 0.625vw, 0.625rem);
-  }
-  .memberProjects .projectInfo h1,
-  .memberProjects .flag {
-    font-size: clamp(0.638125rem, -0.0006rem + 0.73vw, 0.729375rem);
-  }
-}
-@media screen and (max-width: 1400px) {
-  .memberHeader {
-    font-size: clamp(1.333125rem, -0.0002rem + 1.6667vw, 1.458125rem);
-  }
-  .memberProjectHeader p {
-    font-size: clamp(1rem, 0rem + 1.25vw, 1.09375rem);
-  }
-  .memberProjects span p {
-    font-size: clamp(0.5rem, 0rem + 0.625vw, 0.546875rem);
-  }
-  .memberProjects .projectInfo h1,
-  .memberProjects .flag {
-    font-size: clamp(0.583125rem, -0.0035rem + 0.7333vw, 0.638125rem);
+  .memberImg_container {
+    width: 160px;
+    height: 160px;
   }
 }
 @media screen and (max-width: 1280px) {
   .memberHeader {
-    font-size: clamp(1.145625rem, -0.0002rem + 1.6667vw, 1.333125rem);
+    font-size: 20px;
   }
-  .memberProjectHeader p {
-    font-size: clamp(0.859375rem, 0rem + 1.25vw, 1rem);
-  }
-  .memberProjects span p {
-    font-size: clamp(0.43rem, 0.0022rem + 0.6222vw, 0.5rem);
-  }
-  .memberProjects .projectInfo h1,
-  .memberProjects .flag {
-    font-size: clamp(0.50125rem, 0.0009rem + 0.7278vw, 0.583125rem);
-  }
-}
-@media screen and (max-width: 1100px) {
-  .memberHeader {
-    font-size: clamp(0.833125rem, -0.0002rem + 1.6667vw, 1.145625rem);
-  }
-  .memberProjectHeader p {
-    font-size: clamp(0.625rem, 0rem + 1.25vw, 0.859375rem);
-  }
-  .memberProjects span p {
-    font-size: clamp(0.3125rem, -0.0008rem + 0.6267vw, 0.43rem);
-  }
-  .memberProjects .projectInfo h1,
-  .memberProjects .flag {
-    font-size: clamp(0.364375rem, -0.0006rem + 0.73vw, 0.50125rem);
-  }
+  /* .memberImg_container {
+    width: 160px;
+    height: 160px;
+  } */
 }
 @media screen and (max-width: 600px) {
-  .memberImg {
+  /* .memberImg {
     width: 100px;
     height: 100px;
   }
   .memberElipse {
     width: 130px;
     height: 130px;
-  }
-  .memberImg_container {
-    top: -20%;
-  }
-  .memberHeader {
-    padding-left: 80px;
-  }
+  } */
+  /* .memberImg_container {
+    top: 15px;
+  } */
+  /* .memberHeader {
+    padding-left: 110px;
+  } */
   .memberProjectHeader p {
     font-size: 16px;
   }
   .ecosystemDetails_projects {
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
   }
   .ecoSystemDetailsMember .projectImg {
-    width: 146px;
+    width: 100%;
     height: 134px;
   }
+  .ecosystemDetails_project {
+    width: 195px;
+  }
+  .memberImg_container {
+    width: 96px;
+    height: 96px;
+  }
+  .memberHeader {
+    height: 57px;
+  }
+    .memberContent {
+    padding: 60px 20px 40px 20px;
+  }
+}
+@media screen and (max-width: 416px) {
+  .memberElipse {
+    width: 100px;
+    height: 100px;
+  }
+  /* .memberImg {
+    width: 80px;
+    height: 80px;
+  } */
+  .memberImg_container {
+    /* top: -10%; */
+  }
+  .ecosystemDetails_project {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 350px) {
 }

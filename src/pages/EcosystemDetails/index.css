@@ -5,6 +5,11 @@
   gap: 90px;
   color: var(--text-color);
 }
+.ecosystemDetails_ {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
 .ecosystemDetails-title {
   display: flex;
   align-items: center;

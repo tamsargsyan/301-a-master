@@ -74,30 +74,32 @@ const EcoSystemDetails = () => {
             style={{ flexDirection: "column" }}
             pattern1={windowSize.width < 975 ? PATTERN_MOBILE : PATTERN}>
             <div className='ecosystemDetails'>
-              <div className='ecosystemDetails-header'>
+              <div className='ecosystemDetails_'>
                 <div className='ecosystemDetails-title'>
                   <img src={ecosystemResult?.icon} alt='Ecosystem' />
-                  <h1>{header[`title_${lang}`]}</h1>
                 </div>
-                <div className='ecosystemDetails-content'>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: header[`description_${lang}`],
+                <div className='ecosystemDetails-header'>
+                  <h1>{header[`title_${lang}`]}</h1>
+                  <div className='ecosystemDetails-content'>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: header[`description_${lang}`],
+                      }}
+                    />
+                  </div>
+                  <Button
+                    text='recommented'
+                    link={false}
+                    to={""}
+                    style={{
+                      background: ecosystemResult?.color,
+                      color: "#fff",
+                      marginLeft: "auto",
+                      border: "none",
                     }}
+                    className='recommented'
                   />
                 </div>
-                <Button
-                  text='recommented'
-                  link={false}
-                  to={""}
-                  style={{
-                    background: ecosystemResult?.color,
-                    color: "#fff",
-                    marginLeft: "auto",
-                    border: "none",
-                  }}
-                  className='recommented'
-                />
               </div>
               {arr.map((_, i) => (
                 <Fragment key={i}>

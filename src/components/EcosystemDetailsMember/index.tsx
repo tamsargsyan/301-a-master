@@ -9,6 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import SingleProjectBox from "../SingleProjectBox";
 import PROJECT from "../../assets/projectAuthor/project-1.svg";
+import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
+import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 
 interface EcoSystemDetailsMemberProps {
   expertProject?: {
@@ -50,14 +52,14 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
     <div className='ecoSystemDetailsMember'>
       <div className='memberHeader'>
         <div className='memberImg_container'>
-          <img
+          {/* <img
             src={expertProject?.elipse}
             alt='Elipse'
             className='memberElipse'
-          />
+          /> */}
           <img src={PERSON} alt='Member' className='memberImg' />
         </div>
-        <span>Alex KALENDEROĞLU</span>
+        <span>Peter Nemoy</span>
       </div>
       <div className='memberContent'>
         <p>
@@ -108,25 +110,37 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                   x: -width * currentIndex,
                 }}>
                 {arr.map((_, i) => (
-                  <motion.div className='project' key={i}>
-                    <div className='projectImg'></div>
-                    <div className='projectInfo'>
-                      <div className='projectInfo_header'>
-                        <h1>301 Land of Wisdom</h1>
-                        <span className='flag'>
-                          <img src={FLAG} alt='Flag' />
-                          {/* {project.flag} */}
-                          15
-                        </span>
-                      </div>
-                      <span>
-                        <p>
-                          Lorem Ipsum is simply dummy text of the printing and
-                          typesetting industry.
-                        </p>
-                      </span>
-                    </div>
-                  </motion.div>
+                  <SingleProjectBox
+                    title='301 Land of Wisdom'
+                    description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+                    flag={10}
+                    author='Peter Nemoy'
+                    authorImg={AUTHOR_1}
+                    sum='20.000'
+                    percent={80}
+                    projectImg={PROJECT_1}
+                    className='personal_project ecosystemDetails_project'
+                    // onClick={handleSingleProject}
+                  />
+                  // <motion.div className='project' key={i}>
+                  //   <div className='projectImg'></div>
+                  //   <div className='projectInfo'>
+                  //     <div className='projectInfo_header'>
+                  //       <h1>301 Land of Wisdom</h1>
+                  //       <span className='flag'>
+                  //         <img src={FLAG} alt='Flag' />
+                  //         {/* {project.flag} */}
+                  //         15
+                  //       </span>
+                  //     </div>
+                  //     <span>
+                  //       <p>
+                  //         Lorem Ipsum is simply dummy text of the printing and
+                  //         typesetting industry.
+                  //       </p>
+                  //     </span>
+                  //   </div>
+                  // </motion.div>
                   // <SingleProjectBox
                   //   title="Land of Wisdom"
                   //   description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
@@ -139,25 +153,18 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
           ) : (
             <div className='ecosystemDetails_projects'>
               {arr.map((_, i) => (
-                <motion.div className='project' key={i}>
-                  <div className='projectImg'></div>
-                  <div className='projectInfo'>
-                    <div className='projectInfo_header'>
-                      <h1>301 Land of Wisdom</h1>
-                      <span className='flag'>
-                        <img src={FLAG} alt='Flag' />
-                        {/* {project.flag} */}
-                        15
-                      </span>
-                    </div>
-                    <span>
-                      <p>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </span>
-                  </div>
-                </motion.div>
+                <SingleProjectBox
+                  title='301 Land of Wisdom'
+                  description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+                  flag={10}
+                  author='Peter Nemoy'
+                  authorImg={AUTHOR_1}
+                  sum='20.000'
+                  percent={80}
+                  projectImg={PROJECT_1}
+                  className='personal_project ecosystemDetails_project'
+                  // onClick={handleSingleProject}
+                />
               ))}
             </div>
           )}

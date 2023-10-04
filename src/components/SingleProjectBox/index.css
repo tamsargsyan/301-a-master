@@ -4,8 +4,7 @@
   width: 300px;
 }
 .projectImg {
-  height: 200px;
-  background: url(../../assets/project.jpg);
+  height: 110px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -107,7 +106,7 @@
   width: 15px;
   height: 15px;
 }
-.personal_project .author,
+.personal_project .author h1,
 .personal_project .flag {
   font-size: 14px;
 }
