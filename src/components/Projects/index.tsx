@@ -113,6 +113,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                 project[`sector_${lang}` as keyof ProjectKeyOf]
                               }
                               projectImg={PROJECT_1}
+                              className='home_project'
                             />
                           </Fragment>
                         );

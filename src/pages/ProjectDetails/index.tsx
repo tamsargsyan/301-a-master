@@ -1,5 +1,11 @@
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { projectsData } from "../OurProject/projectsData";
+import ROSE_CIRCLE from "../../assets/projectAuthor/rose-circle.png";
+import GREEN_CIRCLE from "../../assets/projectAuthor/green-circle.png";
+import ORANGE_CIRCLE from "../../assets/projectAuthor/orange-circle.png";
+import YELLOW_CIRCLE from "../../assets/projectAuthor/yellow-circle.png";
+import BLUE_CIRCLE from "../../assets/projectAuthor/blue-circle.png";
+import PURPLE_CIRCLE from "../../assets/projectAuthor/purple-circle.png";
 import Button from "../../components/Button";
 import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
@@ -58,9 +64,9 @@ const ProjectDetails = () => {
   ];
 
   const windowSize = useWindowSize();
-  const isThereAnotherMember = projectsData[0].projects[0]?.workTeam.find(
-    member => member.img.length > 1
-  );
+  // const isThereAnotherMember = projectsData[0].projects[0]?.workTeam.find(
+  //   member => member.img.length > 1
+  // );
   const [nextMember, setNextMember] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const donationsRef = useRef<HTMLDivElement>(null);
@@ -115,6 +121,16 @@ const ProjectDetails = () => {
       setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
     }
   }, [data, windowSize.width]);
+  const checkRole = (role: string) => {
+    if (role === "project_manager") return ROSE_CIRCLE;
+    if (role === "donor") return GREEN_CIRCLE;
+    if (role === "ambassador") return ORANGE_CIRCLE;
+    if (role === "volunteer") return YELLOW_CIRCLE;
+    if (role === "experts") return BLUE_CIRCLE;
+    if (role === "partners") return PURPLE_CIRCLE;
+    return ROSE_CIRCLE;
+  };
+  console.log(data);
 
   if (loading)
     return (
@@ -213,7 +229,7 @@ const ProjectDetails = () => {
                     <h2>{project[`project_name_${lang}`]}</h2>
                     <div className='flag'>
                       <img src={FLAG} alt='Flag' />
-                      <span>{15}</span>
+                      <span>{data.map_count}</span>
                     </div>
                   </div>
                   <div className='ourProject__author'>
@@ -321,94 +337,54 @@ const ProjectDetails = () => {
                   </div>
                   <div className='teamMembers _inner'>
                     <div className='firstTeam'>
-                      {projectsData[0].projects[0].workTeam
-                        ?.slice(0, 3)
-                        .map((team, i) => (
-                          <div className='memberWrapper' key={team.id}>
-                            <div className='memberWrapper_withoutName'>
-                              {isThereAnotherMember?.id === team.id && (
-                                <button
-                                  className='arrowBtn_teamMember'
-                                  onClick={() =>
-                                    nextMember > 0 &&
-                                    setNextMember(prev => prev - 1)
-                                  }>
-                                  <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
-                                </button>
-                              )}
-                              <div className='member'>
-                                <img
-                                  src={team.bgImg}
-                                  alt='Team Member'
-                                  className='teamMember_bgImg'
-                                />
-                                <img
-                                  src={team.img[nextMember] || team.img[0]}
-                                  alt='Team Member'
-                                  className='teamMember_img'
-                                />
-                                <RevolveText
-                                  span={50}
-                                  north={0}
-                                  spiral={false}
-                                  size={200}
-                                  text={team.position}
-                                />
-                              </div>
-                              {isThereAnotherMember?.id === team.id && (
-                                <button
-                                  className='arrowBtn_teamMember'
-                                  onClick={() =>
-                                    nextMember < team.img.length &&
-                                    setNextMember(prev => prev + 1)
-                                  }>
-                                  <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
-                                </button>
-                              )}
+                      {data?.team[0]?.map((t: any) => (
+                        <div className='memberWrapper' key={t.id}>
+                          <div className='memberWrapper_withoutName'>
+                            {/* {isThereAnotherMember?.id === team.id && (
+                              <button
+                                className='arrowBtn_teamMember'
+                                onClick={() =>
+                                  nextMember > 0 &&
+                                  setNextMember(prev => prev - 1)
+                                }>
+                                <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
+                              </button>
+                            )} */}
+                            <div className='member'>
+                              <img
+                                src={checkRole(t.role)}
+                                alt='Team Member'
+                                className='teamMember_bgImg'
+                              />
+                              <img
+                                src={`${storageBase}/${t.image}`}
+                                alt='Team Member'
+                                className='teamMember_img'
+                              />
+                              <RevolveText
+                                span={50}
+                                north={0}
+                                spiral={false}
+                                size={200}
+                                text={t.role.split("_").join(" ")}
+                              />
                             </div>
-                            <p className='member_name'>{team.name}</p>
+                            {/* {isThereAnotherMember?.id === team.id && (
+                              <button
+                                className='arrowBtn_teamMember'
+                                onClick={() =>
+                                  nextMember < team.img.length &&
+                                  setNextMember(prev => prev + 1)
+                                }>
+                                <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
+                              </button>
+                            )} */}
                           </div>
-                        ))}
-                    </div>
-                    <div className='secondTeam'>
-                      {projectsData[0].projects[0].workTeam
-                        ?.slice(3)
-                        .map(team => (
-                          <div className='memberWrapper' key={team.id}>
-                            <div className='memberWrapper_withoutName'>
-                              {isThereAnotherMember?.id === team.id && (
-                                <button className='arrowBtn_teamMember'>
-                                  <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
-                                </button>
-                              )}
-                              <div className='member'>
-                                <img
-                                  src={team.bgImg}
-                                  alt='Team Member'
-                                  className='teamMember_bgImg'
-                                />
-                                <img
-                                  src={team.img[nextMember] || team.img[0]}
-                                  alt='Team Member'
-                                  className='teamMember_img'
-                                />
-                                <RevolveText
-                                  span={50}
-                                  north={0}
-                                  spiral={false}
-                                  size={200}
-                                  text={team.position}
-                                />
-                              </div>
-                              {isThereAnotherMember?.id === team.id && (
-                                <button className='arrowBtn_teamMember'>
-                                  <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
-                                </button>
-                              )}
-                            </div>
-                            <p className='member_name'>{team.name}</p>
-                          </div>
-                        ))}
+                          <p className='member_name'>
+                            {t.name} {t.last_name}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

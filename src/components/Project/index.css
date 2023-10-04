@@ -3,7 +3,7 @@
   box-shadow: -6px 8px 30px rgba(26, 61, 127, 0.1);
   display: flex;
   width: 55vw;
-  height: 400px;
+  /* height: 400px; */
   border-radius: 20px;
   margin-bottom: 30px;
 }
@@ -83,6 +83,9 @@
 .heart-btn {
   font-size: clamp(1.25rem, 0rem + 1.0417vw, 3.75rem);
 }
+.home_project .projectImg{
+  width: 220px;
+}
 @media screen and (max-width: 1920px) {
   .view-btn,
   .heart-btn {
@@ -90,9 +93,9 @@
   }
 }
 @media screen and (max-width: 1600px) {
-  .ourProject__project {
+  /* .ourProject__project {
     height: 310px;
-  }
+  } */
   .view-btn,
   .heart-btn {
     font-size: clamp(0.91125rem, -0.0031rem + 1.045vw, 1.041875rem);

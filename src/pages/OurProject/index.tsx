@@ -42,11 +42,13 @@ const OurProjects = () => {
   const { ourProject, projects, projectCategory, projectStatus } = data;
   const [projectCategory_id, setProjectCategory_id] = useState(1);
   const [projectStatus_id, setProjectStatus_id] = useState(1);
-  const filteredProjects = projects?.filter(
-    (project: any) =>
-      project.project_category_id === projectCategory_id &&
-      project.project_status_id === projectStatus_id
-  );
+  const filteredProjects =
+    projects &&
+    projects[0]?.filter(
+      (project: any) =>
+        project.project.project_category_id === projectCategory_id &&
+        project.project.project_status_id === projectStatus_id
+    );
 
   const handleProjectCategory_id = (id: number) => {
     setProjectCategory_id(id);
@@ -71,6 +73,7 @@ const OurProjects = () => {
   const heartit = (id: number) => {
     setProjectId(id);
   };
+  console.log(currentProjects);
 
   if (loading)
     return (
@@ -84,7 +87,7 @@ const OurProjects = () => {
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN}
       sidePatter2Style={{ display: "none" }}
       style={{ flexDirection: "column", padding: "0" }}>
-      {ourProject && projects && (
+      {ourProject && projects[0] && (
         <>
           <div className='filteringWrapper'>
             <Header
@@ -122,8 +125,8 @@ const OurProjects = () => {
             )}
             {windowSize.width > 800 ? (
               <div className='typedBtnsWrapper'>
-                {projectStatus.map((status: any) => (
-                  <Fragment key={status.id}>
+                {projectStatus.map((status: any, i: number) => (
+                  <Fragment key={i}>
                     <Button
                       text={status[`name_${lang}`]}
                       link={false}
@@ -156,18 +159,18 @@ const OurProjects = () => {
             )}
           </div>
           {currentProjects.length ? (
-            currentProjects?.map((project: any) => (
-              <Fragment key={project.id}>
+            currentProjects?.map((project: any, i: number) => (
+              <Fragment key={i}>
                 <Project
-                  author='Peter Nemoy'
-                  authorImg={AUTHOR_1}
-                  title={project[`project_name_${lang}`]}
-                  flag={15}
-                  desc={project[`problem_description_${lang}`]}
-                  projectImg={`${storageBase}/${project.image}`}
-                  heartit={() => heartit(project.id)}
-                  isSaved={project.id === projectId}
-                  id={project.id}
+                  author={`${project.user.name} ${project.user.last_name}`}
+                  authorImg={`${storageBase}/${project.user.image}`}
+                  title={project.project[`project_name_${lang}`]}
+                  flag={project.map_count}
+                  desc={project.project[`problem_description_${lang}`]}
+                  projectImg={`${storageBase}/${project.project.image}`}
+                  heartit={() => heartit(project.project.id)}
+                  isSaved={project.project.id === projectId}
+                  id={project.project.id}
                 />
               </Fragment>
             ))
