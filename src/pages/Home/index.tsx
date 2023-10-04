@@ -66,10 +66,12 @@ const Home = () => {
       shortDescription:
         ourMission && ourMission[0][`short_description_${lang}`],
       description: ourMission && ourMission[0][`description_${lang}`],
-      btn: [{
-        name: t("btns.learn-more"),
-        link: "/301/about-us"
-      }],
+      btn: [
+        {
+          name: t("btns.learn-more"),
+          link: "/about-us",
+        },
+      ],
       icon: ICON_1,
       pattern1: undefined,
       pattern2: SMALL_PATTERN_2,

@@ -1,9 +1,10 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import Background from "../../components/Background";
 import SAGES from "../../assets/info/1.svg";
 import EXPERTS from "../../assets/info/10.svg";
 import AMBASSADOR from "../../assets/signup-account-types/ambassador.svg";
 import FRIENDS from "../../assets/signup-account-types/friends.svg";
+import PARTNERS from "../../assets/signup-account-types/partners.svg";
 import ELIPSE_SAGES from "../../assets/ecosystemDetails/elipse-sages.svg";
 import ELIPSE_EXPERTS from "../../assets/ecosystemDetails/elipse-experts.svg";
 import ELIPSE_AMBASSADORS from "../../assets/ecosystemDetails/elipse-ambassadors.svg";
@@ -16,7 +17,10 @@ import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { RootState } from "../../store/configureStore";
-import { fetchingExpertProject } from "../../actions/apiActions";
+import {
+  fetchingExpertProject,
+  fetchingPartners,
+} from "../../actions/apiActions";
 import { Spin } from "antd";
 import PATTERN from "../../assets/patterns/side-1.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
@@ -24,8 +28,6 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 
 const EcoSystemDetails = () => {
-  const arr = new Array(3).fill("");
-
   useEffect(() => {
     scrollToTop();
   }, []);
@@ -59,26 +61,45 @@ const EcoSystemDetails = () => {
       icon: FRIENDS,
       elipse: ELIPSE_FRIENDS,
     },
+    {
+      name: "partners",
+      color: "",
+      colorWeak: "",
+      icon: PARTNERS,
+      elipse: "",
+    },
   ];
 
   const dispatch = useDispatch();
   const { ecosystem } = useParams();
 
   useEffect(() => {
-    //@ts-ignore
-    dispatch(fetchingExpertProject(`${ecosystem}-project`));
+    if (ecosystem === "partners") {
+      //@ts-ignore
+      dispatch(fetchingExpertProject(`all-${ecosystem}`));
+      //@ts-ignore
+      dispatch(fetchingPartners("partners"));
+    } else {
+      //@ts-ignore
+      dispatch(fetchingExpertProject(`${ecosystem}-project`));
+    }
   }, [dispatch, ecosystem]);
 
-  const { data, loading } = useSelector(
+  const { data, partners, loading } = useSelector(
     (state: RootState) => state.expertProject
   );
-  //@ts-ignore
-  const header = data[ecosystem];
-  const project = data[`${ecosystem}Project`];
+  // console.log(data, "data");
+  // console.log(partners, "partners");
+  const header =
+    //@ts-ignore
+    ecosystem === "partners" ? partners?.partnersDescription : data[ecosystem];
+  const project =
+    ecosystem === "partners" ? data.partners : data[`${ecosystem}Project`];
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
-  const {t} = useTranslation()
+  const { t } = useTranslation();
+  console.log(header);
 
   if (loading)
     return (

@@ -15,7 +15,7 @@ const PersonalInfo = () => {
       <div className='personalInfo_about'>
         <div className='personalInfo_title_wrapper'>
           <p className='personalInfo_title'>About me</p>
-          <NavLink to='/301/personal/personal-info/edit-profile'>
+          <NavLink to='/personal/personal-info/edit-profile'>
             <p>Edit profile</p>
             <img src={EDIT} alt='Edit' />
           </NavLink>

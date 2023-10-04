@@ -12,52 +12,52 @@ import EditProfile from "../components/Personal/EditProfile";
 
 const pagesData: routerType[] = [
   {
-    path: "/301",
+    path: "/",
     element: <Home />,
     title: "home",
   },
   {
-    path: "/:lang/301",
+    path: "/:lang/",
     element: <Home />,
     title: "home",
   },
   {
-    path: "/301/projects",
+    path: "/projects",
     element: <OurProjects />,
     title: "Projects",
   },
   {
-    path: "/:lang/301/projects",
+    path: "/:lang/projects",
     element: <OurProjects />,
     title: "Projects",
   },
   {
-    path: "/301/projects/:id",
+    path: "/projects/:id",
     element: <ProjectDetails />,
     title: "Project",
   },
   {
-    path: "/:lang/301/projects/:id",
+    path: "/:lang/projects/:id",
     element: <ProjectDetails />,
     title: "Project",
   },
   {
-    path: "/301/about-us",
+    path: "/about-us",
     element: <AboutUs />,
     title: "About Us",
   },
   {
-    path: "/:lang/301/about-us",
+    path: "/:lang/about-us",
     element: <AboutUs />,
     title: "About Us",
   },
   {
-    path: "/301/:ecosystem",
+    path: "/:ecosystem",
     element: <EcoSystemDetails />,
     title: "Ecosystem Details",
   },
   {
-    path: "/:lang/301/:ecosystem",
+    path: "/:lang/:ecosystem",
     element: <EcoSystemDetails />,
     title: "Ecosystem Details",
   },
@@ -72,7 +72,7 @@ const pagesData: routerType[] = [
   //   title: "Personal",
   // },
   {
-    path: "/301/personal/personal-info",
+    path: "/personal/personal-info",
     element: (
       <Layout>
         <PersonalInfo />
@@ -81,7 +81,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/:lang/301/personal/personal-info",
+    path: "/:lang/personal/personal-info",
     element: (
       <Layout>
         <PersonalInfo />
@@ -90,7 +90,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/301/personal/my-project",
+    path: "/personal/my-project",
     element: (
       <Layout>
         <PerosnalProjects title='My Project' />
@@ -99,7 +99,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/:lang/301/personal/my-project",
+    path: "/:lang/personal/my-project",
     element: (
       <Layout>
         <PerosnalProjects title='My Project' />
@@ -108,7 +108,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/301/personal/personal-info/edit-profile",
+    path: "/personal/personal-info/edit-profile",
     element: (
       <Layout>
         <EditProfile />
@@ -117,7 +117,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/:lang/301/personal/personal-info/edit-profile",
+    path: "/:lang/personal/personal-info/edit-profile",
     element: (
       <Layout>
         <EditProfile />
@@ -126,7 +126,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/301/personal/my-events",
+    path: "/personal/my-events",
     element: (
       <Layout>
         <PerosnalProjects
@@ -138,7 +138,7 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/:lang/301/personal/my-events",
+    path: "/:lang/personal/my-events",
     element: (
       <Layout>
         <PerosnalProjects

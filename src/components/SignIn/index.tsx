@@ -129,7 +129,7 @@ const SignIn: React.FC<SignInProps> = ({
                     forgetPassword ? t("forget-pass.send") : t("navbar.sign-in")
                   }
                   link={true}
-                  to='/301/personal/personal-info'
+                  to='/personal/personal-info'
                   style={{
                     background: "#DD264E",
                     color: "#fff",

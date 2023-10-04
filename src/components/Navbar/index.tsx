@@ -20,12 +20,12 @@ export const menu = [
   {
     id: 1,
     name: "home",
-    link: "/301",
+    link: "/",
   },
   {
     id: 2,
     name: "projects",
-    link: "/301/projects",
+    link: "/projects",
   },
   {
     id: 3,
@@ -40,7 +40,7 @@ export const menu = [
   {
     id: 5,
     name: "about-us",
-    link: "/301/about-us",
+    link: "/about-us",
   },
   {
     id: 6,

@@ -152,7 +152,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                     color: "#fff",
                   }}
                   link={true}
-                  to='/301/projects'
+                  to='/projects'
                   className='homePage_btn'
                 />
               </div>

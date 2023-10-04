@@ -10,25 +10,25 @@ const PersonalSidebar = () => {
     {
       id: 1,
       name: "Personal info",
-      path: "301/personal/personal-info",
+      path: "personal/personal-info",
       isActive: false,
     },
     {
       id: 2,
       name: "My project",
-      path: "301/personal/my-project",
+      path: "personal/my-project",
       isActive: false,
     },
     {
       id: 3,
       name: "My events",
-      path: "301/personal/my-events",
+      path: "personal/my-events",
       isActive: false,
     },
     {
       id: 4,
       name: "Settings",
-      path: "301/personal/settings",
+      path: "personal/settings",
       isActive: false,
     },
   ]);

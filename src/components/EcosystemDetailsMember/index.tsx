@@ -3,7 +3,7 @@ import ELIPSE from "../../assets/ecosystemDetails/elipse-sages.svg";
 import ARROW from "../../assets/ecosystemDetails/arrow-red.svg";
 import FLAG from "../../assets/flag.svg";
 import "./index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -56,122 +56,137 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
     }
   };
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  const { name, last_name } = project[0].user;
+  // const { name } = project[0].user;
+  // console.log(project[0].user.name);
   const { t } = useTranslation();
+  const { ecosystem } = useParams();
 
   return (
-    <div className='ecoSystemDetailsMember'>
-      <div className='memberHeader'>
-        <div
-          className='memberImg_container'
-          style={{ backgroundImage: `url(${expertProject?.elipse})` }}>
-          <img src={PERSON} alt='Member' className='memberImg' />
-        </div>
-        <span>
-          {name} {last_name}
-        </span>
-      </div>
-      <div className='memberContent'>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: project[0].user[`about_me_${lang}`],
-          }}
-        />
-        {windowSize.width > 600 && (
-          <div className='memberProjects_separatedPart'></div>
-        )}
-        <div className='memberProjects'>
-          <div className='memberProjectHeader'>
-            <p>Project</p>
-            {windowSize.width > 600 && (
-              <div className='btns'>
-                <button
-                  onClick={handleBack}
-                  style={{
-                    background:
-                      currentIndex === 0
-                        ? expertProject?.colorWeak
-                        : expertProject?.color,
-                  }}>
-                  <img src={ARROW} alt='Arrow' />
-                </button>
-                <button
-                  onClick={handleNext}
-                  style={{
-                    background:
-                      currentIndex === 1
-                        ? expertProject?.colorWeak
-                        : expertProject?.color,
-                  }}>
-                  <img src={ARROW} alt='Arrow' />
-                </button>
+    <>
+      {project &&
+        (ecosystem === "partners" ? (
+          <div className='ecosystemDetails_partners'>
+            {project.map((p: any) => (
+              <div className='ecosystemDetails_partners_item' key={p.id}>
+                <img src={`${storageBase}/${p.image}`} alt='Partner' />
               </div>
-            )}
+            ))}
           </div>
-          {windowSize.width > 600 ? (
-            <motion.div ref={carousel} className='carousel'>
-              <motion.div
-                className='innerCarousel'
-                initial={{ x: 0 }}
-                animate={{
-                  x: -width * currentIndex,
-                }}>
-                {arr.map((_, i) => (
-                  <Fragment key={i}>
-                    <SingleProjectBox
-                      title='301 Land of Wisdom'
-                      description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                      flag={10}
-                      author='Peter Nemoy'
-                      authorImg={AUTHOR_1}
-                      sum='20.000'
-                      percent={80}
-                      projectImg={PROJECT_1}
-                      className='personal_project ecosystemDetails_project'
-                    />
-                  </Fragment>
-                ))}
-              </motion.div>
-            </motion.div>
-          ) : (
-            <div className='ecosystemDetails_projects'>
-              {arr.map((_, i) => (
-                <Fragment key={i}>
-                  <SingleProjectBox
-                    title='301 Land of Wisdom'
-                    description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                    flag={10}
-                    author='Peter Nemoy'
-                    authorImg={AUTHOR_1}
-                    sum='20.000'
-                    percent={80}
-                    projectImg={PROJECT_1}
-                    className='personal_project ecosystemDetails_project'
-                  />
-                </Fragment>
-              ))}
+        ) : (
+          <div className='ecoSystemDetailsMember'>
+            <div className='memberHeader'>
+              <div
+                className='memberImg_container'
+                style={{ backgroundImage: `url(${expertProject?.elipse})` }}>
+                <img src={PERSON} alt='Member' className='memberImg' />
+              </div>
+              <span>
+                {project[0].user.name} {project[0].user.last_name}
+              </span>
             </div>
-          )}
-          <NavLink
-            to='/301/projects'
-            className='otherProjects_link'
-            style={{ color: expertProject?.color }}>
-            {t("btns.other-projects")}
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='9'
-              height='16'
-              viewBox='0 0 9 16'
-              fill='none'>
-              <path
-                d='M8.70711 8.70711C9.09763 8.31658 9.09763 7.68342 8.70711 7.29289L2.34314 0.928934C1.95262 0.53841 1.31945 0.53841 0.928928 0.928935C0.538404 1.31946 0.538405 1.95262 0.928929 2.34315L6.58579 8L0.928935 13.6569C0.538411 14.0474 0.538411 14.6805 0.928936 15.0711C1.31946 15.4616 1.95263 15.4616 2.34315 15.0711L8.70711 8.70711ZM6 9L8 9L8 7L6 7L6 9Z'
-                fill={expertProject?.color}
+            <div className='memberContent'>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: project[0].user[`about_me_${lang}`],
+                }}
               />
-            </svg>
-          </NavLink>
-        </div>
-      </div>
-    </div>
+              {windowSize.width > 600 && (
+                <div className='memberProjects_separatedPart'></div>
+              )}
+              <div className='memberProjects'>
+                <div className='memberProjectHeader'>
+                  <p>Project</p>
+                  {windowSize.width > 600 && (
+                    <div className='btns'>
+                      <button
+                        onClick={handleBack}
+                        style={{
+                          background:
+                            currentIndex === 0
+                              ? expertProject?.colorWeak
+                              : expertProject?.color,
+                        }}>
+                        <img src={ARROW} alt='Arrow' />
+                      </button>
+                      <button
+                        onClick={handleNext}
+                        style={{
+                          background:
+                            currentIndex === 1
+                              ? expertProject?.colorWeak
+                              : expertProject?.color,
+                        }}>
+                        <img src={ARROW} alt='Arrow' />
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {windowSize.width > 600 ? (
+                  <motion.div ref={carousel} className='carousel'>
+                    <motion.div
+                      className='innerCarousel'
+                      initial={{ x: 0 }}
+                      animate={{
+                        x: -width * currentIndex,
+                      }}>
+                      {arr.map((_, i) => (
+                        <Fragment key={i}>
+                          <SingleProjectBox
+                            title='301 Land of Wisdom'
+                            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+                            flag={10}
+                            author='Peter Nemoy'
+                            authorImg={AUTHOR_1}
+                            sum='20.000'
+                            percent={80}
+                            projectImg={PROJECT_1}
+                            className='personal_project ecosystemDetails_project'
+                          />
+                        </Fragment>
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                ) : (
+                  <div className='ecosystemDetails_projects'>
+                    {arr.map((_, i) => (
+                      <Fragment key={i}>
+                        <SingleProjectBox
+                          title='301 Land of Wisdom'
+                          description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+                          flag={10}
+                          author='Peter Nemoy'
+                          authorImg={AUTHOR_1}
+                          sum='20.000'
+                          percent={80}
+                          projectImg={PROJECT_1}
+                          className='personal_project ecosystemDetails_project'
+                        />
+                      </Fragment>
+                    ))}
+                  </div>
+                )}
+                <NavLink
+                  to='/projects'
+                  className='otherProjects_link'
+                  style={{ color: expertProject?.color }}>
+                  {t("btns.other-projects")}
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='9'
+                    height='16'
+                    viewBox='0 0 9 16'
+                    fill='none'>
+                    <path
+                      d='M8.70711 8.70711C9.09763 8.31658 9.09763 7.68342 8.70711 7.29289L2.34314 0.928934C1.95262 0.53841 1.31945 0.53841 0.928928 0.928935C0.538404 1.31946 0.538405 1.95262 0.928929 2.34315L6.58579 8L0.928935 13.6569C0.538411 14.0474 0.538411 14.6805 0.928936 15.0711C1.31946 15.4616 1.95263 15.4616 2.34315 15.0711L8.70711 8.70711ZM6 9L8 9L8 7L6 7L6 9Z'
+                      fill={expertProject?.color}
+                    />
+                  </svg>
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        ))}
+    </>
   );
 };
 

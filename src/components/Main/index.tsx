@@ -36,16 +36,15 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         display: windowSize.width < 975 ? "none" : "block",
       }}
       shoudHaveSidePattern={true}
-      style={{ flexDirection: windowSize.width < 975 ? "column" : "row" }}
-    >
+      style={{ flexDirection: windowSize.width < 975 ? "column" : "row" }}>
       {windowSize.width < 975 && (
-        <div className="bgLogo">
-          <img src={BIG_PATTERN} className="mainBigPattern" alt="Pattern" />
-          <img src={LOGO_MOBILE} alt="301" className="logoMobile" />
+        <div className='bgLogo'>
+          <img src={BIG_PATTERN} className='mainBigPattern' alt='Pattern' />
+          <img src={LOGO_MOBILE} alt='301' className='logoMobile' />
         </div>
       )}
-      <div className="bg">
-        <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt="Background" />
+      <div className='bg'>
+        <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt='Background' />
       </div>
       <Header
         title={landOfWisdom[`title_${lang}` as keyof HeaderKeyOf]}
@@ -58,7 +57,7 @@ const Main: React.FC<MainProps> = ({ lang }) => {
           },
           {
             name: t("btns.whole-project"),
-            link: "/301/projects",
+            link: "/projects",
           },
         ]}
         btnStyles={[
@@ -73,14 +72,14 @@ const Main: React.FC<MainProps> = ({ lang }) => {
           },
         ]}
         style={{ padding: 0, width: "30vw" }}
-        className="mainPageHeader homePageHeader"
+        className='mainPageHeader homePageHeader'
       />
       {windowSize.width > 975 && (
-        <div className="bgLogo">
-          <img src={LOGO} alt="301" />
+        <div className='bgLogo'>
+          <img src={LOGO} alt='301' />
         </div>
       )}
-      <FollowUs className="mainFollowUs" />
+      <FollowUs className='mainFollowUs' />
     </Background>
   );
 };

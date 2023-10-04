@@ -160,7 +160,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         },
         {
           name: t("btns.all-partners"),
-          link: "",
+          link: "partners",
         },
       ],
       btnStyle: [

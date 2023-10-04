@@ -19,6 +19,9 @@ import {
   DETAILS_PROJECT_FETCH_START,
   DETAILS_PROJECT_FETCH_SUCCESS,
   DETAILS_PROJECT_FETCH_ERROR,
+  FETCH_PARTNERS_START,
+  FETCH_PARTNERS_SUCCESS,
+  FETCH_PARTNERS_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -83,6 +86,16 @@ export const fetchingExpertProject =
       dispatch({ type: FETCH_EXPERT_PROJECT_ERROR, payload: error.message });
     }
   };
+
+export const fetchingPartners = (data: string) => async (dispatch: any) => {
+  dispatch({ type: FETCH_PARTNERS_START });
+  try {
+    const response = await apiService.get(data);
+    dispatch({ type: FETCH_PARTNERS_SUCCESS, payload: response });
+  } catch (error: any) {
+    dispatch({ type: FETCH_ABOUT_US_ERROR, payload: error.message });
+  }
+};
 
 export const usePostRequest = (endpoint: string, data: Object) => {
   const [postLoading, setLoading] = useState(false);
