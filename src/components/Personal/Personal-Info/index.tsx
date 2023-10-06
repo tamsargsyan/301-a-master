@@ -8,10 +8,14 @@ import TELEGRAM from "../../../assets/personal-telegram.svg";
 import VIBER from "../../../assets/personal-viber.svg";
 import "./index.css";
 import { NavLink } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const PersonalInfo = () => {
   return (
     <div className='personalInfo_wrapper'>
+      <Helmet>
+        <title>Peter Nemoy | Personal Info</title>
+      </Helmet>
       <div className='personalInfo_about'>
         <div className='personalInfo_title_wrapper'>
           <p className='personalInfo_title'>About me</p>

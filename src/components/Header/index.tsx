@@ -5,7 +5,10 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { RootState } from "../../store/configureStore";
 import { useDispatch, useSelector } from "react-redux";
-import { isHomePage, openAccountTypeModal } from "../../actions/donateAction";
+import {
+  isHomePageModal,
+  openAccountTypeModal,
+} from "../../actions/donateAction";
 
 interface HeaderProps {
   title: string;
@@ -126,14 +129,16 @@ const Header: React.FC<HeaderProps> = ({
                     : undefined
                 }
                 onClick={() => {
-                  dispatch(
-                    openAccountTypeModal({
-                      open: true,
-                      id: btn.id,
-                      name: btn.become,
-                    })
-                  );
-                  dispatch(isHomePage(true));
+                  if (btn.become && btn.id) {
+                    dispatch(
+                      openAccountTypeModal({
+                        open: true,
+                        id: btn.id,
+                        name: btn.become,
+                      })
+                    );
+                    dispatch(isHomePageModal(true));
+                  }
                 }}
               />
             ))}

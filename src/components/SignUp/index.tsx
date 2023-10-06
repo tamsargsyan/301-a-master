@@ -14,7 +14,7 @@ import "./index.css";
 import Button from "../Button";
 import EcosystemModal from "../EcosystemModal";
 import { useDispatch } from "react-redux";
-import { isHomePage, openAccountTypeModal } from "../../actions/donateAction";
+import { openAccountTypeModal } from "../../actions/donateAction";
 
 interface SignUpProps {
   signUp: boolean;
@@ -111,7 +111,6 @@ const SignUp: React.FC<SignUpProps> = ({
         name,
       })
     );
-    dispatch(isHomePage(false));
     setSignUp(false);
   };
   return (

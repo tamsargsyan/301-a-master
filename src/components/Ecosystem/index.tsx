@@ -54,7 +54,9 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.learn-more"),
-          link: "sages",
+          link: "/ecosystem/sages",
+          id: null,
+          become: "",
         },
       ],
       btnStyle: [
@@ -79,7 +81,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         },
         {
           name: t("btns.learn-more"),
-          link: "club301",
+          link: "/ecosystem/club301",
           become: "",
           id: null,
         },
@@ -138,7 +140,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         },
         {
           name: t("btns.learn-more"),
-          link: "experts",
+          link: "/ecosystem/experts",
           become: "",
           id: null,
         },

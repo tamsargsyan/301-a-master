@@ -14,7 +14,11 @@ import OneTimeDonation from "./components/OneTimeDonation";
 import DonationProjectsModal from "./components/DonationProjectsModal";
 import DonateToTheProject from "./components/DonateToTheProject";
 import { useDispatch, useSelector } from "react-redux";
-import { openAccountTypeModal, openDonateModal } from "./actions/donateAction";
+import {
+  isHomePageModal,
+  openAccountTypeModal,
+  openDonateModal,
+} from "./actions/donateAction";
 import { RootState } from "./store/configureStore";
 
 function App() {
@@ -117,6 +121,7 @@ function App() {
               name: "",
             })
           );
+          dispatch(isHomePageModal(false));
         }}
       />
       <AgreementTermsModal

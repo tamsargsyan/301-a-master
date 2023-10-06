@@ -14,6 +14,7 @@ import { Spin, Collapse } from "antd";
 import "./index.css";
 import Img from "../../components/Img";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
+import { Helmet } from "react-helmet";
 
 const { Panel } = Collapse;
 
@@ -52,6 +53,9 @@ const AboutUs = () => {
   const faq = infos[5];
   return (
     <>
+      <Helmet>
+        <title>About Us</title>
+      </Helmet>
       <Background
         pattern1={SIDE_PATTERN}
         style={{ flexDirection: "column", gap: "90px" }}>

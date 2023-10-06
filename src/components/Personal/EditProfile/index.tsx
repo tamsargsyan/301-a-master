@@ -12,6 +12,7 @@ import LINKEDIN from "../../../assets/personal-linkedIn.svg";
 import TELEGRAM from "../../../assets/personal-telegram.svg";
 import VIBER from "../../../assets/personal-viber.svg";
 import CLOSE from "../../../assets/close.svg";
+import { Helmet } from "react-helmet";
 const { Option } = Select;
 
 const EditProfile = () => {
@@ -33,6 +34,9 @@ const EditProfile = () => {
 
   return (
     <div className='personalInfo_wrapper'>
+      <Helmet>
+        <title>Peter Nemoy | Edit Profile</title>
+      </Helmet>
       <p className='personalInfo_title'>Edit profile</p>
       <form className='personal_form'>
         <div className='prof_pic'>

@@ -44,6 +44,7 @@ import ReactPlayer from "react-player";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { openDonateModal } from "../../actions/donateAction";
+import { Helmet } from "react-helmet";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
@@ -142,6 +143,9 @@ const ProjectDetails = () => {
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN_SIDE}
       sidePatter2Style={{ display: "none" }}
       style={{ flexDirection: "column", padding: "0" }}>
+      <Helmet>
+        <title>Project {id}</title>
+      </Helmet>
       {project && ourProject && (
         <>
           <div className='filteringWrapper'>

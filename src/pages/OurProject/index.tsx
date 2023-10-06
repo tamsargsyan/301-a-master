@@ -20,6 +20,7 @@ import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
+import { Helmet } from "react-helmet";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
@@ -86,6 +87,9 @@ const OurProjects = () => {
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN}
       sidePatter2Style={{ display: "none" }}
       style={{ flexDirection: "column", padding: "0" }}>
+      <Helmet>
+        <title>Our Projects</title>
+      </Helmet>
       {ourProject && projects[0] && (
         <>
           <div className='filteringWrapper'>

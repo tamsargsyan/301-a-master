@@ -3,6 +3,7 @@ import SingleProjectBox from "../../SingleProjectBox";
 import AUTHOR_1 from "../../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../../assets/projectAuthor/project-1.png";
 import "./index.css";
+import { Helmet } from "react-helmet";
 
 interface PersonalProjectsProps {
   title: string;
@@ -15,6 +16,9 @@ const PerosnalProjects: React.FC<PersonalProjectsProps> = ({
 }) => {
   return (
     <div className='personalInfo_wrapper'>
+      <Helmet>
+        <title>Peter Nemoy | {title}</title>
+      </Helmet>
       <p className='personalInfo_title'>{title}</p>
       {content && <p className='personalInfo_event_content'>{content}</p>}
       <div className='donationProjects'>

@@ -26,6 +26,7 @@ import { useTranslation } from "react-i18next";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -58,7 +59,7 @@ const Home = () => {
   } = data;
   const ourMissionShortDesc =
     ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
-  
+
   const sections = [
     {
       id: 1,
@@ -116,19 +117,21 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>301 | Home</title>
+      </Helmet>
       {data && landOfWisdom && (
         <>
           <Main lang={lang} />
-          {sections.map((section) => (
+          {sections.map(section => (
             <Fragment key={section.id}>
-              <div className="separatedPart"></div>
+              <div className='separatedPart'></div>
               <Background
                 pattern1={section.pattern1}
                 pattern2={section.pattern2}
                 pattern3={section.pattern3}
                 shoudHaveSidePattern={section.shoudHaveSidePattern}
-                style={{ padding: "60px 0" }}
-              >
+                style={{ padding: "60px 0" }}>
                 <Header
                   title={section.title}
                   shortDescription={section.shortDescription}
@@ -136,7 +139,7 @@ const Home = () => {
                   btns={section.btn}
                   icon={section.icon}
                   innerClassName={section.innerClassName}
-                  className="differedHeaderContainer homePageHeader"
+                  className='differedHeaderContainer homePageHeader'
                   ourMissionDesc={section.id === 1 && ourMissionShortDesc}
                 />
               </Background>

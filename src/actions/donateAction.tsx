@@ -13,7 +13,7 @@ export const openAccountTypeModal = (accountType: any) => ({
   type: ACCOUNT_TYPE_MODAL,
   payload: accountType,
 });
-export const isHomePage = (val: boolean) => ({
+export const isHomePageModal = (val: boolean) => ({
   type: IS_HOME_PAGE,
   payload: val,
 });

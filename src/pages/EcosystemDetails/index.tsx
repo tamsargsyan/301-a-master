@@ -26,6 +26,7 @@ import PATTERN from "../../assets/patterns/side-1.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
 
 const EcoSystemDetails = () => {
   useEffect(() => {
@@ -72,7 +73,7 @@ const EcoSystemDetails = () => {
 
   const dispatch = useDispatch();
   const { ecosystem } = useParams();
-
+  console.log(ecosystem);
   useEffect(() => {
     if (ecosystem === "partners") {
       //@ts-ignore
@@ -109,6 +110,11 @@ const EcoSystemDetails = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {ecosystem && ecosystem.charAt(0).toUpperCase() + ecosystem.slice(1)}
+        </title>
+      </Helmet>
       {header && (
         <>
           <Background
