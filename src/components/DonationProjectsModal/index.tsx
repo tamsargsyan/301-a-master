@@ -4,9 +4,17 @@ import SingleProjectBox from "../SingleProjectBox";
 import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import "./index.css";
-import { Fragment } from "react";
-import { useDispatch } from "react-redux";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { openDonateModal } from "../../actions/donateAction";
+import {
+  fetchingProjectDetails,
+  fetchingProjects,
+} from "../../actions/apiActions";
+import { RootState } from "../../store/configureStore";
+import { Spin } from "antd";
+import { storageBase } from "../../utils/storage";
+import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 
 interface DonationProjectsModalProps {
   donateProjects: boolean;
@@ -30,34 +38,62 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
     setDonateProjects(false);
   };
 
-  const handleSingleProject = () => {
+  const handleSingleProject = (id: number) => {
     setDonateSingleProject(true);
     setDonateProjects(false);
+    //@ts-ignore
+    dispatch(fetchingProjectDetails(`project-details/${id}`));
   };
+  const [p, setP] = useState(null);
+
+  useEffect(() => {
+    // donateProjects && dispatch(fetchingProjects("project"));
+    donateProjects &&
+      fetch("https://301.machtech.site/api/get-all-project")
+        .then(response => response.json())
+        .then(data => setP(data))
+        .catch(error => console.error(error));
+  }, [donateProjects]);
+  // console.log(p, "p");
+
+  // const { data, loading } = useSelector(
+  //   (state: RootState) => state.projectData
+  // );
+  // const { projects } = data;
 
   return (
     <Modal setOpenModal={handleClose} openModal={donateProjects}>
       <EcosystemModal onClose={handleClose} header='donate'>
         <div className='donationProjects_wrapper'>
           <div className='donationProjects_title'>Select Project</div>
-          <div className='donationProjects'>
-            {arr.map((_, i) => (
-              <Fragment key={i}>
-                <SingleProjectBox
-                  title='301 Land of Wisdom'
-                  description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                  flag={10}
-                  author='Peter Nemoy'
-                  authorImg={AUTHOR_1}
-                  sum='20.000'
-                  percent={80}
-                  projectImg={PROJECT_1}
-                  className='donation_project'
-                  onClick={handleSingleProject}
-                />
-              </Fragment>
-            ))}
-          </div>
+          {false ? (
+            <div className='donationProjects_spinner'>
+              <Spin size='large' />
+            </div>
+          ) : (
+            <div className='donationProjects'>
+              {p &&
+                //@ts-ignore
+                p.data?.map((p: any, i: number) => (
+                  <Fragment key={i}>
+                    <SingleProjectBox
+                      title={p?.project?.project_name_am}
+                      description={removeHtmlTags(
+                        p?.project?.problem_description_en
+                      )}
+                      flag={p?.map_count}
+                      author={`${p?.sages?.name} ${p?.sages?.last_name}`}
+                      authorImg={`${storageBase}/${p?.sages?.image}`}
+                      budget={p?.project?.budget_price}
+                      collected={p?.collectedPrice}
+                      projectImg={`${storageBase}/${p?.project?.image}`}
+                      className='donation_project'
+                      onClick={() => handleSingleProject(p?.project?.id)}
+                    />
+                  </Fragment>
+                ))}
+            </div>
+          )}
         </div>
       </EcosystemModal>
     </Modal>

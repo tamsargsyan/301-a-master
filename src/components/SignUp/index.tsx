@@ -13,12 +13,14 @@ import PATTERN from "../../assets/signup-account-types/bg-pattern.svg";
 import "./index.css";
 import Button from "../Button";
 import EcosystemModal from "../EcosystemModal";
+import { useDispatch } from "react-redux";
+import { isHomePage, openAccountTypeModal } from "../../actions/donateAction";
 
 interface SignUpProps {
   signUp: boolean;
   setSignUp: (arg: boolean) => void;
   setSignIn: (arg: boolean) => void;
-  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
+  // setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   handleClose: () => void;
 }
 
@@ -35,7 +37,7 @@ const SignUp: React.FC<SignUpProps> = ({
   signUp,
   setSignUp,
   setSignIn,
-  setAccountType,
+  // setAccountType,
   handleClose,
 }) => {
   const accountTypes: AccountType[] = [
@@ -95,12 +97,21 @@ const SignUp: React.FC<SignUpProps> = ({
       },
     },
   ];
+  const dispatch = useDispatch();
   const handleAccountType = (id: number, name: string) => {
-    setAccountType({
-      open: true,
-      id,
-      name,
-    });
+    // setAccountType({
+    //   open: true,
+    //   id,
+    //   name,
+    // });
+    dispatch(
+      openAccountTypeModal({
+        open: true,
+        id,
+        name,
+      })
+    );
+    dispatch(isHomePage(false));
     setSignUp(false);
   };
   return (

@@ -19,6 +19,8 @@ import { HeaderTypes, ProjectsTypes } from "../../utils/api.types";
 import { HeaderKeyOf, ProjectKeyOf } from "../../utils/keyof.type";
 import SingleProjectBox from "../SingleProjectBox";
 import PROJECT_1 from "../../assets/project.jpg";
+import { storageBase } from "../../utils/storage";
+import { NavLink } from "react-router-dom";
 
 interface ProjectsProps {
   OurProjects: HeaderTypes[];
@@ -52,7 +54,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   };
 
   const { projects } = useSelector((state: RootState) => state.homeData.data);
-
+  console.log(projects);
   return (
     <>
       {projects && (
@@ -94,28 +96,33 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                       animate={{
                         x: -width * currentIndex,
                       }}>
-                      {projects.map(project => {
+                      {projects.map((project: any) => {
                         return (
-                          <Fragment key={project.id}>
+                          <NavLink
+                            to={`/projects/${project.project.id}`}
+                            key={project.project.id}>
                             <SingleProjectBox
                               title={
-                                project[
+                                project.project[
                                   `project_name_${lang}` as keyof ProjectKeyOf
                                 ]
                               }
                               description={removeHtmlTags(
-                                project[
+                                project.project[
                                   `description_${lang}` as keyof ProjectKeyOf
                                 ]
-                              )}
-                              flag={10}
+                              )
+                                .split(" ")
+                                .slice(0, 2)
+                                .join(" ")}
+                              flag={project.map_count}
                               author={
                                 project[`sector_${lang}` as keyof ProjectKeyOf]
                               }
-                              projectImg={PROJECT_1}
+                              projectImg={`${storageBase}/${project.project.image}`}
                               className='home_project'
                             />
-                          </Fragment>
+                          </NavLink>
                         );
                       })}
                     </motion.div>
@@ -132,8 +139,11 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                           }
                           description={removeHtmlTags(
                             project[`description_${lang}` as keyof ProjectKeyOf]
-                          )}
-                          flag={10}
+                          )
+                            .split(" ")
+                            .slice(0, 3)
+                            .join(" ")}
+                          flag={3}
                           author={
                             project[`sector_${lang}` as keyof ProjectKeyOf]
                           }

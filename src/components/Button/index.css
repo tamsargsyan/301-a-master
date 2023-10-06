@@ -32,6 +32,9 @@
 .btn:not(.lang, .accountType_btn, .view-btn, .signIn-btn, .recommented) {
   font-size: clamp(1.125rem, 0rem + 0.9375vw, 3.375rem);
 }
+.donationBtn img {
+  width: 1.5vw !important;
+}
 @media screen and (max-width: 1920px) {
   .btn:not(.lang, .accountType_btn, .view-btn, .signIn-btn, .recommented) {
     font-size: clamp(0.9375rem, 0rem + 0.9375vw, 1.125rem);
@@ -57,14 +60,18 @@
     font-size: clamp(0.46875rem, 0.0004rem + 0.9367vw, 0.644375rem);
   }
 }
-@media screen and (max-width: 800px) {
-  .btn:not(.lang, .accountType_btn, .view-btn, .signIn-btn, .recommented) {
-    font-size: clamp(0.351875rem, 0.0012rem + 0.935vw, 0.46875rem);
-  }
-}
 @media screen and (max-width: 975px) {
   .homePage_btn {
     font-size: 15px !important;
     /* padding: 17px !important; */
+  }
+  .donationBtn img {
+    width: 25px !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .btn:not(.lang, .accountType_btn, .view-btn, .signIn-btn, .recommented) {
+    font-size: clamp(0.351875rem, 0.0012rem + 0.935vw, 0.46875rem);
   }
 }

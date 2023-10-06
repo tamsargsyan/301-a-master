@@ -222,7 +222,7 @@
 .firstTeam,
 .secondTeam {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 15px;
@@ -258,14 +258,20 @@
 }
 .memberWrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
 }
 .memberWrapper_withoutName {
   display: flex;
   gap: 20px;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 300px;
+  /* width: 300px;
+  height: 300px; */
 }
 a.fx-Revolve:focus {
   box-shadow: 0 0 3pt 2pt #75acf8;
@@ -383,9 +389,10 @@ a.fx-Revolve:focus:before {
   .dontaionBtns .btn {
     font-size: clamp(0.729375rem, 0.0031rem + 0.83vw, 0.833125rem);
   }
-  .memberWrapper_withoutName {
+}
+@media screen and (max-width: 1560px) {
+  .memberWrapper {
     width: 250px;
-    height: 250px;
   }
 }
 @media screen and (max-width: 1400px) {
@@ -421,9 +428,10 @@ a.fx-Revolve:focus:before {
   .dontaionBtns .btn {
     font-size: clamp(0.666875rem, 0.0002rem + 0.8333vw, 0.729375rem);
   }
-  .memberWrapper_withoutName {
+}
+@media screen and (max-width: 1340px) {
+  .memberWrapper {
     width: 200px;
-    height: 200px;
   }
 }
 @media screen and (max-width: 1280px) {
@@ -460,15 +468,16 @@ a.fx-Revolve:focus:before {
     width: 20px;
     height: 20px;
   }
-  .memberWrapper_withoutName {
+  /* .memberWrapper_withoutName {
     gap: 15px;
-  }
+  } */
   .dontaionBtns .btn {
     font-size: clamp(0.573125rem, 0.0002rem + 0.8333vw, 0.666875rem);
   }
-  .memberWrapper_withoutName {
+}
+@media screen and (max-width: 1130px) {
+  .memberWrapper {
     width: 170px;
-    height: 170px;
   }
 }
 @media screen and (max-width: 1100px) {
@@ -509,9 +518,8 @@ a.fx-Revolve:focus:before {
   }
 }
 @media screen and (max-width: 900px) {
-  .memberWrapper_withoutName {
+  .memberWrapper {
     width: 150px;
-    height: 150px;
   }
 }
 @media screen and (max-width: 800px) {
@@ -579,10 +587,10 @@ a.fx-Revolve:focus:before {
   .dontaionBtnsFixed .btn:last-child {
     width: 50vw !important;
   }
-  .memberWrapper_withoutName {
+  /* .memberWrapper_withoutName {
     width: 192px;
     height: 192px;
-  }
+  } */
 }
 @media screen and (max-width: 600px) {
   .fullProjectInner {

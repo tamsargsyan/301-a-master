@@ -8,8 +8,8 @@ interface SingleProjectBoxProps {
   author?: string;
   flag: number;
   authorImg?: string;
-  sum?: string;
-  percent?: number;
+  budget?: string;
+  collected?: string;
   projectImg?: string;
   className?: string;
   onClick?: () => void;
@@ -21,12 +21,17 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
   author,
   flag,
   authorImg,
-  sum,
-  percent,
+  budget,
+  collected,
   projectImg,
   className,
   onClick,
 }) => {
+  const calcPercent = (val1: number, val2: number) => {
+    return Math.floor((val1 / val2) * 100);
+  };
+  // console.log(collected, budget, "collected, budget");
+
   if (className?.includes("donation_project")) {
     return (
       <motion.div className={`${className} project`} onClick={onClick}>
@@ -50,11 +55,26 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           </div>
           <div className='project_progress'>
             <div className='projectProgress_info'>
-              <span className='sum'>{sum} USD</span>
-              <span className='percent'>{percent}%</span>
+              <span className='sum'>{budget} USD</span>
+              <span className='percent'>
+                {budget &&
+                  collected &&
+                  (+collected >= +budget
+                    ? "100%"
+                    : `${calcPercent(+collected, +budget)}%`)}
+              </span>
             </div>
             <div className='progress'>
-              <div className='progress_line'></div>
+              <div
+                className='progress_line'
+                style={{
+                  width:
+                    budget &&
+                    collected &&
+                    (+collected >= +budget
+                      ? "100%"
+                      : `${calcPercent(+collected, +budget)}%`),
+                }}></div>
             </div>
           </div>
         </div>
@@ -69,7 +89,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           style={{ backgroundImage: `url(${projectImg})` }}></div>
         <div className='projectInfo'>
           <div className='author'>
-            <h1>301 Land of Wisdom</h1>
+            <h1>{title}</h1>
             <span className='flag'>
               <img src={FLAG} alt='Flag' />
               {flag}

@@ -73,7 +73,6 @@ const OurProjects = () => {
   const heartit = (id: number) => {
     setProjectId(id);
   };
-  console.log(currentProjects);
 
   if (loading)
     return (
@@ -162,15 +161,15 @@ const OurProjects = () => {
             currentProjects?.map((project: any, i: number) => (
               <Fragment key={i}>
                 <Project
-                  author={`${project.user.name} ${project.user.last_name}`}
-                  authorImg={`${storageBase}/${project.user.image}`}
-                  title={project.project[`project_name_${lang}`]}
-                  flag={project.map_count}
-                  desc={project.project[`problem_description_${lang}`]}
-                  projectImg={`${storageBase}/${project.project.image}`}
-                  heartit={() => heartit(project.project.id)}
-                  isSaved={project.project.id === projectId}
-                  id={project.project.id}
+                  author={`${project?.user?.name} ${project?.user?.last_name}`}
+                  authorImg={`${storageBase}/${project?.user?.image}`}
+                  title={project?.project[`project_name_${lang}`]}
+                  flag={project?.map_count}
+                  desc={project?.project[`problem_description_${lang}`]}
+                  projectImg={`${storageBase}/${project?.project?.image}`}
+                  heartit={() => heartit(project?.project?.id)}
+                  isSaved={project?.project?.id === projectId}
+                  id={project?.project?.id}
                 />
               </Fragment>
             ))

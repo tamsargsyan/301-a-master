@@ -10,7 +10,6 @@ import { HeaderKeyOf } from "../../utils/keyof.type";
 interface PrivacyProps {
   privacy: { modal: boolean; privacy: string };
   setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
-  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   handleClose: () => void;
 }
 

@@ -2,25 +2,28 @@ import React from "react";
 import Modal from "../Modal";
 import EcosystemModal from "../EcosystemModal";
 import "./index.css";
+import { useDispatch } from "react-redux";
+import { openAccountTypeModal } from "../../actions/donateAction";
 
 interface AgreementTermsModalProps {
-  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   setAgreementTerms: (arg: boolean) => void;
   agreementTerms: boolean;
 }
 
 const AgreementTermsModal: React.FC<AgreementTermsModalProps> = ({
-  setAccountType,
   agreementTerms,
   setAgreementTerms,
 }) => {
+  const dispatch = useDispatch();
   const handleClose = () => {
     setAgreementTerms(false);
-    setAccountType({
-      name: "donor",
-      id: 1,
-      open: true,
-    });
+    dispatch(
+      openAccountTypeModal({
+        name: "donor",
+        id: 1,
+        open: true,
+      })
+    );
   };
 
   return (

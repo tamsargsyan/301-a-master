@@ -15,6 +15,7 @@ import { storageBase } from "../../utils/storage";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
+import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 
 interface EcoSystemDetailsMemberProps {
   expertProject?: {
@@ -36,7 +37,6 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
   const [width, setWidth] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef<HTMLDivElement | null>(null);
-  console.log(project);
 
   useEffect(() => {
     carousel.current &&
@@ -56,10 +56,10 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
     }
   };
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  // const { name } = project[0].user;
-  // console.log(project[0].user.name);
   const { t } = useTranslation();
   const { ecosystem } = useParams();
+  console.log(project);
+  console.log(expertProject);
 
   return (
     <>
@@ -78,16 +78,20 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
               <div
                 className='memberImg_container'
                 style={{ backgroundImage: `url(${expertProject?.elipse})` }}>
-                <img src={PERSON} alt='Member' className='memberImg' />
+                <img
+                  src={`${storageBase}/${project.user.image}`}
+                  alt='Member'
+                  className='memberImg'
+                />
               </div>
               <span>
-                {project[0].user.name} {project[0].user.last_name}
+                {project.user.name} {project.user.last_name}
               </span>
             </div>
             <div className='memberContent'>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: project[0].user[`about_me_${lang}`],
+                  __html: project.user[`about_me_${lang}`],
                 }}
               />
               {windowSize.width > 600 && (
@@ -129,17 +133,20 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                       animate={{
                         x: -width * currentIndex,
                       }}>
-                      {arr.map((_, i) => (
+                      {project?.all_project.map((p: any, i: number) => (
                         <Fragment key={i}>
                           <SingleProjectBox
-                            title='301 Land of Wisdom'
-                            description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                            flag={10}
-                            author='Peter Nemoy'
-                            authorImg={AUTHOR_1}
-                            sum='20.000'
-                            percent={80}
-                            projectImg={PROJECT_1}
+                            title={p?.project[`project_name_${lang}`]}
+                            description={removeHtmlTags(
+                              p?.project[`problem_description_${lang}`]
+                            )
+                              .split(" ")
+                              .slice(0, 2)
+                              .join(" ")}
+                            flag={p?.map_count}
+                            author={`${p[1]?.user?.name} ${p[1]?.user?.last_name}`}
+                            authorImg={`${storageBase}/${p?.user?.image}`}
+                            projectImg={`${storageBase}/${p?.project?.image}`}
                             className='personal_project ecosystemDetails_project'
                           />
                         </Fragment>
@@ -148,17 +155,20 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                   </motion.div>
                 ) : (
                   <div className='ecosystemDetails_projects'>
-                    {arr.map((_, i) => (
+                    {project?.all_project.map((p: any, i: number) => (
                       <Fragment key={i}>
                         <SingleProjectBox
-                          title='301 Land of Wisdom'
-                          description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-                          flag={10}
-                          author='Peter Nemoy'
-                          authorImg={AUTHOR_1}
-                          sum='20.000'
-                          percent={80}
-                          projectImg={PROJECT_1}
+                          title={p?.project[`project_name_${lang}`]}
+                          description={removeHtmlTags(
+                            p?.project[`problem_description_${lang}`]
+                          )
+                            .split(" ")
+                            .slice(0, 2)
+                            .join(" ")}
+                          flag={p?.map_count}
+                          author={`${p[1]?.user?.name} ${p[1]?.user?.last_name}`}
+                          authorImg={`${storageBase}/${p?.user?.image}`}
+                          projectImg={`${storageBase}/${p?.project?.image}`}
                           className='personal_project ecosystemDetails_project'
                         />
                       </Fragment>

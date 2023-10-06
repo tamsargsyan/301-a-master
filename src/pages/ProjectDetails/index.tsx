@@ -130,8 +130,6 @@ const ProjectDetails = () => {
     if (role === "partners") return PURPLE_CIRCLE;
     return ROSE_CIRCLE;
   };
-  console.log(data);
-
   if (loading)
     return (
       <div className='loadingContainer'>
@@ -233,8 +231,13 @@ const ProjectDetails = () => {
                     </div>
                   </div>
                   <div className='ourProject__author'>
-                    <img src={AUTHOR_1} alt='Author' />
-                    <span>Peter Nemoy</span>
+                    <img
+                      src={`${storageBase}/${data?.user?.image}`}
+                      alt='Author'
+                    />
+                    <span>
+                      {data?.user?.name} {data?.user?.last_name}
+                    </span>
                   </div>
                 </div>
                 <div className='fullProject_problemInner'>
@@ -310,16 +313,16 @@ const ProjectDetails = () => {
                         <img src={BUDGET} alt='Budget' />
                         <div className='budgetPrice'>
                           <span>Budget</span>
-                          {/* <h2>{project.budget_price}$</h2> */}
-                          <h2>500$</h2>
+                          <h2>{project?.budget_price}$</h2>
+                          {/* <h2>500$</h2> */}
                         </div>
                       </div>
                       <div className='collected'>
                         <img src={COLLECTED} alt='Collected' />
                         <div className='collectedPrice'>
                           <span>Collected</span>
-                          {/* <h2>{project.collected_price}$</h2> */}
-                          <h2>500$</h2>
+                          <h2>{data.collectedPrice}$</h2>
+                          {/* <h2>500$</h2> */}
                         </div>
                       </div>
                       {/* <div className="remaining">
@@ -337,10 +340,12 @@ const ProjectDetails = () => {
                   </div>
                   <div className='teamMembers _inner'>
                     <div className='firstTeam'>
-                      {data?.team[0]?.map((t: any) => (
-                        <div className='memberWrapper' key={t.id}>
-                          <div className='memberWrapper_withoutName'>
-                            {/* {isThereAnotherMember?.id === team.id && (
+                      {data?.team[0]?.map((t: any) => {
+                        if (t.role !== "sages")
+                          return (
+                            <div className='memberWrapper' key={t.id}>
+                              <div className='memberWrapper_withoutName'>
+                                {/* {isThereAnotherMember?.id === team.id && (
                               <button
                                 className='arrowBtn_teamMember'
                                 onClick={() =>
@@ -350,26 +355,26 @@ const ProjectDetails = () => {
                                 <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
                               </button>
                             )} */}
-                            <div className='member'>
-                              <img
-                                src={checkRole(t.role)}
-                                alt='Team Member'
-                                className='teamMember_bgImg'
-                              />
-                              <img
-                                src={`${storageBase}/${t.image}`}
-                                alt='Team Member'
-                                className='teamMember_img'
-                              />
-                              <RevolveText
-                                span={50}
-                                north={0}
-                                spiral={false}
-                                size={200}
-                                text={t.role.split("_").join(" ")}
-                              />
-                            </div>
-                            {/* {isThereAnotherMember?.id === team.id && (
+                                <div className='member'>
+                                  <img
+                                    src={checkRole(t.role)}
+                                    alt='Team Member'
+                                    className='teamMember_bgImg'
+                                  />
+                                  <img
+                                    src={`${storageBase}/${t.image}`}
+                                    alt='Team Member'
+                                    className='teamMember_img'
+                                  />
+                                  <RevolveText
+                                    span={50}
+                                    north={0}
+                                    spiral={false}
+                                    size={200}
+                                    text={t.role.split("_").join(" ")}
+                                  />
+                                </div>
+                                {/* {isThereAnotherMember?.id === team.id && (
                               <button
                                 className='arrowBtn_teamMember'
                                 onClick={() =>
@@ -379,12 +384,13 @@ const ProjectDetails = () => {
                                 <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
                               </button>
                             )} */}
-                          </div>
-                          <p className='member_name'>
-                            {t.name} {t.last_name}
-                          </p>
-                        </div>
-                      ))}
+                              </div>
+                              <p className='member_name'>
+                                {t.name} {t.last_name}
+                              </p>
+                            </div>
+                          );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -400,7 +406,10 @@ const ProjectDetails = () => {
                       className='innerPartners'>
                       {partners.map((partner: any) => (
                         <motion.div className='partner' key={partner.id}>
-                          <img src={ROSGOSTRAKH} alt={partner.name} />
+                          <img
+                            src={`${storageBase}/${partner.image}`}
+                            alt={partner.name}
+                          />
                         </motion.div>
                       ))}
                     </motion.div>

@@ -7,13 +7,14 @@ import INFO_ICON from "../../assets/info-icon.svg";
 import countries from "../../locales/countries.json";
 import country_dial from "../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
+import { useDispatch } from "react-redux";
+import { openAccountTypeModal } from "../../actions/donateAction";
 
 const { Option } = Select;
 
 interface AccountTypeModalProps {
   accountType: { open: boolean; id: number; name: string };
   setSignUp: (arg: boolean) => void;
-  setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
   setAgreementTerms: (arg: boolean) => void;
   setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
   handleClose: () => void;
@@ -32,7 +33,6 @@ const filterOptionTel = (
 
 const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   accountType,
-  setAccountType,
   setAgreementTerms,
   setPrivacy,
   handleClose,
@@ -45,23 +45,27 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   const onSearch = (value: string) => {
     console.log("search:", value);
   };
-
+  const dispatch = useDispatch();
   const confirm = (e: React.MouseEvent<HTMLElement>) => {
     setAgreementTerms(true);
-    setAccountType({
-      open: false,
-      id: 0,
-      name: "",
-    });
+    dispatch(
+      openAccountTypeModal({
+        open: false,
+        id: 0,
+        name: "",
+      })
+    );
   };
 
   const handlePrivacy = (privacy: string) => {
     setPrivacy({ modal: true, privacy });
-    setAccountType({
-      open: false,
-      id: 0,
-      name: "",
-    });
+    dispatch(
+      openAccountTypeModal({
+        open: false,
+        id: 0,
+        name: "",
+      })
+    );
     setModalName("accountTypeModal");
   };
 

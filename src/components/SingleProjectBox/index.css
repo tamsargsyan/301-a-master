@@ -49,6 +49,7 @@
 }
 .donation_project.project:not(.donateToProject) {
   cursor: pointer;
+  height: fit-content;
 }
 .donation_project.project .projectImg {
   width: 100%;
@@ -72,7 +73,7 @@
 .progress_line {
   background: #189387;
   border-radius: inherit;
-  width: 80%;
+  width: 0%;
   height: inherit;
 }
 .projectProgress_info {
@@ -97,6 +98,7 @@
 }
 .donation_project.project .ourProject__author img {
   width: 2.3vw;
+  aspect-ratio: 1 / 1;
 }
 .donation_project.project .projectInfo .flag img {
   width: 1vw !important;

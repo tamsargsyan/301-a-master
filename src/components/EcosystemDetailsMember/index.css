@@ -95,6 +95,9 @@
   align-items: center;
   justify-content: space-between;
 }
+.ecoSystemDetailsMember .project {
+  width: fit-content;
+}
 .ecoSystemDetailsMember .projectImg {
   height: 130px;
   width: 236px;

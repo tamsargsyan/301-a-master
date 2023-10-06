@@ -14,7 +14,7 @@ import OneTimeDonation from "./components/OneTimeDonation";
 import DonationProjectsModal from "./components/DonationProjectsModal";
 import DonateToTheProject from "./components/DonateToTheProject";
 import { useDispatch, useSelector } from "react-redux";
-import { openDonateModal } from "./actions/donateAction";
+import { openAccountTypeModal, openDonateModal } from "./actions/donateAction";
 import { RootState } from "./store/configureStore";
 
 function App() {
@@ -26,11 +26,6 @@ function App() {
 
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
-  const [accountType, setAccountType] = useState({
-    open: false,
-    id: 0,
-    name: "",
-  });
   const [agreementTerms, setAgreementTerms] = useState(false);
   const [privacy, setPrivacy] = useState({
     modal: false,
@@ -46,6 +41,7 @@ function App() {
   const { isDonateModal } = useSelector(
     (state: RootState) => state.projectDetails
   );
+  const { accountType } = useSelector((state: RootState) => state.homeData);
 
   useEffect(() => {
     document.body.classList.toggle(
@@ -78,6 +74,7 @@ function App() {
   useEffect(() => {
     signUp && setSignIn(false);
   }, [signUp]);
+  const { isHomePage } = useSelector((state: RootState) => state.homeData);
 
   return (
     <div className='container'>
@@ -98,7 +95,6 @@ function App() {
         signUp={signUp}
         setSignUp={setSignUp}
         setSignIn={setSignIn}
-        setAccountType={setAccountType}
         handleClose={() => {
           setSignUp(false);
           modalName === "signIn"
@@ -109,28 +105,27 @@ function App() {
       <AccountTypeModal
         accountType={accountType}
         setSignUp={setSignUp}
-        setAccountType={setAccountType}
         setAgreementTerms={setAgreementTerms}
         setPrivacy={setPrivacy}
         setModalName={setModalName}
         handleClose={() => {
-          setSignUp(true);
-          setAccountType({
-            open: false,
-            id: 0,
-            name: "",
-          });
+          !isHomePage && setSignUp(true);
+          dispatch(
+            openAccountTypeModal({
+              open: false,
+              id: 0,
+              name: "",
+            })
+          );
         }}
       />
       <AgreementTermsModal
         agreementTerms={agreementTerms}
-        setAccountType={setAccountType}
         setAgreementTerms={setAgreementTerms}
       />
       <Privacy
         privacy={privacy}
         setPrivacy={setPrivacy}
-        setAccountType={setAccountType}
         handleClose={() => {
           setPrivacy({
             modal: false,
@@ -139,11 +134,13 @@ function App() {
           if (modalName === "oneTimeDonation") setOneTimeDonation(true);
           if (modalName === "signInModal") setSignIn(true);
           if (modalName === "accountTypeModal")
-            setAccountType({
-              name: "donor",
-              id: 1,
-              open: true,
-            });
+            dispatch(
+              openAccountTypeModal({
+                name: "donor",
+                id: 1,
+                open: true,
+              })
+            );
           if (modalName === "donateToProject") setDonateSingleProject(true);
         }}
       />

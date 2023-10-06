@@ -32,26 +32,28 @@ const Project: React.FC<ProjectProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="ourProject__project">
-      <div className="ourProject__projectInner">
-        <div className="ourProject__projectInfo">
-          <div className="ourProject__author">
-            <img src={authorImg} alt="Author" />
+    <div className='ourProject__project'>
+      <div className='ourProject__projectInner'>
+        <div className='ourProject__projectInfo'>
+          <div className='ourProject__author'>
+            <img src={authorImg} alt='Author' />
             <span>{author}</span>
           </div>
-          <div className="ourProject__title">
+          <div className='ourProject__title'>
             <span>{title}</span>
-            <div className="flag">
-              <img src={FLAG} alt="FLAG" />
+            <div className='flag'>
+              <img src={FLAG} alt='FLAG' />
               <span>{flag}</span>
             </div>
           </div>
           <div
-            className="ourProject__desc"
-            dangerouslySetInnerHTML={{ __html: desc }}
+            className='ourProject__desc'
+            dangerouslySetInnerHTML={{
+              __html: desc.split(" ").slice(0, 7).join(" "),
+            }}
           />
         </div>
-        <div className="btns" style={{ width: "100%" }}>
+        <div className='btns' style={{ width: "100%" }}>
           <Button
             text={t("btns.view")}
             link={true}
@@ -63,7 +65,7 @@ const Project: React.FC<ProjectProps> = ({
               color: "#fff",
               fontWeight: "500",
             }}
-            className="view-btn"
+            className='view-btn'
             onClick={() => {
               //@ts-ignore
               dispatch(fetchingProjectDetails(`project-details/${id}`));
@@ -71,19 +73,18 @@ const Project: React.FC<ProjectProps> = ({
           />
           <button
             className={`heart-btn ${isSaved ? "liked" : ""}`}
-            onClick={heartit}
-          >
+            onClick={heartit}>
             <span>{t("btns.save-project")}</span>
-            <div className="heartWrapper">
-              <svg className="heart" viewBox="0 0 32 29.6">
-                <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" />
+            <div className='heartWrapper'>
+              <svg className='heart' viewBox='0 0 32 29.6'>
+                <path d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z' />
               </svg>
             </div>
           </button>
         </div>
       </div>
-      <div className="ourProject__projectImg">
-        <img src={projectImg} alt="Project" />
+      <div className='ourProject__projectImg'>
+        <img src={projectImg} alt='Project' />
       </div>
     </div>
   );

@@ -99,8 +99,7 @@ const EcoSystemDetails = () => {
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
   const { t } = useTranslation();
-  console.log(header);
-
+  // console.log(project);
   if (loading)
     return (
       <div className='loadingContainer'>
@@ -143,10 +142,12 @@ const EcoSystemDetails = () => {
                   />
                 </div>
               </div>
-              <EcoSystemDetailsMember
-                expertProject={ecosystemResult}
-                project={project}
-              />
+              {project.map((p: any) => (
+                <EcoSystemDetailsMember
+                  expertProject={ecosystemResult}
+                  project={p}
+                />
+              ))}
             </div>
           </Background>
           <Footer />

@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
+import { storageBase } from "../../utils/storage";
 
 interface EcosystemProps {
   lang: string;
@@ -72,11 +73,15 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-301"),
+          become: "доноры «301»",
+          id: 1,
           link: "",
         },
         {
           name: t("btns.learn-more"),
           link: "club301",
+          become: "",
+          id: null,
         },
       ],
       btnStyle: [
@@ -104,6 +109,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           name: t("btns.become-ambassador"),
           link: "",
+          become: "Амбассадор",
+          id: 2,
         },
       ],
       btnStyle: [
@@ -126,10 +133,14 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           name: t("btns.become-expert"),
           link: "",
+          become: "Эксперты",
+          id: 3,
         },
         {
           name: t("btns.learn-more"),
           link: "experts",
+          become: "",
+          id: null,
         },
       ],
       btnStyle: [
@@ -149,18 +160,26 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     },
     {
       id: 6,
-      title: partnerInfo[0][`title_${lang}`],
+      title: partnerInfo && partnerInfo[0] && partnerInfo[0][`title_${lang}`],
       headerIcon: PartnersIcon,
-      description: partnerInfo[0][`description_${lang}`],
+      description:
+        partnerInfo &&
+        partnerInfo[0] &&
+        partnerInfo &&
+        partnerInfo[0][`description_${lang}`],
       mainImg: PARTNERS,
       btn: [
         {
           name: t("btns.become-partner"),
           link: "",
+          become: "Партнеры",
+          id: 4,
         },
         {
           name: t("btns.all-partners"),
           link: "partners",
+          become: "",
+          id: null,
         },
       ],
       btnStyle: [
@@ -177,23 +196,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           color: "#000",
         },
       ],
-      partners: [
-        {
-          id: 1,
-          name: "Rosgostrakh",
-          img: ROSGOSTRAKH,
-        },
-        {
-          id: 2,
-          name: "Betconstruct",
-          img: BETCONSTRUCT,
-        },
-        {
-          id: 3,
-          name: "Digitain",
-          img: DIGITAIN,
-        },
-      ],
+      partners: partnerInfo,
     },
     {
       id: 7,
@@ -206,6 +209,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         {
           name: t("btns.become-fund-friend"),
           link: "",
+          become: "Друзья",
+          id: 5,
         },
       ],
       btnStyle: [
@@ -260,11 +265,14 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
               {data.partners && (
                 <div className='partners'>
                   <div className='innerPartners'>
-                    {data.partners.map(partner => (
-                      <div className='partner' key={partner.id}>
-                        <img src={partner.img} alt={partner.name} />
-                      </div>
-                    ))}
+                    {/* {data.partners.map((partner: any) => ( */}
+                    <div className='partner' key={data.partners?.id}>
+                      <img
+                        src={`${storageBase}/${data.partners?.image}`}
+                        alt={data.partners?.title_en}
+                      />
+                    </div>
+                    {/* ))} */}
                   </div>
                 </div>
               )}

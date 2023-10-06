@@ -16,3 +16,7 @@
   font-weight: 600;
   margin-bottom: 26px;
 }
+.donationProjects_spinner {
+  display: flex;
+  justify-content: center;
+}

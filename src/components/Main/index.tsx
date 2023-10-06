@@ -53,11 +53,15 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         btns={[
           {
             name: t("btns.become-301"),
+            become: "доноры «301»",
+            id: 1,
             link: "",
           },
           {
             name: t("btns.whole-project"),
             link: "/projects",
+            become: "",
+            id: null,
           },
         ]}
         btnStyles={[

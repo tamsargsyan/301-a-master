@@ -4,7 +4,8 @@ import Button from "../Button";
 import "./index.css";
 import { useEffect, useState } from "react";
 import { RootState } from "../../store/configureStore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { isHomePage, openAccountTypeModal } from "../../actions/donateAction";
 
 interface HeaderProps {
   title: string;
@@ -41,6 +42,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const windowSize = useWindowSize();
   const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
+  const dispatch = useDispatch();
   const [ourMission, setOurMission] = useState({
     txt: "Наша миссия — ",
     link: "формирование онтологической безопасности Армении.",
@@ -123,6 +125,16 @@ const Header: React.FC<HeaderProps> = ({
                     ? "homePage_btn"
                     : undefined
                 }
+                onClick={() => {
+                  dispatch(
+                    openAccountTypeModal({
+                      open: true,
+                      id: btn.id,
+                      name: btn.become,
+                    })
+                  );
+                  dispatch(isHomePage(true));
+                }}
               />
             ))}
           </div>
