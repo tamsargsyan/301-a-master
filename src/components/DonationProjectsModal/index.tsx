@@ -1,17 +1,11 @@
 import EcosystemModal from "../EcosystemModal";
 import Modal from "../Modal";
 import SingleProjectBox from "../SingleProjectBox";
-import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import "./index.css";
 import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openDonateModal } from "../../actions/donateAction";
-import {
-  fetchingProjectDetails,
-  fetchingProjects,
-} from "../../actions/apiActions";
-import { RootState } from "../../store/configureStore";
+import { fetchingProjectDetails } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { storageBase } from "../../utils/storage";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
@@ -29,7 +23,6 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   // setDonation,
   setDonateSingleProject,
 }) => {
-  const arr = new Array(6).fill("");
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -54,12 +47,6 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
         .then(data => setP(data))
         .catch(error => console.error(error));
   }, [donateProjects]);
-  // console.log(p, "p");
-
-  // const { data, loading } = useSelector(
-  //   (state: RootState) => state.projectData
-  // );
-  // const { projects } = data;
 
   return (
     <Modal setOpenModal={handleClose} openModal={donateProjects}>

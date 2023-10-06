@@ -1,16 +1,10 @@
-import PERSON from "../../assets/ecosystemDetails/person1.png";
-import ELIPSE from "../../assets/ecosystemDetails/elipse-sages.svg";
 import ARROW from "../../assets/ecosystemDetails/arrow-red.svg";
-import FLAG from "../../assets/flag.svg";
 import "./index.css";
 import { NavLink, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import SingleProjectBox from "../SingleProjectBox";
-import PROJECT from "../../assets/projectAuthor/project-1.svg";
-import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import { storageBase } from "../../utils/storage";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
@@ -32,7 +26,6 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
   expertProject,
   project,
 }) => {
-  const arr = new Array(6).fill("");
   const windowSize = useWindowSize();
   const [width, setWidth] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,19 +51,13 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const { t } = useTranslation();
   const { ecosystem } = useParams();
-  console.log(project);
-  console.log(expertProject);
 
   return (
     <>
       {project &&
         (ecosystem === "partners" ? (
-          <div className='ecosystemDetails_partners'>
-            {project.map((p: any) => (
-              <div className='ecosystemDetails_partners_item' key={p.id}>
-                <img src={`${storageBase}/${p.image}`} alt='Partner' />
-              </div>
-            ))}
+          <div className='ecosystemDetails_partners_item' key={project.id}>
+            <img src={`${storageBase}/${project.image}`} alt='Partner' />
           </div>
         ) : (
           <div className='ecoSystemDetailsMember'>

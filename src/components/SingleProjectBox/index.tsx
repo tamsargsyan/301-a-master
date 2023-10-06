@@ -30,7 +30,6 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
   const calcPercent = (val1: number, val2: number) => {
     return Math.floor((val1 / val2) * 100);
   };
-  // console.log(collected, budget, "collected, budget");
 
   if (className?.includes("donation_project")) {
     return (

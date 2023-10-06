@@ -5,10 +5,9 @@ import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import SMALL_PATTERN_1 from "../../assets/patterns/small-1.svg";
 import ICON from "../../assets/info/4.svg";
 import ARROW from "../../assets/arrow.svg";
-import FLAG from "../../assets/flag.svg";
 import "./index.css";
 import { motion } from "framer-motion";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
@@ -54,7 +53,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
   };
 
   const { projects } = useSelector((state: RootState) => state.homeData.data);
-  console.log(projects);
+
   return (
     <>
       {projects && (

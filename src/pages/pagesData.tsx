@@ -4,7 +4,6 @@ import ProjectDetails from "./ProjectDetails";
 import Home from "./Home";
 import OurProjects from "./OurProject";
 import EcoSystemDetails from "./EcosystemDetails";
-import Personal from "../components/Personal/PersonalSidebar";
 import PersonalInfo from "../components/Personal/Personal-Info";
 import Layout from "../hoc/layout";
 import PerosnalProjects from "../components/Personal/PersonalProjects";

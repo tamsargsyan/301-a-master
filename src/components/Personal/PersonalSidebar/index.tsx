@@ -3,10 +3,9 @@ import SMS from "../../../assets/sms.svg";
 import PERSON from "../../../assets/projectAuthor/person-1.svg";
 import "./index.css";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
 
 const PersonalSidebar = () => {
-  const [bar, setBar] = useState([
+  const bar = [
     {
       id: 1,
       name: "Personal info",
@@ -31,18 +30,7 @@ const PersonalSidebar = () => {
       path: "personal/settings",
       isActive: false,
     },
-  ]);
-
-  const handleClickMenu = (id: number) => {
-    const updatedBar = bar.map(item => {
-      if (item.id === id) {
-        return { ...item, isActive: true };
-      } else {
-        return { ...item, isActive: false };
-      }
-    });
-    setBar(updatedBar);
-  };
+  ];
 
   return (
     <div className='personal_bar_wrapper'>
@@ -50,7 +38,6 @@ const PersonalSidebar = () => {
         <div className='person_bg'></div>
         <div className='person_profile'>
           <div className='prof_pic'>
-            {/* <img src={ELLIPSE} alt='Ellipse' /> */}
             <img src={PERSON} alt='Person' />
           </div>
         </div>
@@ -67,7 +54,7 @@ const PersonalSidebar = () => {
         {bar.map(bar => (
           <NavLink
             end
-            to={`/${bar.path}`} // Use a leading slash here to make it an absolute path
+            to={`/${bar.path}`}
             key={bar.id}
             className={`personal_bar_item`}
             // onClick={() => handleClickMenu(bar.id)}

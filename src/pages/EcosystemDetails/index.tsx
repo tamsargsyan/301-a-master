@@ -73,7 +73,7 @@ const EcoSystemDetails = () => {
 
   const dispatch = useDispatch();
   const { ecosystem } = useParams();
-  console.log(ecosystem);
+
   useEffect(() => {
     if (ecosystem === "partners") {
       //@ts-ignore
@@ -89,18 +89,16 @@ const EcoSystemDetails = () => {
   const { data, partners, loading } = useSelector(
     (state: RootState) => state.expertProject
   );
-  // console.log(data, "data");
-  // console.log(partners, "partners");
   const header =
     //@ts-ignore
     ecosystem === "partners" ? partners?.partnersDescription : data[ecosystem];
   const project =
-    ecosystem === "partners" ? data.partners : data[`${ecosystem}Project`];
+    ecosystem === "partners" ? partners?.partners : data[`${ecosystem}Project`];
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
   const { t } = useTranslation();
-  // console.log(project);
+
   if (loading)
     return (
       <div className='loadingContainer'>
@@ -148,12 +146,17 @@ const EcoSystemDetails = () => {
                   />
                 </div>
               </div>
-              {project.map((p: any) => (
-                <EcoSystemDetailsMember
-                  expertProject={ecosystemResult}
-                  project={p}
-                />
-              ))}
+              <div
+                className={`${
+                  ecosystem === "partners" && "ecosystemDetails_partners"
+                }`}>
+                {project?.map((p: any) => (
+                  <EcoSystemDetailsMember
+                    expertProject={ecosystemResult}
+                    project={p}
+                  />
+                ))}
+              </div>
             </div>
           </Background>
           <Footer />

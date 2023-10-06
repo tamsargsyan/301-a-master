@@ -21,24 +21,9 @@
   flex-direction: row-reverse;
 }
 .partners {
-  display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 50px;
-}
-.partner {
-  border-radius: 10px;
-  border: 1px solid #d7d7d7;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 100px;
-}
-.partner img {
-  width: 100%;
-  height: 100%;
 }
 .ecosystemContainer .partners {
   justify-content: center;

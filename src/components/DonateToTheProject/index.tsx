@@ -1,6 +1,3 @@
-import React from "react";
-import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
 import Modal from "../Modal";
 import EcosystemModal from "../EcosystemModal";
 import SingleProjectBox from "../SingleProjectBox";

@@ -3,31 +3,28 @@ import EcosystemIcon from "../../assets/info/5.svg";
 import SagesIcon from "../../assets/info/6.svg";
 import ClubIcon from "../../assets/info/7.svg";
 import AmbassadorIcon from "../../assets/info/8.svg";
-// import VolunteersIcon from "../../assets/info/9.svg";
 import ExpertIcon from "../../assets/info/10.svg";
 import PartnersIcon from "../../assets/info/11.svg";
 import FriendsIcon from "../../assets/info/12.svg";
 import SAGES from "../../assets/info/sages.svg";
 import CLUB from "../../assets/info/club.svg";
 import AMBASSDOR from "../../assets/info/ambassador.svg";
-// import VOLUNTEERS from "../../assets/info/volunteers.svg";
 import EXPERT from "../../assets/info/expert.svg";
 import PARTNERS from "../../assets/info/partners.svg";
 import FRIENDS from "../../assets/info/fond.svg";
-import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
-import BETCONSTRUCT from "../../assets/info/betconstruct.png";
-import DIGITAIN from "../../assets/info/digitain.png";
 import Background from "../Background";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { storageBase } from "../../utils/storage";
+import { useEffect } from "react";
+import { fetchingPartners } from "../../actions/apiActions";
 
 interface EcosystemProps {
   lang: string;
@@ -44,6 +41,13 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     partnerInfo,
     foundationFriends,
   } = useSelector((state: RootState) => state.homeData.data);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchingPartners("partners"));
+  }, [dispatch]);
+
+  const { partners } = useSelector((state: RootState) => state.expertProject);
   const data = [
     {
       id: 1,
@@ -65,6 +69,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           color: "#000",
         },
       ],
+      partners: null,
     },
     {
       id: 2,
@@ -100,6 +105,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           color: "#000",
         },
       ],
+      partners: null,
     },
     {
       id: 3,
@@ -124,6 +130,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           boxShadow: " -21px 16px 38px 0px rgba(238, 136, 66, 0.42)",
         },
       ],
+      partners: null,
     },
     {
       id: 5,
@@ -159,6 +166,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           borderColor: "#42CFEE",
         },
       ],
+      partners: null,
     },
     {
       id: 6,
@@ -179,7 +187,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
         },
         {
           name: t("btns.all-partners"),
-          link: "partners",
+          link: "/ecosystem/partners",
           become: "",
           id: null,
         },
@@ -198,7 +206,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           color: "#000",
         },
       ],
-      partners: partnerInfo,
+      partners: partners?.partners,
     },
     {
       id: 7,
@@ -224,9 +232,11 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           boxShadow: "-21px 16px 38px 0px rgba(100, 66, 238, 0.37)",
         },
       ],
+      partners: null,
     },
   ];
   const windowSize = useWindowSize();
+
   return (
     <>
       <div className='separatedPart'></div>
@@ -246,38 +256,35 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           className='differedHeaderContainer'
         />
         <div className='ecosystemContainer'>
-          {data.map(data => (
-            <div className='ecosystem' key={data.id}>
+          {data.map(ecosystem => (
+            <div className='ecosystem' key={ecosystem.id}>
               <div className='ecosystemInner'>
                 <Header
-                  title={data.title}
-                  description={data.description}
-                  btns={data.btn}
-                  icon={data.headerIcon}
-                  btnStyles={data.btnStyle}
+                  title={ecosystem.title}
+                  description={ecosystem.description}
+                  btns={ecosystem.btn}
+                  icon={ecosystem.headerIcon}
+                  btnStyles={ecosystem.btnStyle}
                   style={{ padding: 0 }}
-                  mainImg={data.mainImg}
+                  mainImg={ecosystem.mainImg}
                   isEcosystem={true}
                   className='homePageHeader'
                 />
                 <div className='img'>
-                  <img src={data.mainImg} alt='Icon' />
+                  <img src={ecosystem.mainImg} alt='Icon' />
                 </div>
               </div>
-              {data.partners && (
-                <div className='partners'>
-                  <div className='innerPartners'>
-                    {/* {data.partners.map((partner: any) => ( */}
-                    <div className='partner' key={data.partners?.id}>
+              <div className='ecosystemDetails_partners partners'>
+                {ecosystem.partners &&
+                  ecosystem.partners.map((p: any) => (
+                    <div className='ecosystemDetails_partners_item' key={p?.id}>
                       <img
-                        src={`${storageBase}/${data.partners?.image}`}
-                        alt={data.partners?.title_en}
+                        src={`${storageBase}/${p?.image}`}
+                        alt={p?.title_en}
                       />
                     </div>
-                    {/* ))} */}
-                  </div>
-                </div>
-              )}
+                  ))}
+              </div>
             </div>
           ))}
         </div>

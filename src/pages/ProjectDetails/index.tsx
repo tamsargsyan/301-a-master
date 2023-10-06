@@ -13,10 +13,7 @@ import PATTERN from "../../assets/projectAuthor/pattern.svg";
 import PDF from "../../assets/projectAuthor/pdf.svg";
 import BUDGET from "../../assets/projectAuthor/budget.png";
 import COLLECTED from "../../assets/projectAuthor/collected.png";
-// import REMAINING from "../../assets/projectAuthor/remaining.svg";
 import HEART from "../../assets/projectAuthor/heart.svg";
-import ARROW_MEMBER_LEFT from "../../assets/arrow-left-team-member.svg";
-import ARROW_MEMBER_RIGHT from "../../assets/info/arrow-right-team-member.svg";
 import "./index.css";
 import RevolveText from "../../components/Revolve";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -26,9 +23,6 @@ import {
   fetchingProjects,
 } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
-import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-// import FULL_PROJECT_1 from "../../assets/projectAuthor/project-full-1.svg";
-import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
 import { useNavigate, useParams } from "react-router";
 import Footer from "../../components/Footer";
 import Background from "../../components/Background";
@@ -68,7 +62,7 @@ const ProjectDetails = () => {
   // const isThereAnotherMember = projectsData[0].projects[0]?.workTeam.find(
   //   member => member.img.length > 1
   // );
-  const [nextMember, setNextMember] = useState(0);
+  // const [nextMember, setNextMember] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const donationsRef = useRef<HTMLDivElement>(null);
 
@@ -394,6 +388,7 @@ const ProjectDetails = () => {
                               </p>
                             </div>
                           );
+                        return null;
                       })}
                     </div>
                   </div>
