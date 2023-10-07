@@ -4,8 +4,6 @@ import HeaderIcon from "../../assets/info/news.svg";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import NEWS_1 from "../../assets/news1.png";
-// import NEWS_2 from "../../assets/news2.png";
-// import NEWS_3 from "../../assets/news3.jpg";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import Button from "../Button";

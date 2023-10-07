@@ -398,13 +398,17 @@ const ProjectDetails = () => {
                     <img src={PATTERN} alt='Pattern' />
                     <h2>Partners</h2>
                   </div>
-                  <motion.div className='partners _inner' ref={carousel}>
+                  <motion.div
+                    className='ecosystemDetails_partners partners _inner'
+                    ref={carousel}>
                     <motion.div
                       drag='x'
                       dragConstraints={{ right: 0, left: -width }}
                       className='innerPartners'>
                       {partners.map((partner: any) => (
-                        <motion.div className='partner' key={partner.id}>
+                        <motion.div
+                          className='ecosystemDetails_partners_item'
+                          key={partner.id}>
                           <img
                             src={`${storageBase}/${partner.image}`}
                             alt={partner.name}

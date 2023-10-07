@@ -111,7 +111,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                   `description_${lang}` as keyof ProjectKeyOf
                                 ]
                               )
-                                .split(" ")
+                                ?.split(" ")
                                 .slice(0, 2)
                                 .join(" ")}
                               flag={project.map_count}
@@ -139,7 +139,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                           description={removeHtmlTags(
                             project[`description_${lang}` as keyof ProjectKeyOf]
                           )
-                            .split(" ")
+                            ?.split(" ")
                             .slice(0, 3)
                             .join(" ")}
                           flag={3}
