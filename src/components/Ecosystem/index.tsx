@@ -222,6 +222,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           become: "Друзья",
           id: 5,
         },
+        {
+          name: t("btns.learn-more"),
+          link: "/ecosystem/friends-foundation",
+          become: "",
+          id: null,
+        },
       ],
       btnStyle: [
         {
@@ -230,6 +236,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           border: "none",
           color: "#fff",
           boxShadow: "-21px 16px 38px 0px rgba(100, 66, 238, 0.37)",
+        },
+        {
+          border: "1px solid #6442EE",
+          color: "#000",
         },
       ],
       partners: null,

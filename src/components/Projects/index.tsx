@@ -17,7 +17,6 @@ import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { HeaderTypes, ProjectsTypes } from "../../utils/api.types";
 import { HeaderKeyOf, ProjectKeyOf } from "../../utils/keyof.type";
 import SingleProjectBox from "../SingleProjectBox";
-import PROJECT_1 from "../../assets/project.jpg";
 import { storageBase } from "../../utils/storage";
 import { NavLink } from "react-router-dom";
 
@@ -77,7 +76,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                 style={{ width: "100%" }}
               />
               <div className='slider'>
-                {windowSize.width < 1840 && (
+                {projects.length > 2 && (
                   <>
                     <button className='leftBtn' onClick={handleBack}>
                       <img src={ARROW} alt='Arrow' />
@@ -128,26 +127,33 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                   </motion.div>
                 ) : (
                   <div className='innerCarousel'>
-                    {projects.map(project => {
+                    {projects.map((project: any) => {
                       return (
-                        <SingleProjectBox
-                          title={
-                            project[
-                              `project_name_${lang}` as keyof ProjectKeyOf
-                            ]
-                          }
-                          description={removeHtmlTags(
-                            project[`description_${lang}` as keyof ProjectKeyOf]
-                          )
-                            ?.split(" ")
-                            .slice(0, 3)
-                            .join(" ")}
-                          flag={3}
-                          author={
-                            project[`sector_${lang}` as keyof ProjectKeyOf]
-                          }
-                          projectImg={PROJECT_1}
-                        />
+                        <NavLink
+                          to={`/projects/${project.project.id}`}
+                          key={project.project.id}>
+                          <SingleProjectBox
+                            title={
+                              project.project[
+                                `project_name_${lang}` as keyof ProjectKeyOf
+                              ]
+                            }
+                            description={removeHtmlTags(
+                              project.project[
+                                `description_${lang}` as keyof ProjectKeyOf
+                              ]
+                            )
+                              ?.split(" ")
+                              .slice(0, 2)
+                              .join(" ")}
+                            flag={project.map_count}
+                            author={
+                              project[`sector_${lang}` as keyof ProjectKeyOf]
+                            }
+                            projectImg={`${storageBase}/${project.project.image}`}
+                            className='home_project'
+                          />
+                        </NavLink>
                       );
                     })}
                   </div>

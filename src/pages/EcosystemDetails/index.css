@@ -15,6 +15,11 @@
   align-items: center;
   gap: 20px;
 }
+.ecosystemDetails-title img {
+  /* width: 30px; */
+  height: 40px;
+  aspect-ratio: 1 / 1;
+}
 .ecosystemDetails-content {
   font-weight: 500;
   text-align: justify;
@@ -22,6 +27,11 @@
 .ecosystemDetails-content,
 .memberContent {
   font-size: clamp(1.25rem, 0rem + 1.0417vw, 3.75rem);
+}
+.ecoSystemDetailsMember_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 }
 @media screen and (max-width: 1920px) {
   .ecosystemDetails-content,

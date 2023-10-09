@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Background from "../../components/Background";
 import SAGES from "../../assets/info/1.svg";
 import EXPERTS from "../../assets/info/10.svg";
@@ -56,9 +56,9 @@ const EcoSystemDetails = () => {
       elipse: ELIPSE_AMBASSADORS,
     },
     {
-      name: "friends",
-      color: "",
-      colorWeak: "",
+      name: "friends-foundation",
+      color: "#6442EE",
+      colorWeak: "#6442EE99",
       icon: FRIENDS,
       elipse: ELIPSE_FRIENDS,
     },
@@ -80,6 +80,9 @@ const EcoSystemDetails = () => {
       dispatch(fetchingExpertProject(`all-${ecosystem}`));
       //@ts-ignore
       dispatch(fetchingPartners("partners"));
+    } else if (ecosystem === "friends-foundation") {
+      //@ts-ignore
+      dispatch(fetchingExpertProject("friends-foundation"));
     } else {
       //@ts-ignore
       dispatch(fetchingExpertProject(`${ecosystem}-project`));
@@ -89,11 +92,30 @@ const EcoSystemDetails = () => {
   const { data, partners, loading } = useSelector(
     (state: RootState) => state.expertProject
   );
-  const header =
-    //@ts-ignore
-    ecosystem === "partners" ? partners?.partnersDescription : data[ecosystem];
-  const project =
-    ecosystem === "partners" ? partners?.partners : data[`${ecosystem}Project`];
+  const [header, setHeader] = useState(null);
+  const [project, setProject] = useState<any>(null);
+  useEffect(() => {
+    if (ecosystem) {
+      if (ecosystem === "partners") {
+        setHeader(partners?.partnersDescription);
+      } else if (ecosystem === "friends-foundation") {
+        setHeader(data?.friendsOfTheFoundationDescription);
+      } else setHeader(data[ecosystem]);
+    }
+  }, [data, ecosystem, partners]);
+
+  useEffect(() => {
+    if (ecosystem) {
+      if (ecosystem === "partners") {
+        setProject(partners?.partners);
+      } else if (ecosystem === "friends-foundation") {
+        setProject(data?.friendsOfTheFoundation);
+      } else {
+        setProject(data[`${ecosystem}Project`]);
+      }
+    }
+  }, [data, ecosystem, partners?.partners]);
+
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
@@ -110,7 +132,9 @@ const EcoSystemDetails = () => {
     <>
       <Helmet>
         <title>
-          {ecosystem && ecosystem.charAt(0).toUpperCase() + ecosystem.slice(1)}
+          {ecosystem &&
+            ecosystem.split("-")[0].charAt(0).toUpperCase() +
+              ecosystem.split("-")[0].slice(1)}
         </title>
       </Helmet>
       {header && (
@@ -149,9 +173,10 @@ const EcoSystemDetails = () => {
               <div
                 className={`${
                   ecosystem === "partners" && "ecosystemDetails_partners"
-                }`}>
-                {project?.map((p: any) => (
+                } ecoSystemDetailsMember_wrapper`}>
+                {project?.map((p: any, i: number) => (
                   <EcoSystemDetailsMember
+                    key={i}
                     expertProject={ecosystemResult}
                     project={p}
                   />

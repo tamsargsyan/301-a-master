@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "ed74318e-fa2a-41f7-bc0c-85a20b0c6b2a",
+		"name": "301LoginUser",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29136911"
+	},
+	"item": [
+		{
+			"name": "userLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "aghvaneghoyan11@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://301.machtech.site/api/login",
+					"protocol": "https",
+					"host": [
+						"301",
+						"machtech",
+						"site"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

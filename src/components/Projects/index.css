@@ -23,6 +23,11 @@
 }
 .leftBtn,
 .rightBtn {
+  width: 62px;
+  height: 62px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.25);
   padding: 20px;
   border-radius: 50%;
@@ -32,7 +37,11 @@
   z-index: 2;
   transition: 0.3s ease;
 }
-
+.leftBtn img,
+.rightBtn img {
+  width: 18px;
+  height: 18px;
+}
 .leftBtn {
   left: 19px;
 }
@@ -47,6 +56,25 @@
 
 .rightBtn:active {
   transform: translateY(-50%) scale(0.85) rotate(180deg);
+}
+@media screen and (max-width: 1600px) {
+  .rightBtn,
+  .leftBtn {
+    width: 52px;
+    height: 52px;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .rightBtn,
+  .leftBtn {
+    width: 42px;
+    height: 42px;
+  }
+  .rightBtn img,
+  .leftBtn img {
+    width: 13px;
+    height: 13px;
+  }
 }
 @media screen and (max-width: 975px) {
   .leftBtn,

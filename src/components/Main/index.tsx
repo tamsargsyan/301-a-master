@@ -36,7 +36,11 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         display: windowSize.width < 975 ? "none" : "block",
       }}
       shoudHaveSidePattern={true}
-      style={{ flexDirection: windowSize.width < 975 ? "column" : "row" }}>
+      style={{
+        flexDirection: windowSize.width < 975 ? "column" : "row",
+        paddingLeft: windowSize.width < 975 ? "15px" : 0,
+        paddingRight: windowSize.width < 975 ? "15px" : 0,
+      }}>
       {windowSize.width < 975 && (
         <div className='bgLogo'>
           <img src={BIG_PATTERN} className='mainBigPattern' alt='Pattern' />

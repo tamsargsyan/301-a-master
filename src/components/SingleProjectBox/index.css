@@ -132,7 +132,7 @@
 }
 @media screen and (max-width: 600px) {
   .projectImg {
-    height: 100px;
+    height: 72px;
   }
   .project {
     width: clamp(7.875rem, 0rem + 39.375vw, 14.765625rem);
@@ -144,5 +144,8 @@
   .projectInfo span {
     font-size: clamp(0.6875rem, -0.0004rem + 3.4393vw, 1.289375rem);
     font-size: clamp(0.5625rem, -0.0004rem + 2.8143vw, 1.055rem);
+  }
+  .home_project {
+    width: 134px !important;
   }
 }
