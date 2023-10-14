@@ -57,7 +57,7 @@ const SignIn: React.FC<SignInProps> = ({
       setSignIn(false);
       dispatch(login());
     }
-  }, [response, setSignIn]);
+  }, [response, setSignIn, dispatch]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
