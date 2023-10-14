@@ -1,8 +1,8 @@
 import ARROW from "../../../assets/arrow-next-red.svg";
 import SMS from "../../../assets/sms.svg";
-import PERSON from "../../../assets/projectAuthor/person-1.svg";
 import "./index.css";
 import { NavLink } from "react-router-dom";
+import { storageBase } from "../../../utils/storage";
 
 const PersonalSidebar = () => {
   const bar = [
@@ -31,6 +31,8 @@ const PersonalSidebar = () => {
       isActive: false,
     },
   ];
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div className='personal_bar_wrapper'>
@@ -38,10 +40,12 @@ const PersonalSidebar = () => {
         <div className='person_bg'></div>
         <div className='person_profile'>
           <div className='prof_pic'>
-            <img src={PERSON} alt='Person' />
+            <img src={`${storageBase}/${user?.image}`} alt='Person' />
           </div>
         </div>
-        <p className='prof_name'>Peter Nemoy</p>
+        <p className='prof_name'>
+          {user?.name} {user?.last_name}
+        </p>
         <button className='prof_sms'>
           <div className='sms_img'>
             <span className='sms_notif'>3</span>

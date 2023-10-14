@@ -96,19 +96,20 @@ export const fetchingPartners = (data: string) => async (dispatch: any) => {
   }
 };
 
-export const usePostRequest = (endpoint: string, data: Object) => {
+export const usePostRequest = () => {
   const [postLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
+  const [response, setResponse] = useState<any>(null);
 
-  const postRequest = async () => {
+  const postRequest = async (endpoint: string, data: Object) => {
     setLoading(true);
     try {
-      await apiService.post(endpoint, data);
+      await apiService.post(endpoint, data, setResponse);
     } catch (err: any) {
       setError(err);
     }
     setLoading(false);
   };
 
-  return { postRequest, postLoading, error };
+  return { postRequest, postLoading, error, response };
 };

@@ -58,6 +58,7 @@
 .person_profile .prof_pic img {
   width: 85%;
   height: 85%;
+  border-radius: 50%;
 }
 .prof_name {
   padding-top: 330px;

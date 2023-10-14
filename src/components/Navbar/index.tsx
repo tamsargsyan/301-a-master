@@ -10,9 +10,12 @@ import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
 import i18next from "i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { languageDitactor } from "../../actions/language";
 import { openDonateModal } from "../../actions/donateAction";
+import { RootState } from "../../store/configureStore";
+import NOTIFICATION from "../../assets/notification.svg";
+import { storageBase } from "../../utils/storage";
 
 const history = createBrowserHistory(); // Create a history instance
 
@@ -84,6 +87,9 @@ const Navbar: React.FC<NavbarProps> = ({
     dispatch(languageDitactor(language));
     setOpenLangs(false);
   };
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className='navbarContainer'>
@@ -169,35 +175,52 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
       {windowSize.width > 800 ? (
-        <div className='btns' style={{ margin: 0 }}>
-          <Button
-            text={t(`btns.donate`)}
-            link={false}
-            to=''
-            className='signIn-btn'
-            onClick={() => {
-              // setDonation(true);
-              dispatch(openDonateModal(true));
-              setModalName("donate");
-            }}
-            style={{
-              padding: "9px 23px",
-              background: "var(--main-color)",
-              color: "#fff  ",
-            }}
-          />
-          <Button
-            text={t(`navbar.sign-in`)}
-            link={false}
-            to=''
-            className='signIn-btn'
-            onClick={() => {
-              setOpenModal(true);
-              setModalName("signIn");
-            }}
-            style={{ padding: "9px 23px" }}
-          />
-        </div>
+        <>
+          {isAuthenticated ? (
+            <div className='navbar_user_wrapper'>
+              <button className='navbar_notif'>
+                <img src={NOTIFICATION} alt='Notification' />
+                <span className='notification_number'>3</span>
+              </button>
+              <NavLink to='personal/personal-info' className='navbar_user'>
+                <img src={`${storageBase}/${user.image}`} alt='Person' />
+                <p>
+                  {user.name} {user.last_name}
+                </p>
+              </NavLink>
+            </div>
+          ) : (
+            <div className='btns' style={{ margin: 0 }}>
+              <Button
+                text={t(`btns.donate`)}
+                link={false}
+                to=''
+                className='signIn-btn'
+                onClick={() => {
+                  // setDonation(true);
+                  dispatch(openDonateModal(true));
+                  setModalName("donate");
+                }}
+                style={{
+                  padding: "9px 23px",
+                  background: "var(--main-color)",
+                  color: "#fff  ",
+                }}
+              />
+              <Button
+                text={t(`navbar.sign-in`)}
+                link={false}
+                to=''
+                className='signIn-btn'
+                onClick={() => {
+                  setOpenModal(true);
+                  setModalName("signIn");
+                }}
+                style={{ padding: "9px 23px" }}
+              />
+            </div>
+          )}
+        </>
       ) : (
         <Button
           text={t(`navbar.sign-in`)}
