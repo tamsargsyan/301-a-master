@@ -3,30 +3,34 @@ import SMS from "../../../assets/sms.svg";
 import "./index.css";
 import { NavLink } from "react-router-dom";
 import { storageBase } from "../../../utils/storage";
+import { useTranslation } from "react-i18next";
+import NO_IMAGE from "../../../assets/no-image-user.png";
 
 const PersonalSidebar = () => {
+  const { t } = useTranslation();
+
   const bar = [
     {
       id: 1,
-      name: "Personal info",
+      name: t("personal.personal-info"),
       path: "personal/personal-info",
       isActive: false,
     },
     {
       id: 2,
-      name: "My project",
+      name: t("personal.my-project"),
       path: "personal/my-project",
       isActive: false,
     },
     {
       id: 3,
-      name: "My events",
+      name: t("personal.my-events"),
       path: "personal/my-events",
       isActive: false,
     },
     {
       id: 4,
-      name: "Settings",
+      name: t("personal.settings"),
       path: "personal/settings",
       isActive: false,
     },
@@ -40,7 +44,11 @@ const PersonalSidebar = () => {
         <div className='person_bg'></div>
         <div className='person_profile'>
           <div className='prof_pic'>
-            <img src={`${storageBase}/${user?.image}`} alt='Person' />
+            <img
+              style={{ background: user.image ? "transparent" : "#fff" }}
+              src={user.image ? `${storageBase}/${user?.image}` : NO_IMAGE}
+              alt='Person'
+            />
           </div>
         </div>
         <p className='prof_name'>
@@ -51,7 +59,7 @@ const PersonalSidebar = () => {
             <span className='sms_notif'>3</span>
             <img src={SMS} alt='SMS ' />
           </div>
-          <span>My message</span>
+          <span>{t("personal.my-message")}</span>
         </button>
       </div>
       <div className='personal_bar'>

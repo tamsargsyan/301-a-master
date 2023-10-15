@@ -16,6 +16,7 @@ import { openDonateModal } from "../../actions/donateAction";
 import { RootState } from "../../store/configureStore";
 import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
+import NO_IMAGE from "../../assets/no-image-user.png";
 
 const history = createBrowserHistory(); // Create a history instance
 
@@ -183,7 +184,10 @@ const Navbar: React.FC<NavbarProps> = ({
                 <span className='notification_number'>3</span>
               </button>
               <NavLink to='personal/personal-info' className='navbar_user'>
-                <img src={`${storageBase}/${user.image}`} alt='Person' />
+                <img
+                  src={user.image ? `${storageBase}/${user.image}` : NO_IMAGE}
+                  alt='Person'
+                />
                 <p>
                   {user.name} {user.last_name}
                 </p>

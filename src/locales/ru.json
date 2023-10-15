@@ -29,7 +29,9 @@
     "one-time-donation": "единоразовое пожертвование",
     "donate-to-project": "пожертвовать на проект",
     "back": "Назад",
-    "register": "ЗАРЕГИСТРИРОВАТЬСЯ"
+    "register": "ЗАРЕГИСТРИРОВАТЬСЯ",
+    "add": "ДОБАВИТЬ",
+    "save": "Сохранить"
   },
   "contact": {
     "title": "Напишите нам",
@@ -84,7 +86,9 @@
     "projects_interested": "Какое направление проектов Вам интересно",
     "phone": "Телефон",
     "password": "Пароль",
-    "password_confirmation": "Повторить пароль"
+    "password_confirmation": "Повторить пароль",
+    "password_current": "Текущий пароль",
+    "password_new": "Новый пароль"
   },
   "chosenProject": "Вы выбрали проект",
   "select-project": "Выберите проект",
@@ -106,5 +110,18 @@
     "club_code_of_ethics_301": "КОДЕКС ЭТИКИ КЛУБА 301",
     "support_form": "Форма поддержки"
   },
-  "which_sages": "С кем из мудрецов 301 Вы бы хотели сотрудничать?"
+  "which_sages": "С кем из мудрецов 301 Вы бы хотели сотрудничать?",
+  "personal": {
+    "about-me": "Обо мне",
+    "edit-profile": "Редактировать профиль",
+    "contact": "Контакт",
+    "social-media": "Социальные медиа",
+    "my-message": "Мое сообщение",
+    "personal-info": "Личная информация",
+    "my-project": "Мой проект",
+    "my-events": "Мои мероприятия",
+    "settings": "Настройки",
+    "replace": "Заменять",
+    "on_the_web": "В ИНТЕРНЕТЕ"
+  }
 }

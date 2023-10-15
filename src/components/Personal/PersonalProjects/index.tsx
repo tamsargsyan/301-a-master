@@ -4,6 +4,7 @@ import AUTHOR_1 from "../../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../../assets/projectAuthor/project-1.png";
 import "./index.css";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 interface PersonalProjectsProps {
   title: string;
@@ -14,12 +15,14 @@ const PerosnalProjects: React.FC<PersonalProjectsProps> = ({
   title,
   content,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className='personalInfo_wrapper'>
       <Helmet>
-        <title>Peter Nemoy | {title}</title>
+        <title>Peter Nemoy | {t(`personal.${title}`)}</title>
       </Helmet>
-      <p className='personalInfo_title'>{title}</p>
+      <p className='personalInfo_title'>{t(`personal.${title}`)}</p>
       {content && <p className='personalInfo_event_content'>{content}</p>}
       <div className='donationProjects'>
         <SingleProjectBox

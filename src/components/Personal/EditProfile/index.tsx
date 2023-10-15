@@ -37,12 +37,12 @@ const EditProfile = () => {
       <Helmet>
         <title>Peter Nemoy | Edit Profile</title>
       </Helmet>
-      <p className='personalInfo_title'>Edit profile</p>
+      <p className='personalInfo_title'>{t("personal.edit-profile")}</p>
       <form className='personal_form'>
         <div className='prof_pic'>
           <div>
             <div className='signUp_formGroup'>
-              <label htmlFor='personal_name'>Ваша имя</label>
+              <label htmlFor='personal_name'>{t("inputs.name")}</label>
               <input
                 type='text'
                 id='personal_name'
@@ -52,7 +52,7 @@ const EditProfile = () => {
               />
             </div>
             <div className='signUp_formGroup'>
-              <label htmlFor='personal_surname'>Фамилия</label>
+              <label htmlFor='personal_surname'>{t("inputs.surname")}</label>
               <input
                 type='text'
                 id='personal_surname'
@@ -66,12 +66,12 @@ const EditProfile = () => {
             <img src={PROF_PIC} alt='Profile' />
             <p>
               <img src={CLOUD} alt='Cloud' />
-              Replace
+              {t("personal.replace")}
             </p>
           </div>
         </div>
         <div className='signUp_formGroup signUp_textareaGroup'>
-          <label htmlFor='personal_about'>About me</label>
+          <label htmlFor='personal_about'>{t("personal.about-me")}</label>
           <textarea
             id='personal_about'
             name='message'
@@ -85,7 +85,7 @@ const EditProfile = () => {
           />
         </div>
         <div className='signUp_formGroup'>
-          <label htmlFor='signUp_tel'>Телефон</label>
+          <label htmlFor='signUp_tel'>{t("inputs.phone")}</label>
           <div className='signUp_tel'>
             <Select
               className='signUp_selector'
@@ -121,7 +121,7 @@ const EditProfile = () => {
           </div>
         </div>
         <div className='signUp_formGroup'>
-          <label htmlFor='personal_email'>Электронная почта</label>
+          <label htmlFor='personal_email'>{t("sign-in.email")}</label>
           <input
             type='text'
             id='personal_email'
@@ -131,7 +131,7 @@ const EditProfile = () => {
           />
         </div>
         <div className='signUp_formGroup'>
-          <label htmlFor='personal_pass'>Текущий пароль</label>
+          <label htmlFor='personal_pass'>{t("inputs.password_current")}</label>
           <input
             type='text'
             id='personal_pass'
@@ -141,7 +141,7 @@ const EditProfile = () => {
           />
         </div>
         <div className='signUp_formGroup'>
-          <label htmlFor='personal_newPass'>Новый пароль</label>
+          <label htmlFor='personal_newPass'>{t("inputs.password_new")}</label>
           <input
             type='text'
             id='personal_newPass'
@@ -151,7 +151,9 @@ const EditProfile = () => {
           />
         </div>
         <div className='signUp_formGroup'>
-          <label htmlFor='personal_repeatPass'>Повторить пароль</label>
+          <label htmlFor='personal_repeatPass'>
+            {t("inputs.password_confirmation")}
+          </label>
           <input
             type='text'
             id='personal_repeatPass'
@@ -160,9 +162,9 @@ const EditProfile = () => {
             value='daa444%jj55'
           />
         </div>
-        <p className='onTheWeb'>ON THE WEB</p>
+        <p className='onTheWeb'>{t("personal.on_the_web")}</p>
         <div className='personal_add_socialMedias'>
-          <p className='onTheWeb'>Social media</p>
+          <p className='onTheWeb'>{t("personal.social-media")}</p>
           <div className='socialMedia_inputs'>
             <div>
               <img src={FACEBOOK} alt='Facebook' />
@@ -268,7 +270,7 @@ const EditProfile = () => {
             </div>
             <div className='signUp_btns'>
               <Button
-                text='Add'
+                text={t("btns.add")}
                 link={false}
                 to={""}
                 type='submit'
@@ -283,7 +285,7 @@ const EditProfile = () => {
         </div>
         <div className='signUp_btns'>
           <Button
-            text='Save'
+            text={t("btns.save")}
             link={false}
             to={""}
             type='submit'
