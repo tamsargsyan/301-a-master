@@ -203,3 +203,12 @@
   font-size: inherit;
   color: inherit;
 }
+.howDoYouKnow_other {
+  margin-top: 10px;
+}
+.ant-notification  {
+  z-index: 99999;
+}
+.ant-notification-notice-message {
+  margin-bottom: 0 !important;
+}
