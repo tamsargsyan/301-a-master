@@ -7,12 +7,14 @@ import INFO_ICON from "../../assets/info-icon.svg";
 import countries from "../../locales/countries.json";
 import country_dial from "../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
 import { signUpSchema } from "../../Validation";
 import { useCallback, useEffect, useState } from "react";
-import { usePostRequest } from "../../actions/apiActions";
+import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
+import { useTranslation } from "react-i18next";
+import { RootState } from "../../store/configureStore";
 
 const { Option } = Select;
 
@@ -34,6 +36,9 @@ const filterOptionTel = (
   input: string,
   option: { label: string; value: string }
 ) => (option?.value ?? "").toLowerCase().includes(input.toLowerCase());
+
+const filterOptionSages = (input: string, option: any) =>
+  (option?.value ?? "").toLowerCase().includes(input.toLowerCase());
 
 const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   accountType,
@@ -124,6 +129,17 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     }
   }, [response, dispatch, error, openNotification]);
 
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    //@ts-ignore
+    accountType.id === 3 && dispatch(fetchingRegisterData("get-register-data"));
+  }, [accountType.id, dispatch]);
+
+  const { data } = useSelector(
+    (state: RootState) => state.registerData
+  );
+
   return (
     <Modal
       setOpenModal={handleClose}
@@ -165,7 +181,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
               <div className='signUp_formInputs'>
                 <div className='signUp_form1st'>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_name'>Ваша имя*</label>
+                    <label htmlFor='signUp_name'>{t("inputs.name")}*</label>
                     <input
                       type='text'
                       id='signUp_name'
@@ -180,7 +196,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_surname'>Фамилия*</label>
+                    <label htmlFor='signUp_surname'>
+                      {t("inputs.surname")}*
+                    </label>
                     <input
                       type='text'
                       id='signUp_surname'
@@ -197,7 +215,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_oraganization'>Организация*</label>
+                    <label htmlFor='signUp_oraganization'>
+                      {t("inputs.organization")}*
+                    </label>
                     <input
                       type='text'
                       id='signUp_oraganization'
@@ -214,7 +234,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_country'>Страна проживания*</label>
+                    <label htmlFor='signUp_country'>
+                      {t("inputs.country")}*
+                    </label>
                     <Field name='country'>
                       {
                         //@ts-ignore
@@ -244,7 +266,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   </div>
                   <div className='signUp_formGroup'>
                     <label htmlFor='signUp_recommendation'>
-                      Рекомендация от*
+                      {t("inputs.recommendation")}*
                     </label>
                     <Field name='recommendation_from'>
                       {
@@ -292,7 +314,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   {accountType.id === 3 && (
                     <div className='signUp_formGroup'>
                       <label htmlFor='signUp_recommendation'>
-                        С кем из мудрецов 301 Вы бы хотели сотрудничать?*
+                        {t("which_sages")}*
                       </label>
                       <Select
                         className='signUp_selector'
@@ -302,29 +324,22 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         onChange={onChange}
                         onSearch={onSearch}
                         //@ts-ignore
-                        filterOption={filterOption}
-                        options={[
-                          {
-                            value: "jack",
-                            label: "Jack",
-                          },
-                          {
-                            value: "lucy",
-                            label: "Lucy",
-                          },
-                          {
-                            value: "tom",
-                            label: "Tom",
-                          },
-                        ]}
-                      />
+                        filterOption={filterOptionSages}>
+                        {data?.sages.map((sage: any) => (
+                          <Option
+                            key={sage.id}
+                            value={`${sage.name}${sage.last_name}`}>
+                            {`${sage.name}${sage.last_name}`}
+                          </Option>
+                        ))}
+                      </Select>
                     </div>
                   )}
                 </div>
                 <div className='signUp_form2nd'>
                   <div className='signUp_formGroup'>
                     <label htmlFor='signUp_fund'>
-                      Откуда узнали про наш Фонд*
+                      {t("inputs.how_did_you_know")}*
                     </label>
                     <Field name='how_did_you_know'>
                       {
@@ -342,7 +357,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                                   e.target.value
                                 );
                               }}>
-                              Соцсети
+                              {t("checkboxes.social_network")}
                             </Checkbox>
                             <Checkbox
                               value='Community Members 301'
@@ -355,7 +370,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                                   e.target.value
                                 );
                               }}>
-                              Члены сообщества 301
+                              {t("checkboxes.community_members_301")}
                             </Checkbox>
                             <Checkbox
                               value='other'
@@ -368,7 +383,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                                 //   e.target.value
                                 // );
                               }}>
-                              другое
+                              {t("checkboxes.other")}
                             </Checkbox>
                             {howDoYouKnow === "other" ? (
                               <input
@@ -394,9 +409,11 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   </div>
                   <div className='signUp_formGroup'>
                     <label htmlFor='signUp_project'>
-                      Какое направление проектов Вам интересно
+                      {t("inputs.projects_interested")}
                     </label>
-                    <Checkbox className='signUp_radio'>Образование</Checkbox>
+                    <Checkbox className='signUp_radio'>
+                      {t("checkboxes.education")}
+                    </Checkbox>
                     <Field name='projects_interested'>
                       {
                         //@ts-ignore
@@ -408,7 +425,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                               onChange={e => {
                                 handleCheckboxChange(e, form);
                               }}>
-                              Все направления
+                              {t("checkboxes.all_directions")}
                             </Checkbox>
                             <Checkbox
                               value='The science'
@@ -416,7 +433,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                               onChange={e => {
                                 handleCheckboxChange(e, form);
                               }}>
-                              Наука
+                              {t("checkboxes.science")}
                             </Checkbox>
                             <Checkbox
                               value='Innovation'
@@ -424,7 +441,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                               onChange={e => {
                                 handleCheckboxChange(e, form);
                               }}>
-                              Инновации
+                              {t("checkboxes.innovation")}
                             </Checkbox>
                             <Checkbox
                               value='Culture'
@@ -432,7 +449,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                               onChange={e => {
                                 handleCheckboxChange(e, form);
                               }}>
-                              Культура
+                              {t("checkboxes.culture")}
                             </Checkbox>
                             <Checkbox
                               value='Holistic development of territories'
@@ -440,7 +457,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                               onChange={e => {
                                 handleCheckboxChange(e, form);
                               }}>
-                              Целостное развитие территорий
+                              {t("checkboxes.territories")}
                             </Checkbox>
                           </>
                         )
@@ -454,18 +471,24 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   </div>
                   {accountType.id === 3 && (
                     <div className='signUp_formGroup'>
-                      <label htmlFor='signUp_fund'>Форма участия*</label>
-                      <Checkbox className='signUp_radio'>Консультации</Checkbox>
+                      <label htmlFor='signUp_fund'>
+                        {t("checkboxes.participation_form")}*
+                      </label>
                       <Checkbox className='signUp_radio'>
-                        Проектная деятельность
+                        {t("checkboxes.consultations")}
                       </Checkbox>
-                      <Checkbox className='signUp_radio'>оба варианта</Checkbox>
+                      <Checkbox className='signUp_radio'>
+                        {t("checkboxes.project_activities")}
+                      </Checkbox>
+                      <Checkbox className='signUp_radio'>
+                        {t("checkboxes.both_options")}
+                      </Checkbox>
                     </div>
                   )}
                 </div>
                 <div className='signUp_form3rd'>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_email'>Электронная почта*</label>
+                    <label htmlFor='signUp_email'>{t("sign-in.email")}*</label>
                     <input
                       type='text'
                       id='signUp_email'
@@ -479,7 +502,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_tel'>Телефон</label>
+                    <label htmlFor='signUp_tel'>{t("inputs.phone")}</label>
                     <div className='signUp_tel'>
                       <Select
                         className='signUp_selector'
@@ -521,7 +544,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_password'>Пароль*</label>
+                    <label htmlFor='signUp_password'>
+                      {t("inputs.password")}*
+                    </label>
                     <input
                       type='text'
                       id='signUp_password'
@@ -536,7 +561,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   </div>
                   <div className='signUp_formGroup'>
                     <label htmlFor='signUp_repeatPassword'>
-                      Повторить пароль*
+                      {t("inputs.password_confirmation")}*
                     </label>
                     <input
                       type='text'
@@ -555,7 +580,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   <div className='signUp_formGroup terms_formGroup'>
                     <div className='signUp_info'>
                       <Checkbox className='signUp_radio'>
-                        Соглашение условий*
+                        {t("checkboxes.agreement_terms")}*
                       </Checkbox>
                       <Popconfirm
                         className='signUp_popover'
@@ -573,13 +598,13 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     </div>
                     <div className='signUp_info'>
                       <Checkbox className='signUp_radio'>
-                        КОДЕКС ЭТИКИ КЛУБА 301*
+                        {t("checkboxes.club_code_of_ethics_301")}*
                       </Checkbox>
                       <img src={INFO_ICON} alt='Info' />
                     </div>
                     <div className='signUp_info'>
                       <Checkbox className='signUp_radio'>
-                        Форма поддержки
+                        {t("checkboxes.support_form")}
                       </Checkbox>
                       <img src={INFO_ICON} alt='Info' />
                     </div>
@@ -592,7 +617,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     postLoading ? (
                       <Spin size='small' className='btn_spinner' />
                     ) : (
-                      "ЗАРЕГИСТРИРОВАТЬСЯ"
+                      t("btns.register")
                     )
                   }
                   link={false}

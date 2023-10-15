@@ -21,6 +21,9 @@ import {
   DETAILS_PROJECT_FETCH_ERROR,
   FETCH_PARTNERS_START,
   FETCH_PARTNERS_SUCCESS,
+  FETCH_REGISTER_DATA_START,
+  FETCH_REGISTER_DATA_SUCCESS,
+  FETCH_REGISTER_DATA_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -93,6 +96,16 @@ export const fetchingPartners = (data: string) => async (dispatch: any) => {
     dispatch({ type: FETCH_PARTNERS_SUCCESS, payload: response });
   } catch (error: any) {
     dispatch({ type: FETCH_ABOUT_US_ERROR, payload: error.message });
+  }
+};
+
+export const fetchingRegisterData = (data: string) => async (dispatch: any) => {
+  dispatch({ type: FETCH_REGISTER_DATA_START });
+  try {
+    const response = await apiService.get(data);
+    dispatch({ type: FETCH_REGISTER_DATA_SUCCESS, payload: response });
+  } catch (error: any) {
+    dispatch({ type: FETCH_REGISTER_DATA_ERROR, payload: error.message });
   }
 };
 

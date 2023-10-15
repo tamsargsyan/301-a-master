@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import "./index.css";
 import Button from "../Button";
 import country_currency from "../../locales/country_currency.json";
+import { useTranslation } from "react-i18next";
 
 interface OneTimeDonationProps {
   oneTimeDonation: boolean;
@@ -38,15 +39,18 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
     setOneTimeDonation(false);
     setModalName("oneTimeDonation");
   };
+  const { t } = useTranslation();
 
   return (
     <Modal setOpenModal={handleClose} openModal={oneTimeDonation}>
-      <EcosystemModal onClose={handleClose} header='ONE-TIME DONATION'>
+      <EcosystemModal
+        onClose={handleClose}
+        header={t("btns.one-time-donation")}>
         <div className='oneTimeDonation'>
           <form>
             <div className='signUp_formGroup'>
               <label htmlFor='oneTimeDonation_sum'>
-                Введите сумму пожертвования
+                {t("inputs.enter-donation-amount")}
               </label>
               <div className='signUp_tel'>
                 <Select
@@ -71,7 +75,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
               </div>
             </div>
             <div className='signUp_formGroup'>
-              <label htmlFor='oneTimeDonation_name'>Ваша имя</label>
+              <label htmlFor='oneTimeDonation_name'>{t("inputs.name")}</label>
               <input
                 type='text'
                 id='oneTimeDonation_name'
@@ -80,7 +84,9 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
               />
             </div>
             <div className='signUp_formGroup'>
-              <label htmlFor='oneTimeDonation_surname'>Фамилия</label>
+              <label htmlFor='oneTimeDonation_surname'>
+                {t("inputs.surname")}
+              </label>
               <input
                 type='text'
                 id='oneTimeDonation_surname'
@@ -89,7 +95,9 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
               />
             </div>
             <div className='signUp_formGroup'>
-              <label htmlFor='oneTimeDonation_email'>Электронная почта</label>
+              <label htmlFor='oneTimeDonation_email'>
+                {t("sign-in.email")}
+              </label>
               <input
                 type='text'
                 id='oneTimeDonation_email'
@@ -99,7 +107,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
             </div>
             <div className='signUp_btns'>
               <Button
-                text='Donation'
+                text={t("btns.donate")}
                 link={false}
                 to={""}
                 type='submit'

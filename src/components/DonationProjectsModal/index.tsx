@@ -9,6 +9,7 @@ import { fetchingProjectDetails } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { storageBase } from "../../utils/storage";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
+import { useTranslation } from "react-i18next";
 
 interface DonationProjectsModalProps {
   donateProjects: boolean;
@@ -48,11 +49,13 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
         .catch(error => console.error(error));
   }, [donateProjects]);
 
+  const { t } = useTranslation();
+
   return (
     <Modal setOpenModal={handleClose} openModal={donateProjects}>
-      <EcosystemModal onClose={handleClose} header='donate'>
+      <EcosystemModal onClose={handleClose} header={t("btns.donate")}>
         <div className='donationProjects_wrapper'>
-          <div className='donationProjects_title'>Select Project</div>
+          <div className='donationProjects_title'>{t("select-project")}</div>
           {false ? (
             <div className='donationProjects_spinner'>
               <Spin size='large' />
