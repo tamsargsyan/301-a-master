@@ -88,7 +88,8 @@
     "password": "Գաղտնաբառ",
     "password_confirmation": "Կրկնեք գաղտնաբառը",
     "password_current": "Ընթացիկ գաղտնաբառը",
-    "password_new": "նոր ծածկագիր"
+    "password_new": "նոր ծածկագիր",
+    "choose": "Ընտրել"
   },
   "chosenProject": "Դուք ընտրել եք նախագիծ",
   "select-project": "Ընտրեք Նախագիծ",

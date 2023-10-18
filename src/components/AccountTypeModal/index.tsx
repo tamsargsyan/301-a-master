@@ -136,9 +136,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     accountType.id === 3 && dispatch(fetchingRegisterData("get-register-data"));
   }, [accountType.id, dispatch]);
 
-  const { data } = useSelector(
-    (state: RootState) => state.registerData
-  );
+  const { data } = useSelector((state: RootState) => state.registerData);
 
   return (
     <Modal
@@ -244,7 +242,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                           <Select
                             // {...field}
                             showSearch
-                            placeholder='Select a country'
                             optionFilterProp='children'
                             className='signUp_selector'
                             onChange={(_, obj: any) => {
@@ -275,7 +272,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                           <Select
                             // {...field}
                             showSearch
-                            placeholder='Select a ...'
                             optionFilterProp='children'
                             className='signUp_selector'
                             onChange={(_, obj: any) => {
@@ -319,7 +315,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       <Select
                         className='signUp_selector'
                         showSearch
-                        placeholder='Select a recommendation'
                         optionFilterProp='children'
                         onChange={onChange}
                         onSearch={onSearch}
@@ -507,7 +502,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       <Select
                         className='signUp_selector'
                         showSearch
-                        placeholder='Select a tel'
+                        placeholder={t("inputs.choose")}
                         optionFilterProp='children'
                         onChange={handleTelCode}
                         onSearch={onSearch}
@@ -630,18 +625,19 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   }}
                 />
                 <p>
-                  By continuing, you agree 301’s <br></br>
-                  <span
+                  {t("privacy.1")}
+                  <br></br>
+                  <button
                     className='mentioned_txt'
                     onClick={() => handlePrivacy("Terms of Services")}>
-                    Terms of Services
-                  </span>{" "}
-                  and{" "}
-                  <span
+                    {t("privacy.terms")}
+                  </button>
+                  {t("privacy.and")}
+                  <button
                     className='mentioned_txt'
                     onClick={() => handlePrivacy("Privacy Policy")}>
-                    Privacy Policy
-                  </span>
+                    {t("privacy.privacy")}
+                  </button>
                 </p>
               </div>
             </form>

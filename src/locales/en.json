@@ -94,7 +94,8 @@
     "password": "Password",
     "password_confirmation": "Repeat Password",
     "password_current": "Current Password",
-    "password_new": "New Password"
+    "password_new": "New Password",
+    "choose": "Choose"
   },
   "chosenProject": "You have chosen a project",
   "select-project": "Select Project",

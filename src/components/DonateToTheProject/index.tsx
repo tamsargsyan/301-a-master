@@ -92,7 +92,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                     <Select
                       className='signUp_selector'
                       showSearch
-                      placeholder='Select a sum'
+                      placeholder={t("inputs.choose")}
                       optionFilterProp='children'
                       onChange={onChange}
                       onSearch={onSearch}
@@ -106,6 +106,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                         id='donateProject_sum'
                         name='signUp'
                         className='signUp_input'
+                        placeholder='0'
                       />
                     </div>
                   </div>
@@ -155,18 +156,19 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                     }}
                   />
                   <p>
-                    By continuing, you agree 301’s <br></br>
-                    <span
+                    {t("privacy.1")}
+                    <br></br>
+                    <button
                       className='mentioned_txt'
                       onClick={() => handlePrivacy("Terms of Services")}>
-                      Terms of Services
-                    </span>{" "}
-                    and{" "}
-                    <span
+                      {t("privacy.terms")}
+                    </button>
+                    {t("privacy.and")}
+                    <button
                       className='mentioned_txt'
                       onClick={() => handlePrivacy("Privacy Policy")}>
-                      Privacy Policy
-                    </span>
+                      {t("privacy.privacy")}
+                    </button>
                   </p>
                 </div>
               </form>

@@ -90,7 +90,7 @@ const EditProfile = () => {
             <Select
               className='signUp_selector'
               showSearch
-              placeholder='Select a tel'
+              placeholder={t("inputs.choose")}
               optionFilterProp='children'
               onChange={onChange}
               onSearch={onSearch}
