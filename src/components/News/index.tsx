@@ -46,7 +46,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
 
   return (
     <>
-      <div className="separatedPart"></div>
+      <div className='separatedPart'></div>
       <Background
         pattern1={
           windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
@@ -59,11 +59,10 @@ const News: React.FC<NewsProps> = ({ lang }) => {
         pattern2RightStyle={{
           display: "none",
         }}
-        style={{ flexDirection: "column", padding: "0" }}
-      >
+        style={{ flexDirection: "column", padding: "0" }}>
         <Header
           title={t("news-301")}
-          description=""
+          description=''
           icon={HeaderIcon}
           style={{
             paddingTop: "40px",
@@ -73,14 +72,14 @@ const News: React.FC<NewsProps> = ({ lang }) => {
             alignItems: "center",
           }}
         />
-        <button className="leftBtn newsBtn" onClick={handleBack}>
-          <img src={ARROW} alt="Arrow" />
+        <button className='leftBtn newsBtn' onClick={handleBack}>
+          <img src={ARROW} alt='Arrow' />
         </button>
-        <button className="rightBtn newsBtn" onClick={handleNext}>
-          <img src={ARROW} alt="Arrow" />
+        <button className='rightBtn newsBtn' onClick={handleNext}>
+          <img src={ARROW} alt='Arrow' />
         </button>
-        <div className="newsContainer">
-          {news.map((item) => {
+        <div className='newsContainer'>
+          {news.map((item: any) => {
             const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
             const altText =
               typeof dynamicTitle === "string" ? dynamicTitle : "";
@@ -89,12 +88,11 @@ const News: React.FC<NewsProps> = ({ lang }) => {
                 className={`${activeNews === item.id && "activeNews"} ${
                   activeNews === 1 && item.id === 2 && "activeNews1"
                 } ${activeNews === 3 && item.id === 2 && "activeNews2"} news`}
-                key={item.id}
-              >
-                <div className="newsImg">
+                key={item.id}>
+                <div className='newsImg'>
                   <img src={NEWS_1} alt={altText} />
                 </div>
-                <div className="newsContent">
+                <div className='newsContent'>
                   <h1>{dynamicTitle}</h1>
                   <div
                     dangerouslySetInnerHTML={{
@@ -109,9 +107,8 @@ const News: React.FC<NewsProps> = ({ lang }) => {
           })}
         </div>
         <div
-          className="btns newsBtns"
-          style={{ margin: 0, padding: "0 20px", marginBottom: "40px" }}
-        >
+          className='btns newsBtns'
+          style={{ margin: 0, padding: "0 20px", marginBottom: "40px" }}>
           <Button
             text={t("btns.all-news")}
             style={{
@@ -122,7 +119,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
             }}
             link={true}
             to={""}
-            className="homePage_btn"
+            className='homePage_btn'
           />
         </div>
       </Background>
