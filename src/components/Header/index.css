@@ -1,7 +1,7 @@
 .headerContainer {
   display: flex;
   gap: 20px;
-  width: 55vw;
+  width: 63vw;
   z-index: 2;
   position: relative;
 }

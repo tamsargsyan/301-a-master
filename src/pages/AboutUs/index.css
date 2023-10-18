@@ -1,6 +1,6 @@
 .aboutUs_dashedLine,
 .aboutUs_privacy {
-  width: 55vw;
+  width: 63vw;
 }
 .aboutUs_dashedLine {
   border: 1px dashed #000;
@@ -45,7 +45,7 @@
   font-size: clamp(2rem, 0rem + 1.6667vw, 6rem);
 }
 .faq_collapse {
-  width: 55vw;
+  width: 63vw;
   border-radius: 0;
   border: none;
   font-family: Montserrat;
@@ -79,7 +79,7 @@
 .faq_info {
   color: var(--main-color);
   font-weight: 600;
-  width: 55vw;
+  width: 63vw;
 }
 .faq_collapse .ant-collapse-expand-icon {
   position: absolute;
@@ -89,7 +89,7 @@
 }
 
 .faq_qesutions {
-  width: 55vw;
+  width: 63vw;
 }
 .faq_question h1 {
   font-size: 1.7999999999999998vw;
@@ -124,7 +124,7 @@
   }
   .aboutUs-bigPattern-1,
   .aboutUs-bigPattern-3 {
-    width: 60vw;
+    width: 63vw;
   }
   .aboutUs-bigPattern-3 {
     bottom: 400px;
