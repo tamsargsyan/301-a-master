@@ -15,9 +15,9 @@ import ARROW_NEXT from "../../assets/arrow-next.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchingProjects } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
-import AUTHOR_1 from "../../assets/projectAuthor/1.svg";
-// import ROSGOSTRAKH from "../../assets/info/rostgostrakh.svg";
-import PROJECT_1 from "../../assets/projectAuthor/project-1.png";
+import { storageBase } from "../../utils/storage";
+import { scrollToTop } from "../../globalFunctions/scrollToTop";
+import { Helmet } from "react-helmet";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
@@ -28,20 +28,25 @@ const OurProjects = () => {
     dispatch(fetchingProjects("project"));
   }, [dispatch]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.projectData
   );
   const { ourProject, projects, projectCategory, projectStatus } = data;
-
   const [projectCategory_id, setProjectCategory_id] = useState(1);
   const [projectStatus_id, setProjectStatus_id] = useState(1);
-  const filteredProjects = projects?.filter(
-    (project: any) =>
-      project.project_category_id === projectCategory_id &&
-      project.project_status_id === projectStatus_id
-  );
+  const filteredProjects =
+    projects &&
+    projects[0]?.filter(
+      (project: any) =>
+        project.project.project_category_id === projectCategory_id &&
+        project.project.project_status_id === projectStatus_id
+    );
 
   const handleProjectCategory_id = (id: number) => {
     setProjectCategory_id(id);
@@ -62,10 +67,15 @@ const OurProjects = () => {
     filteredProjects &&
     new Array(Math.ceil(filteredProjects?.length / projectsPerPage)).fill(0);
 
+  const [projectId, setProjectId] = useState<number | null>(null);
+  const heartit = (id: number) => {
+    setProjectId(id);
+  };
+
   if (loading)
     return (
-      <div className="loadingContainer">
-        <Spin size="large" />
+      <div className='loadingContainer'>
+        <Spin size='large' />
       </div>
     );
 
@@ -73,18 +83,20 @@ const OurProjects = () => {
     <Background
       pattern1={windowSize.width < 800 ? PATTERN_MOBILE : PATTERN}
       sidePatter2Style={{ display: "none" }}
-      style={{ flexDirection: "column", padding: "0" }}
-    >
-      {ourProject && projects && (
+      style={{ flexDirection: "column", padding: "0" }}>
+      <Helmet>
+        <title>Our Projects</title>
+      </Helmet>
+      {ourProject && projects[0] && (
         <>
-          <div className="filteringWrapper">
+          <div className='filteringWrapper'>
             <Header
               title={ourProject[0][`title_${lang}`]}
               description={ourProject[0][`description_${lang}`]}
               icon={ICON}
             />
             {windowSize.width > 800 ? (
-              <div className="filteringBtnsWrapper">
+              <div className='filteringBtnsWrapper'>
                 {projectCategory.map((category: any, i: number) => (
                   <button
                     disabled={false}
@@ -92,8 +104,7 @@ const OurProjects = () => {
                     className={`${
                       projectCategory_id === category.id && "activeProjectBtn"
                     }`}
-                    onClick={() => handleProjectCategory_id(category.id)}
-                  >
+                    onClick={() => handleProjectCategory_id(category.id)}>
                     {category[`name_${lang}`]}
                   </button>
                 ))}
@@ -102,20 +113,20 @@ const OurProjects = () => {
               <DropDown
                 items={projectCategory}
                 onClickItem={handleProjectCategory_id}
-                type="projectCategory"
+                type='projectCategory'
                 text={
                   projectCategory.find(
                     (category: any) => category.id === projectCategory_id
                   )[`name_${lang}`]
                 }
                 style={{ marginBottom: "20px" }}
-                objKey="name"
+                objKey='name'
               />
             )}
             {windowSize.width > 800 ? (
-              <div className="typedBtnsWrapper">
-                {projectStatus.map((status: any) => (
-                  <Fragment key={status.id}>
+              <div className='typedBtnsWrapper'>
+                {projectStatus.map((status: any, i: number) => (
+                  <Fragment key={i}>
                     <Button
                       text={status[`name_${lang}`]}
                       link={false}
@@ -127,7 +138,7 @@ const OurProjects = () => {
                       }}
                       onClick={() => handleProjectStatus_id(status.id)}
                       disabled={false}
-                      className="typedBtn"
+                      className='typedBtn'
                     />
                   </Fragment>
                 ))}
@@ -136,40 +147,40 @@ const OurProjects = () => {
               <DropDown
                 items={projectStatus}
                 onClickItem={handleProjectStatus_id}
-                type="projectStatus"
+                type='projectStatus'
                 text={
                   projectStatus.find(
                     (status: any) => status.id === projectStatus_id
                   )[`name_${lang}`]
                 }
-                style={{ width: "50vw", marginRight: "auto" }}
-                objKey="name"
+                style={{ width: "55vw", marginRight: "auto" }}
+                objKey='name'
               />
             )}
           </div>
           {currentProjects.length ? (
-            currentProjects?.map((project: any) => (
-              <Fragment key={project.id}>
+            currentProjects?.map((project: any, i: number) => (
+              <Fragment key={i}>
                 <Project
-                  author="Peter Nemoy"
-                  authorImg={AUTHOR_1}
-                  title={project[`project_name_${lang}`]}
-                  flag={15}
-                  desc={project[`problem_description_${lang}`]}
-                  projectImg={PROJECT_1}
-                  // heartit={() => heartit(project.id)}
-                  isSaved={false}
-                  id={project.id}
+                  author={`${project?.user?.name} ${project?.user?.last_name}`}
+                  authorImg={`${storageBase}/${project?.user?.image}`}
+                  title={project?.project[`project_name_${lang}`]}
+                  flag={project?.map_count}
+                  desc={project?.project[`problem_description_${lang}`]}
+                  projectImg={`${storageBase}/${project?.project?.image}`}
+                  heartit={() => heartit(project?.project?.id)}
+                  isSaved={project?.project?.id === projectId}
+                  id={project?.project?.id}
                 />
               </Fragment>
             ))
           ) : (
-            <div className="noProject">There is no project</div>
+            <div className='noProject'>There is no project</div>
           )}
           {totalPages && totalPages.length > 1 && !!currentProjects?.length && (
-            <div className="pagination">
+            <div className='pagination'>
               <Button
-                text="Prev"
+                text='Prev'
                 link={false}
                 to={""}
                 icon={ARROW_NEXT}
@@ -181,23 +192,22 @@ const OurProjects = () => {
                   opacity: currentPage === 1 ? 0 : 1,
                   cursor: currentPage === 1 ? "unset" : "pointer",
                 }}
-                className="pagination_backBtn"
+                className='pagination_backBtn'
               />
-              <div className="paginationBtnWrapper">
+              <div className='paginationBtnWrapper'>
                 {totalPages.map((_: any, i: number) => (
                   <button
                     key={i}
                     className={`${
                       currentPage === i + 1 && "paginationBtn_active"
                     } paginationBtn`}
-                    onClick={() => setCurrentPage(i + 1)}
-                  >
+                    onClick={() => setCurrentPage(i + 1)}>
                     {i + 1}
                   </button>
                 ))}
               </div>
               <Button
-                text="Next"
+                text='Next'
                 link={false}
                 to={""}
                 icon={ARROW_NEXT}
@@ -211,7 +221,7 @@ const OurProjects = () => {
               />
             </div>
           )}
-          <Footer followUs={undefined} />
+          <Footer separatedPart={true} />
         </>
       )}
     </Background>

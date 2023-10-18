@@ -8,13 +8,11 @@
   align-items: center;
   justify-content: center;
   padding: 100px 0;
-  height: 50rem;
 }
 .aboutInner {
   display: flex;
   gap: 60px;
   width: 55vw;
-  height: 40rem;
 }
 .aboutContent {
   width: 70%;
@@ -107,5 +105,8 @@
   }
   .aboutInner {
     width: 100%;
+  }
+  .aboutInner {
+    height: auto;
   }
 }

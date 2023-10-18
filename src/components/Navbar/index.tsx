@@ -10,8 +10,13 @@ import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
 import i18next from "i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { languageDitactor } from "../../actions/language";
+import { openDonateModal } from "../../actions/donateAction";
+import { RootState } from "../../store/configureStore";
+import NOTIFICATION from "../../assets/notification.svg";
+import { storageBase } from "../../utils/storage";
+import NO_IMAGE from "../../assets/no-image-user.png";
 
 const history = createBrowserHistory(); // Create a history instance
 
@@ -19,12 +24,12 @@ export const menu = [
   {
     id: 1,
     name: "home",
-    link: "/301/build",
+    link: "/",
   },
   {
     id: 2,
     name: "projects",
-    link: "/301/build/projects",
+    link: "/projects",
   },
   {
     id: 3,
@@ -39,7 +44,7 @@ export const menu = [
   {
     id: 5,
     name: "about-us",
-    link: "/about",
+    link: "/about-us",
   },
   {
     id: 6,
@@ -48,7 +53,17 @@ export const menu = [
   },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  setOpenModal: (arg: boolean) => void;
+  // setDonation: (arg: boolean) => void;
+  setModalName: (arg: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({
+  setOpenModal,
+  // setDonation,
+  setModalName,
+}) => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -62,7 +77,7 @@ const Navbar = () => {
   const langs = ["en", "ru", "am"];
   const [openLangs, setOpenLangs] = useState(false);
   const lang = i18next.language;
-  const copyLangs = langs.filter((item) => item !== lang);
+  const copyLangs = langs.filter(item => item !== lang);
   const { i18n, t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -73,32 +88,34 @@ const Navbar = () => {
     dispatch(languageDitactor(language));
     setOpenLangs(false);
   };
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
-    <div className="navbarContainer">
+    <div className='navbarContainer'>
       {windowSize.width < 975 && (
-        <div className="mobileMenu">
+        <div className='mobileMenu'>
           <div
             className={`${openMenu && "openedHamburger"} hamburger`}
-            onClick={() => setOpenMenu(!openMenu)}
-          >
-            <div className="line"></div>
-            <div className="line"></div>
-            <div className="line"></div>
+            onClick={() => setOpenMenu(!openMenu)}>
+            <div className='line'></div>
+            <div className='line'></div>
+            <div className='line'></div>
           </div>
           {openMenu && (
-            <div className="openedMobileMenu">
-              <div className="bigPatternNav">
-                <img src={BIG_PATTERN} alt="Pattern" />
+            <div className='openedMobileMenu'>
+              <div className='bigPatternNav'>
+                <img src={BIG_PATTERN} alt='Pattern' />
               </div>
-              <div className="sidePattern1">
-                <img src={SIDE_PATTERN} alt="Pattern" />
+              <div className='sidePattern1'>
+                <img src={SIDE_PATTERN} alt='Pattern' />
               </div>
-              <div className="sidePattern2">
-                <img src={SIDE_PATTERN} alt="Pattern" />
+              <div className='sidePattern2'>
+                <img src={SIDE_PATTERN} alt='Pattern' />
               </div>
-              <div className="menu">
-                <div className="link">
+              <div className='menu'>
+                <div className='link'>
                   {menu.map((link, i) => (
                     <NavLink
                       onClick={() => {
@@ -107,14 +124,13 @@ const Navbar = () => {
                       }}
                       key={i}
                       to={link.link}
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    >
+                      style={{ animationDelay: `${i * 0.1}s` }}>
                       {t(`navbar.${link.name}`)}
                     </NavLink>
                   ))}
                 </div>
-                <div className="link logout">
-                  <a href="/">Log out</a>
+                <div className='link logout'>
+                  <a href='/'>Log out</a>
                 </div>
               </div>
             </div>
@@ -122,28 +138,28 @@ const Navbar = () => {
         </div>
       )}
       {openMenu ? (
-        <div className="logo">
+        <div className='logo'>
           <span>Меню</span>
         </div>
       ) : (
-        <button className="logo" onClick={scrollToTop}>
-          <img src={LOGO} alt="Logo" />
+        <button className='logo' onClick={scrollToTop}>
+          <img src={LOGO} alt='Logo' />
         </button>
       )}
-      <div className="menu">
-        <div className="link">
+      <div className='menu'>
+        <div className='link'>
           {menu.map((link, i) => (
             <NavLink key={i} to={link.link} onClick={scrollToTop}>
               {t(`navbar.${link.name}`)}
             </NavLink>
           ))}
         </div>
-        <div className="langsWrapper">
+        <div className='langsWrapper'>
           <Button
             text={lang}
             link={false}
             to={""}
-            className="activeLang lang"
+            className='activeLang lang'
             onClick={() => setOpenLangs(!openLangs)}
           />
           {copyLangs.map((lang, i) => (
@@ -159,12 +175,66 @@ const Navbar = () => {
           ))}
         </div>
       </div>
-      <Button
-        text={t(`navbar.sign-in`)}
-        link={true}
-        to=""
-        className="signIn-btn"
-      />
+      {windowSize.width > 800 ? (
+        <>
+          {isAuthenticated ? (
+            <div className='navbar_user_wrapper'>
+              <button className='navbar_notif'>
+                <img src={NOTIFICATION} alt='Notification' />
+                <span className='notification_number'>3</span>
+              </button>
+              <NavLink to='personal/personal-info' className='navbar_user'>
+                <img
+                  src={user.image ? `${storageBase}/${user.image}` : NO_IMAGE}
+                  alt='Person'
+                />
+                <p>
+                  {user.name} {user.last_name}
+                </p>
+              </NavLink>
+            </div>
+          ) : (
+            <div className='btns' style={{ margin: 0 }}>
+              <Button
+                text={t(`btns.donate`)}
+                link={false}
+                to=''
+                className='signIn-btn'
+                onClick={() => {
+                  // setDonation(true);
+                  dispatch(openDonateModal(true));
+                  setModalName("donate");
+                }}
+                style={{
+                  padding: "9px 23px",
+                  background: "var(--main-color)",
+                  color: "#fff  ",
+                }}
+              />
+              <Button
+                text={t(`navbar.sign-in`)}
+                link={false}
+                to=''
+                className='signIn-btn'
+                onClick={() => {
+                  setOpenModal(true);
+                  setModalName("signIn");
+                }}
+                style={{ padding: "9px 23px" }}
+              />
+            </div>
+          )}
+        </>
+      ) : (
+        <Button
+          text={t(`navbar.sign-in`)}
+          link={false}
+          to=''
+          className='signIn-btn'
+          onClick={() => setOpenModal(true)}
+          style={{ padding: "9px 23px" }}
+        />
+      )}
     </div>
   );
 };

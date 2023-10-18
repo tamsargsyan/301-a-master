@@ -1,8 +1,9 @@
 .headerContainer {
   display: flex;
   gap: 20px;
-  width: 50vw;
+  width: 55vw;
   z-index: 2;
+  position: relative;
 }
 .header {
   color: #151c26;
@@ -33,6 +34,7 @@
   font-size: clamp(1.125rem, 0rem + 0.9375vw, 3.375rem);
   text-align: justify;
   line-height: 155%;
+  color: var(--text-color);
 }
 .mainImgHeader {
   display: flex;

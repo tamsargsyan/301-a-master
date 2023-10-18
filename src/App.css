@@ -1,13 +1,16 @@
 :root {
   --main-color: #dd264e;
   --text-color: #313a4b;
+  --text-color-2: #9b9b9b;
+  --mention-color: #1877f2;
 }
 
 *,
 *:before,
 *:after {
   box-sizing: border-box;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
+  font-family: Montserrat, sans-serif;
 }
 
 body::-webkit-scrollbar {
@@ -66,6 +69,33 @@ h2 {
   justify-content: center;
   align-items: center;
 }
+body.no-scroll {
+  overflow: hidden;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.mentioned_link {
+  color: var(--main-color);
+  font-weight: 700;
+}
+.personalInfo_wrapper {
+  opacity: 0;
+  animation: reveal 0.5s ease forwards;
+}
+@keyframes reveal {
+  to {
+    opacity: 1;
+  }
+}
 @media screen and (max-width: 975px) {
   .btns {
     flex-direction: column;
@@ -74,7 +104,7 @@ h2 {
   .btn:not(.lang, .signIn-btn) {
     width: 100% !important;
   }
-  .App {
+  .container {
     min-height: auto;
   }
   .headerContainer,
@@ -84,9 +114,12 @@ h2 {
   .slider .innerCarousel,
   .aboutContainer,
   .navbarContainer,
-  .pagination {
-    padding-left: clamp(1.5625rem, -0.0004rem + 7.8143vw, 2.93rem) !important;
-    padding-right: clamp(1.5625rem, -0.0004rem + 7.8143vw, 2.93rem) !important;
+  .pagination,
+  .aboutUs_privacy {
+    padding-left: 15px;
+    padding-right: 15px;
+    /* padding-left: clamp(1.5625rem, -0.0004rem + 7.8143vw, 2.93rem) !important; */
+    /* padding-right: clamp(1.5625rem, -0.0004rem + 7.8143vw, 2.93rem) !important; */
   }
   .differedHeaderContainer {
     padding-left: 15px !important;

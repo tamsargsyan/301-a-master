@@ -1,0 +1,22 @@
+.donationProjects {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  gap: 44px;
+  height: 50vh;
+  overflow-y: auto;
+}
+.donationProjects_wrapper {
+  background: #fff;
+  padding: 40px;
+}
+.donationProjects_title {
+  color: var(--text-color);
+  font-size: 1.5625vw;
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+.donationProjects_spinner {
+  display: flex;
+  justify-content: center;
+}

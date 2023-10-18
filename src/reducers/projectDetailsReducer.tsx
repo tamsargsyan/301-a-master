@@ -1,27 +1,40 @@
-import { FETCH_START } from "../utils/action.types";
-import { FETCH_SUCCESS } from "../utils/action.types";
-import { FETCH_ERROR } from "../utils/action.types";
+import {
+  DETAILS_PROJECT_FETCH_START,
+  DETAILS_PROJECT_FETCH_SUCCESS,
+  DETAILS_PROJECT_FETCH_ERROR,
+  IS_DONATE_MODAL,
+} from "../utils/action.types";
 
 interface ProjectsState {
   data: any;
   loading: boolean;
   error: string | null;
+  isDonateModal: boolean;
 }
 
 const initialState: ProjectsState = {
   data: [],
   loading: false,
   error: null,
+  isDonateModal: false,
 };
 
-const projectDetailsReducer = (state = initialState, action: any): ProjectsState => {
+const projectDetailsReducer = (
+  state = initialState,
+  action: any
+): ProjectsState => {
   switch (action.type) {
-    case FETCH_START:
+    case DETAILS_PROJECT_FETCH_START:
       return { ...state, loading: true, error: null };
-    case FETCH_SUCCESS:
+    case DETAILS_PROJECT_FETCH_SUCCESS:
       return { ...state, loading: false, data: action.payload };
-    case FETCH_ERROR:
+    case DETAILS_PROJECT_FETCH_ERROR:
       return { ...state, loading: false, error: action.payload };
+    case IS_DONATE_MODAL:
+      return {
+        ...state,
+        isDonateModal: action.payload,
+      };
     default:
       return state;
   }

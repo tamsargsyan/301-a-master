@@ -10,10 +10,10 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 
 interface FooterProps {
-  followUs: any;
+  separatedPart?: Boolean;
 }
 
-const Footer: React.FC<FooterProps> = ({ followUs }) => {
+const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
   const { t } = useTranslation();
   const ecosystem = [
     {
@@ -27,10 +27,6 @@ const Footer: React.FC<FooterProps> = ({ followUs }) => {
     {
       id: 3,
       name: "ambassadors",
-    },
-    {
-      id: 4,
-      name: "volunteers",
     },
     {
       id: 5,
@@ -66,7 +62,7 @@ const Footer: React.FC<FooterProps> = ({ followUs }) => {
 
   return (
     <>
-      <div className="separatedPart"></div>
+      {separatedPart && <div className="separatedPart"></div>}
       <div className="footerContainer">
         <div className="footerBg"></div>
         {/* <div className="pattern1">
@@ -91,7 +87,7 @@ const Footer: React.FC<FooterProps> = ({ followUs }) => {
               <h2>{t("navbar.our-menu")}</h2>
               <div className="list">
                 {menu.map((menu) => (
-                  <a href="#projects" key={menu.id}>
+                  <a href={menu.link} key={menu.id}>
                     {t(`navbar.${menu.name}`)}
                   </a>
                 ))}
@@ -114,7 +110,7 @@ const Footer: React.FC<FooterProps> = ({ followUs }) => {
             )}
           </div>
           <div className="footerForthtPart">
-            <FollowUs links={followUs} />
+            <FollowUs />
           </div>
           {windowSize.width < 875 && (
             <div className="logo301Footer">

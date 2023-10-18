@@ -12,16 +12,20 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import BG from "../../assets/info/main-page-bg.svg";
 import BG_MOBILE from "../../assets/info/main-page-bg-mobile.svg";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { HeaderKeyOf } from "../../utils/keyof.type";
 
 interface MainProps {
-  landOfWisdom: any;
-  followUs: any;
   lang: string;
 }
 
-const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
+const Main: React.FC<MainProps> = ({ lang }) => {
   const windowSize = useWindowSize();
   const { t } = useTranslation();
+  const { landOfWisdom } = useSelector(
+    (state: RootState) => state.homeData.data
+  );
 
   return (
     <Background
@@ -32,22 +36,38 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
         display: windowSize.width < 975 ? "none" : "block",
       }}
       shoudHaveSidePattern={true}
-      style={{ flexDirection: windowSize.width < 975 ? "column" : "row" }}
-    >
+      style={{
+        flexDirection: windowSize.width < 975 ? "column" : "row",
+        paddingLeft: windowSize.width < 975 ? "15px" : 0,
+        paddingRight: windowSize.width < 975 ? "15px" : 0,
+      }}>
       {windowSize.width < 975 && (
-        <div className="bgLogo">
-          <img src={BIG_PATTERN} className="mainBigPattern" alt="Pattern" />
-          <img src={LOGO_MOBILE} alt="301" className="logoMobile" />
+        <div className='bgLogo'>
+          <img src={BIG_PATTERN} className='mainBigPattern' alt='Pattern' />
+          <img src={LOGO_MOBILE} alt='301' className='logoMobile' />
         </div>
       )}
-      <div className="bg">
-        <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt="Background" />
+      <div className='bg'>
+        <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt='Background' />
       </div>
       <Header
-        title={landOfWisdom[`title_${lang}`]}
+        title={landOfWisdom[`title_${lang}` as keyof HeaderKeyOf]}
         icon={""}
-        description={landOfWisdom[`description_${lang}`]}
-        btns={[t("btns.become-301"), t("btns.whole-project")]}
+        description={landOfWisdom[`description_${lang}` as keyof HeaderKeyOf]}
+        btns={[
+          {
+            name: t("btns.become-301"),
+            become: "доноры «301»",
+            id: 1,
+            link: "",
+          },
+          {
+            name: t("btns.whole-project"),
+            link: "/projects",
+            become: "",
+            id: null,
+          },
+        ]}
         btnStyles={[
           {
             background: "#DD264E",
@@ -60,14 +80,14 @@ const Main: React.FC<MainProps> = ({ landOfWisdom, followUs, lang }) => {
           },
         ]}
         style={{ padding: 0, width: "30vw" }}
-        className="mainPageHeader homePageHeader"
+        className='mainPageHeader homePageHeader'
       />
       {windowSize.width > 975 && (
-        <div className="bgLogo">
-          <img src={LOGO} alt="301" />
+        <div className='bgLogo'>
+          <img src={LOGO} alt='301' />
         </div>
       )}
-      <FollowUs className="mainFollowUs" links={followUs} />
+      <FollowUs className='mainFollowUs' />
     </Background>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Background from "../Background";
 import Header from "../Header";
 import EMAIL from "../../assets/email.svg";
@@ -8,8 +8,14 @@ import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { usePostRequest } from "../../actions/apiActions";
+import { Spin } from "antd";
 
-const Contact = () => {
+interface ContactProps {
+  separatedPart?: Boolean;
+}
+
+const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
@@ -25,15 +31,24 @@ const Contact = () => {
       [name]: value,
     }));
   };
-
+  const { postRequest, postLoading } = usePostRequest();
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
+    postRequest("write-to-us", formData);
   };
-
+  useEffect(() => {
+    !postLoading &&
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+  }, [postLoading]);
   const windowSize = useWindowSize();
+
   return (
     <>
-      <div className="separatedPart"></div>
+      {separatedPart && <div className="separatedPart"></div>}
       <Background
         pattern1={
           windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
@@ -49,6 +64,7 @@ const Contact = () => {
       >
         <Header
           title={t("contact.title")}
+          description=""
           icon={EMAIL}
           style={{
             paddingTop: "40px",
@@ -97,15 +113,22 @@ const Contact = () => {
                 cols={80}
                 value={formData.message}
                 onChange={handleChange}
+                required
                 className="form"
               />
             </div>
           </div>
           <div className="btns">
             <Button
-              text={t("btns.send")}
+              text={
+                postLoading ? (
+                  <Spin size="small" className="btn_spinner" />
+                ) : (
+                  t("btns.send")
+                )
+              }
               style={{
-                padding: "15px 70px",
+                // padding: "15px 70px",
                 background: "#DD264E",
                 boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
                 color: "#fff",
@@ -113,6 +136,7 @@ const Contact = () => {
               link={false}
               to=""
               className="homePage_btn"
+              type="submit"
             />
           </div>
         </form>

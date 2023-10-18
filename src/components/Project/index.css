@@ -2,13 +2,14 @@
   background-color: #fff;
   box-shadow: -6px 8px 30px rgba(26, 61, 127, 0.1);
   display: flex;
-  width: 70vw;
-  height: 400px;
+  width: 55vw;
+  /* height: 400px; */
   border-radius: 20px;
   margin-bottom: 30px;
+  height: 270px;
 }
 .ourProject__projectImg {
-  width: 100%;
+  width: 50%;
   border-radius: inherit;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -26,7 +27,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 40vw;
+  width: 50%;
 }
 .ourProject__author,
 .ourProject__title {
@@ -43,6 +44,7 @@
   border: 2px solid #dd264e;
   border-radius: 50%;
   padding: 2px;
+  width: 3vw;
 }
 .heart {
   width: 20px;
@@ -83,6 +85,9 @@
 .heart-btn {
   font-size: clamp(1.25rem, 0rem + 1.0417vw, 3.75rem);
 }
+.home_project {
+  width: 220px;
+}
 @media screen and (max-width: 1920px) {
   .view-btn,
   .heart-btn {
@@ -90,9 +95,9 @@
   }
 }
 @media screen and (max-width: 1600px) {
-  .ourProject__project {
+  /* .ourProject__project {
     height: 310px;
-  }
+  } */
   .view-btn,
   .heart-btn {
     font-size: clamp(0.91125rem, -0.0031rem + 1.045vw, 1.041875rem);
@@ -111,9 +116,6 @@
   }
 }
 @media screen and (max-width: 1280px) {
-  .ourProject__author img {
-    width: clamp(2.50625rem, -0.0031rem + 3.65vw, 2.916875rem);
-  }
   .ourProject__title,
   .ourProject__author {
     font-size: clamp(0.625rem, 0rem + 1.25vw, 0.859375rem);
@@ -124,9 +126,6 @@
   }
 }
 @media screen and (max-width: 1100px) {
-  .ourProject__author img {
-    width: clamp(1.823125rem, 0.0015rem + 3.6433vw, 2.50625rem);
-  }
   .ourProject__title,
   .ourProject__author {
     font-size: clamp(0.625rem, 0rem + 1.25vw, 0.859375rem);
@@ -136,13 +135,16 @@
     font-size: clamp(0.520625rem, -0.001rem + 1.0433vw, 0.71625rem);
   }
   .ourProject__projectInner {
-    width: 100%;
     padding: 30px clamp(1.301875rem, -0.0015rem + 2.6067vw, 1.790625rem);
   }
 }
 @media screen and (max-width: 800px) {
   .ourProject__project {
     width: 90vw;
+  }
+  .ourProject__projectImg,
+  .ourProject__projectInner {
+    width: 100%;
   }
 }
 @media screen and (max-width: 600px) {
@@ -176,5 +178,8 @@
   }
   .paginationBtn {
     font-size: 20px !important;
+  }
+  .home_project .projectInfo {
+    padding: 8px;
   }
 }

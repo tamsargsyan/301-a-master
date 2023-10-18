@@ -3,6 +3,11 @@ import homeReducer from "../reducers/homeReducer";
 import projectReducer from "../reducers/projectReducer";
 import projectDetailsReducer from "../reducers/projectDetailsReducer";
 import languageDitactorReducer from "../reducers/languageReducer";
+import aboutUsReducer from "../reducers/aboutUsReducer";
+import privacyPolicyReducer from "../reducers/privacyPolicyReducer";
+import expertProjectReducer from "../reducers/expertProjectReducer";
+import authReducer from "../reducers/authReducer";
+import registerDataReducer from "../reducers/registerDataReducer";
 
 const store = configureStore({
   reducer: {
@@ -10,7 +15,11 @@ const store = configureStore({
     projectData: projectReducer,
     projectDetails: projectDetailsReducer,
     languageDitactor: languageDitactorReducer,
-    // Add other reducers here
+    aboutUs: aboutUsReducer,
+    privacyPolicy: privacyPolicyReducer,
+    expertProject: expertProjectReducer,
+    auth: authReducer,
+    registerData: registerDataReducer,
   },
 });
 

@@ -4,13 +4,17 @@ import Button from "../Button";
 import "./index.css";
 import { useEffect, useState } from "react";
 import { RootState } from "../../store/configureStore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  isHomePageModal,
+  openAccountTypeModal,
+} from "../../actions/donateAction";
 
 interface HeaderProps {
   title: string;
   shortDescription?: string;
-  description?: any;
-  btns?: string[];
+  description: string;
+  btns?: any;
   style?: Object;
   btnStyles?: React.CSSProperties[];
   icon?: string;
@@ -19,6 +23,8 @@ interface HeaderProps {
   isEcosystem?: boolean;
   innerClassName?: string;
   ourMissionDesc?: string;
+  id?: string;
+  faqDesc?: any;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -34,9 +40,12 @@ const Header: React.FC<HeaderProps> = ({
   isEcosystem,
   innerClassName,
   ourMissionDesc,
+  id,
+  faqDesc,
 }) => {
   const windowSize = useWindowSize();
   const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
+  const dispatch = useDispatch();
   const [ourMission, setOurMission] = useState({
     txt: "Наша миссия — ",
     link: "формирование онтологической безопасности Армении.",
@@ -58,17 +67,17 @@ const Header: React.FC<HeaderProps> = ({
   }, [lang]);
 
   return (
-    <div className={`${className} headerContainer`} style={style}>
+    <div className={`${className} headerContainer`} id={id} style={style}>
       {icon && !isEcosystem && (
-        <div className="icon">
-          <img src={icon} alt="Icon" />
+        <div className='icon'>
+          <img src={icon} alt='Icon' />
         </div>
       )}
-      <div className="headerContent">
+      <div className='headerContent'>
         <div className={`${isEcosystem && "header_ecosystem"} header`}>
           {isEcosystem && (
-            <div className="ecosystemImg">
-              <img src={icon} alt="Ecosystem" />
+            <div className='ecosystemImg'>
+              <img src={icon} alt='Ecosystem' />
             </div>
           )}
           <h1>{title}</h1>
@@ -76,7 +85,9 @@ const Header: React.FC<HeaderProps> = ({
             (ourMissionTxt ? (
               <p>
                 {ourMission.txt}
-                <NavLink to="" style={{ color: "var(--main-color)" }}>
+                <NavLink
+                  to='/about-us/#faq'
+                  style={{ color: "var(--main-color)" }}>
                   {ourMission.link}
                 </NavLink>
               </p>
@@ -85,28 +96,50 @@ const Header: React.FC<HeaderProps> = ({
             ))}
         </div>
         {windowSize.width < 975 && mainImg && (
-          <div className="mainImgHeader">
-            <img src={mainImg} alt="Main" />
+          <div className='mainImgHeader'>
+            <img src={mainImg} alt='Main' />
           </div>
         )}
-        <div
-          className={`${innerClassName} inner`}
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+        {description !== "" && (
+          <div
+            className={`${innerClassName} inner`}
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        )}
+        {faqDesc &&
+          faqDesc.map((desc: string, i: number) => (
+            <div
+              key={i}
+              className={`${innerClassName} inner`}
+              dangerouslySetInnerHTML={{ __html: desc }}
+            />
+          ))}
         {btns && (
-          <div className="btns">
-            {btns.map((btnText, index) => (
+          <div className='btns'>
+            {btns.map((btn: any, index: number) => (
               <Button
                 key={index}
-                text={btnText}
+                text={btn.name}
                 style={btnStyles && btnStyles[index]}
-                link={true}
-                to=""
+                link={btn.link !== ""}
+                to={btn.link}
                 className={
                   className?.includes("homePageHeader")
                     ? "homePage_btn"
                     : undefined
                 }
+                onClick={() => {
+                  if (btn.become && btn.id) {
+                    dispatch(
+                      openAccountTypeModal({
+                        open: true,
+                        id: btn.id,
+                        name: btn.become,
+                      })
+                    );
+                    dispatch(isHomePageModal(true));
+                  }
+                }}
               />
             ))}
           </div>

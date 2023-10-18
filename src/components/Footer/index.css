@@ -48,6 +48,11 @@
   align-items: center;
   gap: 15px;
 }
+.footerForthtPart,
+.ecosystemMenu {
+  position: relative;
+  z-index: 9999;
+}
 .footerInfo h2,
 .list,
 .footerForthtPart .verticalText {

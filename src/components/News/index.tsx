@@ -4,14 +4,15 @@ import HeaderIcon from "../../assets/info/news.svg";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import NEWS_1 from "../../assets/news1.png";
-// import NEWS_2 from "../../assets/news2.png";
-// import NEWS_3 from "../../assets/news3.jpg";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import Button from "../Button";
 import { useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import { HeaderKeyOf } from "../../utils/keyof.type";
 
 interface newsTypes {
   id: number;
@@ -26,11 +27,10 @@ interface newsTypes {
 }
 
 interface NewsProps {
-  news: newsTypes[];
   lang: string;
 }
 
-const News: React.FC<NewsProps> = ({ news, lang }) => {
+const News: React.FC<NewsProps> = ({ lang }) => {
   const [activeNews, setActiveNews] = useState(2);
   const handleBack = () => {
     activeNews > 1 && setActiveNews((prevIndex) => prevIndex - 1);
@@ -42,6 +42,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
 
   const windowSize = useWindowSize();
   const { t } = useTranslation();
+  const { news } = useSelector((state: RootState) => state.homeData.data);
 
   return (
     <>
@@ -62,6 +63,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
       >
         <Header
           title={t("news-301")}
+          description=""
           icon={HeaderIcon}
           style={{
             paddingTop: "40px",
@@ -79,7 +81,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
         </button>
         <div className="newsContainer">
           {news.map((item) => {
-            const dynamicTitle = item[`title_${lang}` as keyof newsTypes];
+            const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
             const altText =
               typeof dynamicTitle === "string" ? dynamicTitle : "";
             return (
@@ -116,7 +118,7 @@ const News: React.FC<NewsProps> = ({ news, lang }) => {
               color: "#DD264E",
               boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
               margin: windowSize.width < 975 ? 0 : "50px 0",
-              padding: "15px 30px",
+              // padding: "15px 30px",
             }}
             link={true}
             to={""}
