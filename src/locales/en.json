@@ -95,7 +95,8 @@
     "password_confirmation": "Repeat Password",
     "password_current": "Current Password",
     "password_new": "New Password",
-    "choose": "Choose"
+    "choose": "Choose",
+    "participation_form": "Participation form"
   },
   "chosenProject": "You have chosen a project",
   "select-project": "Select Project",
@@ -109,7 +110,6 @@
     "innovation": "Innovation",
     "culture": "Culture",
     "territories": "Holistic development of territories",
-    "participation_form": "Participation form",
     "consultations": "Consultations",
     "project_activities": "Project activities",
     "both_options": "both options",

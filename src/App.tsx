@@ -119,6 +119,7 @@ function App() {
               open: false,
               id: 0,
               name: "",
+              type: "",
             })
           );
           dispatch(isHomePageModal(false));
@@ -142,6 +143,7 @@ function App() {
             dispatch(
               openAccountTypeModal({
                 name: "donor",
+                type: "",
                 id: 1,
                 open: true,
               })

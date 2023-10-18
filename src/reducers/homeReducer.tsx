@@ -15,6 +15,7 @@ interface HomeState {
     open: boolean;
     id: number;
     name: string;
+    type: string;
   };
   isHomePage: boolean;
 }
@@ -27,6 +28,7 @@ const initialState: HomeState = {
     open: false,
     id: 0,
     name: "",
+    type: "",
   },
   isHomePage: false,
 };

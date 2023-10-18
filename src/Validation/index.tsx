@@ -26,8 +26,7 @@ export const signUpSchema = yup.object().shape({
     .email("Invalid email format"),
   phone: yup
     .string()
-    .matches(/^[0-9]+$/, "Phone number should contain only numbers")
-    .required("Phone number is a required field"),
+    .matches(/^[0-9]+$/, "Phone number should contain only numbers"),
   country: yup.string().required("Country is a required field"),
   organization: yup.string().required("Organization is a required field"),
   how_did_you_know: yup.string().required("This is a required field"),
@@ -36,13 +35,7 @@ export const signUpSchema = yup.object().shape({
     .of(yup.string())
     .required("At least one project is required")
     .min(1, "At least one project is required"),
-  // participation_form: yup.string().required("This is a required field"),
-  // sages_id: yup.string().required("This is a required field"),
-  // type: yup.string().required("This is a required field"),
-  agreement_terms: yup.string(),
-  club_code_of_ethics_301: yup.string(),
-  support_form: yup.string(),
-  // recommendation_from: yup.string().required("This is a required field"),
+  recommendation_from: yup.string().required("This is a required field"),
   password: yup
     .string()
     .required("Password is a required field")
@@ -51,4 +44,10 @@ export const signUpSchema = yup.object().shape({
     .string()
     .required("Password confirmation is a required field")
     .oneOf([yup.ref("password")], "Passwords must match"),
+});
+
+export const otherSignUpSchema = yup.object().shape({
+  ...signUpSchema.fields,
+  participation_form: yup.string().required("This is a required field"),
+  sages_id: yup.string().required("This is a required field"),
 });

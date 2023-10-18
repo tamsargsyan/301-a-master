@@ -27,6 +27,7 @@ interface SignUpProps {
 interface AccountType {
   id: number;
   name: string;
+  type: string;
   icon: string;
   mainImg: string;
   btn: string;
@@ -44,6 +45,7 @@ const SignUp: React.FC<SignUpProps> = ({
     {
       id: 1,
       name: "доноры «301»",
+      type: "donor",
       icon: DONOR,
       mainImg: DONOR_MAIN,
       btn: "Become one of 301",
@@ -55,6 +57,7 @@ const SignUp: React.FC<SignUpProps> = ({
     {
       id: 2,
       name: "Амбассадор",
+      type: "ambassadors",
       icon: AMBASSADOR,
       mainImg: AMBASSADOR_MAIN,
       btn: "Стать амбассадором",
@@ -66,6 +69,7 @@ const SignUp: React.FC<SignUpProps> = ({
     {
       id: 3,
       name: "Эксперты",
+      type: "experts",
       icon: EXPERTS,
       mainImg: EXPERTS_MAIN,
       btn: "Стать экспертом",
@@ -77,6 +81,7 @@ const SignUp: React.FC<SignUpProps> = ({
     {
       id: 4,
       name: "Партнеры",
+      type: "partners",
       icon: PARTNERS,
       mainImg: PARTNERS_MAIN,
       btn: "Стать партнером",
@@ -88,6 +93,7 @@ const SignUp: React.FC<SignUpProps> = ({
     {
       id: 5,
       name: "Друзья",
+      type: "friends",
       icon: FRIENDS,
       mainImg: FRIENDS_MAIN,
       btn: "Стать другом фонда",
@@ -98,17 +104,13 @@ const SignUp: React.FC<SignUpProps> = ({
     },
   ];
   const dispatch = useDispatch();
-  const handleAccountType = (id: number, name: string) => {
-    // setAccountType({
-    //   open: true,
-    //   id,
-    //   name,
-    // });
+  const handleAccountType = (id: number, name: string, type: string) => {
     dispatch(
       openAccountTypeModal({
         open: true,
         id,
         name,
+        type,
       })
     );
     setSignUp(false);
@@ -143,7 +145,9 @@ const SignUp: React.FC<SignUpProps> = ({
                 className='accountType_btn'
                 link={false}
                 to={""}
-                onClick={() => handleAccountType(account.id, account.name)}
+                onClick={() =>
+                  handleAccountType(account.id, account.name, account.type)
+                }
               />
             </div>
           ))}
