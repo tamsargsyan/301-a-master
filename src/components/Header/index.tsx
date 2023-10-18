@@ -135,6 +135,7 @@ const Header: React.FC<HeaderProps> = ({
                         open: true,
                         id: btn.id,
                         name: btn.become,
+                        type: btn.type,
                       })
                     );
                     dispatch(isHomePageModal(true));

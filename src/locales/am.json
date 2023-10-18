@@ -89,7 +89,8 @@
     "password_confirmation": "Կրկնեք գաղտնաբառը",
     "password_current": "Ընթացիկ գաղտնաբառը",
     "password_new": "նոր ծածկագիր",
-    "choose": "Ընտրել"
+    "choose": "Ընտրել",
+    "participation_form": "Մասնակցության ձև"
   },
   "chosenProject": "Դուք ընտրել եք նախագիծ",
   "select-project": "Ընտրեք Նախագիծ",
@@ -103,7 +104,6 @@
     "innovation": "Ինովացիա",
     "culture": "Կուլտուրա",
     "territories": "Տարածքների ամբողջական զարգացում",
-    "participation_form": "Մասնակցության ձև",
     "consultations": "Խորհրդակցություններ",
     "both_options": "երկու տարբերակն էլ",
     "agreement_terms": "Համաձայնագրի պայմանները",

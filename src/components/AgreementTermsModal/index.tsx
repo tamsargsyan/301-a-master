@@ -22,6 +22,7 @@ const AgreementTermsModal: React.FC<AgreementTermsModalProps> = ({
         name: "donor",
         id: 1,
         open: true,
+        type: "donor",
       })
     );
   };

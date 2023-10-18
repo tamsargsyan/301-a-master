@@ -10,7 +10,7 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
-import { signUpSchema } from "../../Validation";
+import { otherSignUpSchema, signUpSchema } from "../../Validation";
 import { useCallback, useEffect, useState } from "react";
 import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ import { RootState } from "../../store/configureStore";
 const { Option } = Select;
 
 interface AccountTypeModalProps {
-  accountType: { open: boolean; id: number; name: string };
+  accountType: { open: boolean; id: number; name: string; type: string };
   setSignUp: (arg: boolean) => void;
   setAgreementTerms: (arg: boolean) => void;
   setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
@@ -47,13 +47,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   handleClose,
   setModalName,
 }) => {
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
   const dispatch = useDispatch();
   const confirm = (e: React.MouseEvent<HTMLElement>) => {
     setAgreementTerms(true);
@@ -62,6 +55,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
         open: false,
         id: 0,
         name: "",
+        type: "",
       })
     );
   };
@@ -73,6 +67,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
         open: false,
         id: 0,
         name: "",
+        type: "",
       })
     );
     setModalName("accountTypeModal");
@@ -95,6 +90,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
 
     form.setFieldValue("projects_interested", updatedProjectsInterested);
   };
+  const [participation_form, setParticipation_form] = useState("");
   const [telCode, setTelCode] = useState("");
   const handleTelCode = (val: string) => setTelCode(val);
 
@@ -111,7 +107,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     },
     [api]
   );
-  console.log(telCode);
 
   useEffect(() => {
     if (response) {
@@ -120,6 +115,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
           open: false,
           id: 0,
           name: "",
+          type: "",
         })
       );
       openNotification(response.data.message);
@@ -135,8 +131,11 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     //@ts-ignore
     accountType.id === 3 && dispatch(fetchingRegisterData("get-register-data"));
   }, [accountType.id, dispatch]);
-
   const { data } = useSelector((state: RootState) => state.registerData);
+  const [agreementTermsChecked, setAgreementTearmsChecked] = useState(false);
+  const [clubCodeOfEthics301Checked, setClubCodeOfEthics301Checked] =
+    useState(false);
+  const [supportFormChecked, setSupportFormChecked] = useState(false);
 
   return (
     <Modal
@@ -149,7 +148,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
         header={accountType.name}
         className='modal_back'>
         <Formik
-          validationSchema={signUpSchema}
+          validationSchema={
+            accountType.id === 3 ? otherSignUpSchema : signUpSchema
+          }
           initialValues={{
             name: "",
             last_name: "",
@@ -162,9 +163,20 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
             country: "",
             password: "",
             password_confirmation: "",
+            participation_form: "",
+            sages_id: "",
           }}
           onSubmit={values => {
-            postRequest("register-user", values);
+            const completePhoneNumber = `${telCode} ${values.phone}`;
+            const result = {
+              ...values,
+              phone: completePhoneNumber,
+              type: accountType.type,
+              agreement_terms: agreementTermsChecked,
+              club_code_of_ethics_301: clubCodeOfEthics301Checked,
+              support_form: supportFormChecked,
+            };
+            postRequest("register-user", result);
           }}>
           {({
             values,
@@ -247,7 +259,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                             onChange={(_, obj: any) => {
                               form.setFieldValue("country", obj.label);
                             }}
-                            onSearch={onSearch}
                             //@ts-ignore
                             filterOption={filterOption}
                             options={countries}
@@ -280,7 +291,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                                 obj.label
                               );
                             }}
-                            onSearch={onSearch}
                             //@ts-ignore
                             filterOption={filterOption}
                             options={[
@@ -307,27 +317,41 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       className='error'
                     />
                   </div>
-                  {accountType.id === 3 && (
+                  {accountType.type === "experts" && (
                     <div className='signUp_formGroup'>
-                      <label htmlFor='signUp_recommendation'>
-                        {t("which_sages")}*
-                      </label>
-                      <Select
-                        className='signUp_selector'
-                        showSearch
-                        optionFilterProp='children'
-                        onChange={onChange}
-                        onSearch={onSearch}
-                        //@ts-ignore
-                        filterOption={filterOptionSages}>
-                        {data?.sages.map((sage: any) => (
-                          <Option
-                            key={sage.id}
-                            value={`${sage.name}${sage.last_name}`}>
-                            {`${sage.name}${sage.last_name}`}
-                          </Option>
-                        ))}
-                      </Select>
+                      <label htmlFor='signUp_sages'>{t("which_sages")}*</label>
+                      <Field name='sages_id'>
+                        {
+                          //@ts-ignore
+                          ({ _, form }) => (
+                            <Select
+                              className='signUp_selector'
+                              showSearch
+                              optionFilterProp='children'
+                              onChange={(_, obj: any) => {
+                                form.setFieldValue("sages_id", obj.key);
+                              }}
+                              //@ts-ignore
+                              filterOption={filterOptionSages}>
+                              {data?.sages.map((sage: any) => (
+                                <Option
+                                  key={sage.id}
+                                  value={`${sage.name}${sage.last_name}`}>
+                                  {`${sage.name}${sage.last_name}`}
+                                </Option>
+                              ))}
+                            </Select>
+                          )
+                        }
+                      </Field>
+                      <p className='error'>
+                        {errors.sages_id && touched.sages_id && errors.sages_id}
+                      </p>
+                      {/* <ErrorMessage
+                        name='sages_id'
+                        component='p'
+                        className='error'
+                      /> */}
                     </div>
                   )}
                 </div>
@@ -406,14 +430,18 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     <label htmlFor='signUp_project'>
                       {t("inputs.projects_interested")}
                     </label>
-                    <Checkbox className='signUp_radio'>
-                      {t("checkboxes.education")}
-                    </Checkbox>
                     <Field name='projects_interested'>
                       {
                         //@ts-ignore
                         ({ _, form }) => (
                           <>
+                            <Checkbox
+                              className='signUp_radio'
+                              onChange={e => {
+                                handleCheckboxChange(e, form);
+                              }}>
+                              {t("checkboxes.education")}
+                            </Checkbox>
                             <Checkbox
                               className='signUp_radio'
                               value='All directions'
@@ -467,17 +495,63 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   {accountType.id === 3 && (
                     <div className='signUp_formGroup'>
                       <label htmlFor='signUp_fund'>
-                        {t("checkboxes.participation_form")}*
+                        {t("inputs.participation_form")}*
                       </label>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.consultations")}
-                      </Checkbox>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.project_activities")}
-                      </Checkbox>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.both_options")}
-                      </Checkbox>
+                      <Field name='participation_form'>
+                        {
+                          //@ts-ignore
+                          ({ _, form }) => (
+                            <>
+                              <Checkbox
+                                value='Consultations'
+                                checked={participation_form === "Consultations"}
+                                className='signUp_radio'
+                                onChange={e => {
+                                  setParticipation_form(e.target.value);
+                                  form.setFieldValue(
+                                    "participation_form",
+                                    e.target.value
+                                  );
+                                }}>
+                                {t("checkboxes.consultations")}
+                              </Checkbox>
+                              <Checkbox
+                                value='Project activities'
+                                checked={
+                                  participation_form === "Project activities"
+                                }
+                                className='signUp_radio'
+                                onChange={e => {
+                                  setParticipation_form(e.target.value);
+                                  form.setFieldValue(
+                                    "participation_form",
+                                    e.target.value
+                                  );
+                                }}>
+                                {t("checkboxes.project_activities")}
+                              </Checkbox>
+                              <Checkbox
+                                value='both options'
+                                checked={participation_form === "both options"}
+                                className='signUp_radio'
+                                onChange={e => {
+                                  setParticipation_form(e.target.value);
+                                  form.setFieldValue(
+                                    "participation_form",
+                                    e.target.value
+                                  );
+                                }}>
+                                {t("checkboxes.both_options")}
+                              </Checkbox>
+                            </>
+                          )
+                        }
+                      </Field>
+                      <ErrorMessage
+                        name='how_did_you_know'
+                        component='p'
+                        className='error'
+                      />
                     </div>
                   )}
                 </div>
@@ -505,7 +579,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         placeholder={t("inputs.choose")}
                         optionFilterProp='children'
                         onChange={handleTelCode}
-                        onSearch={onSearch}
                         //@ts-ignore
                         filterOption={filterOptionTel}
                         // options={country_dial}
@@ -574,7 +647,12 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   </div>
                   <div className='signUp_formGroup terms_formGroup'>
                     <div className='signUp_info'>
-                      <Checkbox className='signUp_radio'>
+                      <Checkbox
+                        className='signUp_radio'
+                        checked={agreementTermsChecked}
+                        onChange={e =>
+                          setAgreementTearmsChecked(e.target.checked)
+                        }>
                         {t("checkboxes.agreement_terms")}*
                       </Checkbox>
                       <Popconfirm
@@ -592,13 +670,21 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       </Popconfirm>
                     </div>
                     <div className='signUp_info'>
-                      <Checkbox className='signUp_radio'>
+                      <Checkbox
+                        className='signUp_radio'
+                        checked={clubCodeOfEthics301Checked}
+                        onChange={e =>
+                          setClubCodeOfEthics301Checked(e.target.checked)
+                        }>
                         {t("checkboxes.club_code_of_ethics_301")}*
                       </Checkbox>
                       <img src={INFO_ICON} alt='Info' />
                     </div>
                     <div className='signUp_info'>
-                      <Checkbox className='signUp_radio'>
+                      <Checkbox
+                        className='signUp_radio'
+                        checked={supportFormChecked}
+                        onChange={e => setSupportFormChecked(e.target.checked)}>
                         {t("checkboxes.support_form")}
                       </Checkbox>
                       <img src={INFO_ICON} alt='Info' />

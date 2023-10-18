@@ -89,7 +89,8 @@
     "password_confirmation": "Повторить пароль",
     "password_current": "Текущий пароль",
     "password_new": "Новый пароль",
-    "choose": "Выбирать"
+    "choose": "Выбирать",
+    "participation_form": "Форма участия"
   },
   "chosenProject": "Вы выбрали проект",
   "select-project": "Выберите проект",
@@ -103,7 +104,6 @@
     "innovation": "Инновации",
     "culture": "Культура",
     "territories": "Целостное развитие территорий",
-    "participation_form": "Форма участия",
     "consultations": "Консультации",
     "project_activities": "Проектная деятельность",
     "both_options": "оба варианта",
