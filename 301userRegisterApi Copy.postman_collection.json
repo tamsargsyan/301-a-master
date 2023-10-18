@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "5d5169b3-bb50-4780-8056-3a1a9eb948ac",
+		"name": "301userRegisterApi Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29136911"
+	},
+	"item": [
+		{
+			"name": "registerTypeDonor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Aghvan",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Yeghoyan",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "aghvaneghoyan19@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "093626760",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Armenia",
+							"type": "text"
+						},
+						{
+							"key": "organization",
+							"value": "dsgsdf",
+							"type": "text"
+						},
+						{
+							"key": "how_did_you_know",
+							"value": "Соцсети",
+							"type": "text"
+						},
+						{
+							"key": "projects_interested",
+							"value": "Инновации",
+							"type": "text"
+						},
+						{
+							"key": "participation_form",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "sages_id",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "donor",
+							"type": "text"
+						},
+						{
+							"key": "agreement_terms",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "club_code_of_ethics_301",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "support_form",
+							"value": "approved",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "recommendation_from",
+							"value": "expert",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://301.machtech.site/api/register-user",
+					"protocol": "https",
+					"host": [
+						"301",
+						"machtech",
+						"site"
+					],
+					"path": [
+						"api",
+						"register-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerTypeExpert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Aghvan",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Yeghoyan",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "aghvaneghoyan17@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "093626760",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Armenia",
+							"type": "text"
+						},
+						{
+							"key": "organization",
+							"value": "dsgsdf",
+							"type": "text"
+						},
+						{
+							"key": "how_did_you_know",
+							"value": "other",
+							"type": "text"
+						},
+						{
+							"key": "projects_interested",
+							"value": "Инновации",
+							"type": "text"
+						},
+						{
+							"key": "participation_form",
+							"value": "Консультации",
+							"type": "text"
+						},
+						{
+							"key": "sages_id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "expert",
+							"type": "text"
+						},
+						{
+							"key": "agreement_terms",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "club_code_of_ethics_301",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "support_form",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "recommendation_from",
+							"value": "donor",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "dsgsdgds",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://301.machtech.site/api/register-user",
+					"protocol": "https",
+					"host": [
+						"301",
+						"machtech",
+						"site"
+					],
+					"path": [
+						"api",
+						"register-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerTypeAmbassador",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Aghvan",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Yeghoyan",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "aghvaneghoyan20@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "093626760",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Armenia",
+							"type": "text"
+						},
+						{
+							"key": "organization",
+							"value": "dsgsdf",
+							"type": "text"
+						},
+						{
+							"key": "how_did_you_know",
+							"value": "Соцсети",
+							"type": "text"
+						},
+						{
+							"key": "projects_interested",
+							"value": "Инновации",
+							"type": "text"
+						},
+						{
+							"key": "participation_form",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "sages_id",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "ambassador",
+							"type": "text"
+						},
+						{
+							"key": "agreement_terms",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "club_code_of_ethics_301",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "support_form",
+							"value": "approved",
+							"type": "text"
+						},
+						{
+							"key": "recommendation_from",
+							"value": "expert",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://301.machtech.site/api/register-user",
+					"protocol": "https",
+					"host": [
+						"301",
+						"machtech",
+						"site"
+					],
+					"path": [
+						"api",
+						"register-user"
+					],
+					"query": [
+						{
+							"key": "participation_form",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "sages_id",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "support_form",
+							"value": "approved",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRegisterData",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://301.machtech.site/api/get-register-data",
+					"protocol": "https",
+					"host": [
+						"301",
+						"machtech",
+						"site"
+					],
+					"path": [
+						"api",
+						"get-register-data"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

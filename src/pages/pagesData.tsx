@@ -82,7 +82,7 @@ const pagesData: routerType[] = [
     path: "/personal/my-project",
     element: (
       <Layout>
-        <PerosnalProjects title='My Project' />
+        <PerosnalProjects title='my-project' />
       </Layout>
     ),
     title: "Personal Info",
@@ -91,7 +91,7 @@ const pagesData: routerType[] = [
     path: "/:lang/personal/my-project",
     element: (
       <Layout>
-        <PerosnalProjects title='My Project' />
+        <PerosnalProjects title='my-project' />
       </Layout>
     ),
     title: "Personal Info",
@@ -119,7 +119,7 @@ const pagesData: routerType[] = [
     element: (
       <Layout>
         <PerosnalProjects
-          title='My Events'
+          title='my-events'
           content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
         />
       </Layout>
@@ -131,7 +131,7 @@ const pagesData: routerType[] = [
     element: (
       <Layout>
         <PerosnalProjects
-          title='My Events'
+          title='my-events'
           content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
         />
       </Layout>

@@ -25,7 +25,13 @@
     "save-project": "Պահպանել նախագիծը",
     "download-pdf": "ներբեռնել pdf տարբերակը",
     "donate": "Նվիրաբերել",
-    "recommended": "խորհուրդ է տրվում"
+    "recommended": "խորհուրդ է տրվում",
+    "one-time-donation": "միանվագ նվիրատվություն",
+    "donate-to-project": "նվիրաբերել նախագծին",
+    "back": "Հետ",
+    "register": "ԳՐԱՆՑՎԵԼ",
+    "add": "ԱՎԵԼԱՑՆԵԼ",
+    "save": "Պահպանել"
   },
   "contact": {
     "title": "Գրեք մեզ",
@@ -68,5 +74,54 @@
     "terms": "Ծառայությունների մատուցման պայմաններին",
     "and": "և",
     "privacy": "Գաղտնիության քաղաքականությանը"
+  },
+  "inputs": {
+    "enter-donation-amount": "Մուտքագրեք նվիրատվության գումարը",
+    "name": "Քո անունը",
+    "surname": "Ազգանունը",
+    "organization": "Կազմակերպություն",
+    "country": "Բնակության վայր",
+    "recommendation": "Առաջարկություն կողմից",
+    "how_did_you_know": "Ինչպե՞ս իմացաք մեր հիմնադրամի մասին:",
+    "projects_interested": "Ծրագրերի ո՞ր ոլորտն եք Ձեզ հետաքրքրում:",
+    "phone": "Հեռախոս",
+    "password": "Գաղտնաբառ",
+    "password_confirmation": "Կրկնեք գաղտնաբառը",
+    "password_current": "Ընթացիկ գաղտնաբառը",
+    "password_new": "նոր ծածկագիր",
+    "choose": "Ընտրել"
+  },
+  "chosenProject": "Դուք ընտրել եք նախագիծ",
+  "select-project": "Ընտրեք Նախագիծ",
+  "checkboxes": {
+    "social_network": "Սոցիալական ցանց",
+    "community_members_301": "Համայնքի անդամներ 301",
+    "other": "այլ",
+    "education": "Կրթություն",
+    "all_directions": "Բոլոր ուղղությունները",
+    "science": "Գիտությունը",
+    "innovation": "Ինովացիա",
+    "culture": "Կուլտուրա",
+    "territories": "Տարածքների ամբողջական զարգացում",
+    "participation_form": "Մասնակցության ձև",
+    "consultations": "Խորհրդակցություններ",
+    "both_options": "երկու տարբերակն էլ",
+    "agreement_terms": "Համաձայնագրի պայմանները",
+    "club_code_of_ethics_301": "ԱԿՈՒՄԲԱՅԻՆ ԷԹԻԿԱՅԻ ԿՈԴԻՐՔ 301",
+    "support_form": "Աջակցության ձև"
+  },
+  "which_sages": "Ո՞ր 301 իմաստունի հետ կցանկանայիք համագործակցել:",
+  "personal": {
+    "about-me": "Իմ մասին",
+    "edit-profile": "Խմբագրել պրոֆիլը",
+    "contact": "Կապ",
+    "social-media": "Սոցիալական մեդիա",
+    "my-message": "Իմ նամակները",
+    "personal-info": "Անձնական տեղեկատվություն",
+    "my-project": "Իմ նախագիծը",
+    "my-events": "Իմ իրադարձությունները",
+    "settings": "Կարգավորումներ",
+    "replace": "Փոխարինել",
+    "on_the_web": "ՎԵԲՈՒՄ"
   }
 }

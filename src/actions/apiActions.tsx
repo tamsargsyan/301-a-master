@@ -21,6 +21,9 @@ import {
   DETAILS_PROJECT_FETCH_ERROR,
   FETCH_PARTNERS_START,
   FETCH_PARTNERS_SUCCESS,
+  FETCH_REGISTER_DATA_START,
+  FETCH_REGISTER_DATA_SUCCESS,
+  FETCH_REGISTER_DATA_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -96,19 +99,30 @@ export const fetchingPartners = (data: string) => async (dispatch: any) => {
   }
 };
 
-export const usePostRequest = (endpoint: string, data: Object) => {
-  const [postLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+export const fetchingRegisterData = (data: string) => async (dispatch: any) => {
+  dispatch({ type: FETCH_REGISTER_DATA_START });
+  try {
+    const response = await apiService.get(data);
+    dispatch({ type: FETCH_REGISTER_DATA_SUCCESS, payload: response });
+  } catch (error: any) {
+    dispatch({ type: FETCH_REGISTER_DATA_ERROR, payload: error.message });
+  }
+};
 
-  const postRequest = async () => {
+export const usePostRequest = () => {
+  const [postLoading, setLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const [response, setResponse] = useState<any>(null);
+
+  const postRequest = async (endpoint: string, data: Object) => {
     setLoading(true);
     try {
-      await apiService.post(endpoint, data);
+      await apiService.post(endpoint, data, setResponse);
     } catch (err: any) {
       setError(err);
     }
     setLoading(false);
   };
 
-  return { postRequest, postLoading, error };
+  return { postRequest, postLoading, error, response };
 };

@@ -25,7 +25,13 @@
     "save-project": "Сохранить проект",
     "download-pdf": "скачать презентацию pdf",
     "donate": "Пожертвовать",
-    "recommended": "рекомендуемые"
+    "recommended": "рекомендуемые",
+    "one-time-donation": "единоразовое пожертвование",
+    "donate-to-project": "пожертвовать на проект",
+    "back": "Назад",
+    "register": "ЗАРЕГИСТРИРОВАТЬСЯ",
+    "add": "ДОБАВИТЬ",
+    "save": "Сохранить"
   },
   "contact": {
     "title": "Напишите нам",
@@ -68,5 +74,55 @@
     "terms": "Условиями обслуживания",
     "and": "и",
     "privacy": "Политикой конфиденциальности"
+  },
+  "inputs": {
+    "enter-donation-amount": "Введите сумму пожертвования",
+    "name": "Ваша имя",
+    "surname": "Фамилия",
+    "organization": "Организация",
+    "country": "Страна проживания",
+    "recommendation": "Рекомендация от",
+    "how_did_you_know": "Откуда узнали про наш Фонд",
+    "projects_interested": "Какое направление проектов Вам интересно",
+    "phone": "Телефон",
+    "password": "Пароль",
+    "password_confirmation": "Повторить пароль",
+    "password_current": "Текущий пароль",
+    "password_new": "Новый пароль",
+    "choose": "Выбирать"
+  },
+  "chosenProject": "Вы выбрали проект",
+  "select-project": "Выберите проект",
+  "checkboxes": {
+    "social_network": "Соцсети",
+    "community_members_301": "Члены сообщества 301",
+    "other": "другое",
+    "education": "Образование",
+    "all_directions": "Все направления",
+    "science": "Наука",
+    "innovation": "Инновации",
+    "culture": "Культура",
+    "territories": "Целостное развитие территорий",
+    "participation_form": "Форма участия",
+    "consultations": "Консультации",
+    "project_activities": "Проектная деятельность",
+    "both_options": "оба варианта",
+    "agreement_terms": "Соглашение условий",
+    "club_code_of_ethics_301": "КОДЕКС ЭТИКИ КЛУБА 301",
+    "support_form": "Форма поддержки"
+  },
+  "which_sages": "С кем из мудрецов 301 Вы бы хотели сотрудничать?",
+  "personal": {
+    "about-me": "Обо мне",
+    "edit-profile": "Редактировать профиль",
+    "contact": "Контакт",
+    "social-media": "Социальные медиа",
+    "my-message": "Мое сообщение",
+    "personal-info": "Личная информация",
+    "my-project": "Мой проект",
+    "my-events": "Мои мероприятия",
+    "settings": "Настройки",
+    "replace": "Заменять",
+    "on_the_web": "В ИНТЕРНЕТЕ"
   }
 }

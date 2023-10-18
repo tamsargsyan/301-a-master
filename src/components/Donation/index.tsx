@@ -7,6 +7,7 @@ import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openDonateModal } from "../../actions/donateAction";
 import { RootState } from "../../store/configureStore";
+import { useTranslation } from "react-i18next";
 
 interface DonationProps {
   setSignUp: (arg: boolean) => void;
@@ -23,22 +24,24 @@ const Donation: React.FC<DonationProps> = ({
   setOneTimeDonation,
   setDonateProjects,
 }) => {
+  const { t } = useTranslation();
+
   const donations_cards = [
     {
       id: 1,
-      title: "one-time donation",
+      title: t("btns.one-time-donation"),
       desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
       img: ONE_TIME_DONATION,
     },
     {
       id: 2,
-      title: "donate to the project",
+      title: t("btns.donate-to-project"),
       desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the",
       img: PROJECT_DONATION,
     },
     {
       id: 3,
-      title: "become one of 301",
+      title: t("btns.become-301"),
       desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
       img: DONATION_301,
     },
@@ -64,7 +67,7 @@ const Donation: React.FC<DonationProps> = ({
       openModal={isDonateModal}>
       <EcosystemModal
         onClose={() => dispatch(openDonateModal(false))}
-        header='donate'>
+        header={t("btns.donate")}>
         <div className='donationWrapper'>
           <div className='donation'>
             <div className='donation_info'>

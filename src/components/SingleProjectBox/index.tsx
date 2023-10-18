@@ -50,7 +50,9 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           </div>
           <div>
             <h1>{title}</h1>
-            <span className='donationProject_desc'>{description}</span>
+            <span className='donationProject_desc'>
+              {description?.slice(0, 3)}
+            </span>
           </div>
           <div className='project_progress'>
             <div className='projectProgress_info'>
@@ -94,7 +96,9 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
               {flag}
             </span>
           </div>
-          <span className='donationProject_desc'>{description}</span>
+          <span className='donationProject_desc'>
+            {description?.slice(0, 3)}
+          </span>
         </div>
       </motion.div>
     );
@@ -106,7 +110,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
         style={{ backgroundImage: `url(${projectImg})` }}></div>
       <div className='projectInfo'>
         <h1>{title}</h1>
-        <span>{description}</span>
+        <span>{description?.slice(0, 3)}</span>
         <div className='author'>
           <span>{author}</span>
           <span className='flag'>

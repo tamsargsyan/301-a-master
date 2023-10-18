@@ -6,6 +6,8 @@ import languageDitactorReducer from "./languageReducer";
 import aboutUsReducer from "./aboutUsReducer";
 import privacyPolicyReducer from "./privacyPolicyReducer";
 import expertProjectReducer from "./expertProjectReducer";
+import authReducer from "./authReducer";
+import registerDataReducer from "./registerDataReducer";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   aboutUs: aboutUsReducer,
   privacyPolicy: privacyPolicyReducer,
   expertProject: expertProjectReducer,
+  auth: authReducer,
+  registerData: registerDataReducer,
 });
 
 export default rootReducer;

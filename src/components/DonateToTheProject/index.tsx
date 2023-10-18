@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
+import { useTranslation } from "react-i18next";
 
 interface DonateToTheProjectProps {
   setDonateProjects: (arg: boolean) => void;
@@ -52,10 +53,13 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
+  const { t } = useTranslation();
 
   return (
     <Modal setOpenModal={handleClose} openModal={donateSingleProject}>
-      <EcosystemModal onClose={handleClose} header='donate to the project'>
+      <EcosystemModal
+        onClose={handleClose}
+        header={t("btns.donate-to-project")}>
         <div className='chosenProject_wrapper'>
           {loading ? (
             <div className='donationProjects_spinner'>
@@ -64,7 +68,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
           ) : (
             <>
               <div className='chosenProject_project'>
-                <div className='chosenProject'>You have chosen a project</div>
+                <div className='chosenProject'>{t("chosenProject")}</div>
                 <SingleProjectBox
                   title={data?.project?.project_name_am}
                   description={removeHtmlTags(
@@ -82,13 +86,13 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
               <form>
                 <div className='signUp_formGroup'>
                   <label htmlFor='donateProject_sum'>
-                    Введите сумму пожертвования
+                    {t("inputs.enter-donation-amount")}
                   </label>
                   <div className='signUp_tel'>
                     <Select
                       className='signUp_selector'
                       showSearch
-                      placeholder='Select a sum'
+                      placeholder={t("inputs.choose")}
                       optionFilterProp='children'
                       onChange={onChange}
                       onSearch={onSearch}
@@ -102,12 +106,13 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                         id='donateProject_sum'
                         name='signUp'
                         className='signUp_input'
+                        placeholder='0'
                       />
                     </div>
                   </div>
                 </div>
                 <div className='signUp_formGroup'>
-                  <label htmlFor='donateProject_name'>Ваша имя</label>
+                  <label htmlFor='donateProject_name'>{t("inputs.name")}</label>
                   <input
                     type='text'
                     id='donateProject_name'
@@ -116,7 +121,9 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                   />
                 </div>
                 <div className='signUp_formGroup'>
-                  <label htmlFor='donateProject_surname'>Фамилия</label>
+                  <label htmlFor='donateProject_surname'>
+                    {t("inputs.surname")}
+                  </label>
                   <input
                     type='text'
                     id='donateProject_surname'
@@ -125,7 +132,9 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                   />
                 </div>
                 <div className='signUp_formGroup'>
-                  <label htmlFor='donateProject_email'>Электронная почта</label>
+                  <label htmlFor='donateProject_email'>
+                    {t("sign-in.email")}
+                  </label>
                   <input
                     type='text'
                     id='donateProject_email'
@@ -135,7 +144,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                 </div>
                 <div className='signUp_btns'>
                   <Button
-                    text='Donation'
+                    text={t("btns.donate")}
                     link={false}
                     to={""}
                     type='submit'
@@ -147,18 +156,19 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                     }}
                   />
                   <p>
-                    By continuing, you agree 301’s <br></br>
-                    <span
+                    {t("privacy.1")}
+                    <br></br>
+                    <button
                       className='mentioned_txt'
                       onClick={() => handlePrivacy("Terms of Services")}>
-                      Terms of Services
-                    </span>{" "}
-                    and{" "}
-                    <span
+                      {t("privacy.terms")}
+                    </button>
+                    {t("privacy.and")}
+                    <button
                       className='mentioned_txt'
                       onClick={() => handlePrivacy("Privacy Policy")}>
-                      Privacy Policy
-                    </span>
+                      {t("privacy.privacy")}
+                    </button>
                   </p>
                 </div>
               </form>

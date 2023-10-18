@@ -31,10 +31,10 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
       [name]: value,
     }));
   };
-  const { postRequest, postLoading } = usePostRequest("write-to-us", formData);
+  const { postRequest, postLoading } = usePostRequest();
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    postRequest();
+    postRequest("write-to-us", formData);
   };
   useEffect(() => {
     !postLoading &&

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import CLOSE from "../../assets/sign-up-close.svg";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
+import { useTranslation } from "react-i18next";
 
 interface EcosystemModalProps {
   onClose: () => void;
@@ -16,6 +17,8 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
   header,
   className,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={`${className} signUp_bg`}>
       <div className='signUp_content'>
@@ -23,7 +26,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
           <button className='close' onClick={onClose}>
             {className === "modal_back" ? (
               <>
-                Back
+                {t("btns.back")}
                 <div>
                   <img src={ARROW} alt='Arrow' />
                 </div>
