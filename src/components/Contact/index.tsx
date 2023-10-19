@@ -26,7 +26,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       [name]: value,
     }));
@@ -34,7 +34,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
   const { postRequest, postLoading } = usePostRequest();
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    postRequest("write-to-us", formData);
+    postRequest("write-to-us", formData, {});
   };
   useEffect(() => {
     !postLoading &&
@@ -48,7 +48,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
 
   return (
     <>
-      {separatedPart && <div className="separatedPart"></div>}
+      {separatedPart && <div className='separatedPart'></div>}
       <Background
         pattern1={
           windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
@@ -60,11 +60,10 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
           height: "190px",
           top: "480px",
         }}
-        style={{ flexDirection: "column", padding: "0" }}
-      >
+        style={{ flexDirection: "column", padding: "0" }}>
         <Header
           title={t("contact.title")}
-          description=""
+          description=''
           icon={EMAIL}
           style={{
             paddingTop: "40px",
@@ -74,55 +73,55 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
             alignItems: "center",
           }}
         />
-        <form className="formContainer" onSubmit={handleSubmit}>
-          <div className="formInner">
-            <div className="formInputs">
-              <div className="formGroup">
+        <form className='formContainer' onSubmit={handleSubmit}>
+          <div className='formInner'>
+            <div className='formInputs'>
+              <div className='formGroup'>
                 <input
-                  type="text"
-                  name="name"
-                  id="name"
+                  type='text'
+                  name='name'
+                  id='name'
                   placeholder={t("contact.your-name")}
                   value={formData.name}
                   onChange={handleChange}
                   required
                   aria-hidden={true}
-                  className="form"
+                  className='form'
                 />
               </div>
-              <div className="formGroup">
+              <div className='formGroup'>
                 <input
-                  type="text"
-                  name="email"
-                  id="email"
+                  type='text'
+                  name='email'
+                  id='email'
                   placeholder={t("contact.your-email")}
                   value={formData.email}
                   onChange={handleChange}
                   required
                   aria-hidden={true}
-                  className="form"
+                  className='form'
                 />
               </div>
             </div>
-            <div className="formGroup">
+            <div className='formGroup'>
               <textarea
-                id="message"
-                name="message"
+                id='message'
+                name='message'
                 placeholder={t("contact.write")}
                 rows={4}
                 cols={80}
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="form"
+                className='form'
               />
             </div>
           </div>
-          <div className="btns">
+          <div className='btns'>
             <Button
               text={
                 postLoading ? (
-                  <Spin size="small" className="btn_spinner" />
+                  <Spin size='small' className='btn_spinner' />
                 ) : (
                   t("btns.send")
                 )
@@ -134,9 +133,9 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
                 color: "#fff",
               }}
               link={false}
-              to=""
-              className="homePage_btn"
-              type="submit"
+              to=''
+              className='homePage_btn'
+              type='submit'
             />
           </div>
         </form>

@@ -1,10 +1,9 @@
-.oneTimeDonation {
-  background: #fff;
+.donation_form {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 60px 0;
 }
-.oneTimeDonation form {
+.donation_form .signUp_formGroup,
+.donation_form .signUp_btns {
   width: 300px;
 }

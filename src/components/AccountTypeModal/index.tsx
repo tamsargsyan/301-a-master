@@ -176,7 +176,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
               club_code_of_ethics_301: clubCodeOfEthics301Checked,
               support_form: supportFormChecked,
             };
-            postRequest("register-user", result);
+            postRequest("register-user", result, {});
           }}>
           {({
             values,

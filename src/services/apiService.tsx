@@ -8,8 +8,15 @@ export const apiService = {
     return response.data;
   },
 
-  post: async (data: any, payload: Object, setResponse: any) => {
-    const response = await axios.post(`${BASE_URL}/${data}`, payload);
+  post: async (data: any, payload: Object, setResponse: any, headers: any) => {
+    const config = {
+      headers,
+    };
+    const response = await axios.post(
+      `${BASE_URL}/${data}`,
+      payload,
+      config.headers
+    );
     setResponse(response);
   },
 };

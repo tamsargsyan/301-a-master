@@ -114,10 +114,10 @@ export const usePostRequest = () => {
   const [error, setError] = useState<any>(null);
   const [response, setResponse] = useState<any>(null);
 
-  const postRequest = async (endpoint: string, data: Object) => {
+  const postRequest = async (endpoint: string, data: Object, headers: any) => {
     setLoading(true);
     try {
-      await apiService.post(endpoint, data, setResponse);
+      await apiService.post(endpoint, data, setResponse, headers);
     } catch (err: any) {
       setError(err);
     }

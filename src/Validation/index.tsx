@@ -51,3 +51,19 @@ export const otherSignUpSchema = yup.object().shape({
   participation_form: yup.string().required("This is a required field"),
   sages_id: yup.string().required("This is a required field"),
 });
+
+export const donationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Name should only contain letters")
+    .required("Name is a required field"),
+  last_name: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Last Name should only contain letters")
+    .required("Last Name is a required field"),
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Invalid email format"),
+  amount: yup.string().required("This is a required field"),
+});
