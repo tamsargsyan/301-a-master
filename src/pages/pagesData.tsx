@@ -8,6 +8,7 @@ import PersonalInfo from "../components/Personal/Personal-Info";
 import Layout from "../hoc/layout";
 import PerosnalProjects from "../components/Personal/PersonalProjects";
 import EditProfile from "../components/Personal/EditProfile";
+import AuthenticatedRoute from "./AuthRoute";
 
 const pagesData: routerType[] = [
   {
@@ -63,78 +64,94 @@ const pagesData: routerType[] = [
   {
     path: "/personal/personal-info",
     element: (
-      <Layout>
-        <PersonalInfo />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <PersonalInfo />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/:lang/personal/personal-info",
     element: (
-      <Layout>
-        <PersonalInfo />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <PersonalInfo />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/personal/my-project",
     element: (
-      <Layout>
-        <PerosnalProjects title='my-project' />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <PerosnalProjects title='my-project' />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/:lang/personal/my-project",
     element: (
-      <Layout>
-        <PerosnalProjects title='my-project' />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <PerosnalProjects title='my-project' />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/personal/personal-info/edit-profile",
     element: (
-      <Layout>
-        <EditProfile />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <EditProfile />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/:lang/personal/personal-info/edit-profile",
     element: (
-      <Layout>
-        <EditProfile />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <EditProfile />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/personal/my-events",
     element: (
-      <Layout>
-        <PerosnalProjects
-          title='my-events'
-          content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
-        />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <PerosnalProjects
+            title='my-events'
+            content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
+          />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },
   {
     path: "/:lang/personal/my-events",
     element: (
-      <Layout>
-        <PerosnalProjects
-          title='my-events'
-          content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
-        />
-      </Layout>
+      <AuthenticatedRoute>
+        <Layout>
+          <PerosnalProjects
+            title='my-events'
+            content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
+          />
+        </Layout>
+      </AuthenticatedRoute>
     ),
     title: "Personal Info",
   },

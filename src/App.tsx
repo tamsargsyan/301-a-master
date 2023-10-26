@@ -20,6 +20,7 @@ import {
   openDonateModal,
 } from "./actions/donateAction";
 import { RootState } from "./store/configureStore";
+import { useSearchParams } from "react-router-dom";
 
 function App() {
   // const location = useLocation();
@@ -80,13 +81,16 @@ function App() {
   }, [signUp]);
   const { isHomePage } = useSelector((state: RootState) => state.homeData);
 
+  const [searchParams] = useSearchParams();
+  const signInActive = searchParams.get("signIn") === "active";
+
+  useEffect(() => {
+    if (signInActive) setSignIn(true);
+  }, [signInActive]);
+
   return (
     <div className='container'>
-      <Navbar
-        setOpenModal={setSignIn}
-        // setDonation={setDonation}
-        setModalName={setModalName}
-      />
+      <Navbar setOpenModal={setSignIn} setModalName={setModalName} />
       <Router />
       <SignIn
         signIn={signIn}

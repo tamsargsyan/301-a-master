@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "ebae4b4e-cb3b-45eb-b393-6a5dcb83ea75",
+		"name": "301DonationApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29136911"
+	},
+	"item": [
+		{
+			"name": "donationApi",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzMwMS5tYWNodGVjaC5zaXRlL2FwaS9sb2dpbiIsImlhdCI6MTY5NzYxMTI2MSwiZXhwIjoxNjk3NjE0ODYxLCJuYmYiOjE2OTc2MTEyNjEsImp0aSI6ImFwOXdJUm5ESUZQUlZZUFciLCJzdWIiOiIyNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.02vJOSheJ_xY5lV_SDOX7wYKE7x0t45dJKFPGbT5T9Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Aghvan",
+							"type": "text"
+						},
+						{
+							"key": "last-name",
+							"value": "Yeghoyan",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "aghvaneghoyan11@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "2000",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "one_time",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://301.machtech.site/api/donation",
+					"protocol": "https",
+					"host": [
+						"301",
+						"machtech",
+						"site"
+					],
+					"path": [
+						"api",
+						"donation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

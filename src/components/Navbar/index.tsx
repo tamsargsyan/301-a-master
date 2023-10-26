@@ -5,7 +5,7 @@ import SIDE_PATTERN from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
@@ -91,6 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div className='navbarContainer'>
@@ -219,6 +220,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => {
                   setOpenModal(true);
                   setModalName("signIn");
+                  setSearchParams({ signIn: "active" });
                 }}
                 style={{ padding: "9px 23px" }}
               />
