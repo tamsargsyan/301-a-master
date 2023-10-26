@@ -151,26 +151,23 @@ const ProjectDetails = () => {
             {windowSize.width > 800 ? (
               <div className='filteringBtnsWrapper'>
                 {projectCategory.map((category: any, i: number) => (
-                  <button
-                    disabled={true}
-                    key={i}
-                    // className={`${
-                    // activeProjects.i === i && "activeProjectBtn"
-                    // }`}
-                    // onClick={() => handleClick(i, category.name_am)}
-                  >
+                  <button disabled={true} key={i}>
                     {category[`name_${lang}`]}
                   </button>
                 ))}
               </div>
             ) : (
               <DropDown
-                items={projectsData}
+                items={projectCategory}
                 onClickItem={() => {}}
-                type='i'
-                text='All'
+                type='projectCategory'
+                text={
+                  projectCategory.find((category: any) => category.id === 1)[
+                    `name_${lang}`
+                  ]
+                }
                 style={{ marginBottom: "20px" }}
-                objKey={""}
+                objKey='name'
               />
             )}
             {windowSize.width > 800 ? (
@@ -194,12 +191,16 @@ const ProjectDetails = () => {
               </div>
             ) : (
               <DropDown
-                items={[]}
+                items={projectStatus}
                 onClickItem={() => {}}
-                type='type'
-                text={"All"}
-                style={{ width: "63vw", marginRight: "auto" }}
-                objKey={""}
+                type='projectStatus'
+                text={
+                  projectStatus.find((status: any) => status.id === 1)[
+                    `name_${lang}`
+                  ]
+                }
+                style={{ marginRight: "auto" }}
+                objKey='name'
               />
             )}
           </div>
@@ -312,7 +313,6 @@ const ProjectDetails = () => {
                         <div className='budgetPrice'>
                           <span>Budget</span>
                           <h2>{project?.budget_price}$</h2>
-                          {/* <h2>500$</h2> */}
                         </div>
                       </div>
                       <div className='collected'>
@@ -320,14 +320,8 @@ const ProjectDetails = () => {
                         <div className='collectedPrice'>
                           <span>Collected</span>
                           <h2>{data.collectedPrice}$</h2>
-                          {/* <h2>500$</h2> */}
                         </div>
                       </div>
-                      {/* <div className="remaining">
-                        <img src={REMAINING} alt="Remaining" />
-                        <span>Remaining</span>
-                        <h2>{project.remaining_price}$</h2>
-                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -343,16 +337,6 @@ const ProjectDetails = () => {
                           return (
                             <div className='memberWrapper' key={t.id}>
                               <div className='memberWrapper_withoutName'>
-                                {/* {isThereAnotherMember?.id === team.id && (
-                              <button
-                                className='arrowBtn_teamMember'
-                                onClick={() =>
-                                  nextMember > 0 &&
-                                  setNextMember(prev => prev - 1)
-                                }>
-                                <img src={ARROW_MEMBER_LEFT} alt='Arrow' />
-                              </button>
-                            )} */}
                                 <div className='member'>
                                   <img
                                     src={checkRole(t.role)}
@@ -372,16 +356,6 @@ const ProjectDetails = () => {
                                     text={t.role.split("_").join(" ")}
                                   />
                                 </div>
-                                {/* {isThereAnotherMember?.id === team.id && (
-                              <button
-                                className='arrowBtn_teamMember'
-                                onClick={() =>
-                                  nextMember < team.img.length &&
-                                  setNextMember(prev => prev + 1)
-                                }>
-                                <img src={ARROW_MEMBER_RIGHT} alt='Arrow' />
-                              </button>
-                            )} */}
                               </div>
                               <p className='member_name'>
                                 {t.name} {t.last_name}

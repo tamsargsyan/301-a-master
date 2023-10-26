@@ -116,8 +116,8 @@ input[type="number"] {
   .navbarContainer,
   .pagination,
   .aboutUs_privacy {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
     /* padding-left: clamp(1.5625rem, -0.0004rem + 7.8143vw, 2.93rem) !important; */
     /* padding-right: clamp(1.5625rem, -0.0004rem + 7.8143vw, 2.93rem) !important; */
   }

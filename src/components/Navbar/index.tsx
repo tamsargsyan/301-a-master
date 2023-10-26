@@ -73,11 +73,30 @@ const Navbar: React.FC<NavbarProps> = ({
       document.body.classList.remove("no-scroll");
     };
   }, [openMenu]);
+  const langs = [
+    {
+      id: 1,
+      shortName: "en",
+      longName: "ENGLISH",
+    },
+    {
+      id: 2,
+      shortName: "ru",
+      longName: "Русский",
+    },
+    {
+      id: 3,
+      shortName: "am",
+      longName: "Հայերեն",
+    },
+  ];
 
-  const langs = ["en", "ru", "am"];
   const [openLangs, setOpenLangs] = useState(false);
   const lang = i18next.language;
-  const copyLangs = langs.filter(item => item !== lang);
+  const copyLangs = langs.filter(item => item.shortName !== lang);
+  const differentLang = langs.find(
+    item1 => !copyLangs.some(item2 => item1.id === item2.id)
+  );
   const { i18n, t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -157,23 +176,31 @@ const Navbar: React.FC<NavbarProps> = ({
         </div>
         <div className='langsWrapper'>
           <Button
-            text={lang}
+            text={
+              windowSize.width < 800
+                ? differentLang?.longName
+                : differentLang?.shortName
+            }
             link={false}
             to={""}
             className='activeLang lang'
             onClick={() => setOpenLangs(!openLangs)}
           />
-          {copyLangs.map((lang, i) => (
-            <Fragment key={i}>
-              <Button
-                text={lang}
-                link={false}
-                to={""}
-                className={`${openLangs && "openedLang"} lang`}
-                onClick={() => handleLanguageChange(lang)}
-              />
-            </Fragment>
-          ))}
+          <div className='notActiveLangs_wrapper'>
+            {copyLangs.map((lang, i) => (
+              <Fragment key={i}>
+                <Button
+                  text={windowSize.width < 800 ? lang.longName : lang.shortName}
+                  link={false}
+                  to={""}
+                  className={`${openLangs && "openedLang"} activeLang_${
+                    i + 1
+                  } lang`}
+                  onClick={() => handleLanguageChange(lang.shortName)}
+                />
+              </Fragment>
+            ))}
+          </div>
         </div>
       </div>
       {windowSize.width > 800 ? (
@@ -202,7 +229,6 @@ const Navbar: React.FC<NavbarProps> = ({
                 to=''
                 className='signIn-btn'
                 onClick={() => {
-                  // setDonation(true);
                   dispatch(openDonateModal(true));
                   setModalName("donate");
                 }}

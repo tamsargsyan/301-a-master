@@ -100,12 +100,20 @@
   border-radius: 50%;
   padding: 2px;
 }
+.notActiveLangs_wrapper {
+  display: flex;
+  gap: 10px;
+}
 @media screen and (max-width: 800px) {
   .logo {
     width: fit-content;
   }
   .lang {
     font-size: 12px;
+    width: 100%;
+    border-radius: 100px;
+    border: none;
+    justify-content: flex-start;
   }
   .link,
   .navbarContainer .btn:not(.lang) {
@@ -211,11 +219,37 @@
   }
   .langsWrapper {
     flex-direction: row-reverse;
-    width: 20px;
+    width: 115px;
+    position: relative;
+  }
+  .notActiveLangs_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 37px;
+    background: #fff;
+    z-index: -1;
+    width: 100%;
+    height: 0;
+    box-shadow: 0px 4px 16px 0px rgba(39, 78, 151, 0.12);
+    flex-direction: column;
+    gap: 0;
+    transition: 0.3s ease;
+  }
+  .notActiveLangs_wrapper:has(.openedLang) {
+    height: fit-content;
   }
   .langsWrapper:has(.openedLang) {
-    width: 100px;
+    width: 115px;
     transition: 0.3s ease;
+  }
+  .notActiveLangs_wrapper .lang {
+    border-radius: 0;
+  }
+  .notActiveLangs_wrapper .activeLang_2,
+  .notActiveLangs_wrapper {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px
   }
 }
 

@@ -127,7 +127,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                   </motion.div>
                 ) : (
                   <div className='innerCarousel'>
-                    {projects.map((project: any) => {
+                    {projects.slice(0, 4).map((project: any) => {
                       return (
                         <NavLink
                           to={`/projects/${project.project.id}`}

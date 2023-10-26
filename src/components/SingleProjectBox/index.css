@@ -129,6 +129,12 @@
   .author {
     font-size: clamp(0.625rem, 0rem + 3.125vw, 1.171875rem);
   }
+  .projectInfo h1,
+  .flag,
+  .projectInfo span,
+  .author {
+    font-size: 16px;
+  }
 }
 @media screen and (max-width: 600px) {
   .projectImg {

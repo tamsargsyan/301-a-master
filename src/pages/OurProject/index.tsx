@@ -153,7 +153,7 @@ const OurProjects = () => {
                     (status: any) => status.id === projectStatus_id
                   )[`name_${lang}`]
                 }
-                style={{ width: "63vw", marginRight: "auto" }}
+                style={{ marginRight: "auto" }}
                 objKey='name'
               />
             )}
