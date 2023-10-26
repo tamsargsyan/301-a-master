@@ -3,6 +3,7 @@ import {
   FETCH_EXPERT_PROJECT_SUCCESS,
   FETCH_EXPERT_PROJECT_ERROR,
   FETCH_PARTNERS_SUCCESS,
+  RECOMMENTED_MODAL_OPEN,
 } from "../utils/action.types";
 
 interface ExpertProjectState {
@@ -10,6 +11,7 @@ interface ExpertProjectState {
   loading: boolean;
   error: string | null;
   partners: any;
+  modalOpen: boolean;
 }
 
 const initialState: ExpertProjectState = {
@@ -17,6 +19,7 @@ const initialState: ExpertProjectState = {
   partners: null,
   loading: false,
   error: null,
+  modalOpen: false,
 };
 
 const expertProjectReducer = (
@@ -32,6 +35,11 @@ const expertProjectReducer = (
       return { ...state, loading: false, error: action.payload };
     case FETCH_PARTNERS_SUCCESS:
       return { ...state, loading: false, partners: action.payload };
+    case RECOMMENTED_MODAL_OPEN:
+      return {
+        ...state,
+        modalOpen: action.payload,
+      };
     default:
       return state;
   }

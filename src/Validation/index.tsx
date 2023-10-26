@@ -67,3 +67,22 @@ export const donationSchema = yup.object().shape({
     .email("Invalid email format"),
   amount: yup.string().required("This is a required field"),
 });
+
+export const recommendationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Name should only contain letters")
+    .required("Name is a required field"),
+  last_name: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Last Name should only contain letters")
+    .required("Last Name is a required field"),
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Invalid email format"),
+  phone: yup
+    .string()
+    .matches(/^[0-9]+$/, "Phone number should contain only numbers"),
+  country: yup.string().required("Country is a required field"),
+});

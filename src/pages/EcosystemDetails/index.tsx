@@ -27,6 +27,7 @@ import PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+import { openRecommentedModal } from "../../actions/donateAction";
 
 const EcoSystemDetails = () => {
   useEffect(() => {
@@ -167,6 +168,7 @@ const EcoSystemDetails = () => {
                       border: "none",
                     }}
                     className='recommented'
+                    onClick={() => dispatch(openRecommentedModal(true))}
                   />
                 </div>
               </div>

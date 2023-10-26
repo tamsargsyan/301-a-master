@@ -68,8 +68,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
           style={{
             paddingTop: "40px",
             paddingBottom: "40px",
-            width: "100%",
-            paddingLeft: "300px",
+            width: "63vw",
             alignItems: "center",
           }}
         />

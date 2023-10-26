@@ -21,6 +21,7 @@ import {
 } from "./actions/donateAction";
 import { RootState } from "./store/configureStore";
 import { useSearchParams } from "react-router-dom";
+import RecommentedModal from "./components/RecommentedModal";
 
 function App() {
   // const location = useLocation();
@@ -157,8 +158,6 @@ function App() {
       />
       <Donation
         setSignUp={setSignUp}
-        // donation={donation}
-        // setDonation={setDonation}
         setOneTimeDonation={setOneTimeDonation}
         setDonateProjects={setDonateProjects}
       />
@@ -169,14 +168,12 @@ function App() {
         setOneTimeDonation={setOneTimeDonation}
         handleClose={() => {
           setOneTimeDonation(false);
-          // setDonation(true);
           dispatch(openDonateModal(true));
         }}
       />
       <DonationProjectsModal
         donateProjects={donateProjects}
         setDonateProjects={setDonateProjects}
-        // setDonation={setDonation}
         setDonateSingleProject={setDonateSingleProject}
       />
       <DonateToTheProject
@@ -186,6 +183,7 @@ function App() {
         setPrivacy={setPrivacy}
         setModalName={setModalName}
       />
+      <RecommentedModal />
     </div>
   );
 }

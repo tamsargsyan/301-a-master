@@ -25,7 +25,7 @@
     "save-project": "Сохранить проект",
     "download-pdf": "скачать презентацию pdf",
     "donate": "Пожертвовать",
-    "recommended": "рекомендуемые",
+    "recommended": "Рекомендуемые",
     "one-time-donation": "единоразовое пожертвование",
     "donate-to-project": "пожертвовать на проект",
     "back": "Назад",
@@ -60,7 +60,9 @@
     "forget-pass": "Забыть пароль ?",
     "login-with": "Войдите с",
     "notHavingAcc": "У вас нет учетной записи?",
-    "sign-up": "Зарегистрироваться"
+    "sign-up": "Зарегистрироваться",
+    "link": "Связь",
+    "your-contact": "Ваши контакты"
   },
   "forget-pass": {
     "forget-pass": "Забыли пароль?",
@@ -90,7 +92,8 @@
     "password_current": "Текущий пароль",
     "password_new": "Новый пароль",
     "choose": "Выбирать",
-    "participation_form": "Форма участия"
+    "participation_form": "Форма участия",
+    "activities": "Направления деятельности"
   },
   "chosenProject": "Вы выбрали проект",
   "select-project": "Выберите проект",

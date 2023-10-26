@@ -25,7 +25,7 @@
     "save-project": "Պահպանել նախագիծը",
     "download-pdf": "ներբեռնել pdf տարբերակը",
     "donate": "Նվիրաբերել",
-    "recommended": "խորհուրդ է տրվում",
+    "recommended": "Խորհուրդ է տրվում",
     "one-time-donation": "միանվագ նվիրատվություն",
     "donate-to-project": "նվիրաբերել նախագծին",
     "back": "Հետ",
@@ -60,7 +60,9 @@
     "forget-pass": "Մոռացե՞լ եք գաղտնաբառը ?",
     "login-with": "Մուտք գործեք",
     "notHavingAcc": "Չունե՞ք հաշիվ:",
-    "sign-up": "Գրանցվել"
+    "sign-up": "Գրանցվել",
+    "link": "Հղում",
+    "your-contact": "Ձեր կոնտակտները"
   },
   "forget-pass": {
     "forget-pass": "Մոռացե՞լ եք գաղտնաբառը ?",
@@ -90,7 +92,8 @@
     "password_current": "Ընթացիկ գաղտնաբառը",
     "password_new": "նոր ծածկագիր",
     "choose": "Ընտրել",
-    "participation_form": "Մասնակցության ձև"
+    "participation_form": "Մասնակցության ձև",
+    "activities": "Գործունեություն"
   },
   "chosenProject": "Դուք ընտրել եք նախագիծ",
   "select-project": "Ընտրեք Նախագիծ",

@@ -33,11 +33,11 @@ interface NewsProps {
 const News: React.FC<NewsProps> = ({ lang }) => {
   const [activeNews, setActiveNews] = useState(2);
   const handleBack = () => {
-    activeNews > 1 && setActiveNews((prevIndex) => prevIndex - 1);
+    activeNews > 1 && setActiveNews(prevIndex => prevIndex - 1);
   };
 
   const handleNext = () => {
-    activeNews < 3 && setActiveNews((prevIndex) => prevIndex + 1);
+    activeNews < 3 && setActiveNews(prevIndex => prevIndex + 1);
   };
 
   const windowSize = useWindowSize();
@@ -67,8 +67,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
           style={{
             paddingTop: "40px",
             paddingBottom: "40px",
-            width: "100%",
-            paddingLeft: "300px",
+            width: "63vw",
             alignItems: "center",
           }}
         />

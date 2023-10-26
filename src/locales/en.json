@@ -25,7 +25,7 @@
     "save-project": "Save project",
     "download-pdf": "download presentation pdf",
     "donate": "Donate",
-    "recommended": "recommended",
+    "recommended": "Recommended",
     "one-time-donation": "one-time donation",
     "donate-to-project": "donate to the project",
     "donation": "donation",
@@ -66,7 +66,9 @@
     "forget-pass": "Forget Password ?",
     "login-with": "Log In With",
     "notHavingAcc": "Don't have an account?",
-    "sign-up": "Sign Up"
+    "sign-up": "Sign Up",
+    "link": "Link",
+    "your-contact": "Your contacts"
   },
   "forget-pass": {
     "forget-pass": "Forgot your password?",
@@ -96,7 +98,8 @@
     "password_current": "Current Password",
     "password_new": "New Password",
     "choose": "Choose",
-    "participation_form": "Participation form"
+    "participation_form": "Participation form",
+    "activities": "Activities"
   },
   "chosenProject": "You have chosen a project",
   "select-project": "Select Project",
