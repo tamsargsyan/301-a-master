@@ -65,7 +65,11 @@ export const donationSchema = yup.object().shape({
     .string()
     .required("Email is a required field")
     .email("Invalid email format"),
-  amount: yup.string().required("This is a required field"),
+  amount: yup
+    .number()
+    .typeError("Amount must be a number")
+    .positive("Amount must be a positive number")
+    .required("Amount is a required field"),
 });
 
 export const recommendationSchema = yup.object().shape({

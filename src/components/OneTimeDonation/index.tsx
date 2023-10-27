@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
 import { useState } from "react";
+import { usePostRequest } from "../../actions/apiActions";
 
 interface OneTimeDonationProps {
   oneTimeDonation: boolean;
@@ -36,6 +37,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
   };
   const { t } = useTranslation();
   const [summa, setSumma] = useState("");
+  const { postRequest, postLoading } = usePostRequest();
 
   return (
     <Modal
@@ -48,13 +50,26 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
         className='oneTimeDonation_bg'>
         <Formik
           validationSchema={donationSchema}
-          initialValues={{ name: "", last_name: "", email: "", amount: "" }}
+          initialValues={{
+            name: "",
+            last_name: "",
+            email: "",
+            amount: "",
+            currency_type: "",
+          }}
           onSubmit={values => {
-            // const result = {
-            //   ...values,
-            //   amount: `${summa}`,
-            // };
-            // postRequest("login", values);
+            const result = {
+              ...values,
+              currency_type: summa,
+              type: "one_time",
+            };
+            const token = localStorage.getItem("token");
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+            postRequest("donation", result, config);
           }}>
           {({
             values,
@@ -63,6 +78,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
             handleChange,
             handleBlur,
             handleSubmit,
+            isValid,
           }) => (
             <form
               noValidate
@@ -98,7 +114,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                   </div>
                 </div>
                 <p className='error'>
-                  {errors.amount && touched.amount && !summa && errors.amount}
+                  {errors.amount && touched.amount && summa && errors.amount}
                 </p>
               </div>
               <div className='signUp_formGroup'>
@@ -178,12 +194,12 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                     color: "#fff",
                   }}
                   className='donation_btn'
+                  active={isValid}
                 />
               </div>
             </form>
           )}
         </Formik>
-        {/* </div> */}
       </EcosystemModal>
     </Modal>
   );
