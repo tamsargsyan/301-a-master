@@ -28,6 +28,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { openRecommentedModal } from "../../actions/donateAction";
+import ClubIcon from "../../assets/info/7.svg";
 
 const EcoSystemDetails = () => {
   useEffect(() => {
@@ -50,7 +51,7 @@ const EcoSystemDetails = () => {
       elipse: ELIPSE_EXPERTS,
     },
     {
-      name: "ambassadors",
+      name: "ambassador",
       color: "",
       colorWeak: "",
       icon: AMBASSADOR,
@@ -70,6 +71,13 @@ const EcoSystemDetails = () => {
       icon: PARTNERS,
       elipse: "",
     },
+    {
+      name: "club301",
+      color: "",
+      colorWeak: "",
+      icon: ClubIcon,
+      elipse: "",
+    },
   ];
 
   const dispatch = useDispatch();
@@ -84,6 +92,12 @@ const EcoSystemDetails = () => {
     } else if (ecosystem === "friends-foundation") {
       //@ts-ignore
       dispatch(fetchingExpertProject("friends-foundation"));
+    } else if (ecosystem === "club301") {
+      //@ts-ignore
+      dispatch(fetchingExpertProject("club-301"));
+    } else if (ecosystem === "ambassador") {
+      //@ts-ignore
+      dispatch(fetchingExpertProject("ambassador"));
     } else {
       //@ts-ignore
       dispatch(fetchingExpertProject(`${ecosystem}-project`));
@@ -99,6 +113,8 @@ const EcoSystemDetails = () => {
     if (ecosystem) {
       if (ecosystem === "partners") {
         setHeader(partners?.partnersDescription);
+      } else if (ecosystem === "ambassador") {
+        setHeader(data?.ambassador_description);
       } else if (ecosystem === "friends-foundation") {
         setHeader(data?.friendsOfTheFoundationDescription);
       } else setHeader(data[ecosystem]);
@@ -111,12 +127,15 @@ const EcoSystemDetails = () => {
         setProject(partners?.partners);
       } else if (ecosystem === "friends-foundation") {
         setProject(data?.friendsOfTheFoundation);
+      } else if (ecosystem === "club301") {
+        setProject(data?.donor);
+      } else if (ecosystem === "ambassador") {
+        setProject(data?.ambassador);
       } else {
         setProject(data[`${ecosystem}Project`]);
       }
     }
   }, [data, ecosystem, partners?.partners]);
-
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();

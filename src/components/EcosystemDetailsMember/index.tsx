@@ -66,28 +66,39 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                 className='memberImg_container'
                 style={{ backgroundImage: `url(${expertProject?.elipse})` }}>
                 <img
-                  src={`${storageBase}/${project.user.image}`}
+                  src={`${storageBase}/${
+                    ecosystem === "club301" || ecosystem === "ambassador"
+                      ? project.image
+                      : project.user.image
+                  }`}
                   alt='Member'
                   className='memberImg'
                 />
               </div>
               <span>
-                {project.user.name} {project.user.last_name}
+                {ecosystem === "club301" || ecosystem === "ambassador"
+                  ? project.name
+                  : project.user.name}{" "}
+                {ecosystem === "club301" || ecosystem === "ambassador"
+                  ? project.last_name
+                  : project.user.last_name}
               </span>
             </div>
             <div className='memberContent'>
               <div
                 dangerouslySetInnerHTML={{
                   __html:
-                    project.user.role !== "sages"
+                    ecosystem === "club301" || ecosystem === "ambassador"
+                      ? project[`about_me_${lang}`]
+                      : project.user?.role !== "sages"
                       ? project.user[`description_${lang}`]
                       : project.user[`about_me_${lang}`],
                 }}
               />
-              {windowSize.width > 600 && project.all_project.length && (
+              {windowSize.width > 600 && project.all_project?.length && (
                 <div className='memberProjects_separatedPart'></div>
               )}
-              {project.all_project.length && (
+              {project.all_project?.length && (
                 <div className='memberProjects'>
                   <div className='memberProjectHeader'>
                     <p>Project</p>
@@ -124,7 +135,7 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                         animate={{
                           x: -width * currentIndex,
                         }}>
-                        {project?.all_project.map((p: any, i: number) => (
+                        {project?.all_project?.map((p: any, i: number) => (
                           <Fragment key={i}>
                             <SingleProjectBox
                               title={p?.project[`project_name_${lang}`]}
@@ -146,7 +157,7 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                     </motion.div>
                   ) : (
                     <div className='ecosystemDetails_projects'>
-                      {project?.all_project.map((p: any, i: number) => (
+                      {project?.all_project?.map((p: any, i: number) => (
                         <Fragment key={i}>
                           <SingleProjectBox
                             title={p?.project[`project_name_${lang}`]}

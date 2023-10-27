@@ -235,7 +235,9 @@ const RecommentedModal: React.FC<RecommentedModalProps> = ({}) => {
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_tel'>{t("inputs.phone")}</label>
+                    <label htmlFor='recommendation_tel'>
+                      {t("inputs.phone")}
+                    </label>
                     <div className='signUp_tel'>
                       <Select
                         className='signUp_selector'
@@ -264,7 +266,7 @@ const RecommentedModal: React.FC<RecommentedModalProps> = ({}) => {
                         <input
                           type='number'
                           name='phone'
-                          id='signUp_tel'
+                          id='recommendation_tel'
                           className='signUp_input'
                           value={values.phone}
                           onChange={handleChange}
