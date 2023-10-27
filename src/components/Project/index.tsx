@@ -37,10 +37,14 @@ const Project: React.FC<ProjectProps> = ({
         <div className='ourProject__projectInfo'>
           <div className='ourProject__author'>
             <img src={authorImg} alt='Author' />
-            <span>{author}</span>
+            <span>
+              {author.length > 19 ? `${author.slice(0, 18)}. . .` : author}
+            </span>
           </div>
           <div className='ourProject__title'>
-            <span>{title}</span>
+            <span>
+              {title.length > 19 ? `${title.slice(0, 18)}. . .` : title}
+            </span>
             <div className='flag'>
               <img src={FLAG} alt='FLAG' />
               <span>{flag}</span>
@@ -49,7 +53,7 @@ const Project: React.FC<ProjectProps> = ({
           <div
             className='ourProject__desc'
             dangerouslySetInnerHTML={{
-              __html: desc.split(" ").slice(0, 7).join(" "),
+              __html: desc.length > 100 ? `${desc.slice(0, 90)}. . .` : desc,
             }}
           />
         </div>

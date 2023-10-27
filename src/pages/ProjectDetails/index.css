@@ -74,11 +74,18 @@
 }
 .fullProject_titleInner .ourProject__author {
   margin: 0;
+  gap: 10px;
+}
+.fullProject_titleInner .ourProject__author img {
+  width: 48px;
+  height: 48px;
 }
 .titlePart {
   display: flex;
-  gap: 40px;
+  gap: 20px;
   align-items: center;
+  width: 40vw;
+  margin-right: 60px;
 }
 .problem_heading,
 .titlePart {
@@ -203,7 +210,7 @@
   width: 100%;
 }
 .fullProjectInner {
-  padding: 0 15%;
+  padding: 0 15.1563%;
 }
 .download_pdf img,
 .problem_heading img {
@@ -394,6 +401,9 @@ a.fx-Revolve:focus:before {
   .memberWrapper {
     width: 250px;
   }
+  .fullProjectInner {
+    padding: 0 13%;
+  }
 }
 @media screen and (max-width: 1400px) {
   .titlePart,
@@ -468,9 +478,10 @@ a.fx-Revolve:focus:before {
     width: 20px;
     height: 20px;
   }
-  /* .memberWrapper_withoutName {
-    gap: 15px;
-  } */
+  .fullProject_titleInner .ourProject__author img {
+    width: 43px;
+    height: 43px;
+  }
   .dontaionBtns .btn {
     font-size: clamp(0.573125rem, 0.0002rem + 0.8333vw, 0.666875rem);
   }
@@ -515,6 +526,10 @@ a.fx-Revolve:focus:before {
   }
   .dontaionBtnsFixed .btn:last-child {
     width: 40vw !important;
+  }
+  .fullProject_titleInner .ourProject__author img {
+    width: 38px;
+    height: 38px;
   }
 }
 @media screen and (max-width: 900px) {

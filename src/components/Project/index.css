@@ -3,11 +3,9 @@
   box-shadow: -6px 8px 30px rgba(26, 61, 127, 0.1);
   display: flex;
   width: 63vw;
-  /* height: 400px; */
   border-radius: 20px;
   margin-bottom: 30px;
-  min-height: 270px;
-  max-height: 350px;
+  height: 310px;
 }
 .ourProject__projectImg {
   width: 50%;
@@ -97,9 +95,6 @@
   }
 }
 @media screen and (max-width: 1600px) {
-  /* .ourProject__project {
-    height: 310px;
-  } */
   .view-btn,
   .heart-btn {
     font-size: clamp(0.91125rem, -0.0031rem + 1.045vw, 1.041875rem);

@@ -49,7 +49,6 @@
 }
 .donation_project.project:not(.donateToProject) {
   cursor: pointer;
-  height: fit-content;
 }
 .donation_project.project .projectImg {
   width: 100%;

@@ -172,7 +172,6 @@ const ProjectDetails = () => {
                     <Button
                       text={status[`name_${lang}`]}
                       link={false}
-                      // active={typedProject === btn.type}
                       to={""}
                       style={{
                         padding: "12px 22px",
@@ -207,7 +206,7 @@ const ProjectDetails = () => {
                   <img src={ARROW} alt='Back Button' />
                 </button>
                 <img
-                  src={`${storageBase}/${project.image}`}
+                  src={`${storageBase}/${project.banner_image}`}
                   alt='Project Background'
                   className='bgImg'
                 />
@@ -309,14 +308,20 @@ const ProjectDetails = () => {
                     </div>
                     <div className='budgetContainer'>
                       <div className='budget'>
-                        <img src={BUDGET} alt='Budget' />
+                        <img
+                          src={`${storageBase}/${project?.budget_image}`}
+                          alt='Budget'
+                        />
                         <div className='budgetPrice'>
                           <span>Budget</span>
                           <h2>{project?.budget_price}$</h2>
                         </div>
                       </div>
                       <div className='collected'>
-                        <img src={COLLECTED} alt='Collected' />
+                        <img
+                          src={`${storageBase}/${project.collected_image}`}
+                          alt='Collected'
+                        />
                         <div className='collectedPrice'>
                           <span>Collected</span>
                           <h2>{data.collectedPrice}$</h2>
