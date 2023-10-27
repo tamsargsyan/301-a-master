@@ -147,9 +147,9 @@ const EcoSystemDetails = () => {
               <div className='ecosystemDetails_'>
                 <div className='ecosystemDetails-title'>
                   <img src={ecosystemResult?.icon} alt='Ecosystem' />
+                  <h1>{header[`title_${lang}`]}</h1>
                 </div>
                 <div className='ecosystemDetails-header'>
-                  <h1>{header[`title_${lang}`]}</h1>
                   <div className='ecosystemDetails-content'>
                     <div
                       dangerouslySetInnerHTML={{

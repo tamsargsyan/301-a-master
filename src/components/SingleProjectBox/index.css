@@ -152,6 +152,21 @@
     font-size: clamp(0.5625rem, -0.0004rem + 2.8143vw, 1.055rem);
   }
   .home_project {
+    width: 175px !important;
+  }
+}
+@media screen and (max-width: 395px) {
+    .home_project {
+    width: 165px !important;
+  }
+}
+@media screen and (max-width: 372px) {
+    .home_project {
+    width: 160px !important;
+  }
+}
+@media screen and (max-width: 360px) {
+    .home_project {
     width: 134px !important;
   }
 }

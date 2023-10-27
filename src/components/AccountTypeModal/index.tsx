@@ -141,7 +141,8 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     <Modal
       setOpenModal={handleClose}
       openModal={accountType.open}
-      className='signUp_overlay'>
+      className='signUp_overlay'
+      headerShow={false}>
       {contextHolder}
       <EcosystemModal
         onClose={handleClose}
@@ -709,6 +710,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     border: "none",
                     color: "#fff",
                   }}
+                  className='donation_btn'
                 />
                 <p>
                   {t("privacy.1")}

@@ -55,14 +55,14 @@ export const menu = [
 
 interface NavbarProps {
   setOpenModal: (arg: boolean) => void;
-  // setDonation: (arg: boolean) => void;
   setModalName: (arg: string) => void;
+  signIn: boolean;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
   setOpenModal,
-  // setDonation,
   setModalName,
+  signIn,
 }) => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
@@ -113,7 +113,9 @@ const Navbar: React.FC<NavbarProps> = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <div className='navbarContainer'>
+    <div
+      className='navbarContainer'
+      style={{ zIndex: signIn || windowSize.width > 800 ? "99999" : "999999" }}>
       {windowSize.width < 975 && (
         <div className='mobileMenu'>
           <div

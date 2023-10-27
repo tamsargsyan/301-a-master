@@ -1,5 +1,4 @@
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { projectsData } from "../OurProject/projectsData";
 import ROSE_CIRCLE from "../../assets/projectAuthor/rose-circle.png";
 import GREEN_CIRCLE from "../../assets/projectAuthor/green-circle.png";
 import ORANGE_CIRCLE from "../../assets/projectAuthor/orange-circle.png";
@@ -59,10 +58,6 @@ const ProjectDetails = () => {
   ];
 
   const windowSize = useWindowSize();
-  // const isThereAnotherMember = projectsData[0].projects[0]?.workTeam.find(
-  //   member => member.img.length > 1
-  // );
-  // const [nextMember, setNextMember] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const donationsRef = useRef<HTMLDivElement>(null);
 
@@ -281,31 +276,36 @@ const ProjectDetails = () => {
                   </div>
                   <div className='roadMap_inner _inner'>
                     <div className='fullProject_slider'>
-                      <div className='chartContainer'>
-                        <div className='chart_line'></div>
-                        {project?.month_data.map((month: any, i: number) => {
-                          return (
-                            <div className='chart' key={i}>
-                              <div className='chart_info'>
-                                <h1>{month.month}</h1>
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: month[`month_description_${lang}`],
-                                  }}
-                                />
-                              </div>
-                              <div className='chart_month'>
-                                <div
-                                  className='month_circle'
-                                  style={{ backgroundColor: colors[i] }}></div>
-                                <div className='month'>
-                                  {month[`month_${lang}`]}
+                      {project?.month_data.lnegth && (
+                        <div className='chartContainer'>
+                          <div className='chart_line'></div>
+                          {project?.month_data.map((month: any, i: number) => {
+                            return (
+                              <div className='chart' key={i}>
+                                <div className='chart_info'>
+                                  <h1>{month.month}</h1>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        month[`month_description_${lang}`],
+                                    }}
+                                  />
+                                </div>
+                                <div className='chart_month'>
+                                  <div
+                                    className='month_circle'
+                                    style={{
+                                      backgroundColor: colors[i],
+                                    }}></div>
+                                  <div className='month'>
+                                    {month[`month_${lang}`]}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                     <div className='budgetContainer'>
                       <div className='budget'>
@@ -325,48 +325,50 @@ const ProjectDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className='workTeamContainer'>
-                  <div className='roadMap_heading problem_heading'>
-                    <img src={PATTERN} alt='Pattern' />
-                    <h2>Work Team</h2>
-                  </div>
-                  <div className='teamMembers _inner'>
-                    <div className='firstTeam'>
-                      {data?.team[0]?.map((t: any) => {
-                        if (t.role !== "sages")
-                          return (
-                            <div className='memberWrapper' key={t.id}>
-                              <div className='memberWrapper_withoutName'>
-                                <div className='member'>
-                                  <img
-                                    src={checkRole(t.role)}
-                                    alt='Team Member'
-                                    className='teamMember_bgImg'
-                                  />
-                                  <img
-                                    src={`${storageBase}/${t.image}`}
-                                    alt='Team Member'
-                                    className='teamMember_img'
-                                  />
-                                  <RevolveText
-                                    span={50}
-                                    north={0}
-                                    spiral={false}
-                                    size={200}
-                                    text={t.role.split("_").join(" ")}
-                                  />
+                {data.team[0].length === true && (
+                  <div className='workTeamContainer'>
+                    <div className='roadMap_heading problem_heading'>
+                      <img src={PATTERN} alt='Pattern' />
+                      <h2>Work Team</h2>
+                    </div>
+                    <div className='teamMembers _inner'>
+                      <div className='firstTeam'>
+                        {data?.team[0]?.map((t: any) => {
+                          if (t.role !== "sages")
+                            return (
+                              <div className='memberWrapper' key={t.id}>
+                                <div className='memberWrapper_withoutName'>
+                                  <div className='member'>
+                                    <img
+                                      src={checkRole(t.role)}
+                                      alt='Team Member'
+                                      className='teamMember_bgImg'
+                                    />
+                                    <img
+                                      src={`${storageBase}/${t.image}`}
+                                      alt='Team Member'
+                                      className='teamMember_img'
+                                    />
+                                    <RevolveText
+                                      span={50}
+                                      north={0}
+                                      spiral={false}
+                                      size={200}
+                                      text={t.role.split("_").join(" ")}
+                                    />
+                                  </div>
                                 </div>
+                                <p className='member_name'>
+                                  {t.name} {t.last_name}
+                                </p>
                               </div>
-                              <p className='member_name'>
-                                {t.name} {t.last_name}
-                              </p>
-                            </div>
-                          );
-                        return null;
-                      })}
+                            );
+                          return null;
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 <div className='partnersContainer'>
                   <div className='roadMap_heading problem_heading'>
                     <img src={PATTERN} alt='Pattern' />

@@ -289,6 +289,7 @@ const RecommentedModal: React.FC<RecommentedModalProps> = ({}) => {
                     border: "none",
                     color: "#fff",
                   }}
+                  className='donation_btn'
                 />
               </div>
             </form>

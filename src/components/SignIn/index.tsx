@@ -31,7 +31,6 @@ const SignIn: React.FC<SignInProps> = ({
   setSignUp,
   setPrivacy,
   setModalName,
-  isAuthenticated,
   dispatch,
 }) => {
   const [forgetPassword, setForgetPassword] = useState(false);
@@ -67,7 +66,7 @@ const SignIn: React.FC<SignInProps> = ({
 
   return (
     <>
-      <Modal setOpenModal={setSignIn} openModal={signIn}>
+      <Modal setOpenModal={setSignIn} openModal={signIn} headerShow={true}>
         <div className='modal_signIn'>
           {windowSize.width > 600 && (
             <div className='modal_signIn_leftSide'>

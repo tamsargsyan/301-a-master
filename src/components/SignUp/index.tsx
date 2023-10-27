@@ -119,7 +119,8 @@ const SignUp: React.FC<SignUpProps> = ({
     <Modal
       setOpenModal={handleClose}
       openModal={signUp}
-      className='signUp_overlay'>
+      className='signUp_overlay'
+      headerShow={false}>
       <EcosystemModal onClose={handleClose} header='select account type'>
         <div className='signUp_content_accountTypes'>
           <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />

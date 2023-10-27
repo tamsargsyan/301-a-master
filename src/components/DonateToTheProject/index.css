@@ -18,3 +18,16 @@
   font-weight: 600;
   font-size: 1.4322916666666667vw;
 }
+@media screen and (max-width: 800px) {
+  .chosenProject_wrapper {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .chosenProject_project {
+    width: 100%;
+  }
+  .chosenProject_project .chosenProject {
+    font-size: 22px;
+  }
+}

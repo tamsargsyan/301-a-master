@@ -138,3 +138,11 @@
     width: 20rem;
   }
 }
+@media screen and (max-width: 800px) {
+  .signUp_content_accountTypes {
+    margin: 0;
+  }
+  .accountType:hover {
+    transform: translateY(0);
+  }
+}

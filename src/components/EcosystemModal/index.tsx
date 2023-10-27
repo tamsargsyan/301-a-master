@@ -3,6 +3,8 @@ import CLOSE from "../../assets/sign-up-close.svg";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import { useTranslation } from "react-i18next";
+import Footer from "../Footer";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface EcosystemModalProps {
   onClose: () => void;
@@ -18,6 +20,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
   className,
 }) => {
   const { t } = useTranslation();
+  const windowSize = useWindowSize();
 
   return (
     <div className={`${className} signUp_bg`}>
@@ -41,6 +44,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
         </div>
         {children}
       </div>
+      {windowSize.width < 800 && <Footer />}
     </div>
   );
 };

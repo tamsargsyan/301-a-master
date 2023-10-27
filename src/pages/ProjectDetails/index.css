@@ -165,7 +165,6 @@
 .budgetContainer {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
   gap: 25px;
 }
 .budget,
@@ -218,6 +217,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  margin-bottom: 50px;
 }
 .firstTeam,
 .secondTeam {

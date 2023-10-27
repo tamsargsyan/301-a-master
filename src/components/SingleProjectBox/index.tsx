@@ -48,7 +48,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
               {flag}
             </span>
           </div>
-          <div>
+          <div className='donationProject_title'>
             <h1>{title}</h1>
             <span className='donationProject_desc'>
               {description?.slice(0, 3)}

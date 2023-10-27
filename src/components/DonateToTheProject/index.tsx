@@ -56,7 +56,10 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
   const { t } = useTranslation();
 
   return (
-    <Modal setOpenModal={handleClose} openModal={donateSingleProject}>
+    <Modal
+      setOpenModal={handleClose}
+      openModal={donateSingleProject}
+      headerShow={true}>
       <EcosystemModal
         onClose={handleClose}
         header={t("btns.donate-to-project")}>

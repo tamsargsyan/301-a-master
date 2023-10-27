@@ -38,18 +38,22 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
   const [summa, setSumma] = useState("");
 
   return (
-    <Modal setOpenModal={handleClose} openModal={oneTimeDonation}>
+    <Modal
+      setOpenModal={handleClose}
+      openModal={oneTimeDonation}
+      headerShow={false}>
       <EcosystemModal
         onClose={handleClose}
-        header={t("btns.one-time-donation")}>
+        header={t("btns.one-time-donation")}
+        className='oneTimeDonation_bg'>
         <Formik
           validationSchema={donationSchema}
           initialValues={{ name: "", last_name: "", email: "", amount: "" }}
           onSubmit={values => {
-            const result = {
-              ...values,
-              amount: `${summa}`,
-            };
+            // const result = {
+            //   ...values,
+            //   amount: `${summa}`,
+            // };
             // postRequest("login", values);
           }}>
           {({
@@ -173,6 +177,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                     border: "none",
                     color: "#fff",
                   }}
+                  className='donation_btn'
                 />
               </div>
             </form>

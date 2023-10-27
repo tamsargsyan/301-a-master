@@ -91,7 +91,11 @@ function App() {
 
   return (
     <div className='container'>
-      <Navbar setOpenModal={setSignIn} setModalName={setModalName} />
+      <Navbar
+        setOpenModal={setSignIn}
+        setModalName={setModalName}
+        signIn={signIn}
+      />
       <Router />
       <SignIn
         signIn={signIn}

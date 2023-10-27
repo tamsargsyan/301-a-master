@@ -6,7 +6,8 @@
   /* height: 400px; */
   border-radius: 20px;
   margin-bottom: 30px;
-  height: 270px;
+  min-height: 270px;
+  max-height: 350px;
 }
 .ourProject__projectImg {
   width: 50%;
