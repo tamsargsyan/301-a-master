@@ -221,4 +221,7 @@
     padding-right: 20px;
     height: auto;
   }
+  .signUp_tel .signUp_input {
+    height: 100%;
+  }
 }

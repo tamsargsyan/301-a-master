@@ -91,11 +91,6 @@ input[type="number"] {
   opacity: 0;
   animation: reveal 0.5s ease forwards;
 }
-@keyframes reveal {
-  to {
-    opacity: 1;
-  }
-}
 @media screen and (max-width: 975px) {
   .btns {
     flex-direction: column;

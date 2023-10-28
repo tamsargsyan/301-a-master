@@ -1,5 +1,6 @@
 import Background from "../../components/Background";
 import SIDE_PATTERN from "../../assets/patterns/side-about-us.svg";
+import SIDE_PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import Header from "../../components/Header";
 import { Fragment, useEffect, useRef } from "react";
 import Footer from "../../components/Footer";
@@ -15,10 +16,12 @@ import "./index.css";
 import Img from "../../components/Img";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { Helmet } from "react-helmet";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const { Panel } = Collapse;
 
 const AboutUs = () => {
+  const windowSize = useWindowSize();
   const data1 = [
     "Соглашение условий *",
     "КОДЕКС ЭТИКИ КЛУБА 301*",
@@ -57,7 +60,7 @@ const AboutUs = () => {
         <title>About Us</title>
       </Helmet>
       <Background
-        pattern1={SIDE_PATTERN}
+        pattern1={windowSize.width < 800 ? SIDE_PATTERN_MOBILE : SIDE_PATTERN}
         style={{ flexDirection: "column", gap: "90px" }}>
         <div className='aboutUs-bigPattern-1'>
           <img src={PATTERN_1} alt='Pattern' />

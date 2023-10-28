@@ -69,6 +69,10 @@
   transform: translate(-50%, -50%);
   width: 25rem;
 }
+.accountType_mainImg img {
+  width: 120px;
+  height: 120px;
+}
 @media screen and (max-width: 1440px) {
   .accountType_header {
     font-size: 17px;
@@ -144,5 +148,32 @@
   }
   .accountType:hover {
     transform: translateY(0);
+  }
+  .accountType {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    justify-content: space-between;
+    width: 224px;
+    height: 369px;
+  }
+  .accountType_mainImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+  }
+  .accountType_mainImg img {
+    width: 76px;
+    height: 150.733px;
+  }
+  .accountType_header {
+    font-size: 20px;
+  }
+  .accountType_header img {
+    width: 25px !important;
+    height: 35px !important;
+  }
+  .accountType_btn {
+    font-size: 14px;
   }
 }

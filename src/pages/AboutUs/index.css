@@ -132,4 +132,22 @@
   .aboutUs-bigPattern-2 {
     width: 70vw;
   }
+  .faq_qesutions {
+    width: 100%;
+    padding: 0 15px;
+  }
+  .faq_collapse {
+    width: 100%;
+    font-size: 17px;
+  }
+  .faq_question h1 {
+    font-size: clamp(1.125rem, 0rem + 5.625vw, 2.109375rem);
+  }
+  .faq_q,
+  .faq_collapse .ant-collapse-header-text {
+    font-size: 17px !important;
+  }
+  .faq_a {
+    font-size: 17px !important;
+  }
 }

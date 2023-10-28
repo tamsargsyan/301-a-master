@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({
   useEffect(() => {
     const navbarElement = document.querySelector(".navbarContainer");
     if (navbarElement) {
-      setNavbarHeight(navbarElement.clientHeight);
+      setNavbarHeight(navbarElement.clientHeight + 1);
     }
   }, []);
 
@@ -36,19 +36,25 @@ const Modal: React.FC<ModalProps> = ({
         top:
           windowSize.width < 800 && !headerShow ? `${navbarHeight}px` : "0px",
       }}>
-      <div
-        className={`${openModal && "opened_modal"} modal`}
-        onClick={e => e.stopPropagation()}>
-        {windowSize.width <= 600 && headerShow && (
-          <div className='modal_close_mobile'>
-            <button onClick={() => setOpenModal(false)}>
-              <img src={CLOSE} alt='Close' />
-            </button>
-            <span>Menu</span>
-          </div>
-        )}
-        {children}
-      </div>
+      {windowSize.width <= 600 ? (
+        <div onClick={e => e.stopPropagation()} className='mobile_modal'>
+          {headerShow && (
+            <div className='modal_close_mobile'>
+              <button onClick={() => setOpenModal(false)}>
+                <img src={CLOSE} alt='Close' />
+              </button>
+              <span>Menu</span>
+            </div>
+          )}
+          {children}
+        </div>
+      ) : (
+        <div
+          className={`${openModal && "opened_modal"} modal`}
+          onClick={e => e.stopPropagation()}>
+          {children}
+        </div>
+      )}
     </div>
   );
 };

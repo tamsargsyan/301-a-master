@@ -157,6 +157,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                       border: "none",
                       color: "#fff",
                     }}
+                    className='donation_btn'
                   />
                   <p>
                     {t("privacy.1")}

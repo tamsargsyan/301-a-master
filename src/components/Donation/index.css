@@ -184,11 +184,11 @@
   }
   .donation_info,
   .donationCard_title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
   }
   .donationCard_desc {
-    font-size: 16px;
+    font-size: 12px;
   }
   .donationCard_img {
     width: 100px;

@@ -174,3 +174,17 @@
     font-size: 7px;
   }
 }
+@media screen and (max-width: 1100px) {
+  .prof_name {
+    font-size: 18px;
+  }
+  .prof_sms,
+  .personal_bar_item {
+    font-size: 14px;
+  }
+  .person_profile {
+    width: 200px;
+    height: 200px;
+    top: 70px;
+  }
+}

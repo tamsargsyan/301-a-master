@@ -34,6 +34,9 @@
   flex-direction: column;
   gap: 80px;
 }
+.ecosystemDetails-header {
+  width: 100%;
+}
 @media screen and (max-width: 1920px) {
   .ecosystemDetails-content,
   .memberContent {
@@ -74,7 +77,8 @@
   .ecosystemDetails {
     width: 90vw;
   }
-  .ecosystemDetails-content, .memberContent {
+  .ecosystemDetails-content,
+  .memberContent {
     font-size: 14px;
   }
 }

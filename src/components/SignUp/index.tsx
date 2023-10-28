@@ -15,6 +15,8 @@ import Button from "../Button";
 import EcosystemModal from "../EcosystemModal";
 import { useDispatch } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
+import CardSlider from "../CardSlider";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface SignUpProps {
   signUp: boolean;
@@ -115,6 +117,8 @@ const SignUp: React.FC<SignUpProps> = ({
     );
     setSignUp(false);
   };
+  const windowSize = useWindowSize();
+  // https://codepen.io/hk2002/pen/yLQPNgQ
   return (
     <Modal
       setOpenModal={handleClose}
@@ -124,34 +128,41 @@ const SignUp: React.FC<SignUpProps> = ({
       <EcosystemModal onClose={handleClose} header='select account type'>
         <div className='signUp_content_accountTypes'>
           <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
-          {accountTypes.map(account => (
-            <div
-              className='accountType'
-              key={account.id}
-              id={`accountType-${account.id}`}>
-              <div className='accountType_header'>
-                <img src={account.icon} alt='Account' />
-                <span>{account.name}</span>
+          {windowSize.width >= 800 ? (
+            accountTypes.map(account => (
+              <div
+                className='accountType'
+                key={account.id}
+                id={`accountType-${account.id}`}>
+                <div className='accountType_header'>
+                  <img src={account.icon} alt='Account' />
+                  <span>{account.name}</span>
+                </div>
+                <div className='accountType_mainImg'>
+                  <img src={account.mainImg} alt='Account Main' />
+                </div>
+                <Button
+                  text={account.btn}
+                  style={{
+                    ...account.btnStyle,
+                    color: "#fff",
+                    border: "none",
+                  }}
+                  className='accountType_btn'
+                  link={false}
+                  to={""}
+                  onClick={() =>
+                    handleAccountType(account.id, account.name, account.type)
+                  }
+                />
               </div>
-              <div className='accountType_mainImg'>
-                <img src={account.mainImg} alt='Account Main' />
-              </div>
-              <Button
-                text={account.btn}
-                style={{
-                  ...account.btnStyle,
-                  color: "#fff",
-                  border: "none",
-                }}
-                className='accountType_btn'
-                link={false}
-                to={""}
-                onClick={() =>
-                  handleAccountType(account.id, account.name, account.type)
-                }
-              />
-            </div>
-          ))}
+            ))
+          ) : (
+            <CardSlider
+              data={accountTypes}
+              // handleAccountType={handleAccountType}
+            />
+          )}
         </div>
       </EcosystemModal>
     </Modal>

@@ -56,10 +56,6 @@
   background: #fff;
   padding: 5px;
 }
-.accountType_mainImg img {
-  width: 120px;
-  height: 120px;
-}
 @media screen and (max-width: 1600px) {
   .signUp_bg {
     width: 80rem;
@@ -94,5 +90,18 @@
   }
   .signUp_content {
     padding: 0;
+  }
+  .close {
+    width: 30px;
+    height: 30px;
+    position: unset;
+    left: 20px;
+  }
+  .signUp_content_header {
+    font-size: 14px;
+    gap: 14px;
+    justify-content: flex-start;
+    padding-top: 45px;
+    padding-bottom: 45px;
   }
 }
