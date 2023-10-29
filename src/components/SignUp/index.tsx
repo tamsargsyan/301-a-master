@@ -160,7 +160,7 @@ const SignUp: React.FC<SignUpProps> = ({
           ) : (
             <CardSlider
               data={accountTypes}
-              // handleAccountType={handleAccountType}
+              handleAccountType={handleAccountType}
             />
           )}
         </div>

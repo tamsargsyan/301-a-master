@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import Button from "../Button";
 
 interface CardSliderProps {
   data: any;
+  handleAccountType: any;
 }
 
-const CardSlider: React.FC<CardSliderProps> = ({ data }) => {
+const CardSlider: React.FC<CardSliderProps> = ({ data, handleAccountType }) => {
   const [active, setActive] = useState(0);
 
   const prevSlide = () => {
@@ -17,23 +18,6 @@ const CardSlider: React.FC<CardSliderProps> = ({ data }) => {
   const nextSlide = () => {
     setActive((active + 1) % data.length);
   };
-
-  //   useEffect(() => {
-  //     const cardContainers = document.querySelectorAll(".card-container");
-  //     cardContainers.forEach((cardContainer, index) => {
-  //       const offset = (active - index) / 3;
-  //       const absOffset = Math.abs(active - index) / 3;
-  //       const direction = Math.sign(active - index);
-  //       const opacity = Math.abs(active - index) <= 1 ? 1 : 0;
-  //       //@ts-ignore
-  //       cardContainer.style.transform = `
-  //         translateY(${offset * -30}rem)
-  //         translateX(${direction * -5}rem)
-  //       `;
-  //       //@ts-ignore
-  //       cardContainer.style.opacity = opacity;
-  //     });
-  //   }, [active]);
 
   return (
     <div className='card_slider'>
@@ -73,9 +57,7 @@ const CardSlider: React.FC<CardSliderProps> = ({ data }) => {
               className='accountType_btn'
               link={false}
               to={""}
-              //   onClick={() =>
-              //     // handleAccountType(account.id, account.name, account.type)
-              //   }
+              onClick={() => handleAccountType(card.id, card.name, card.type)}
             />
           </div>
         </div>

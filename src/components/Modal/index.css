@@ -36,9 +36,7 @@
     padding: 23px;
     color: #151c26;
     font-size: 15px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
     text-align: center;
   }
   .modal_close_mobile button {
@@ -49,15 +47,14 @@
     transform: translateY(-50%);
   }
   .overlay {
-    overflow: hidden;
-    overflow-y: auto;
-    height: -webkit-fill-available;
     backdrop-filter: blur(0);
   }
-  .overlay::-webkit-scrollbar {
-    display: none;
-  }
   .mobile_modal {
-    height: 100%;
+    height: -webkit-fill-available;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .mobile_modal::-webkit-scrollbar {
+    display: none;
   }
 }
