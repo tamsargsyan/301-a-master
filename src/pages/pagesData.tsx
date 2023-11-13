@@ -9,6 +9,7 @@ import Layout from "../hoc/layout";
 import PerosnalProjects from "../components/Personal/PersonalProjects";
 import EditProfile from "../components/Personal/EditProfile";
 import AuthenticatedRoute from "./AuthRoute";
+import Media from "./Media";
 
 const pagesData: routerType[] = [
   {
@@ -50,6 +51,16 @@ const pagesData: routerType[] = [
     path: "/:lang/about-us",
     element: <AboutUs />,
     title: "About Us",
+  },
+  {
+    path: "/media",
+    element: <Media />,
+    title: "Media",
+  },
+  {
+    path: "/:lang/media",
+    element: <Media />,
+    title: "Media",
   },
   {
     path: "/ecosystem/:ecosystem",
