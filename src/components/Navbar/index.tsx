@@ -18,7 +18,7 @@ import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
 import NO_IMAGE from "../../assets/no-image-user.png";
 
-const history = createBrowserHistory(); // Create a history instance
+export const history = createBrowserHistory(); // Create a history instance
 
 export const menu = [
   {

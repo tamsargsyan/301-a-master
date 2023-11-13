@@ -37,7 +37,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
   };
   const { t } = useTranslation();
   const [summa, setSumma] = useState("");
-  const { postRequest, postLoading } = usePostRequest();
+  const { postRequest } = usePostRequest();
 
   return (
     <Modal

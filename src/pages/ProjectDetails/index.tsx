@@ -10,8 +10,6 @@ import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import PATTERN from "../../assets/projectAuthor/pattern.svg";
 import PDF from "../../assets/projectAuthor/pdf.svg";
-import BUDGET from "../../assets/projectAuthor/budget.png";
-import COLLECTED from "../../assets/projectAuthor/collected.png";
 import HEART from "../../assets/projectAuthor/heart.svg";
 import "./index.css";
 import RevolveText from "../../components/Revolve";

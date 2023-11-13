@@ -73,6 +73,9 @@
   "forget-pass": {
     "forget-pass": "Forgot your password?",
     "enter-email": "Please, enter your email and we will send you a link to reset a password.",
+    "sent-email": "We have sent a password recovery instruction to your email.",
+    "check-email": "Check your email",
+    "back-to": "Back to",
     "send": "Send",
     "need-help": "If you need help, contact our",
     "support": " Support team"

@@ -10,7 +10,22 @@ export const signInSchema = yup.object().shape({
     .required("Password is a required field")
     .min(8, "Password must be at least 8 characters"),
 });
-
+export const forgetPassShcema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Invalid email format"),
+});
+export const changePassSchema = yup.object().shape({
+  password: yup
+    .string()
+    .required("Password is a required field")
+    .min(8, "Password must be at least 8 characters"),
+  password_confirmation: yup
+    .string()
+    .required("Password confirmation is a required field")
+    .oneOf([yup.ref("password")], "Passwords must match"),
+});
 export const signUpSchema = yup.object().shape({
   name: yup
     .string()

@@ -125,6 +125,11 @@
   font-weight: 500;
   margin: 7px 0;
 }
+.checkEmail_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-height: 685px) {
   .modal_signIn_rightSide {
     padding: 50px 70px;

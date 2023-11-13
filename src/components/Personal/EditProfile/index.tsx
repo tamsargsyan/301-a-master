@@ -14,7 +14,6 @@ import VIBER from "../../../assets/personal-viber.svg";
 import CLOSE from "../../../assets/close.svg";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-import { storageBase } from "../../../utils/storage";
 import { usePostRequest } from "../../../actions/apiActions";
 const { Option } = Select;
 
@@ -49,7 +48,7 @@ const EditProfile = () => {
     }
   };
   const [telCode, setTelCode] = useState("+374");
-  const { postRequest, postLoading, response, error } = usePostRequest();
+  const { postRequest, postLoading } = usePostRequest();
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
