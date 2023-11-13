@@ -10,6 +10,7 @@ import PerosnalProjects from "../components/Personal/PersonalProjects";
 import EditProfile from "../components/Personal/EditProfile";
 import AuthenticatedRoute from "./AuthRoute";
 import Media from "./Media";
+import Calendar from "./Calendar";
 
 const pagesData: routerType[] = [
   {
@@ -61,6 +62,16 @@ const pagesData: routerType[] = [
     path: "/:lang/media",
     element: <Media />,
     title: "Media",
+  },
+  {
+    path: "/calendar",
+    element: <Calendar />,
+    title: "Calendar",
+  },
+  {
+    path: "/:lang/calendar",
+    element: <Calendar />,
+    title: "Calendar",
   },
   {
     path: "/ecosystem/:ecosystem",
