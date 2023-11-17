@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import CardSlider from "../CardSlider";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 interface SignUpProps {
   signUp: boolean;
@@ -43,14 +44,16 @@ const SignUp: React.FC<SignUpProps> = ({
   // setAccountType,
   handleClose,
 }) => {
+  const { t } = useTranslation();
+
   const accountTypes: AccountType[] = [
     {
       id: 1,
-      name: "доноры «301»",
+      name: t("footer.ecosystem.donor"),
       type: "donor",
       icon: DONOR,
       mainImg: DONOR_MAIN,
-      btn: "Become one of 301",
+      btn: t("btns.become-301"),
       btnStyle: {
         background: "#189387",
         boxShadow: "-9px 11px 24px 0px rgba(24, 147, 135, 0.35)",
@@ -58,11 +61,11 @@ const SignUp: React.FC<SignUpProps> = ({
     },
     {
       id: 2,
-      name: "Амбассадор",
+      name: t("footer.ecosystem.ambassadors"),
       type: "ambassadors",
       icon: AMBASSADOR,
       mainImg: AMBASSADOR_MAIN,
-      btn: "Стать амбассадором",
+      btn: t("btns.become-ambassador"),
       btnStyle: {
         background: "#EE8842",
         boxShadow: "-9px 11px 24px 0px rgba(238, 136, 66, 0.35)",
@@ -70,11 +73,11 @@ const SignUp: React.FC<SignUpProps> = ({
     },
     {
       id: 3,
-      name: "Эксперты",
+      name: t("footer.ecosystem.experts"),
       type: "experts",
       icon: EXPERTS,
       mainImg: EXPERTS_MAIN,
-      btn: "Стать экспертом",
+      btn: t("btns.become-expert"),
       btnStyle: {
         background: "#42CFEE",
         boxShadow: "-9px 11px 24px 0px rgba(24, 147, 135, 0.35)",
@@ -82,11 +85,11 @@ const SignUp: React.FC<SignUpProps> = ({
     },
     {
       id: 4,
-      name: "Партнеры",
+      name: t("footer.ecosystem.partners"),
       type: "partners",
       icon: PARTNERS,
       mainImg: PARTNERS_MAIN,
-      btn: "Стать партнером",
+      btn: t("btns.become-partner"),
       btnStyle: {
         background: "#C12DD9",
         boxShadow: "-9px 11px 24px 0px rgba(193, 45, 217, 0.35)",
@@ -94,11 +97,11 @@ const SignUp: React.FC<SignUpProps> = ({
     },
     {
       id: 5,
-      name: "Друзья",
+      name: t("footer.ecosystem.fund-friends"),
       type: "friends",
       icon: FRIENDS,
       mainImg: FRIENDS_MAIN,
-      btn: "Стать другом фонда",
+      btn: t("btns.become-fund-friend"),
       btnStyle: {
         background: "#6442EE",
         boxShadow: "-9px 11px 24px 0px rgba(100, 66, 238, 0.35)",
@@ -125,7 +128,7 @@ const SignUp: React.FC<SignUpProps> = ({
       openModal={signUp}
       className='signUp_overlay'
       headerShow={false}>
-      <EcosystemModal onClose={handleClose} header='select account type'>
+      <EcosystemModal onClose={handleClose} header={t("select-acount-type")}>
         <div className='signUp_content_accountTypes'>
           <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
           {windowSize.width >= 800 ? (

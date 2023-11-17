@@ -26,7 +26,7 @@
   margin-top: 50px;
 }
 .ecosystemContainer .partners {
-  justify-content: center;
+  /* justify-content: center; */
 }
 .ecosystemContainer .partners .partner {
   width: 12vw;
@@ -48,6 +48,15 @@
   display: flex;
   gap: 15px;
   cursor: grab;
+}
+.ecosystemDetails_partners {
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.ecosystemDetails_partners::-webkit-scrollbar {
+  display: none;
 }
 @media screen and (max-width: 975px) {
   .ecosystemContainer {

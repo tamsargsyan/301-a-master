@@ -54,6 +54,7 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
     (state: RootState) => state.projectDetails
   );
   const { t } = useTranslation();
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   return (
     <Modal
@@ -73,12 +74,16 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
               <div className='chosenProject_project'>
                 <div className='chosenProject'>{t("chosenProject")}</div>
                 <SingleProjectBox
-                  title={data?.project?.project_name_am}
-                  description={removeHtmlTags(
-                    data?.project?.problem_description_en
-                  )}
+                  // title={data?.project?.project_name_am}
+                  // description={removeHtmlTags(
+                  //   data?.project?.problem_description_en
+                  // )}
                   flag={data?.map_count}
-                  author={`${data?.user?.name} ${data?.user?.last_name}`}
+                  author={
+                    data &&
+                    data.project &&
+                    data?.project[`project_name_${lang}`]
+                  }
                   authorImg={`${storageBase}/${data?.user?.image}`}
                   budget={data?.project?.budget_price}
                   collected={data?.collectedPrice}

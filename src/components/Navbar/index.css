@@ -44,11 +44,11 @@
 }
 .lang:not(.activeLang) {
   opacity: 0;
-  cursor: unset;
+  visibility: hidden;
 }
 .openedLang {
   opacity: 1 !important;
-  cursor: pointer !important;
+  visibility: visible !important;
 }
 .langsWrapper {
   display: flex;
@@ -255,7 +255,24 @@
     border-bottom-right-radius: 25px
   }
 }
-
+@media screen and (max-width: 1150px) {
+  .navbarContainer .logo {
+    display: none;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .link a {
+    font-size: 13px;
+  }
+  /* .lang {
+    width: 25px;
+    height: 25px;
+  } */
+  .lang {
+    /* padding: 15px; */
+    font-style: 13px;
+  }
+}
 @media screen and (max-width: 600px) {
   .link a,
   .logo {

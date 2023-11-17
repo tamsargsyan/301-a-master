@@ -105,14 +105,14 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                   `project_name_${lang}` as keyof ProjectKeyOf
                                 ]
                               }
-                              description={removeHtmlTags(
-                                project.project[
-                                  `description_${lang}` as keyof ProjectKeyOf
-                                ]
-                              )
-                                ?.split(" ")
-                                .slice(0, 2)
-                                .join(" ")}
+                              // description={removeHtmlTags(
+                              //   project.project[
+                              //     `description_${lang}` as keyof ProjectKeyOf
+                              //   ]
+                              // )
+                              //   ?.split(" ")
+                              //   .slice(0, 2)
+                              //   .join(" ")}
                               flag={project.map_count}
                               author={
                                 project[`sector_${lang}` as keyof ProjectKeyOf]
@@ -138,14 +138,14 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                 `project_name_${lang}` as keyof ProjectKeyOf
                               ]
                             }
-                            description={removeHtmlTags(
-                              project.project[
-                                `description_${lang}` as keyof ProjectKeyOf
-                              ]
-                            )
-                              ?.split(" ")
-                              .slice(0, 2)
-                              .join(" ")}
+                            // description={removeHtmlTags(
+                            //   project.project[
+                            //     `description_${lang}` as keyof ProjectKeyOf
+                            //   ]
+                            // )
+                            //   ?.split(" ")
+                            //   .slice(0, 2)
+                            //   .join(" ")}
                             flag={project.map_count}
                             author={
                               project[`sector_${lang}` as keyof ProjectKeyOf]

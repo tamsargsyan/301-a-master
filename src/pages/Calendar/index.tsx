@@ -6,9 +6,6 @@ import { Helmet } from "react-helmet";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Header from "../../components/Header";
 import IMG_1 from "../../assets/calendar/img-1.png";
-import IMG_2 from "../../assets/medias/pdf-1.svg";
-import PDF from "../../assets/projectAuthor/pdf.svg";
-import PLAY_ICON from "../../assets/medias/play-icon.svg";
 import "./index.css";
 import { useState } from "react";
 import Button from "../../components/Button";
@@ -17,8 +14,7 @@ import ICON from "../../assets/info/4.svg";
 import { DownOutlined, CloseOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space, Radio } from "antd";
-import ADDRESS from "../../assets/calendar/location-icon.svg";
-import DATE from "../../assets/calendar/time-icon.svg";
+import SingleEvent from "../../components/SingleEvent";
 
 const items: MenuProps["items"] = [
   {
@@ -56,150 +52,149 @@ const items: MenuProps["items"] = [
   },
 ];
 
+export const events = [
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+  {
+    id: 1,
+    title: "Lorem Ipsum is simply dummy ",
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    img: IMG_1,
+    address: "Ереван, ул. Московяна 24",
+    date: "Fri, 10 Nov AM 10:30",
+  },
+];
+
 const Calendar = () => {
   const windowSize = useWindowSize();
-
-  const medias = [
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-    {
-      id: 1,
-      title: "Lorem Ipsum is simply dummy ",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      img: IMG_1,
-      address: "Ереван, ул. Московяна 24",
-      date: "Fri, 10 Nov AM 10:30",
-    },
-  ];
-
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 10;
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = medias?.slice(
+  const currentProjects = events?.slice(
     indexOfFirstProject,
     indexOfLastProject
   );
   const totalPages =
-    medias && new Array(Math.ceil(medias?.length / projectsPerPage)).fill(0);
+    events && new Array(Math.ceil(events?.length / projectsPerPage)).fill(0);
 
   const [openVideo, setOpenVideo] = useState(false);
   const [openBook, setOpenBook] = useState(false);
@@ -275,31 +270,15 @@ const Calendar = () => {
             </div>
           </div>
         </div>
-        <div className='medias_wrapper calendars_wrapper'>
+        <div className='events_wrapper calendars_wrapper'>
           {currentProjects.map((event, i) => (
-            <div className='event_wrapper'>
-              <div className='event_wrapper_img'>
-                <img src={event.img} alt='Event' />
-              </div>
-              <div className='event_info'>
-                <p className='event_title'>{event.title}</p>
-                <p className='event_desc'>{event.desc}</p>
-                <div className='event_address'>
-                  <img src={ADDRESS} alt='Address' />
-                  <p>{event.address}</p>
-                </div>
-                <div className='event_date'>
-                  <img src={DATE} alt='Address' />
-                  <p>{event.date}</p>
-                </div>
-                <Button
-                  text='Participate'
-                  link={false}
-                  to={""}
-                  className='calendar_participate_btn'
-                />
-              </div>
-            </div>
+            <SingleEvent
+              img={event.img}
+              title={event.title}
+              desc={event.desc}
+              address={event.address}
+              date={event.date}
+            />
           ))}
         </div>
         {totalPages && totalPages.length > 1 && !!currentProjects?.length && (

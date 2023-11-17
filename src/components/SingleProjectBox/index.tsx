@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import FLAG from "../../assets/flag.svg";
 
 interface SingleProjectBoxProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   author?: string;
   flag: number;
   authorImg?: string;
@@ -40,19 +40,27 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
         <div className='projectInfo'>
           <div className='author'>
             <div className='ourProject__author'>
-              <img src={authorImg} alt='Author' />
+              <img
+                src={authorImg}
+                alt='Author'
+                className='ourProject_author_img'
+              />
               <span>{author}</span>
             </div>
-            <span className='flag'>
-              <img src={FLAG} alt='Flag' />
-              {flag}
-            </span>
+            {flag && (
+              <span className='flag'>
+                <img src={FLAG} alt='Flag' />
+                {flag}
+              </span>
+            )}
           </div>
           <div className='donationProject_title'>
-            <h1>{title}</h1>
-            <span className='donationProject_desc'>
-              {description?.slice(0, 3)}
-            </span>
+            {title && <h1>{title}</h1>}
+            {description && (
+              <span className='donationProject_desc'>
+                {description?.slice(0, 3)}
+              </span>
+            )}
           </div>
           <div className='project_progress'>
             <div className='projectProgress_info'>
@@ -91,10 +99,12 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
         <div className='projectInfo'>
           <div className='author'>
             <h1>{title}</h1>
-            <span className='flag'>
-              <img src={FLAG} alt='Flag' />
-              {flag}
-            </span>
+            {flag && (
+              <span className='flag'>
+                <img src={FLAG} alt='Flag' />
+                {flag}
+              </span>
+            )}
           </div>
           <span className='donationProject_desc'>
             {description?.slice(0, 3)}
@@ -108,15 +118,20 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
       <div
         className='projectImg'
         style={{ backgroundImage: `url(${projectImg})` }}></div>
-      <div className='projectInfo'>
+      <div
+        className={`${
+          className === "home_project" && "projectInfo_withoutDesc_home"
+        } projectInfo`}>
         <h1>{title}</h1>
-        <span>{description?.slice(0, 3)}</span>
+        {description && <span>{description?.slice(0, 3)}</span>}
         <div className='author'>
           <span>{author}</span>
-          <span className='flag'>
-            <img src={FLAG} alt='Flag' />
-            {flag}
-          </span>
+          {flag && (
+            <span className='flag'>
+              <img src={FLAG} alt='Flag' />
+              {flag}
+            </span>
+          )}
         </div>
       </div>
     </motion.div>

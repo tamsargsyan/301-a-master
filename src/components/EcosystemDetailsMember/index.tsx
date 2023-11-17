@@ -95,10 +95,10 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                       : project.user[`about_me_${lang}`],
                 }}
               />
-              {windowSize.width > 600 && project.all_project?.length && (
+              {windowSize.width > 600 && project.all_project?.length ? (
                 <div className='memberProjects_separatedPart'></div>
-              )}
-              {project.all_project?.length && (
+              ) : null}
+              {project.all_project?.length ? (
                 <div className='memberProjects'>
                   <div className='memberProjectHeader'>
                     <p>Project</p>
@@ -139,12 +139,12 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                           <Fragment key={i}>
                             <SingleProjectBox
                               title={p?.project[`project_name_${lang}`]}
-                              description={removeHtmlTags(
-                                p?.project[`problem_description_${lang}`]
-                              )
-                                .split(" ")
-                                .slice(0, 2)
-                                .join(" ")}
+                              // description={removeHtmlTags(
+                              //   p?.project[`problem_description_${lang}`]
+                              // )
+                              //   .split(" ")
+                              //   .slice(0, 2)
+                              //   .join(" ")}
                               flag={p?.map_count}
                               author={`${p[1]?.user?.name} ${p[1]?.user?.last_name}`}
                               authorImg={`${storageBase}/${p?.user?.image}`}
@@ -161,12 +161,12 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                         <Fragment key={i}>
                           <SingleProjectBox
                             title={p?.project[`project_name_${lang}`]}
-                            description={removeHtmlTags(
-                              p?.project[`problem_description_${lang}`]
-                            )
-                              .split(" ")
-                              .slice(0, 2)
-                              .join(" ")}
+                            // description={removeHtmlTags(
+                            //   p?.project[`problem_description_${lang}`]
+                            // )
+                            //   .split(" ")
+                            //   .slice(0, 2)
+                            //   .join(" ")}
                             flag={p?.map_count}
                             author={`${p[1]?.user?.name} ${p[1]?.user?.last_name}`}
                             authorImg={`${storageBase}/${p?.user?.image}`}
@@ -195,7 +195,7 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                     </svg>
                   </NavLink>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         ))}

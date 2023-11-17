@@ -3,13 +3,14 @@ import Modal from "../Modal";
 import SingleProjectBox from "../SingleProjectBox";
 import "./index.css";
 import { Fragment, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openDonateModal } from "../../actions/donateAction";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { storageBase } from "../../utils/storage";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { useTranslation } from "react-i18next";
+import { RootState } from "../../store/configureStore";
 
 interface DonationProjectsModalProps {
   donateProjects: boolean;
@@ -50,6 +51,7 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   }, [donateProjects]);
 
   const { t } = useTranslation();
+  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
   return (
     <Modal setOpenModal={handleClose} openModal={donateProjects}>
@@ -67,12 +69,14 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
                 p.data?.map((p: any, i: number) => (
                   <Fragment key={i}>
                     <SingleProjectBox
-                      title={p?.project?.project_name_am}
-                      description={removeHtmlTags(
-                        p?.project?.problem_description_en
-                      )}
+                      // title={p?.project[`project_name_${lang}`]}
+                      // description={removeHtmlTags(
+                      //   p?.project[`problem_description_${lang}`]
+                      // )}
                       flag={p?.map_count}
-                      author={`${p?.sages?.name} ${p?.sages?.last_name}`}
+                      author={
+                        p && p.project && p?.project[`project_name_${lang}`]
+                      }
                       authorImg={`${storageBase}/${p?.sages?.image}`}
                       budget={p?.project?.budget_price}
                       collected={p?.collectedPrice}

@@ -162,9 +162,9 @@ const OurProjects = () => {
             currentProjects?.map((project: any, i: number) => (
               <Fragment key={i}>
                 <Project
-                  author={`${project?.user?.name} ${project?.user?.last_name}`}
+                  author={project?.project[`project_name_${lang}`]}
                   authorImg={`${storageBase}/${project?.user?.image}`}
-                  title={project?.project[`project_name_${lang}`]}
+                  // title={project?.project[`project_name_${lang}`]}
                   flag={project?.map_count}
                   desc={project?.project[`problem_description_${lang}`]}
                   projectImg={`${storageBase}/${project?.project?.image}`}

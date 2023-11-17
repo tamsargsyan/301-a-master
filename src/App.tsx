@@ -82,6 +82,44 @@ function App() {
     if (signInActive) setSignIn(true);
   }, [signInActive]);
 
+    const container = document.querySelectorAll(".ecosystemDetails_partners");
+    let isDown = false;
+    //@ts-ignore
+    let startX;
+    //@ts-ignore
+    let scrollLeft;
+    container.forEach(ct => {
+      //@ts-ignore
+      ct?.addEventListener("mousedown", e => {
+        //@ts-ignore
+        isDown = true;
+        //@ts-ignore
+        startX = e.pageX - ct.offsetLeft;
+        //@ts-ignore
+        scrollLeft = ct.scrollLeft;
+      });
+      //@ts-ignore
+      ct?.addEventListener("mouseleave", () => {
+        //@ts-ignore
+        isDown = false;
+      });
+      //@ts-ignore
+      ct?.addEventListener("mouseup", () => {
+        isDown = false;
+      });
+      //@ts-ignore
+      ct?.addEventListener("mousemove", e => {
+        if (!isDown) return;
+        e.preventDefault();
+        //@ts-ignore
+        const x = e.pageX - ct.offsetLeft;
+        //@ts-ignore
+        const walk = (x - startX) * 2;
+        //@ts-ignore
+        ct.scrollLeft = scrollLeft - walk;
+      });
+    });
+
   return (
     <div className='container'>
       <Navbar

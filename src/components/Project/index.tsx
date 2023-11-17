@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 interface ProjectProps {
   author: string;
   authorImg: string;
-  title: string;
+  title?: string;
   flag: number;
   desc: string;
   projectImg: string;
@@ -36,34 +36,52 @@ const Project: React.FC<ProjectProps> = ({
       <div className='ourProject__projectInner'>
         <div className='ourProject__projectInfo'>
           <div className='ourProject__author'>
-            <img src={authorImg} alt='Author' />
-            <span>
-              {author.length > 19 ? `${author.slice(0, 18)}. . .` : author}
-            </span>
-          </div>
-          <div className='ourProject__title'>
-            <span>
-              {title.length > 19 ? `${title.slice(0, 18)}. . .` : title}
-            </span>
-            <div className='flag'>
-              <img src={FLAG} alt='FLAG' />
-              <span>{flag}</span>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <img
+                src={authorImg}
+                alt='Author'
+                className='ourProject_author_img'
+              />
+              <span>{author}</span>
             </div>
+            {flag ? (
+              <div className='flag'>
+                <img src={FLAG} alt='FLAG' />
+                <span>{flag}</span>
+              </div>
+            ) : null}
           </div>
+          {title ? (
+            <div className='ourProject__title'>
+              <span>
+                {title && title.length > 19
+                  ? `${title.slice(0, 18)}. . .`
+                  : title}
+              </span>
+              {/* {flag ? (
+              <div className='flag'>
+                <img src={FLAG} alt='FLAG' />
+                <span>{flag}</span>
+              </div>
+            ) : null} */}
+            </div>
+          ) : null}
           <div
             className='ourProject__desc'
             dangerouslySetInnerHTML={{
-              __html: desc.length > 100 ? `${desc.slice(0, 90)}. . .` : desc,
+              __html: desc.length > 100 ? `${desc.slice(0, 220)}. . .` : desc,
             }}
           />
         </div>
-        <div className='btns' style={{ width: "100%" }}>
+        <div
+          className='btns'
+          style={{ width: "100%", justifyContent: "space-between" }}>
           <Button
             text={t("btns.view")}
             link={true}
             to={`${id}`}
             style={{
-              padding: "20px 30px",
+              padding: "9px 30px",
               height: "35px",
               background: "#DD264E",
               color: "#fff",
@@ -78,7 +96,7 @@ const Project: React.FC<ProjectProps> = ({
           <button
             className={`heart-btn ${isSaved ? "liked" : ""}`}
             onClick={heartit}>
-            <span>{t("btns.save-project")}</span>
+            {/* <span>{t("btns.save-project")}</span> */}
             <div className='heartWrapper'>
               <svg className='heart' viewBox='0 0 32 29.6'>
                 <path d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z' />

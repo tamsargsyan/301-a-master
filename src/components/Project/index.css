@@ -5,7 +5,7 @@
   width: 63vw;
   border-radius: 20px;
   margin-bottom: 30px;
-  height: 310px;
+  height: 270px;
 }
 .ourProject__projectImg {
   width: 50%;
@@ -31,19 +31,26 @@
 .ourProject__author,
 .ourProject__title {
   display: flex;
+  justify-content: space-between;
   gap: 20px;
   align-items: center;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+}
+.ourProject__author {
+  margin-bottom: 15px;
 }
 .ourProject__title {
   justify-content: space-between;
 }
-.ourProject__author img {
+.ourProject_author_img {
   border: 2px solid #dd264e;
   border-radius: 50%;
   padding: 2px;
+}
+.ourProject__author .ourProject_author_img {
   width: 3vw;
+  aspect-ratio: 1 / 1;
 }
 .heart {
   width: 20px;
@@ -153,7 +160,7 @@
   .ourProject__title {
     font-size: 16px;
   }
-  .ourProject__author img {
+  .ourProject__author .ourProject_author_img {
     width: 48px;
   }
   .ourProject__desc,

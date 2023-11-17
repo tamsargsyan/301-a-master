@@ -34,6 +34,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
   const { t } = useTranslation();
   const {
     ourEcosystem,
+    //@ts-ignore
     sages,
     club301,
     ambassadors,
@@ -84,12 +85,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           id: 1,
           link: "",
         },
-        {
-          name: t("btns.learn-more"),
-          link: "/ecosystem/club301",
-          become: "",
-          id: null,
-        },
+        // {
+        //   name: t("btns.learn-more"),
+        //   link: "/ecosystem/club301",
+        //   become: "",
+        //   id: null,
+        // },
       ],
       btnStyle: [
         {
@@ -145,12 +146,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           become: "Эксперты",
           id: 3,
         },
-        {
-          name: t("btns.learn-more"),
-          link: "/ecosystem/experts",
-          become: "",
-          id: null,
-        },
+        // {
+        //   name: t("btns.learn-more"),
+        //   link: "/ecosystem/experts",
+        //   become: "",
+        //   id: null,
+        // },
       ],
       btnStyle: [
         {
@@ -222,12 +223,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           become: "Друзья",
           id: 5,
         },
-        {
-          name: t("btns.learn-more"),
-          link: "/ecosystem/friends-foundation",
-          become: "",
-          id: null,
-        },
+        // {
+        //   name: t("btns.learn-more"),
+        //   link: "/ecosystem/friends-foundation",
+        //   become: "",
+        //   id: null,
+        // },
       ],
       btnStyle: [
         {
@@ -285,15 +286,19 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                 </div>
               </div>
               <div className='ecosystemDetails_partners partners'>
-                {ecosystem.partners &&
-                  ecosystem.partners.map((p: any) => (
-                    <div className='ecosystemDetails_partners_item' key={p?.id}>
-                      <img
-                        src={`${storageBase}/${p?.image}`}
-                        alt={p?.title_en}
-                      />
-                    </div>
-                  ))}
+                <div className='innerPartners'>
+                  {ecosystem.partners &&
+                    ecosystem.partners.map((p: any) => (
+                      <div
+                        className='ecosystemDetails_partners_item'
+                        key={p?.id}>
+                        <img
+                          src={`${storageBase}/${p?.image}`}
+                          alt={p?.title_en}
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
           ))}

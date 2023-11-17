@@ -37,7 +37,7 @@
   .donationProjects_title {
     font-size: 18px;
   }
-  .donation_project.project .ourProject__author img {
+  .donation_project.project .ourProject__author .ourProject_author_img {
     width: 38px;
   }
   .donation_project.project .projectInfo .flag img {

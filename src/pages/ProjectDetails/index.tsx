@@ -9,7 +9,7 @@ import Button from "../../components/Button";
 import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import PATTERN from "../../assets/projectAuthor/pattern.svg";
-import PDF from "../../assets/projectAuthor/pdf.svg";
+// import PDF from "../../assets/projectAuthor/pdf.svg";
 import HEART from "../../assets/projectAuthor/heart.svg";
 import "./index.css";
 import RevolveText from "../../components/Revolve";
@@ -102,13 +102,7 @@ const ProjectDetails = () => {
   }, [project]);
   const navigate = useNavigate();
   const carousel = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0);
 
-  useEffect(() => {
-    if (data && carousel.current) {
-      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-    }
-  }, [data, windowSize.width]);
   const checkRole = (role: string) => {
     if (role === "project_manager") return ROSE_CIRCLE;
     if (role === "donor") return GREEN_CIRCLE;
@@ -225,6 +219,7 @@ const ProjectDetails = () => {
                     <img
                       src={`${storageBase}/${data?.user?.image}`}
                       alt='Author'
+                      className='ourProject_author_img'
                     />
                     <span>
                       {data?.user?.name} {data?.user?.last_name}
@@ -235,27 +230,39 @@ const ProjectDetails = () => {
                   <div className='problem_header'>
                     <div className='problem_heading'>
                       <img src={PATTERN} alt='Pattern' />
-                      <h2>Problem</h2>
+                      <h2>
+                        {false
+                          ? t("project-details.problem")
+                          : t("project-in-progress")}
+                      </h2>
                     </div>
-                    {windowSize.width > 600 && (
+                    {/* {windowSize.width > 600 && (
                       <button className='download_pdf'>
                         <span>{t("btns.download-pdf")}</span>
                         <img src={PDF} alt='Pdf' />
                       </button>
-                    )}
+                    )} */}
                   </div>
-                  <div
+                  {false ? (
+                    <div
+                      className='problem_inner'
+                      dangerouslySetInnerHTML={{
+                        __html: project[`problem_description_${lang}`],
+                      }}
+                    />
+                  ) : null}
+                  {/* <div
                     className='problem_inner'
                     dangerouslySetInnerHTML={{
                       __html: project[`problem_description_${lang}`],
                     }}
-                  />
-                  {windowSize.width < 600 && (
+                  /> */}
+                  {/* {windowSize.width < 600 && (
                     <button className='download_pdf'>
                       <span>dawload presentation pdf</span>
                       <img src={PDF} alt='Pdf' />
                     </button>
-                  )}
+                  )} */}
                 </div>
                 {project.video && (
                   <div className='videoContainer _inner'>
@@ -266,68 +273,72 @@ const ProjectDetails = () => {
                     />
                   </div>
                 )}
-                <div className='roadMapContainer'>
-                  <div className='roadMap_heading problem_heading'>
-                    <img src={PATTERN} alt='Pattern' />
-                    <h2>Road Map</h2>
-                  </div>
-                  <div className='roadMap_inner _inner'>
-                    <div className='fullProject_slider'>
-                      {project?.month_data.lnegth && (
-                        <div className='chartContainer'>
-                          <div className='chart_line'></div>
-                          {project?.month_data.map((month: any, i: number) => {
-                            return (
-                              <div className='chart' key={i}>
-                                <div className='chart_info'>
-                                  <h1>{month.month}</h1>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        month[`month_description_${lang}`],
-                                    }}
-                                  />
-                                </div>
-                                <div className='chart_month'>
-                                  <div
-                                    className='month_circle'
-                                    style={{
-                                      backgroundColor: colors[i],
-                                    }}></div>
-                                  <div className='month'>
-                                    {month[`month_${lang}`]}
+                {project && project.budget_price ? (
+                  <div className='roadMapContainer'>
+                    <div className='roadMap_heading problem_heading'>
+                      <img src={PATTERN} alt='Pattern' />
+                      <h2>{t("project-details.road-map")}</h2>
+                    </div>
+                    <div className='roadMap_inner _inner'>
+                      <div className='fullProject_slider'>
+                        {project?.month_data.lnegth && (
+                          <div className='chartContainer'>
+                            <div className='chart_line'></div>
+                            {project?.month_data.map(
+                              (month: any, i: number) => {
+                                return (
+                                  <div className='chart' key={i}>
+                                    <div className='chart_info'>
+                                      <h1>{month.month}</h1>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            month[`month_description_${lang}`],
+                                        }}
+                                      />
+                                    </div>
+                                    <div className='chart_month'>
+                                      <div
+                                        className='month_circle'
+                                        style={{
+                                          backgroundColor: colors[i],
+                                        }}></div>
+                                      <div className='month'>
+                                        {month[`month_${lang}`]}
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                    <div className='budgetContainer'>
-                      <div className='budget'>
-                        <img
-                          src={`${storageBase}/${project?.budget_image}`}
-                          alt='Budget'
-                        />
-                        <div className='budgetPrice'>
-                          <span>Budget</span>
-                          <h2>{project?.budget_price}$</h2>
-                        </div>
+                                );
+                              }
+                            )}
+                          </div>
+                        )}
                       </div>
-                      <div className='collected'>
-                        <img
-                          src={`${storageBase}/${project.collected_image}`}
-                          alt='Collected'
-                        />
-                        <div className='collectedPrice'>
-                          <span>Collected</span>
-                          <h2>{data.collectedPrice}$</h2>
+                      <div className='budgetContainer'>
+                        <div className='budget'>
+                          <img
+                            src={`${storageBase}/${project?.budget_image}`}
+                            alt='Budget'
+                          />
+                          <div className='budgetPrice'>
+                            <span>{t("budget")}</span>
+                            <h2>{project?.budget_price}$</h2>
+                          </div>
+                        </div>
+                        <div className='collected'>
+                          <img
+                            src={`${storageBase}/${project.collected_image}`}
+                            alt='Collected'
+                          />
+                          <div className='collectedPrice'>
+                            <span>{t("collected")}</span>
+                            <h2>{data.collectedPrice}$</h2>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ) : null}
                 {data.team[0].length === true && (
                   <div className='workTeamContainer'>
                     <div className='roadMap_heading problem_heading'>
@@ -375,27 +386,24 @@ const ProjectDetails = () => {
                 <div className='partnersContainer'>
                   <div className='roadMap_heading problem_heading'>
                     <img src={PATTERN} alt='Pattern' />
-                    <h2>Partners</h2>
+                    <h2>{t("project-details.partners")}</h2>
                   </div>
-                  <motion.div
+                  <div
                     className='ecosystemDetails_partners partners _inner'
                     ref={carousel}>
-                    <motion.div
-                      drag='x'
-                      dragConstraints={{ right: 0, left: -width }}
-                      className='innerPartners'>
+                    <div className='innerPartners'>
                       {partners.map((partner: any) => (
-                        <motion.div
+                        <div
                           className='ecosystemDetails_partners_item'
                           key={partner.id}>
                           <img
                             src={`${storageBase}/${partner.image}`}
                             alt={partner.name}
                           />
-                        </motion.div>
+                        </div>
                       ))}
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
                 </div>
                 <div className='_inner dontaionBtns_wrapper' ref={donationsRef}>
                   <div
@@ -404,7 +412,7 @@ const ProjectDetails = () => {
                     } dontaionBtns`}
                     style={{ position: isVisible ? "static" : "fixed" }}>
                     <Button
-                      text='add to interesting'
+                      text={t("add-to-interesting")}
                       link={false}
                       to=''
                       icon={HEART}
@@ -412,26 +420,28 @@ const ProjectDetails = () => {
                         color: "#717883",
                         border: "1px solid #000",
                         gap: "10px",
-                        padding: "12px 35spx",
+                        padding: "9px 35spx",
                         fontWeight: 600,
                         width: "100%",
                       }}
                       className='donationBtn'
                     />
-                    <Button
-                      text={t("btns.donate")}
-                      link={false}
-                      to={""}
-                      style={{
-                        color: "#fff",
-                        background: "#DD264E",
-                        boxShadow: "0px 26px 40px 0px rgba(191, 9, 48, 0.15)",
-                        padding: "12px 35px",
-                        width: !isVisible ? "auto" : "100%",
-                      }}
-                      onClick={() => dispatch(openDonateModal(true))}
-                      className='donationBtn'
-                    />
+                    {project && project.budget_price ? (
+                      <Button
+                        text={t("btns.donate")}
+                        link={false}
+                        to={""}
+                        style={{
+                          color: "#fff",
+                          background: "#DD264E",
+                          boxShadow: "0px 26px 40px 0px rgba(191, 9, 48, 0.15)",
+                          padding: "12px 35px",
+                          width: !isVisible ? "auto" : "100%",
+                        }}
+                        onClick={() => dispatch(openDonateModal(true))}
+                        className='donationBtn'
+                      />
+                    ) : null}
                   </div>
                 </div>
               </div>

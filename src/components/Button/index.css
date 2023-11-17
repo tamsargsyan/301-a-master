@@ -41,6 +41,7 @@
 }
 .donationBtn img {
   width: 1.5vw !important;
+  height: auto;
 }
 @media screen and (max-width: 1920px) {
   .btn:not(

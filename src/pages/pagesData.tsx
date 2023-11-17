@@ -11,6 +11,7 @@ import EditProfile from "../components/Personal/EditProfile";
 import AuthenticatedRoute from "./AuthRoute";
 import Media from "./Media";
 import Calendar from "./Calendar";
+import CalendarDetails from "./CalendarDetails";
 
 const pagesData: routerType[] = [
   {
@@ -71,6 +72,16 @@ const pagesData: routerType[] = [
   {
     path: "/:lang/calendar",
     element: <Calendar />,
+    title: "Calendar",
+  },
+  {
+    path: "/calendar/:id",
+    element: <CalendarDetails />,
+    title: "Calendar",
+  },
+  {
+    path: "/:lang/calendar/:id",
+    element: <CalendarDetails />,
     title: "Calendar",
   },
   {

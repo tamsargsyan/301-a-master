@@ -45,6 +45,7 @@
     "ecosystem": {
       "title": "OUR ECOSYSTEM",
       "sage": "Sage",
+      "donor": "donors '301'",
       "club301": "Club 301",
       "ambassadors": "Ambassadors",
       "volunteers": "Volunteers",
@@ -52,7 +53,7 @@
       "partners": "Partners",
       "fund-friends": "Foundation Friends"
     },
-    "address": "Yerevan, st. Moskovyan 24"
+    "address": "Yerevan, st. Abovyan 25"
   },
   "project-details": {
     "problem": "Problem",
@@ -136,5 +137,10 @@
     "settings": "Settings",
     "replace": "Replace",
     "on_the_web": "ON THE WEB"
-  }
+  },
+  "select-acount-type": "SELECT ACCOUNT TYPE",
+  "budget": "Budget",
+  "collected": "Collected",
+  "project-in-progress": "These projects are in progress. The detailed information will be available later.",
+  "add-to-interesting": "add to interesting"
 }

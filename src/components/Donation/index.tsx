@@ -70,7 +70,7 @@ const Donation: React.FC<DonationProps> = ({
         header={t("btns.donate")}>
         <div className='donationWrapper'>
           <div className='donation'>
-            <div className='donation_info'>
+            {/* <div className='donation_info'>
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
@@ -80,7 +80,7 @@ const Donation: React.FC<DonationProps> = ({
                 electronic typesetting, remaining essentially unchanged. It was
                 popularised in
               </p>
-            </div>
+            </div> */}
             <div className='donation_cards'>
               {donations_cards.map(card => (
                 <div

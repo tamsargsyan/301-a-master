@@ -96,7 +96,8 @@
   justify-content: space-between;
 }
 .ecoSystemDetailsMember .project {
-  width: fit-content;
+  width: 236px;
+  height: auto !important;
 }
 .ecoSystemDetailsMember .projectImg {
   height: 130px;
@@ -161,6 +162,7 @@
 .ecosystemDetails_partners_item img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 @media screen and (max-width: 1610px) {
   .ecosystemDetails_partners_item {
@@ -232,7 +234,7 @@
     height: 134px;
   }
   .ecosystemDetails_project {
-    width: 195px;
+    width: 100% !important;
   }
   .memberImg_container {
     width: 96px;
