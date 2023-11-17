@@ -8,6 +8,7 @@ import privacyPolicyReducer from "../reducers/privacyPolicyReducer";
 import expertProjectReducer from "../reducers/expertProjectReducer";
 import authReducer from "../reducers/authReducer";
 import registerDataReducer from "../reducers/registerDataReducer";
+import congratsReducer from "../reducers/congratsReducer";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     expertProject: expertProjectReducer,
     auth: authReducer,
     registerData: registerDataReducer,
+    congrats: congratsReducer,
   },
 });
 

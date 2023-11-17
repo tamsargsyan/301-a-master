@@ -6,26 +6,23 @@ import { Select, Spin } from "antd";
 import country_currency from "../../locales/country_currency.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import "./index.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { useTranslation } from "react-i18next";
+import { openDonateSingleProject } from "../../actions/donateAction";
+import {
+  getModalName,
+  openPrivacyPolicy,
+} from "../../actions/privacyPolicyAction";
 
 interface DonateToTheProjectProps {
   setDonateProjects: (arg: boolean) => void;
-  setDonateSingleProject: (arg: boolean) => void;
-  donateSingleProject: boolean;
-  setPrivacy: any;
-  setModalName: (arg: string) => void;
 }
 
 const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
-  donateSingleProject,
-  setDonateSingleProject,
   setDonateProjects,
-  setModalName,
-  setPrivacy,
 }) => {
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -40,27 +37,28 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
     option: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-  const handlePrivacy = (privacy: string) => {
-    setPrivacy({ modal: true, privacy });
-    setDonateSingleProject(false);
-    setModalName("donateToProject");
+  const dispatch = useDispatch();
+
+  const handlePrivacy = (privacy: string, e: any) => {
+    e.preventDefault();
+    dispatch(openPrivacyPolicy(true, privacy));
+    dispatch(openDonateSingleProject(false));
+    dispatch(getModalName("donateToProject"));
   };
 
   const handleClose = () => {
     setDonateProjects(true);
-    setDonateSingleProject(false);
+    dispatch(openDonateSingleProject(false));
   };
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const { openModal } = useSelector((state: RootState) => state.projectData);
 
   return (
-    <Modal
-      setOpenModal={handleClose}
-      openModal={donateSingleProject}
-      headerShow={true}>
+    <Modal setOpenModal={handleClose} openModal={openModal} headerShow={true}>
       <EcosystemModal
         onClose={handleClose}
         header={t("btns.donate-to-project")}>
@@ -169,13 +167,13 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                     <br></br>
                     <button
                       className='mentioned_txt'
-                      onClick={() => handlePrivacy("Terms of Services")}>
+                      onClick={e => handlePrivacy("Terms of Services", e)}>
                       {t("privacy.terms")}
                     </button>
                     {t("privacy.and")}
                     <button
                       className='mentioned_txt'
-                      onClick={() => handlePrivacy("Privacy Policy")}>
+                      onClick={e => handlePrivacy("Privacy Policy", e)}>
                       {t("privacy.privacy")}
                     </button>
                   </p>

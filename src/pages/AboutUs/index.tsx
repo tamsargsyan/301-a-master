@@ -17,17 +17,24 @@ import Img from "../../components/Img";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { Helmet } from "react-helmet";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 const { Panel } = Collapse;
 
 const AboutUs = () => {
   const windowSize = useWindowSize();
-  const data1 = [
-    "Соглашение условий *",
-    "КОДЕКС ЭТИКИ КЛУБА 301*",
-    "Форма поддержки",
-    "Terms of Services and Privacy Policy",
-  ];
+  // const data1 = [
+  //   {
+  //     name: "Соглашение условий *",
+  //     render: <button></button>
+  //   },
+  // ];
+  // const data1 = [
+  //   "Соглашение условий *",
+  //   "КОДЕКС ЭТИКИ КЛУБА 301*",
+  //   "Форма поддержки",
+  //   "Terms of Services and Privacy Policy",
+  // ];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,6 +52,8 @@ const AboutUs = () => {
     }
   }, [faqRef, data]);
 
+  const { t } = useTranslation();
+
   if (loading)
     return (
       <div className='loadingContainer'>
@@ -54,6 +63,9 @@ const AboutUs = () => {
 
   const infos = Object.values(data);
   const faq = infos[5];
+
+  const handlePrivacy = (text: string) => {};
+
   return (
     <>
       <Helmet>
@@ -147,9 +159,28 @@ const AboutUs = () => {
         </div>
         <div className='aboutUs_dashedLine' />
         <div className='inner aboutUs_privacy'>
-          {data1.map((item, i) => (
-            <p key={i}>{item}</p>
-          ))}
+          {/* {data1.map((item, i) => (
+            <button onClick={() => {}} key={i}>
+              {item}
+            </button>
+          ))} */}
+          <button onClick={() => {}}>Соглашение условий *</button>
+          <button onClick={() => {}}>КОДЕКС ЭТИКИ КЛУБА 301*</button>
+          <button onClick={() => {}}>Форма поддержки</button>
+          <p>
+            <button
+              className='mentioned_txt'
+              onClick={() => handlePrivacy("Terms of Services")}>
+              {t("privacy.terms")}
+            </button>
+            <button>{t("privacy.and")}</button>
+            <button
+              className='mentioned_txt'
+              // onClick={() => handlePrivacy("Privacy Policy")}
+            >
+              {t("privacy.privacy")}
+            </button>
+          </p>
         </div>
       </Background>
       <Contact />

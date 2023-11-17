@@ -11,10 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
 import { otherSignUpSchema, signUpSchema } from "../../Validation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
+import { congratsModal } from "../../actions/congratsAction";
+import {
+  getModalName,
+  openPrivacyPolicy,
+} from "../../actions/privacyPolicyAction";
 
 const { Option } = Select;
 
@@ -22,9 +27,7 @@ interface AccountTypeModalProps {
   accountType: { open: boolean; id: number; name: string; type: string };
   setSignUp: (arg: boolean) => void;
   setAgreementTerms: (arg: boolean) => void;
-  setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
   handleClose: () => void;
-  setModalName: (arg: string) => void;
 }
 
 const filterOption = (
@@ -43,9 +46,7 @@ const filterOptionSages = (input: string, option: any) =>
 const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   accountType,
   setAgreementTerms,
-  setPrivacy,
   handleClose,
-  setModalName,
 }) => {
   const dispatch = useDispatch();
   const confirm = (e: React.MouseEvent<HTMLElement>) => {
@@ -61,7 +62,8 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   };
 
   const handlePrivacy = (privacy: string) => {
-    setPrivacy({ modal: true, privacy });
+    // setPrivacy({ modal: true, privacy });
+    dispatch(openPrivacyPolicy(true, privacy));
     dispatch(
       openAccountTypeModal({
         open: false,
@@ -70,7 +72,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
         type: "",
       })
     );
-    setModalName("accountTypeModal");
+    dispatch(getModalName("accountTypeModal"));
   };
 
   const [howDoYouKnow, setHowDoYouKnow] = useState<string>("");
@@ -97,17 +99,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   const { postRequest, postLoading, response, error } = usePostRequest();
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotification = useCallback(
-    (message: string) => {
-      api.open({
-        message,
-        description: false,
-        duration: 0,
-      });
-    },
-    [api]
-  );
-
   useEffect(() => {
     if (response) {
       dispatch(
@@ -118,12 +109,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
           type: "",
         })
       );
-      openNotification(response.data.message);
+      dispatch(congratsModal(true, t("congrats.register")));
     }
-    if (error) {
-      openNotification(JSON.parse(error.response.data).email[0]);
-    }
-  }, [response, dispatch, error, openNotification]);
+  }, [response, dispatch, error]);
 
   const { t } = useTranslation();
 
@@ -143,7 +131,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
       openModal={accountType.open}
       className='signUp_overlay'
       headerShow={false}>
-      {contextHolder}
       <EcosystemModal
         onClose={handleClose}
         header={accountType.name}

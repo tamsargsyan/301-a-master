@@ -10,6 +10,8 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { usePostRequest } from "../../actions/apiActions";
 import { Spin } from "antd";
+import { useDispatch } from "react-redux";
+import { congratsModal } from "../../actions/congratsAction";
 
 interface ContactProps {
   separatedPart?: Boolean;
@@ -17,6 +19,7 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,7 +34,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
       [name]: value,
     }));
   };
-  const { postRequest, postLoading } = usePostRequest();
+  const { postRequest, postLoading, response } = usePostRequest();
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     postRequest("write-to-us", formData, {});
@@ -45,6 +48,12 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
       });
   }, [postLoading]);
   const windowSize = useWindowSize();
+
+  useEffect(() => {
+    !postLoading &&
+      response &&
+      dispatch(congratsModal(true, t("congrats.contact-us")));
+  }, [postLoading, response]);
 
   return (
     <>

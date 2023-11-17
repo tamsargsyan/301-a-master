@@ -8,14 +8,15 @@ import { Spin } from "antd";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 
 interface PrivacyProps {
-  privacy: { modal: boolean; privacy: string };
-  setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
   handleClose: () => void;
 }
 
-const Privacy: React.FC<PrivacyProps> = ({ privacy, handleClose }) => {
+const Privacy: React.FC<PrivacyProps> = ({ handleClose }) => {
   const dispatch = useDispatch();
-  const endpoint = privacy?.privacy?.toLowerCase().split(" ").join("-");
+  const { privacy, modal } = useSelector(
+    (state: RootState) => state.privacyPolicy.privacyPolicy
+  );
+  const endpoint = privacy?.toLowerCase().split(" ").join("-");
 
   const toCamelCase = (input: string) => {
     return input
@@ -26,20 +27,20 @@ const Privacy: React.FC<PrivacyProps> = ({ privacy, handleClose }) => {
   useEffect(() => {
     //@ts-ignore
     endpoint && dispatch(fetchingPrivacyPolicy(endpoint));
-  }, [dispatch, privacy.modal, endpoint]);
+  }, [dispatch, modal, endpoint]);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.privacyPolicy
   );
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   //@ts-ignore
-  const jsonData = data[toCamelCase(privacy.privacy)];
+  const jsonData = data[toCamelCase(privacy || "")];
 
   return (
-    <Modal setOpenModal={handleClose} openModal={privacy.modal}>
+    <Modal setOpenModal={handleClose} openModal={modal}>
       <EcosystemModal
         onClose={handleClose}
-        header={privacy.privacy}
+        header={privacy || ""}
         className='modal_back'>
         <div
           className={`agreementTerms_${loading && "loading"} agreementTerms`}

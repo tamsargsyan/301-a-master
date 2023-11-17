@@ -4,7 +4,10 @@ import SingleProjectBox from "../SingleProjectBox";
 import "./index.css";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { openDonateModal } from "../../actions/donateAction";
+import {
+  openDonateModal,
+  openDonateSingleProject,
+} from "../../actions/donateAction";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { storageBase } from "../../utils/storage";
@@ -15,15 +18,11 @@ import { RootState } from "../../store/configureStore";
 interface DonationProjectsModalProps {
   donateProjects: boolean;
   setDonateProjects: (arg: boolean) => void;
-  // setDonation: (arg: boolean) => void;
-  setDonateSingleProject: (arg: boolean) => void;
 }
 
 const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   donateProjects,
   setDonateProjects,
-  // setDonation,
-  setDonateSingleProject,
 }) => {
   const dispatch = useDispatch();
 
@@ -34,7 +33,7 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   };
 
   const handleSingleProject = (id: number) => {
-    setDonateSingleProject(true);
+    dispatch(openDonateSingleProject(true));
     setDonateProjects(false);
     //@ts-ignore
     dispatch(fetchingProjectDetails(`project-details/${id}`));

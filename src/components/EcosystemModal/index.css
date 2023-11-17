@@ -56,6 +56,24 @@
   background: #fff;
   padding: 5px;
 }
+.conragts_modal {
+  width: 45rem !important;
+}
+.conragts_modal .signUp_content {
+  padding: 0;
+  border-radius: 9px;
+  background: #fff;
+}
+.conragts_modal .signUp_content_header .close {
+  display: none;
+}
+.conragts_modal_content {
+  padding: 35px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-width: 1600px) {
   .signUp_bg {
     width: 80rem;

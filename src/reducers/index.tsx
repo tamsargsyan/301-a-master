@@ -8,6 +8,7 @@ import privacyPolicyReducer from "./privacyPolicyReducer";
 import expertProjectReducer from "./expertProjectReducer";
 import authReducer from "./authReducer";
 import registerDataReducer from "./registerDataReducer";
+import congratsReducer from "./congratsReducer";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   expertProject: expertProjectReducer,
   auth: authReducer,
   registerData: registerDataReducer,
+  congrats: congratsReducer,
 });
 
 export default rootReducer;

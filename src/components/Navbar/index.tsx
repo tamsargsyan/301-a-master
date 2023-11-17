@@ -17,6 +17,7 @@ import { RootState } from "../../store/configureStore";
 import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
 import NO_IMAGE from "../../assets/no-image-user.png";
+import { getModalName } from "../../actions/privacyPolicyAction";
 
 export const history = createBrowserHistory(); // Create a history instance
 
@@ -55,15 +56,10 @@ export const menu = [
 
 interface NavbarProps {
   setOpenModal: (arg: boolean) => void;
-  setModalName: (arg: string) => void;
   signIn: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  setOpenModal,
-  setModalName,
-  signIn,
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   const windowSize = useWindowSize();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -232,7 +228,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 className='signIn-btn'
                 onClick={() => {
                   dispatch(openDonateModal(true));
-                  setModalName("donate");
+                  dispatch(getModalName("donate"));
                 }}
                 style={{
                   padding: "9px 23px",
@@ -247,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 className='signIn-btn'
                 onClick={() => {
                   setOpenModal(true);
-                  setModalName("signIn");
+                  dispatch(getModalName("signIn"));
                   setSearchParams({ signIn: "active" });
                 }}
                 style={{ padding: "9px 23px" }}

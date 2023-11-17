@@ -142,5 +142,9 @@
   "budget": "Budget",
   "collected": "Collected",
   "project-in-progress": "These projects are in progress. The detailed information will be available later.",
-  "add-to-interesting": "add to interesting"
+  "add-to-interesting": "add to interesting",
+  "congrats": {
+    "contact-us": "Thanks for your feedback! We will reply to you as soon as possible.",
+    "register": "Thank you for registration! Now you are a part of the “301. Land of Wisdom« foundation."
+  }
 }

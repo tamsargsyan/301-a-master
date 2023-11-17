@@ -9,20 +9,21 @@ import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
 import { useState } from "react";
 import { usePostRequest } from "../../actions/apiActions";
+import { useDispatch } from "react-redux";
+import {
+  getModalName,
+  openPrivacyPolicy,
+} from "../../actions/privacyPolicyAction";
 
 interface OneTimeDonationProps {
   oneTimeDonation: boolean;
   handleClose: () => void;
-  setModalName: (arg: string) => void;
-  setPrivacy: any;
   setOneTimeDonation: (arg: boolean) => void;
 }
 
 const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
   oneTimeDonation,
   handleClose,
-  setModalName,
-  setPrivacy,
   setOneTimeDonation,
 }) => {
   const filterOption = (
@@ -30,10 +31,13 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
     option: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
+  const dispatch = useDispatch();
+
   const handlePrivacy = (privacy: string) => {
-    setPrivacy({ modal: true, privacy });
+    // setPrivacy({ modal: true, privacy });
+    dispatch(openPrivacyPolicy(true, privacy));
     setOneTimeDonation(false);
-    setModalName("oneTimeDonation");
+    dispatch(getModalName("oneTimeDonation"));
   };
   const { t } = useTranslation();
   const [summa, setSumma] = useState("");

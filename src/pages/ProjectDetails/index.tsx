@@ -30,11 +30,10 @@ import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import Header from "../../components/Header";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
 import ReactPlayer from "react-player";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
-import { openDonateModal } from "../../actions/donateAction";
+import { openDonateSingleProject } from "../../actions/donateAction";
 import { Helmet } from "react-helmet";
 
 const ProjectDetails = () => {
@@ -112,6 +111,7 @@ const ProjectDetails = () => {
     if (role === "partners") return PURPLE_CIRCLE;
     return ROSE_CIRCLE;
   };
+
   if (loading)
     return (
       <div className='loadingContainer'>
@@ -230,11 +230,7 @@ const ProjectDetails = () => {
                   <div className='problem_header'>
                     <div className='problem_heading'>
                       <img src={PATTERN} alt='Pattern' />
-                      <h2>
-                        {false
-                          ? t("project-details.problem")
-                          : t("project-in-progress")}
-                      </h2>
+                      <h2>{t("project-details.problem")}</h2>
                     </div>
                     {/* {windowSize.width > 600 && (
                       <button className='download_pdf'>
@@ -243,14 +239,12 @@ const ProjectDetails = () => {
                       </button>
                     )} */}
                   </div>
-                  {false ? (
-                    <div
-                      className='problem_inner'
-                      dangerouslySetInnerHTML={{
-                        __html: project[`problem_description_${lang}`],
-                      }}
-                    />
-                  ) : null}
+                  <div
+                    className='problem_inner'
+                    dangerouslySetInnerHTML={{
+                      __html: project[`problem_description_${lang}`],
+                    }}
+                  />
                   {/* <div
                     className='problem_inner'
                     dangerouslySetInnerHTML={{
@@ -273,72 +267,79 @@ const ProjectDetails = () => {
                     />
                   </div>
                 )}
-                {project && project.budget_price ? (
-                  <div className='roadMapContainer'>
-                    <div className='roadMap_heading problem_heading'>
-                      <img src={PATTERN} alt='Pattern' />
-                      <h2>{t("project-details.road-map")}</h2>
-                    </div>
-                    <div className='roadMap_inner _inner'>
-                      <div className='fullProject_slider'>
-                        {project?.month_data.lnegth && (
-                          <div className='chartContainer'>
-                            <div className='chart_line'></div>
-                            {project?.month_data.map(
-                              (month: any, i: number) => {
-                                return (
-                                  <div className='chart' key={i}>
-                                    <div className='chart_info'>
-                                      <h1>{month.month}</h1>
-                                      <div
-                                        dangerouslySetInnerHTML={{
-                                          __html:
-                                            month[`month_description_${lang}`],
-                                        }}
-                                      />
-                                    </div>
-                                    <div className='chart_month'>
-                                      <div
-                                        className='month_circle'
-                                        style={{
-                                          backgroundColor: colors[i],
-                                        }}></div>
-                                      <div className='month'>
-                                        {month[`month_${lang}`]}
+                <div className='roadMapContainer'>
+                  <div className='roadMap_heading problem_heading'>
+                    <img src={PATTERN} alt='Pattern' />
+                    <h2>
+                      {+project.budget_price !== 0
+                        ? t("project-details.road-map")
+                        : t("project-in-progress")}
+                    </h2>
+                  </div>
+                  {project &&
+                    (+project.budget_price !== 0 ? (
+                      <div className='roadMap_inner _inner'>
+                        <div className='fullProject_slider'>
+                          {project?.month_data.lnegth && (
+                            <div className='chartContainer'>
+                              <div className='chart_line'></div>
+                              {project?.month_data.map(
+                                (month: any, i: number) => {
+                                  return (
+                                    <div className='chart' key={i}>
+                                      <div className='chart_info'>
+                                        <h1>{month.month}</h1>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              month[
+                                                `month_description_${lang}`
+                                              ],
+                                          }}
+                                        />
+                                      </div>
+                                      <div className='chart_month'>
+                                        <div
+                                          className='month_circle'
+                                          style={{
+                                            backgroundColor: colors[i],
+                                          }}></div>
+                                        <div className='month'>
+                                          {month[`month_${lang}`]}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                );
-                              }
-                            )}
+                                  );
+                                }
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <div className='budgetContainer'>
+                          <div className='budget'>
+                            <img
+                              src={`${storageBase}/${project?.budget_image}`}
+                              alt='Budget'
+                            />
+                            <div className='budgetPrice'>
+                              <span>{t("budget")}</span>
+                              <h2>{project?.budget_price}$</h2>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                      <div className='budgetContainer'>
-                        <div className='budget'>
-                          <img
-                            src={`${storageBase}/${project?.budget_image}`}
-                            alt='Budget'
-                          />
-                          <div className='budgetPrice'>
-                            <span>{t("budget")}</span>
-                            <h2>{project?.budget_price}$</h2>
+                          <div className='collected'>
+                            <img
+                              src={`${storageBase}/${project.collected_image}`}
+                              alt='Collected'
+                            />
+                            <div className='collectedPrice'>
+                              <span>{t("collected")}</span>
+                              <h2>{data.collectedPrice}$</h2>
+                            </div>
                           </div>
                         </div>
-                        <div className='collected'>
-                          <img
-                            src={`${storageBase}/${project.collected_image}`}
-                            alt='Collected'
-                          />
-                          <div className='collectedPrice'>
-                            <span>{t("collected")}</span>
-                            <h2>{data.collectedPrice}$</h2>
-                          </div>
-                        </div>
                       </div>
-                    </div>
-                  </div>
-                ) : null}
+                    ) : null)}
+                </div>
                 {data.team[0].length === true && (
                   <div className='workTeamContainer'>
                     <div className='roadMap_heading problem_heading'>
@@ -438,7 +439,15 @@ const ProjectDetails = () => {
                           padding: "12px 35px",
                           width: !isVisible ? "auto" : "100%",
                         }}
-                        onClick={() => dispatch(openDonateModal(true))}
+                        onClick={() => {
+                          dispatch(openDonateSingleProject(true));
+                          dispatch(
+                            //@ts-ignore
+                            fetchingProjectDetails(
+                              `project-details/${project.id}`
+                            )
+                          );
+                        }}
                         className='donationBtn'
                       />
                     ) : null}

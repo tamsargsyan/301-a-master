@@ -21,13 +21,15 @@ import { login } from "../../actions/authActions";
 import { useSearchParams } from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
 import { history } from "../Navbar";
+import {
+  getModalName,
+  openPrivacyPolicy,
+} from "../../actions/privacyPolicyAction";
 
 interface SignInProps {
   signIn: boolean;
   setSignIn: (arg: boolean) => void;
   setSignUp: (arg: boolean) => void;
-  setPrivacy: any;
-  setModalName: (arg: string) => void;
   isAuthenticated: any;
   dispatch: any;
 }
@@ -36,8 +38,6 @@ const SignIn: React.FC<SignInProps> = ({
   signIn,
   setSignIn,
   setSignUp,
-  setPrivacy,
-  setModalName,
   dispatch,
 }) => {
   const [forgetPassword, setForgetPassword] = useState(false);
@@ -48,9 +48,9 @@ const SignIn: React.FC<SignInProps> = ({
   }, [signIn]);
 
   const handlePrivacy = (privacy: string) => {
-    setPrivacy({ modal: true, privacy });
+    dispatch(openPrivacyPolicy(true, privacy));
     setSignIn(false);
-    setModalName("signInModal");
+    dispatch(getModalName("signInModal"));
   };
   const windowSize = useWindowSize();
   const { t } = useTranslation();

@@ -12,6 +12,7 @@ interface EcosystemModalProps {
   header: string;
   className?: string;
   closeIcon?: string;
+  headerChildren?: ReactNode;
 }
 
 const EcosystemModal: React.FC<EcosystemModalProps> = ({
@@ -20,6 +21,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
   header,
   className,
   closeIcon,
+  headerChildren,
 }) => {
   const { t } = useTranslation();
   const windowSize = useWindowSize();
@@ -43,6 +45,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
           <div className='signUp_header'>
             <p>{header}</p>
           </div>
+          {headerChildren}
         </div>
         {children}
       </div>

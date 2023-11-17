@@ -18,25 +18,23 @@ import {
   isHomePageModal,
   openAccountTypeModal,
   openDonateModal,
+  openDonateSingleProject,
 } from "./actions/donateAction";
 import { RootState } from "./store/configureStore";
 import { useSearchParams } from "react-router-dom";
 import RecommentedModal from "./components/RecommentedModal";
+import Conragts from "./components/Congrats";
+import { openPrivacyPolicy } from "./actions/privacyPolicyAction";
 
 function App() {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [agreementTerms, setAgreementTerms] = useState(false);
-  const [privacy, setPrivacy] = useState({
-    modal: false,
-    privacy: "",
-  });
-  const [modalName, setModalName] = useState("");
   const [oneTimeDonation, setOneTimeDonation] = useState(false);
   const [donateProjects, setDonateProjects] = useState(false);
-  const [donateSingleProject, setDonateSingleProject] = useState(false);
 
   const dispatch = useDispatch();
+  const { modalName } = useSelector((state: RootState) => state.privacyPolicy);
   const { isDonateModal } = useSelector(
     (state: RootState) => state.projectDetails
   );
@@ -49,11 +47,9 @@ function App() {
         signUp ||
         accountType.open ||
         agreementTerms ||
-        privacy.modal ||
         isDonateModal ||
         oneTimeDonation ||
-        donateProjects ||
-        donateSingleProject
+        donateProjects
     );
     return () => {
       document.body.classList.remove("no-scroll");
@@ -63,11 +59,9 @@ function App() {
     signUp,
     accountType.open,
     agreementTerms,
-    privacy.modal,
     isDonateModal,
     oneTimeDonation,
     donateProjects,
-    donateSingleProject,
   ]);
 
   useEffect(() => {
@@ -82,59 +76,49 @@ function App() {
     if (signInActive) setSignIn(true);
   }, [signInActive]);
 
-    const container = document.querySelectorAll(".ecosystemDetails_partners");
-    let isDown = false;
+  const container = document.querySelectorAll(".ecosystemDetails_partners");
+  let isDown = false;
+  //@ts-ignore
+  let startX;
+  //@ts-ignore
+  let scrollLeft;
+  container.forEach(ct => {
     //@ts-ignore
-    let startX;
-    //@ts-ignore
-    let scrollLeft;
-    container.forEach(ct => {
+    ct?.addEventListener("mousedown", e => {
       //@ts-ignore
-      ct?.addEventListener("mousedown", e => {
-        //@ts-ignore
-        isDown = true;
-        //@ts-ignore
-        startX = e.pageX - ct.offsetLeft;
-        //@ts-ignore
-        scrollLeft = ct.scrollLeft;
-      });
+      isDown = true;
       //@ts-ignore
-      ct?.addEventListener("mouseleave", () => {
-        //@ts-ignore
-        isDown = false;
-      });
+      startX = e.pageX - ct.offsetLeft;
       //@ts-ignore
-      ct?.addEventListener("mouseup", () => {
-        isDown = false;
-      });
-      //@ts-ignore
-      ct?.addEventListener("mousemove", e => {
-        if (!isDown) return;
-        e.preventDefault();
-        //@ts-ignore
-        const x = e.pageX - ct.offsetLeft;
-        //@ts-ignore
-        const walk = (x - startX) * 2;
-        //@ts-ignore
-        ct.scrollLeft = scrollLeft - walk;
-      });
+      scrollLeft = ct.scrollLeft;
     });
+    //@ts-ignore
+    ct?.addEventListener("mouseleave", () => {
+      //@ts-ignore
+      isDown = false;
+    });
+    //@ts-ignore
+    ct?.addEventListener("mouseup", () => {
+      isDown = false;
+    });
+    //@ts-ignore
+    ct?.addEventListener("mousemove", e => {
+      if (!isDown) return;
+      e.preventDefault();
+      //@ts-ignore
+      const x = e.pageX - ct.offsetLeft;
+      //@ts-ignore
+      const walk = (x - startX) * 2;
+      //@ts-ignore
+      ct.scrollLeft = scrollLeft - walk;
+    });
+  });
 
   return (
     <div className='container'>
-      <Navbar
-        setOpenModal={setSignIn}
-        setModalName={setModalName}
-        signIn={signIn}
-      />
+      <Navbar setOpenModal={setSignIn} signIn={signIn} />
       <Router />
-      <SignIn
-        signIn={signIn}
-        setSignIn={setSignIn}
-        setSignUp={setSignUp}
-        setPrivacy={setPrivacy}
-        setModalName={setModalName}
-      />
+      <SignIn signIn={signIn} setSignIn={setSignIn} setSignUp={setSignUp} />
       <SignUp
         signUp={signUp}
         setSignUp={setSignUp}
@@ -150,8 +134,6 @@ function App() {
         accountType={accountType}
         setSignUp={setSignUp}
         setAgreementTerms={setAgreementTerms}
-        setPrivacy={setPrivacy}
-        setModalName={setModalName}
         handleClose={() => {
           !isHomePage && setSignUp(true);
           dispatch(
@@ -170,13 +152,8 @@ function App() {
         setAgreementTerms={setAgreementTerms}
       />
       <Privacy
-        privacy={privacy}
-        setPrivacy={setPrivacy}
         handleClose={() => {
-          setPrivacy({
-            modal: false,
-            privacy: "",
-          });
+          dispatch(openPrivacyPolicy(false, null));
           if (modalName === "oneTimeDonation") setOneTimeDonation(true);
           if (modalName === "signInModal") setSignIn(true);
           if (modalName === "accountTypeModal")
@@ -188,7 +165,8 @@ function App() {
                 open: true,
               })
             );
-          if (modalName === "donateToProject") setDonateSingleProject(true);
+          if (modalName === "donateToProject")
+            dispatch(openDonateSingleProject(true));
         }}
       />
       <Donation
@@ -198,8 +176,6 @@ function App() {
       />
       <OneTimeDonation
         oneTimeDonation={oneTimeDonation}
-        setModalName={setModalName}
-        setPrivacy={setPrivacy}
         setOneTimeDonation={setOneTimeDonation}
         handleClose={() => {
           setOneTimeDonation(false);
@@ -209,16 +185,10 @@ function App() {
       <DonationProjectsModal
         donateProjects={donateProjects}
         setDonateProjects={setDonateProjects}
-        setDonateSingleProject={setDonateSingleProject}
       />
-      <DonateToTheProject
-        setDonateSingleProject={setDonateSingleProject}
-        setDonateProjects={setDonateProjects}
-        donateSingleProject={donateSingleProject}
-        setPrivacy={setPrivacy}
-        setModalName={setModalName}
-      />
+      <DonateToTheProject setDonateProjects={setDonateProjects} />
       <RecommentedModal />
+      <Conragts />
     </div>
   );
 }

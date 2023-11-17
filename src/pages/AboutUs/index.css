@@ -5,6 +5,12 @@
 .aboutUs_dashedLine {
   border: 1px dashed #000;
 }
+.aboutUs_privacy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.aboutUs_privacy button,
 .aboutUs_privacy p {
   margin: 0;
   line-height: 155%;
