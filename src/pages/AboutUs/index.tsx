@@ -11,30 +11,22 @@ import PATTERN_1 from "../../assets/patterns/about-us/big-pattern-1.svg";
 import PATTERN_2 from "../../assets/patterns/about-us/big-pattern-2.svg";
 import PATTERN_3 from "../../assets/patterns/about-us/big-pattern-3.svg";
 import { fetchingAboutUs } from "../../actions/apiActions";
-import { Spin, Collapse } from "antd";
+import { Spin, Collapse, Popconfirm } from "antd";
 import "./index.css";
 import Img from "../../components/Img";
 import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { Helmet } from "react-helmet";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import {
+  getAgreementTerms,
+  openPrivacyPolicy,
+} from "../../actions/privacyPolicyAction";
 
 const { Panel } = Collapse;
 
 const AboutUs = () => {
   const windowSize = useWindowSize();
-  // const data1 = [
-  //   {
-  //     name: "Соглашение условий *",
-  //     render: <button></button>
-  //   },
-  // ];
-  // const data1 = [
-  //   "Соглашение условий *",
-  //   "КОДЕКС ЭТИКИ КЛУБА 301*",
-  //   "Форма поддержки",
-  //   "Terms of Services and Privacy Policy",
-  // ];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,8 +56,9 @@ const AboutUs = () => {
   const infos = Object.values(data);
   const faq = infos[5];
 
-  const handlePrivacy = (text: string) => {};
-
+  const handlePrivacy = (privacy: string) => {
+    dispatch(openPrivacyPolicy(true, privacy));
+  };
   return (
     <>
       <Helmet>
@@ -159,14 +152,47 @@ const AboutUs = () => {
         </div>
         <div className='aboutUs_dashedLine' />
         <div className='inner aboutUs_privacy'>
-          {/* {data1.map((item, i) => (
-            <button onClick={() => {}} key={i}>
-              {item}
-            </button>
-          ))} */}
-          <button onClick={() => {}}>Соглашение условий *</button>
-          <button onClick={() => {}}>КОДЕКС ЭТИКИ КЛУБА 301*</button>
-          <button onClick={() => {}}>Форма поддержки</button>
+          <button
+            onClick={() =>
+              dispatch(getAgreementTerms(true, t("checkboxes.agreement_terms"), "about_us"))
+            }>
+            Соглашение условий *
+          </button>
+          <button
+            onClick={() =>
+              dispatch(
+                getAgreementTerms(true, t("checkboxes.club_code_of_ethics_301"), "about_us")
+              )
+            }>
+            КОДЕКС ЭТИКИ КЛУБА 301*
+          </button>
+          <Popconfirm
+            className='signUp_popover'
+            description={
+              <div className='support_popover'>
+                <div className='support_popover-list-item'>
+                  <div className='support_popover-list-circle'></div>
+                  <div className='support_popover-list-text'>
+                    Годовая подписка (После регистрации списывается
+                    <span> 3612 $</span> сразу на год вперед)
+                  </div>
+                </div>
+                <div className='support_popover-list-item'>
+                  <div className='support_popover-list-circle'></div>
+                  <div className='support_popover-list-text'>
+                    Ежемесячная подписка (После регистрации ежемесячно
+                    списывается <span>301$</span>)
+                  </div>
+                </div>
+              </div>
+            }
+            icon={false}
+            //@ts-ignore
+            okText={false}
+            cancelText={false}
+            title={undefined}>
+            <button>Форма поддержки</button>
+          </Popconfirm>
           <p>
             <button
               className='mentioned_txt'
@@ -176,8 +202,7 @@ const AboutUs = () => {
             <button>{t("privacy.and")}</button>
             <button
               className='mentioned_txt'
-              // onClick={() => handlePrivacy("Privacy Policy")}
-            >
+              onClick={() => handlePrivacy("Privacy Policy")}>
               {t("privacy.privacy")}
             </button>
           </p>

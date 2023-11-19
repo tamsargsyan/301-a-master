@@ -29,10 +29,11 @@ import { openPrivacyPolicy } from "./actions/privacyPolicyAction";
 function App() {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
-  const [agreementTerms, setAgreementTerms] = useState(false);
   const [oneTimeDonation, setOneTimeDonation] = useState(false);
   const [donateProjects, setDonateProjects] = useState(false);
-
+  const { agreementTerms } = useSelector(
+    (state: RootState) => state.privacyPolicy
+  );
   const dispatch = useDispatch();
   const { modalName } = useSelector((state: RootState) => state.privacyPolicy);
   const { isDonateModal } = useSelector(
@@ -46,7 +47,7 @@ function App() {
       signIn ||
         signUp ||
         accountType.open ||
-        agreementTerms ||
+        agreementTerms.modal ||
         isDonateModal ||
         oneTimeDonation ||
         donateProjects
@@ -58,7 +59,7 @@ function App() {
     signIn,
     signUp,
     accountType.open,
-    agreementTerms,
+    agreementTerms.modal,
     isDonateModal,
     oneTimeDonation,
     donateProjects,
@@ -133,7 +134,6 @@ function App() {
       <AccountTypeModal
         accountType={accountType}
         setSignUp={setSignUp}
-        setAgreementTerms={setAgreementTerms}
         handleClose={() => {
           !isHomePage && setSignUp(true);
           dispatch(
@@ -147,10 +147,7 @@ function App() {
           dispatch(isHomePageModal(false));
         }}
       />
-      <AgreementTermsModal
-        agreementTerms={agreementTerms}
-        setAgreementTerms={setAgreementTerms}
-      />
+      <AgreementTermsModal />
       <Privacy
         handleClose={() => {
           dispatch(openPrivacyPolicy(false, null));

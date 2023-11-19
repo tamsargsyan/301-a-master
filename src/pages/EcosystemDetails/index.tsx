@@ -107,11 +107,8 @@ const EcoSystemDetails = () => {
   const { data, partners, loading } = useSelector(
     (state: RootState) => state.expertProject
   );
-
-  console.log(partners);
   const [header, setHeader] = useState(null);
   const [project, setProject] = useState<any>(null);
-  console.log(partners);
   useEffect(() => {
     if (ecosystem) {
       if (ecosystem === "partners") {

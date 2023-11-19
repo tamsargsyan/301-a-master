@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
 import {
+  getAgreementTerms,
   getModalName,
   openPrivacyPolicy,
 } from "../../actions/privacyPolicyAction";
@@ -26,7 +27,6 @@ const { Option } = Select;
 interface AccountTypeModalProps {
   accountType: { open: boolean; id: number; name: string; type: string };
   setSignUp: (arg: boolean) => void;
-  setAgreementTerms: (arg: boolean) => void;
   handleClose: () => void;
 }
 
@@ -45,12 +45,31 @@ const filterOptionSages = (input: string, option: any) =>
 
 const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   accountType,
-  setAgreementTerms,
   handleClose,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const confirm = (e: React.MouseEvent<HTMLElement>) => {
-    setAgreementTerms(true);
+  const confirmAgreementTerms = () => {
+    dispatch(
+      getAgreementTerms(true, t("checkboxes.agreement_terms"), "sign_up")
+    );
+    dispatch(
+      openAccountTypeModal({
+        open: false,
+        id: 0,
+        name: "",
+        type: "",
+      })
+    );
+  };
+  const confirmClubCodeEthics = () => {
+    dispatch(
+      getAgreementTerms(
+        true,
+        t("checkboxes.club_code_of_ethics_301"),
+        "sign_up"
+      )
+    );
     dispatch(
       openAccountTypeModal({
         open: false,
@@ -62,7 +81,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   };
 
   const handlePrivacy = (privacy: string) => {
-    // setPrivacy({ modal: true, privacy });
     dispatch(openPrivacyPolicy(true, privacy));
     dispatch(
       openAccountTypeModal({
@@ -112,8 +130,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
       dispatch(congratsModal(true, t("congrats.register")));
     }
   }, [response, dispatch, error]);
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     //@ts-ignore
@@ -645,15 +661,26 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       </Checkbox>
                       <Popconfirm
                         className='signUp_popover'
-                        // title='Delete the task'
-                        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
                         icon={false}
+                        description={
+                          <span>
+                            КОДЕКС ЭТИКИ КЛУБА 301
+                            <br />
+                            Уважаемые Члены Клуба 301, пожалуйста, внимательно
+                            ознакомьтесь с правилами Клуба 301! Как
+                            действительный член Клуба 301 («Член Клуба»), Вы
+                            принимаете Кодекс Этики  Клуба 301 и обязуетесь
+                            соблюдать Правила клуба 301 (в дальнейшем
+                            “Правила”).
+                          </span>
+                        }
                         //@ts-ignore
-                        onConfirm={confirm}
+                        onConfirm={confirmAgreementTerms}
                         //@ts-ignore
                         // onCancel={cancel}
                         okText='more'
-                        cancelText={false}>
+                        cancelText={false}
+                        title={undefined}>
                         <img src={INFO_ICON} alt='Info' />
                       </Popconfirm>
                     </div>
@@ -666,7 +693,29 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         }>
                         {t("checkboxes.club_code_of_ethics_301")}*
                       </Checkbox>
-                      <img src={INFO_ICON} alt='Info' />
+                      <Popconfirm
+                        className='signUp_popover'
+                        description={
+                          <span>
+                            КОДЕКС ЭТИКИ КЛУБА 301
+                            <br />
+                            Уважаемые Члены Клуба 301, пожалуйста, внимательно
+                            ознакомьтесь с правилами Клуба 301! Как
+                            действительный член Клуба 301 («Член Клуба»), Вы
+                            принимаете Кодекс Этики  Клуба 301 и обязуетесь
+                            соблюдать Правила клуба 301 (в дальнейшем
+                            “Правила”).
+                          </span>
+                        }
+                        icon={false}
+                        //@ts-ignore
+                        onConfirm={confirmClubCodeEthics}
+                        //@ts-ignore
+                        okText='more'
+                        cancelText={false}
+                        title={undefined}>
+                        <img src={INFO_ICON} alt='Info' />
+                      </Popconfirm>
                     </div>
                     <div className='signUp_info'>
                       <Checkbox
@@ -675,7 +724,35 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         onChange={e => setSupportFormChecked(e.target.checked)}>
                         {t("checkboxes.support_form")}
                       </Checkbox>
-                      <img src={INFO_ICON} alt='Info' />
+                      <Popconfirm
+                        className='signUp_popover'
+                        description={
+                          <div className='support_popover'>
+                            <div className='support_popover-list-item'>
+                              <div className='support_popover-list-circle'></div>
+                              <div className='support_popover-list-text'>
+                                Годовая подписка (После регистрации списывается
+                                <span> 3612 $</span> сразу на год вперед)
+                              </div>
+                            </div>
+                            <div className='support_popover-list-item'>
+                              <div className='support_popover-list-circle'></div>
+                              <div className='support_popover-list-text'>
+                                Ежемесячная подписка (После регистрации
+                                ежемесячно списывается <span>301$</span>)
+                              </div>
+                            </div>
+                          </div>
+                        }
+                        icon={false}
+                        //@ts-ignore
+                        // onConfirm={confirmClubCodeEthics}
+                        //@ts-ignore
+                        okText={false}
+                        cancelText={false}
+                        title={undefined}>
+                        <img src={INFO_ICON} alt='Info' />
+                      </Popconfirm>
                     </div>
                   </div>
                 </div>

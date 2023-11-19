@@ -4,6 +4,7 @@ import {
   FETCH_PRIVACY_POLICY_ERROR,
   OPEN_PRIVACY_POLICY,
   MODAL_NAME,
+  AGREEMENT_TERMS,
 } from "../utils/action.types";
 import { PrivactPolicy } from "../utils/api.types";
 
@@ -16,6 +17,11 @@ interface PrivacyPolicyState {
     privacy: null | string;
   };
   modalName: string;
+  agreementTerms: {
+    modal: boolean;
+    text: string | null;
+    from: string;
+  };
 }
 
 const initialState: PrivacyPolicyState = {
@@ -27,6 +33,11 @@ const initialState: PrivacyPolicyState = {
     privacy: null,
   },
   modalName: "",
+  agreementTerms: {
+    modal: false,
+    text: null,
+    from: "",
+  },
 };
 
 const privacyPolicyReducer = (
@@ -52,6 +63,15 @@ const privacyPolicyReducer = (
       return {
         ...state,
         modalName: action.payload,
+      };
+    case AGREEMENT_TERMS:
+      return {
+        ...state,
+        agreementTerms: {
+          modal: action.payload.modal,
+          text: action.payload.text,
+          from: action.payload.from,
+        },
       };
     default:
       return state;

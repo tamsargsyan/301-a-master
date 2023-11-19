@@ -2,36 +2,37 @@ import React from "react";
 import Modal from "../Modal";
 import EcosystemModal from "../EcosystemModal";
 import "./index.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
+import { getAgreementTerms } from "../../actions/privacyPolicyAction";
+import { RootState } from "../../store/configureStore";
 
-interface AgreementTermsModalProps {
-  setAgreementTerms: (arg: boolean) => void;
-  agreementTerms: boolean;
-}
+interface AgreementTermsModalProps {}
 
-const AgreementTermsModal: React.FC<AgreementTermsModalProps> = ({
-  agreementTerms,
-  setAgreementTerms,
-}) => {
+const AgreementTermsModal: React.FC<AgreementTermsModalProps> = ({}) => {
   const dispatch = useDispatch();
+  const { agreementTerms } = useSelector(
+    (state: RootState) => state.privacyPolicy
+  );
+
   const handleClose = () => {
-    setAgreementTerms(false);
-    dispatch(
-      openAccountTypeModal({
-        name: "donor",
-        id: 1,
-        open: true,
-        type: "donor",
-      })
-    );
+    dispatch(getAgreementTerms(false, null, ""));
+    agreementTerms.from === "sign_up" &&
+      dispatch(
+        openAccountTypeModal({
+          name: "donor",
+          id: 1,
+          open: true,
+          type: "donor",
+        })
+      );
   };
 
   return (
-    <Modal setOpenModal={handleClose} openModal={agreementTerms}>
+    <Modal setOpenModal={handleClose} openModal={agreementTerms.modal}>
       <EcosystemModal
         onClose={handleClose}
-        header='Соглашение условий'
+        header={agreementTerms.text || ""}
         className='modal_back'>
         <div className='agreementTerms'>
           <p>

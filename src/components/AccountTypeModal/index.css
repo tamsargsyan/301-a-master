@@ -206,11 +206,37 @@
 .howDoYouKnow_other {
   margin-top: 10px;
 }
-.ant-notification  {
+.ant-notification {
   z-index: 99999;
 }
 .ant-notification-notice-message {
   margin-bottom: 0 !important;
+}
+.support_popover-list-item {
+  display: flex;
+  gap: 15px;
+}
+.support_popover-list-item:first-child {
+  margin-bottom: 18px;
+}
+.support_popover {
+  margin-top: 30px;
+}
+.support_popover-list-text {
+  width: fit-content;
+  color: #313a4b;
+  text-align: justify;
+  font-weight: 500;
+}
+.support_popover-list-text span {
+  color: #dd264e;
+}
+.support_popover-list-circle {
+  background: #313a4b;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 7.5px;
 }
 @media screen and (max-width: 800px) {
   .signUp_formInputs {
