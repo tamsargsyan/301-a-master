@@ -51,7 +51,7 @@
     height: -webkit-fill-available;
   }
   .mobile_modal {
-    height: -webkit-fill-available;
+    height: 100%;
     overflow: hidden;
     overflow-y: auto;
   }

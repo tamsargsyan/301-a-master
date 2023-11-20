@@ -69,7 +69,7 @@ const Project: React.FC<ProjectProps> = ({
           <div
             className='ourProject__desc'
             dangerouslySetInnerHTML={{
-              __html: desc.length > 100 ? `${desc.slice(0, 220)}. . .` : desc,
+              __html: desc.length > 100 ? `${desc.slice(0, 200)}. . .` : desc,
             }}
           />
         </div>
