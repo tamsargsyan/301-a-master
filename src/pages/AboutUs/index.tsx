@@ -2,7 +2,7 @@ import Background from "../../components/Background";
 import SIDE_PATTERN from "../../assets/patterns/side-about-us.svg";
 import SIDE_PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import Header from "../../components/Header";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
@@ -56,9 +56,10 @@ const AboutUs = () => {
   const infos = Object.values(data);
   const faq = infos[5];
 
-  const handlePrivacy = (privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacy));
+  const handlePrivacy = (privacyHeader: string, privacy: string) => {
+    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
   };
+
   return (
     <>
       <Helmet>
@@ -154,14 +155,24 @@ const AboutUs = () => {
         <div className='inner aboutUs_privacy'>
           <button
             onClick={() =>
-              dispatch(getAgreementTerms(true, t("checkboxes.agreement_terms"), "about_us"))
+              dispatch(
+                getAgreementTerms(
+                  true,
+                  t("checkboxes.agreement_terms"),
+                  "about_us"
+                )
+              )
             }>
             Соглашение условий *
           </button>
           <button
             onClick={() =>
               dispatch(
-                getAgreementTerms(true, t("checkboxes.club_code_of_ethics_301"), "about_us")
+                getAgreementTerms(
+                  true,
+                  t("checkboxes.club_code_of_ethics_301"),
+                  "about_us"
+                )
               )
             }>
             КОДЕКС ЭТИКИ КЛУБА 301*
@@ -172,37 +183,47 @@ const AboutUs = () => {
               <div className='support_popover'>
                 <div className='support_popover-list-item'>
                   <div className='support_popover-list-circle'></div>
-                  <div className='support_popover-list-text'>
-                    Годовая подписка (После регистрации списывается
-                    <span> 3612 $</span> сразу на год вперед)
-                  </div>
+                  <div
+                    className='support_popover-list-text'
+                    dangerouslySetInnerHTML={{
+                      __html: t("privacy.support_popover_1"),
+                    }}
+                  />
                 </div>
                 <div className='support_popover-list-item'>
                   <div className='support_popover-list-circle'></div>
-                  <div className='support_popover-list-text'>
-                    Ежемесячная подписка (После регистрации ежемесячно
-                    списывается <span>301$</span>)
-                  </div>
+                  <div
+                    className='support_popover-list-text'
+                    dangerouslySetInnerHTML={{
+                      __html: t("privacy.support_popover_2"),
+                    }}
+                  />
                 </div>
               </div>
             }
             icon={false}
-            //@ts-ignore
-            okText={false}
-            cancelText={false}
+            okText={""}
+            cancelText={""}
             title={undefined}>
-            <button>Форма поддержки</button>
+            <button className='support_form'>Форма поддержки</button>
           </Popconfirm>
           <p>
             <button
               className='mentioned_txt'
-              onClick={() => handlePrivacy("Terms of Services")}>
+              onClick={() =>
+                handlePrivacy(
+                  t("privacy.terms-of-services"),
+                  "Terms of Services"
+                )
+              }>
               {t("privacy.terms")}
             </button>
             <button>{t("privacy.and")}</button>
             <button
               className='mentioned_txt'
-              onClick={() => handlePrivacy("Privacy Policy")}>
+              onClick={() =>
+                handlePrivacy(t("privacy.privacy-policy"), "Privacy Policy")
+              }>
               {t("privacy.privacy")}
             </button>
           </p>

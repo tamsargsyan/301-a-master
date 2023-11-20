@@ -14,6 +14,7 @@ interface PrivacyPolicyState {
   error: string | null;
   privacyPolicy: {
     modal: boolean;
+    privacyHeader: null | string;
     privacy: null | string;
   };
   modalName: string;
@@ -30,6 +31,7 @@ const initialState: PrivacyPolicyState = {
   error: null,
   privacyPolicy: {
     modal: false,
+    privacyHeader: null,
     privacy: null,
   },
   modalName: "",
@@ -56,6 +58,7 @@ const privacyPolicyReducer = (
         ...state,
         privacyPolicy: {
           modal: action.payload.modal,
+          privacyHeader: action.payload.privacyHeader,
           privacy: action.payload.privacy,
         },
       };

@@ -7,7 +7,8 @@
     "calendar": "Calendar",
     "about-us": "About Us",
     "contact": "Contact",
-    "sign-in": "Sign In"
+    "sign-in": "Sign In",
+    "logout": "Logout"
   },
   "btns": {
     "become-301": "Become one of 301",
@@ -85,7 +86,11 @@
     "1": "By continuing, you agree 301’s",
     "terms": "Terms of Services",
     "and": "and",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "terms-of-services": "Terms of Services",
+    "privacy-policy": "PRIVACY POLICY",
+    "support_popover_1": "<div>Annual subscription (After registration, <span>$3612</span> is deducted immediately for the year in advance)</div>",
+    "support_popover_2": "<div>Monthly subscription (After registration, <span>$301</span> is debited monthly)</div>"
   },
   "inputs": {
     "enter-donation-amount": "Enter donation amount",

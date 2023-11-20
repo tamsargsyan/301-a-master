@@ -13,7 +13,7 @@ interface PrivacyProps {
 
 const Privacy: React.FC<PrivacyProps> = ({ handleClose }) => {
   const dispatch = useDispatch();
-  const { privacy, modal } = useSelector(
+  const { privacyHeader, privacy, modal } = useSelector(
     (state: RootState) => state.privacyPolicy.privacyPolicy
   );
   const endpoint = privacy?.toLowerCase().split(" ").join("-");
@@ -40,7 +40,7 @@ const Privacy: React.FC<PrivacyProps> = ({ handleClose }) => {
     <Modal setOpenModal={handleClose} openModal={modal}>
       <EcosystemModal
         onClose={handleClose}
-        header={privacy || ""}
+        header={privacyHeader || ""}
         className='modal_back'>
         <div
           className={`agreementTerms_${loading && "loading"} agreementTerms`}

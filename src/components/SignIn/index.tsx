@@ -47,8 +47,8 @@ const SignIn: React.FC<SignInProps> = ({
     !signIn && setForgetPassword(false);
   }, [signIn]);
 
-  const handlePrivacy = (privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacy));
+  const handlePrivacy = (privacyHeader: string, privacy: string) => {
+    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
     setSignIn(false);
     dispatch(getModalName("signInModal"));
   };
@@ -287,13 +287,23 @@ const SignIn: React.FC<SignInProps> = ({
                     <br></br>
                     <button
                       className='mentioned_txt'
-                      onClick={() => handlePrivacy("Terms of Services")}>
+                      onClick={() =>
+                        handlePrivacy(
+                          t("privacy.terms-of-services"),
+                          "Terms of Services"
+                        )
+                      }>
                       {t("privacy.terms")}
                     </button>
                     {t("privacy.and")}
                     <button
                       className='mentioned_txt'
-                      onClick={() => handlePrivacy("Privacy Policy")}>
+                      onClick={() =>
+                        handlePrivacy(
+                          t("privacy.privacy-policy"),
+                          "Privacy Policy"
+                        )
+                      }>
                       {t("privacy.privacy")}
                     </button>
                   </p>

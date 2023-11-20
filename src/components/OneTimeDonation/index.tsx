@@ -33,9 +33,8 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
 
   const dispatch = useDispatch();
 
-  const handlePrivacy = (privacy: string) => {
-    // setPrivacy({ modal: true, privacy });
-    dispatch(openPrivacyPolicy(true, privacy));
+  const handlePrivacy = (privacyHeader: string, privacy: string) => {
+    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
     setOneTimeDonation(false);
     dispatch(getModalName("oneTimeDonation"));
   };
@@ -176,13 +175,23 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                   <br></br>
                   <button
                     className='mentioned_txt'
-                    onClick={() => handlePrivacy("Terms of Services")}>
+                    onClick={() =>
+                      handlePrivacy(
+                        t("privacy.terms-of-services"),
+                        "Terms of Services"
+                      )
+                    }>
                     {t("privacy.terms")}
                   </button>
                   {t("privacy.and")}
                   <button
                     className='mentioned_txt'
-                    onClick={() => handlePrivacy("Privacy Policy")}>
+                    onClick={() =>
+                      handlePrivacy(
+                        t("privacy.privacy-policy"),
+                        "Privacy Policy"
+                      )
+                    }>
                     {t("privacy.privacy")}
                   </button>
                 </p>

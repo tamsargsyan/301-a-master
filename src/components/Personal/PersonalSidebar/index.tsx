@@ -68,9 +68,7 @@ const PersonalSidebar = () => {
             end
             to={`/${bar.path}`}
             key={bar.id}
-            className={`personal_bar_item`}
-            // onClick={() => handleClickMenu(bar.id)}
-          >
+            className={`personal_bar_item`}>
             {bar.name}
             <img src={ARROW} alt='Arrow' />
           </NavLink>

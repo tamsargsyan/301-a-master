@@ -121,6 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             <div className='line'></div>
             <div className='line'></div>
           </div>
+          {/* <p>Menu</p> */}
           {openMenu && (
             <div className='openedMobileMenu'>
               <div className='bigPatternNav'>
@@ -134,6 +135,26 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
               </div>
               <div className='menu'>
                 <div className='link'>
+                  {isAuthenticated && (
+                    <div className='navbar_user_wrapper'>
+                      <NavLink
+                        to='personal/personal-info'
+                        className='navbar_user'
+                        onClick={() => setOpenMenu(false)}>
+                        <img
+                          src={
+                            user?.image
+                              ? `${storageBase}/${user?.image}`
+                              : NO_IMAGE
+                          }
+                          alt='Person'
+                        />
+                        <p style={{ fontSize: "18px", margin: 0 }}>
+                          {user?.name} {user?.last_name}
+                        </p>
+                      </NavLink>
+                    </div>
+                  )}
                   {menu.map((link, i) => (
                     <NavLink
                       onClick={() => {
@@ -148,7 +169,20 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                   ))}
                 </div>
                 <div className='link logout'>
-                  <a href='/'>Log out</a>
+                  <a
+                    href='/'
+                    onClick={e => {
+                      e.preventDefault();
+                      if (!isAuthenticated) {
+                        dispatch(getModalName("signIn"));
+                        setSearchParams({ signIn: "active" });
+                      }
+                      setOpenModal(true);
+                    }}>
+                    {!isAuthenticated
+                      ? t("navbar.sign-in")
+                      : t("navbar.logout")}
+                  </a>
                 </div>
               </div>
             </div>
@@ -158,6 +192,29 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
       {openMenu ? (
         <div className='logo'>
           <span>Меню</span>
+          <Button
+            text={t(`btns.donate`)}
+            link={false}
+            to=''
+            className='signIn-btn'
+            onClick={() => {
+              dispatch(openDonateModal(true));
+              dispatch(getModalName("donate"));
+              setOpenMenu(false);
+            }}
+            style={{
+              padding: "9px 23px",
+              background: "var(--main-color)",
+              color: "#fff",
+              display: "block",
+            }}
+          />
+          {isAuthenticated && (
+            <button className='navbar_notif'>
+              <img src={NOTIFICATION} alt='Notification' />
+              <span className='notification_number'>3</span>
+            </button>
+          )}
         </div>
       ) : (
         <button className='logo' onClick={scrollToTop}>

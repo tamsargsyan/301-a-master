@@ -80,8 +80,8 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     );
   };
 
-  const handlePrivacy = (privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacy));
+  const handlePrivacy = (privacyHeader: string, privacy: string) => {
+    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
     dispatch(
       openAccountTypeModal({
         open: false,
@@ -679,7 +679,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         //@ts-ignore
                         // onCancel={cancel}
                         okText='more'
-                        cancelText={false}
+                        cancelText={""}
                         title={undefined}>
                         <img src={INFO_ICON} alt='Info' />
                       </Popconfirm>
@@ -712,7 +712,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         onConfirm={confirmClubCodeEthics}
                         //@ts-ignore
                         okText='more'
-                        cancelText={false}
+                        cancelText={""}
                         title={undefined}>
                         <img src={INFO_ICON} alt='Info' />
                       </Popconfirm>
@@ -725,31 +725,32 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         {t("checkboxes.support_form")}
                       </Checkbox>
                       <Popconfirm
-                        className='signUp_popover'
+                        className='signUp_popover popover_support_from'
                         description={
                           <div className='support_popover'>
                             <div className='support_popover-list-item'>
                               <div className='support_popover-list-circle'></div>
-                              <div className='support_popover-list-text'>
-                                Годовая подписка (После регистрации списывается
-                                <span> 3612 $</span> сразу на год вперед)
-                              </div>
+                              <div
+                                className='support_popover-list-text'
+                                dangerouslySetInnerHTML={{
+                                  __html: t("privacy.support_popover_1"),
+                                }}
+                              />
                             </div>
                             <div className='support_popover-list-item'>
                               <div className='support_popover-list-circle'></div>
-                              <div className='support_popover-list-text'>
-                                Ежемесячная подписка (После регистрации
-                                ежемесячно списывается <span>301$</span>)
-                              </div>
+                              <div
+                                className='support_popover-list-text'
+                                dangerouslySetInnerHTML={{
+                                  __html: t("privacy.support_popover_2"),
+                                }}
+                              />
                             </div>
                           </div>
                         }
                         icon={false}
-                        //@ts-ignore
-                        // onConfirm={confirmClubCodeEthics}
-                        //@ts-ignore
-                        okText={false}
-                        cancelText={false}
+                        okText={""}
+                        cancelText={""}
                         title={undefined}>
                         <img src={INFO_ICON} alt='Info' />
                       </Popconfirm>
@@ -781,13 +782,23 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   <br></br>
                   <button
                     className='mentioned_txt'
-                    onClick={() => handlePrivacy("Terms of Services")}>
+                    onClick={() =>
+                      handlePrivacy(
+                        t("privacy.terms-of-services"),
+                        "Terms of Services"
+                      )
+                    }>
                     {t("privacy.terms")}
                   </button>
                   {t("privacy.and")}
                   <button
                     className='mentioned_txt'
-                    onClick={() => handlePrivacy("Privacy Policy")}>
+                    onClick={() =>
+                      handlePrivacy(
+                        t("privacy.privacy-policy"),
+                        "Privacy Policy"
+                      )
+                    }>
                     {t("privacy.privacy")}
                   </button>
                 </p>

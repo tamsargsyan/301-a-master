@@ -150,7 +150,7 @@ function App() {
       <AgreementTermsModal />
       <Privacy
         handleClose={() => {
-          dispatch(openPrivacyPolicy(false, null));
+          dispatch(openPrivacyPolicy(false, null, null));
           if (modalName === "oneTimeDonation") setOneTimeDonation(true);
           if (modalName === "signInModal") setSignIn(true);
           if (modalName === "accountTypeModal")

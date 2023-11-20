@@ -39,9 +39,9 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
 
   const dispatch = useDispatch();
 
-  const handlePrivacy = (privacy: string, e: any) => {
+  const handlePrivacy = (privacyHeader: string, e: any, privacy: string) => {
     e.preventDefault();
-    dispatch(openPrivacyPolicy(true, privacy));
+    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
     dispatch(openDonateSingleProject(false));
     dispatch(getModalName("donateToProject"));
   };
@@ -167,13 +167,25 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                     <br></br>
                     <button
                       className='mentioned_txt'
-                      onClick={e => handlePrivacy("Terms of Services", e)}>
+                      onClick={e =>
+                        handlePrivacy(
+                          t("privacy.terms-of-services"),
+                          e,
+                          "Terms of Services"
+                        )
+                      }>
                       {t("privacy.terms")}
                     </button>
                     {t("privacy.and")}
                     <button
                       className='mentioned_txt'
-                      onClick={e => handlePrivacy("Privacy Policy", e)}>
+                      onClick={e =>
+                        handlePrivacy(
+                          t("privacy.privacy-policy"),
+                          e,
+                          "Privacy Policy"
+                        )
+                      }>
                       {t("privacy.privacy")}
                     </button>
                   </p>

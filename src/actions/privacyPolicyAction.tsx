@@ -4,10 +4,15 @@ import {
   AGREEMENT_TERMS,
 } from "../utils/action.types";
 
-export const openPrivacyPolicy = (modal: boolean, privacy: null | string) => ({
+export const openPrivacyPolicy = (
+  modal: boolean,
+  privacyHeader: null | string,
+  privacy: null | string
+) => ({
   type: OPEN_PRIVACY_POLICY,
   payload: {
     modal,
+    privacyHeader,
     privacy,
   },
 });

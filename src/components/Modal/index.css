@@ -48,6 +48,7 @@
   }
   .overlay {
     backdrop-filter: blur(0);
+    height: -webkit-fill-available;
   }
   .mobile_modal {
     height: -webkit-fill-available;

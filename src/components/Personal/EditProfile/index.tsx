@@ -15,6 +15,8 @@ import CLOSE from "../../../assets/close.svg";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { usePostRequest } from "../../../actions/apiActions";
+import ARROW from "../../../assets/edit-profile/arrow-down.svg";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 const { Option } = Select;
 
 const EditProfile = () => {
@@ -59,6 +61,8 @@ const EditProfile = () => {
     };
     postRequest("edit-profile", formData, config);
   };
+  const windowSize = useWindowSize();
+  const [openNewLink, setOpenNewLink] = useState(false);
 
   return (
     <div className='personalInfo_wrapper'>
@@ -239,14 +243,24 @@ const EditProfile = () => {
           <div className='socialMedia_inputs'>
             <div>
               <img src={FACEBOOK} alt='Facebook' />
-              <p>Facebook</p>
+              {windowSize.width > 600 ? (
+                <p>Facebook</p>
+              ) : (
+                <input
+                  placeholder='Facebook'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
             </div>
             <div>
-              <input
-                placeholder='Facebook'
-                value='@arnak.qerobyanh'
-                className='socialMedia_input'
-              />
+              {windowSize.width > 600 && (
+                <input
+                  placeholder='Facebook'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
               <button>
                 <img src={CLOSE} alt='Close' />
               </button>
@@ -255,14 +269,24 @@ const EditProfile = () => {
           <div className='socialMedia_inputs'>
             <div>
               <img src={INSTAGRAM} alt='Instagram' />
-              <p>Instagram</p>
+              {windowSize.width > 600 ? (
+                <p>Instagram</p>
+              ) : (
+                <input
+                  placeholder='Instagram'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
             </div>
             <div>
-              <input
-                placeholder='Instagram'
-                value='@arnak.qerobyanh'
-                className='socialMedia_input'
-              />
+              {windowSize.width > 600 && (
+                <input
+                  placeholder='Instagram'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
               <button>
                 <img src={CLOSE} alt='Close' />
               </button>
@@ -271,14 +295,24 @@ const EditProfile = () => {
           <div className='socialMedia_inputs'>
             <div>
               <img src={LINKEDIN} alt='Linked In' />
-              <p>Linked In</p>
+              {windowSize.width > 600 ? (
+                <p>Linked In</p>
+              ) : (
+                <input
+                  placeholder='Linked In'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
             </div>
             <div>
-              <input
-                placeholder='Linked In'
-                value='@arnak.qerobyanh'
-                className='socialMedia_input'
-              />
+              {windowSize.width > 600 && (
+                <input
+                  placeholder='Linked In'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
               <button>
                 <img src={CLOSE} alt='Close' />
               </button>
@@ -287,71 +321,134 @@ const EditProfile = () => {
           <div className='socialMedia_inputs'>
             <div>
               <img src={TELEGRAM} alt='Telegram' />
-              <p>Telegram</p>
+              {windowSize.width > 600 ? (
+                <p>Telegram</p>
+              ) : (
+                <input
+                  placeholder='Telegram'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
             </div>
             <div>
-              <input
-                placeholder='Telegram'
-                value='@arnak.qerobyanh'
-                className='socialMedia_input'
-              />
+              {windowSize.width > 600 && (
+                <input
+                  placeholder='Telegram'
+                  value='@arnak.qerobyanh'
+                  className='socialMedia_input'
+                />
+              )}
               <button>
                 <img src={CLOSE} alt='Close' />
               </button>
             </div>
           </div>
-          <div className='socialMedia_inputs'>
-            <div>
-              <img src={VIBER} alt='Viber' />
-              <p>Viber</p>
+          <div className='socialMedia_inputs socialMedia_inputs_add'>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                cursor: "pointer",
+              }}
+              onClick={() => setOpenNewLink(!openNewLink)}>
+              <div className='new_link_'>
+                <img src={VIBER} alt='Viber' />
+                <p>Viber</p>
+              </div>
+              {windowSize.width < 600 && (
+                <img
+                  src={ARROW}
+                  alt='Arrow'
+                  style={{
+                    transition: "0.3s ease",
+                    transform: `rotate(${openNewLink ? 180 : 0}deg)`,
+                  }}
+                />
+              )}
             </div>
-            {/* <div>
-              <input
-                placeholder='Telegram'
-                value='@arnak.qerobyanh'
-                className='socialMedia_input'
-              />
-              <button>
-                <img src={CLOSE} alt='Close' />
-              </button>
-            </div> */}
-          </div>
-          <div className='socialMedia_addLink'>
-            <div className='signUp_formGroup'>
-              <label htmlFor='personal_linkTitle'>Link Title</label>
-              <input
-                type='text'
-                id='personal_linkTitle'
-                name='signUp'
-                className='signUp_input'
-                placeholder='Enter link title'
-                // value='Peter'
-              />
-            </div>
-            <div className='signUp_formGroup'>
-              <label htmlFor='personal_url'>Url</label>
-              <input
-                type='text'
-                id='personal_url'
-                name='signUp'
-                className='signUp_input'
-                placeholder='Enter URL'
-                // value='Peter'
-              />
-            </div>
-            <div className='signUp_btns'>
-              <Button
-                text={t("btns.add")}
-                link={false}
-                to={""}
-                type='submit'
-                style={{
-                  background: "var(--main-color)",
-                  border: "none",
-                  color: "#fff",
-                }}
-              />
-            </div>
+            {windowSize.width < 600 ? (
+              openNewLink && (
+                <div className='socialMedia_addLink'>
+                  <div className='signUp_formGroup'>
+                    <label htmlFor='personal_linkTitle'>Link Title</label>
+                    <input
+                      type='text'
+                      id='personal_linkTitle'
+                      name='signUp'
+                      className='signUp_input'
+                      placeholder='Enter link title'
+                      // value='Peter'
+                    />
+                  </div>
+                  <div className='signUp_formGroup'>
+                    <label htmlFor='personal_url'>Url</label>
+                    <input
+                      type='text'
+                      id='personal_url'
+                      name='signUp'
+                      className='signUp_input'
+                      placeholder='Enter URL'
+                      // value='Peter'
+                    />
+                  </div>
+                  <div className='signUp_btns'>
+                    <Button
+                      text={t("btns.add")}
+                      link={false}
+                      to={""}
+                      type='submit'
+                      style={{
+                        background: "var(--main-color)",
+                        border: "none",
+                        color: "#fff",
+                        padding: "12px 25px",
+                      }}
+                    />
+                  </div>
+                </div>
+              )
+            ) : (
+              <div className='socialMedia_addLink'>
+                <div className='signUp_formGroup'>
+                  <label htmlFor='personal_linkTitle'>Link Title</label>
+                  <input
+                    type='text'
+                    id='personal_linkTitle'
+                    name='signUp'
+                    className='signUp_input'
+                    placeholder='Enter link title'
+                    // value='Peter'
+                  />
+                </div>
+                <div className='signUp_formGroup'>
+                  <label htmlFor='personal_url'>Url</label>
+                  <input
+                    type='text'
+                    id='personal_url'
+                    name='signUp'
+                    className='signUp_input'
+                    placeholder='Enter URL'
+                    // value='Peter'
+                  />
+                </div>
+                <div className='signUp_btns'>
+                  <Button
+                    text={t("btns.add")}
+                    link={false}
+                    to={""}
+                    type='submit'
+                    style={{
+                      background: "var(--main-color)",
+                      border: "none",
+                      color: "#fff",
+                      padding: "12px 25px",
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className='signUp_btns'>
@@ -372,6 +469,7 @@ const EditProfile = () => {
               border: "none",
               color: "#fff",
             }}
+            className='edit_profile_save_btn'
           />
         </div>
       </form>

@@ -252,7 +252,7 @@
   .notActiveLangs_wrapper .activeLang_2,
   .notActiveLangs_wrapper {
     border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px
+    border-bottom-right-radius: 25px;
   }
 }
 @media screen and (max-width: 1150px) {
@@ -277,6 +277,29 @@
   .link a,
   .logo {
     font-size: clamp(1.125rem, 0rem + 5.625vw, 2.109375rem);
+  }
+  .navbarContainer .logo {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    gap: 10px;
+  }
+  .navbar_notif {
+    padding: 0;
+    margin-left: 50px;
+  }
+  .navbar_user p{
+    font-weight: 600;
+  }
+}
+@media screen and (max-width: 440px) {
+  .navbar_notif {
+    margin-left: 30px;
+  }
+}
+@media screen and (max-width: 400px) {
+    .navbar_notif {
+    margin-left: 10px;
   }
 }
 

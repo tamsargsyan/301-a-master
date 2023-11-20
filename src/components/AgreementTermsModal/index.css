@@ -44,3 +44,9 @@
     font-size: clamp(0.390625rem, 0.0006rem + 1.04vw, 0.520625rem);
   }
 }
+@media screen and (max-width: 600px) {
+  .agreementTerms {
+    padding: 15px;
+    font-size: 16px;
+  }
+}
