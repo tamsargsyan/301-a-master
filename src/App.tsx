@@ -77,43 +77,54 @@ function App() {
     if (signInActive) setSignIn(true);
   }, [signInActive]);
 
-  const container = document.querySelectorAll(".ecosystemDetails_partners");
+  const ct = document.querySelectorAll(".ecosystemDetails_partners");
+  const leftButton = document.querySelector(".projectDetails_slider .leftBtn");
+  const rightButton = document.querySelector(
+    ".projectDetails_slider .rightBtn"
+  );
+  console.log(ct);
+  let scrollDistance = 20;
+
   let isDown = false;
   //@ts-ignore
   let startX;
   //@ts-ignore
   let scrollLeft;
-  container.forEach(ct => {
-    //@ts-ignore
-    ct?.addEventListener("mousedown", e => {
-      //@ts-ignore
-      isDown = true;
-      //@ts-ignore
-      startX = e.pageX - ct.offsetLeft;
-      //@ts-ignore
-      scrollLeft = ct.scrollLeft;
-    });
-    //@ts-ignore
-    ct?.addEventListener("mouseleave", () => {
-      //@ts-ignore
-      isDown = false;
-    });
-    //@ts-ignore
-    ct?.addEventListener("mouseup", () => {
-      isDown = false;
-    });
-    //@ts-ignore
-    ct?.addEventListener("mousemove", e => {
-      if (!isDown) return;
-      e.preventDefault();
-      //@ts-ignore
-      const x = e.pageX - ct.offsetLeft;
-      //@ts-ignore
-      const walk = (x - startX) * 2;
-      //@ts-ignore
-      ct.scrollLeft = scrollLeft - walk;
-    });
+
+  // container.forEach(ct => {
+  leftButton?.addEventListener("click", () => {
+    ct[0].scrollLeft -= scrollDistance;
   });
+
+  rightButton?.addEventListener("click", () => {
+    ct[0].scrollLeft += scrollDistance;
+  });
+  ct[0]?.addEventListener("mousedown", e => {
+    //@ts-ignore
+    isDown = true;
+    //@ts-ignore
+    startX = e.pageX - ct[0].offsetLeft;
+    //@ts-ignore
+    scrollLeft = ct[0].scrollLeft;
+  });
+  ct[0]?.addEventListener("mouseleave", () => {
+    //@ts-ignore
+    isDown = false;
+  });
+  ct[0]?.addEventListener("mouseup", () => {
+    isDown = false;
+  });
+  ct[0]?.addEventListener("mousemove", e => {
+    if (!isDown) return;
+    e.preventDefault();
+    //@ts-ignore
+    const x = e.pageX - ct[0].offsetLeft;
+    //@ts-ignore
+    const walk = (x - startX) * 2;
+    //@ts-ignore
+    ct[0].scrollLeft = scrollLeft - walk;
+  });
+  // });
 
   return (
     <div className='container'>
@@ -163,7 +174,7 @@ function App() {
               })
             );
           if (modalName === "donateToProject")
-            dispatch(openDonateSingleProject(true));
+            dispatch(openDonateSingleProject(true, "donation"));
         }}
       />
       <Donation

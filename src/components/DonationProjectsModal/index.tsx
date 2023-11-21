@@ -33,7 +33,7 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   };
 
   const handleSingleProject = (id: number) => {
-    dispatch(openDonateSingleProject(true));
+    dispatch(openDonateSingleProject(true, "donation"));
     setDonateProjects(false);
     //@ts-ignore
     dispatch(fetchingProjectDetails(`project-details/${id}`));

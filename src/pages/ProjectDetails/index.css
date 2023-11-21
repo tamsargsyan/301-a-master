@@ -329,6 +329,19 @@ a.fx-Revolve:focus:before {
 .ourProject__projectInfo {
   width: 100%;
 }
+.projectDetails_slider {
+  position: relative;
+}
+.projectDetails_slider .leftBtn {
+  left: 10px;
+  width: 35px;
+  height: 35px;
+}
+.projectDetails_slider .rightBtn {
+  width: 35px;
+  height: 35px;
+  right: 10px;
+}
 @media screen and (max-width: 1920px) {
   .titlePart,
   .problem_heading,

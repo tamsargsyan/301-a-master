@@ -24,7 +24,10 @@ export const openRecommentedModal = (val: boolean) => ({
   type: RECOMMENTED_MODAL_OPEN,
   payload: val,
 });
-export const openDonateSingleProject = (val: boolean) => ({
+export const openDonateSingleProject = (val: boolean, from: string) => ({
   type: OPEN_DONATE_SINGLE_PROJECT,
-  payload: val,
+  payload: {
+    val,
+    from,
+  },
 });

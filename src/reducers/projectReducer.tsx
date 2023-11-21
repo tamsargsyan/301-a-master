@@ -9,14 +9,20 @@ interface ProjectsState {
   data: any;
   loading: boolean;
   error: string | null;
-  openModal: boolean;
+  donateSingleProject: {
+    openModal: boolean;
+    from: string;
+  };
 }
 
 const initialState: ProjectsState = {
   data: [],
   loading: false,
   error: null,
-  openModal: false,
+  donateSingleProject: {
+    openModal: false,
+    from: "",
+  },
 };
 
 const projectReducer = (state = initialState, action: any): ProjectsState => {
@@ -30,7 +36,10 @@ const projectReducer = (state = initialState, action: any): ProjectsState => {
     case OPEN_DONATE_SINGLE_PROJECT:
       return {
         ...state,
-        openModal: action.payload,
+        donateSingleProject: {
+          openModal: action.payload.val,
+          from: action.payload.from,
+        },
       };
     default:
       return state;

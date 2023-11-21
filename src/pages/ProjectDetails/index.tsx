@@ -389,21 +389,29 @@ const ProjectDetails = () => {
                     <img src={PATTERN} alt='Pattern' />
                     <h2>{t("project-details.partners")}</h2>
                   </div>
-                  <div
-                    className='ecosystemDetails_partners partners _inner'
-                    ref={carousel}>
-                    <div className='innerPartners'>
-                      {partners.map((partner: any) => (
-                        <div
-                          className='ecosystemDetails_partners_item'
-                          key={partner.id}>
-                          <img
-                            src={`${storageBase}/${partner.image}`}
-                            alt={partner.name}
-                          />
-                        </div>
-                      ))}
+                  <div className='projectDetails_slider'>
+                    <button className='leftBtn'>
+                      <img src={ARROW} alt='Arrow' />
+                    </button>
+                    <div
+                      className='ecosystemDetails_partners partners _inner'
+                      ref={carousel}>
+                      <div className='innerPartners'>
+                        {partners.map((partner: any) => (
+                          <div
+                            className='ecosystemDetails_partners_item'
+                            key={partner.id}>
+                            <img
+                              src={`${storageBase}/${partner.image}`}
+                              alt={partner.name}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                    <button className='rightBtn'>
+                      <img src={ARROW} alt='Arrow' />
+                    </button>
                   </div>
                 </div>
                 <div className='_inner dontaionBtns_wrapper' ref={donationsRef}>
@@ -440,7 +448,9 @@ const ProjectDetails = () => {
                           width: !isVisible ? "auto" : "100%",
                         }}
                         onClick={() => {
-                          dispatch(openDonateSingleProject(true));
+                          dispatch(
+                            openDonateSingleProject(true, "projectDetails")
+                          );
                           dispatch(
                             //@ts-ignore
                             fetchingProjectDetails(

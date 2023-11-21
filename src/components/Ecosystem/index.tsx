@@ -285,10 +285,10 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                   <img src={ecosystem.mainImg} alt='Icon' />
                 </div>
               </div>
-              <div className='ecosystemDetails_partners partners'>
-                <div className='innerPartners'>
-                  {ecosystem.partners &&
-                    ecosystem.partners.map((p: any) => (
+              {ecosystem.partners && (
+                <div className='ecosystemDetails_partners partners'>
+                  <div className='innerPartners'>
+                    {ecosystem.partners.map((p: any) => (
                       <div
                         className='ecosystemDetails_partners_item'
                         key={p?.id}>
@@ -298,8 +298,9 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                         />
                       </div>
                     ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ))}
         </div>

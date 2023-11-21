@@ -175,6 +175,12 @@
   .donation_project.project .ourProject__author span {
     width: auto;
   }
+  .home_project .flag img {
+    width: 10px;
+  }
+  .home_project .projectInfo h1 {
+    font-size: 6px;
+  }
 }
 @media screen and (max-width: 395px) {
   .home_project {

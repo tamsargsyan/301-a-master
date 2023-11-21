@@ -42,20 +42,23 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
   const handlePrivacy = (privacyHeader: string, e: any, privacy: string) => {
     e.preventDefault();
     dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    dispatch(openDonateSingleProject(false));
+    dispatch(openDonateSingleProject(false, ""));
     dispatch(getModalName("donateToProject"));
   };
 
+  const { openModal, from } = useSelector(
+    (state: RootState) => state.projectData.donateSingleProject
+  );
+
   const handleClose = () => {
-    setDonateProjects(true);
-    dispatch(openDonateSingleProject(false));
+    if (from !== "projectDetails") setDonateProjects(true);
+    dispatch(openDonateSingleProject(false, ""));
   };
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  const { openModal } = useSelector((state: RootState) => state.projectData);
 
   return (
     <Modal setOpenModal={handleClose} openModal={openModal} headerShow={true}>
