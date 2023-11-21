@@ -35,6 +35,7 @@ import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { openDonateSingleProject } from "../../actions/donateAction";
 import { Helmet } from "react-helmet";
+import "react-slideshow-image/dist/styles.css";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
@@ -100,7 +101,8 @@ const ProjectDetails = () => {
     }
   }, [project]);
   const navigate = useNavigate();
-  const carousel = useRef<HTMLDivElement | null>(null);
+  const sliderRef = useRef(null);
+  const scrollAmount = 100;
 
   const checkRole = (role: string) => {
     if (role === "project_manager") return ROSE_CIRCLE;
@@ -389,11 +391,19 @@ const ProjectDetails = () => {
                     <img src={PATTERN} alt='Pattern' />
                     <h2>{t("project-details.partners")}</h2>
                   </div>
-                  <div className='projectDetails_slider'>
-                    <button className='leftBtn'>
+                  {/* <div className='projectDetails_slider'>
+                    <button
+                      className='leftBtn'
+                      onClick={() => {
+                        const container = sliderRef.current;
+                        if (container) {
+                          //@ts-ignore
+                          container.scrollLeft -= scrollAmount;
+                        }
+                      }}>
                       <img src={ARROW} alt='Arrow' />
-                    </button>
-                    <div
+                    </button> */}
+                  {/* <div
                       className='ecosystemDetails_partners partners _inner'
                       ref={carousel}>
                       <div className='innerPartners'>
@@ -408,8 +418,78 @@ const ProjectDetails = () => {
                           </div>
                         ))}
                       </div>
+                    </div> */}
+                  {/* <div
+                      className='ecosystemDetails_partners partners _inner'
+                      ref={sliderRef}>
+                      {partners.map((partner: any) => {
+                        return (
+                          <div
+                            className='ecosystemDetails_partners_item'
+                            key={partner.id}>
+                            <img
+                              src={`${storageBase}/${partner.image}`}
+                              alt={partner.name}
+                              className='image'
+                            /> */}
+                  {/* <img
+                              className='image'
+                              alt='sliderImage'
+                              src={`${storageBase}/${partner.image}`}
+                            /> */}
+                  {/* </div>
+                        );
+                      })}
+                    </div> */}
+                  {/* <button
+                      className='rightBtn'
+                      onClick={() => {
+                        const container = sliderRef.current;
+                        if (container) {
+                          //@ts-ignore
+                          container.scrollLeft += scrollAmount;
+                        }
+                      }}>
+                      <img src={ARROW} alt='Arrow' />
+                    </button> */}
+                  {/* </div> */}
+                  <div className='projectDetails_slider_1 partners _inner'>
+                    <button
+                      className='leftBtn'
+                      onClick={() => {
+                        const container = sliderRef.current;
+                        if (container) {
+                          console.log(container);
+                          //@ts-ignore
+                          container.scrollLeft -= scrollAmount;
+                        }
+                      }}>
+                      <img src={ARROW} alt='Arrow' />
+                      {/* <ChevronLeftIcon /> */}
+                    </button>
+                    <div className='images-container' ref={sliderRef}>
+                      {partners.map((partner: any) => {
+                        return (
+                          <div
+                            className='ecosystemDetails_partners_item'
+                            key={partner.id}>
+                            <img
+                              alt='sliderImage'
+                              src={`${storageBase}/${partner.image}`}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
-                    <button className='rightBtn'>
+                    <button
+                      className='rightBtn'
+                      onClick={() => {
+                        const container = sliderRef.current;
+                        if (container) {
+                          //@ts-ignore
+                          container.scrollLeft += scrollAmount;
+                        }
+                      }}>
                       <img src={ARROW} alt='Arrow' />
                     </button>
                   </div>

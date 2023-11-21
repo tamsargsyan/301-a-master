@@ -23,8 +23,9 @@ import { RootState } from "../../store/configureStore";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { storageBase } from "../../utils/storage";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { fetchingPartners } from "../../actions/apiActions";
+import ARROW from "../../assets/arrow.svg";
 
 interface EcosystemProps {
   lang: string;
@@ -247,6 +248,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     },
   ];
   const windowSize = useWindowSize();
+  const sliderRef = useRef(null);
+  const scrollAmount = 100;
 
   return (
     <>
@@ -286,19 +289,44 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                 </div>
               </div>
               {ecosystem.partners && (
-                <div className='ecosystemDetails_partners partners'>
-                  <div className='innerPartners'>
-                    {ecosystem.partners.map((p: any) => (
-                      <div
-                        className='ecosystemDetails_partners_item'
-                        key={p?.id}>
-                        <img
-                          src={`${storageBase}/${p?.image}`}
-                          alt={p?.title_en}
-                        />
-                      </div>
-                    ))}
+                <div className='projectDetails_slider_1 partners _inner'>
+                  <button
+                    className='leftBtn'
+                    onClick={() => {
+                      const container = sliderRef.current;
+                      if (container) {
+                        console.log(container);
+                        //@ts-ignore
+                        container.scrollLeft -= scrollAmount;
+                      }
+                    }}>
+                    <img src={ARROW} alt='Arrow' />
+                  </button>
+                  <div className='images-container' ref={sliderRef}>
+                    {ecosystem.partners.map((partner: any) => {
+                      return (
+                        <div
+                          className='ecosystemDetails_partners_item'
+                          key={partner.id}>
+                          <img
+                            alt='sliderImage'
+                            src={`${storageBase}/${partner.image}`}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
+                  <button
+                    className='rightBtn'
+                    onClick={() => {
+                      const container = sliderRef.current;
+                      if (container) {
+                        //@ts-ignore
+                        container.scrollLeft += scrollAmount;
+                      }
+                    }}>
+                    <img src={ARROW} alt='Arrow' />
+                  </button>
                 </div>
               )}
             </div>

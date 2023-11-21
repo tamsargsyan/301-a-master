@@ -78,27 +78,12 @@ function App() {
   }, [signInActive]);
 
   const ct = document.querySelectorAll(".ecosystemDetails_partners");
-  const leftButton = document.querySelector(".projectDetails_slider .leftBtn");
-  const rightButton = document.querySelector(
-    ".projectDetails_slider .rightBtn"
-  );
-  console.log(ct);
-  let scrollDistance = 20;
 
   let isDown = false;
   //@ts-ignore
   let startX;
   //@ts-ignore
   let scrollLeft;
-
-  // container.forEach(ct => {
-  leftButton?.addEventListener("click", () => {
-    ct[0].scrollLeft -= scrollDistance;
-  });
-
-  rightButton?.addEventListener("click", () => {
-    ct[0].scrollLeft += scrollDistance;
-  });
   ct[0]?.addEventListener("mousedown", e => {
     //@ts-ignore
     isDown = true;
