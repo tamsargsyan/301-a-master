@@ -6,13 +6,13 @@
     "media": "Медиа",
     "calendar": "Календарь",
     "about-us": "О нас",
-    "contact": "Контакт",
+    "contact": "Контакты",
     "sign-in": "Войти",
     "logout": "Выйти"
   },
   "btns": {
     "become-301": "Стань одним из 301",
-    "whole-project": "Весь проект",
+    "whole-project": "Все проекты",
     "learn-more": "Узнать больше",
     "other-projects": "Другие проекты",
     "become-ambassador": "Стать амбассадором",
@@ -44,7 +44,7 @@
   "footer": {
     "ecosystem": {
       "title": "НАША ЭКОСИСТЕМА",
-      "sage": "Мудрец",
+      "sage": "Мудрецы",
       "donor": "доноры «301»",
       "club301": "Клуб 301",
       "ambassadors": "Амбассадоры",
@@ -139,7 +139,7 @@
   },
   "select-acount-type": "ВЫБЕРИТЕ ТИП СЧЕТА",
   "project-details": {
-    "problem": "Проблема",
+    "problem": "О чем проект?",
     "road-map": "Дорожная карта",
     "partners": "Партнеры"
   },

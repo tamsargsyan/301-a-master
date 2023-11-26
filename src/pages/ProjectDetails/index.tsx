@@ -36,6 +36,8 @@ import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { openDonateSingleProject } from "../../actions/donateAction";
 import { Helmet } from "react-helmet";
 import "react-slideshow-image/dist/styles.css";
+import BUDGET from "../../assets/projectAuthor/budget.svg";
+import COLLECTED from "../../assets/projectAuthor/collected.svg";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
@@ -79,6 +81,7 @@ const ProjectDetails = () => {
   const { ourProject } = useSelector(
     (state: RootState) => state.projectData.data
   );
+
   useEffect(() => {
     if (project) {
       const observer = new IntersectionObserver(entries => {
@@ -270,14 +273,18 @@ const ProjectDetails = () => {
                   </div>
                 )}
                 <div className='roadMapContainer'>
-                  <div className='roadMap_heading problem_heading'>
-                    <img src={PATTERN} alt='Pattern' />
-                    <h2>
-                      {+project.budget_price !== 0
-                        ? t("project-details.road-map")
-                        : t("project-in-progress")}
-                    </h2>
-                  </div>
+                  {project &&
+                    project.month_data &&
+                    project.month_data[0].month_am !== "-" && (
+                      <div className='roadMap_heading problem_heading'>
+                        <img src={PATTERN} alt='Pattern' />
+                        <h2>
+                          {+project.budget_price !== 0
+                            ? t("project-details.road-map")
+                            : t("project-in-progress")}
+                        </h2>
+                      </div>
+                    )}
                   {project &&
                     (+project.budget_price !== 0 ? (
                       <div className='roadMap_inner _inner'>
@@ -320,7 +327,8 @@ const ProjectDetails = () => {
                         <div className='budgetContainer'>
                           <div className='budget'>
                             <img
-                              src={`${storageBase}/${project?.budget_image}`}
+                              // src={`${storageBase}/${project?.budget_image}`}
+                              src={BUDGET}
                               alt='Budget'
                             />
                             <div className='budgetPrice'>
@@ -330,7 +338,8 @@ const ProjectDetails = () => {
                           </div>
                           <div className='collected'>
                             <img
-                              src={`${storageBase}/${project.collected_image}`}
+                              // src={`${storageBase}/${project.collected_image}`}
+                              src={COLLECTED}
                               alt='Collected'
                             />
                             <div className='collectedPrice'>

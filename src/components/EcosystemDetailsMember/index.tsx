@@ -78,10 +78,10 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
               <span>
                 {ecosystem === "club301" || ecosystem === "ambassador"
                   ? project.name
-                  : project.user.name}{" "}
+                  : project.user[`name_${lang}`]}{" "}
                 {ecosystem === "club301" || ecosystem === "ambassador"
                   ? project.last_name
-                  : project.user.last_name}
+                  : project.user[`last_name_${lang}`]}
               </span>
             </div>
             <div className='memberContent'>

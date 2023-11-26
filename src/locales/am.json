@@ -12,7 +12,7 @@
   },
   "btns": {
     "become-301": "Դարձի՛ր 301-ից մեկը",
-    "whole-project": "Ամբողջ նախագիծը",
+    "whole-project": "Բոլոր նախագծերը",
     "learn-more": "Իմանալ ավելին",
     "other-projects": "Այլ նախագծեր",
     "become-ambassador": "Դարձեք դեսպան",
@@ -138,7 +138,7 @@
   },
   "select-acount-type": "ԸՆՏՐԵԼ ՀԱՇՎԻ ՏԵՍԱԿԸ",
   "project-details": {
-    "problem": "Խնդիր",
+    "problem": "Ինչի՞ մասին է նախագիծը։",
     "road-map": "Ճանապարհային քարտեզ",
     "partners": "Գործընկերներ"
   },

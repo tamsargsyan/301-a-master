@@ -233,7 +233,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           <Button
             text={
               windowSize.width < 800
-                ? differentLang?.longName
+                ? differentLang?.shortName
                 : differentLang?.shortName
             }
             link={false}
@@ -245,7 +245,9 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             {copyLangs.map((lang, i) => (
               <Fragment key={i}>
                 <Button
-                  text={windowSize.width < 800 ? lang.longName : lang.shortName}
+                  text={
+                    windowSize.width < 800 ? lang.shortName : lang.shortName
+                  }
                   link={false}
                   to={""}
                   className={`${openLangs && "openedLang"} activeLang_${
