@@ -1,6 +1,6 @@
 import Modal from "../Modal";
 import EcosystemModal from "../EcosystemModal";
-import { Select, Checkbox, Popconfirm, Spin, notification } from "antd";
+import { Select, Checkbox, Popconfirm, Spin } from "antd";
 import "./index.css";
 import Button from "../Button";
 import INFO_ICON from "../../assets/info-icon.svg";
@@ -16,11 +16,7 @@ import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
-import {
-  getAgreementTerms,
-  getModalName,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
+import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { useLocation, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 
@@ -108,7 +104,7 @@ const AccountTypeModal = () => {
       );
       dispatch(congratsModal(true, t("congrats.register")));
     }
-  }, [response, dispatch, error]);
+  }, [response, dispatch, error, t]);
 
   const { data } = useSelector((state: RootState) => state.registerData);
   const [agreementTermsChecked, setAgreementTearmsChecked] = useState(false);

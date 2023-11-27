@@ -300,11 +300,6 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                 link={true}
                 to='/login'
                 className='signIn-btn'
-                onClick={() => {
-                  // setOpenModal(true);
-                  // dispatch(getModalName("signIn"));
-                  // setSearchParams({ signIn: "active" });
-                }}
                 style={{ padding: "9px 23px" }}
               />
             </div>

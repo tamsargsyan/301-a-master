@@ -9,7 +9,7 @@ interface Props {
 const AuthenticatedRoute: React.FC<Props> = ({ children }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   if (!isAuthenticated) {
-    return <Navigate to='/?signIn=active' />;
+    return <Navigate to='/login' />;
   }
   return children;
 };

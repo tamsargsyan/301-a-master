@@ -26,10 +26,6 @@ import {
 } from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
 import { history } from "../Navbar";
-import {
-  getModalName,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
 
 interface SignInProps {
   setSignUp: (arg: boolean) => void;
@@ -44,22 +40,20 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
   const showLogin = location.pathname === "/login";
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   !signIn && setForgetPassword(false);
-  // }, [signIn]);
-
   const windowSize = useWindowSize();
   const { t } = useTranslation();
   const { postRequest, postLoading, response } = usePostRequest();
 
+  const [hasNavigated, setHasNavigated] = useState(false);
   useEffect(() => {
-    if (response && response.status === 200) {
+    if (response && response.status === 200 && !hasNavigated) {
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      navigate("/");
       dispatch(login());
+      setHasNavigated(true);
+      navigate("/");
     }
-  }, [response, dispatch]);
+  }, [response, dispatch, navigate, hasNavigated]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -69,11 +63,6 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
 
   const [searchParams] = useSearchParams();
   const resetPass = searchParams.get("resetPass");
-
-  // useEffect(() => {
-  //   if (resetPass) setSignIn(true);
-  // }, [resetPass, setSignIn]);
-
   const signInState = () => {
     if (forgetPassword) return forgetPassShcema;
     else if (resetPass) return changePassSchema;
@@ -272,10 +261,10 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
                   <div className='line'></div>
                 </div>
                 <div className='signIn_another_icons'>
-                  <a href='gmail.com'>
+                  <a href='https://301.machtech.site/api/auth/google'>
                     <img src={GMAIL} alt='Gmail' />
                   </a>
-                  <a href='facebook.com'>
+                  <a href='https://301.machtech.site/api/auth/facebook'>
                     <img src={FB} alt='Facebook' />
                   </a>
                 </div>

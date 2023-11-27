@@ -20,14 +20,6 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
 
-interface SignUpProps {
-  signUp: boolean;
-  setSignUp: (arg: boolean) => void;
-  setSignIn: (arg: boolean) => void;
-  // setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
-  handleClose: () => void;
-}
-
 const SignUp = () => {
   const { t } = useTranslation();
 

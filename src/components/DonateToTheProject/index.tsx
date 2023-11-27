@@ -9,13 +9,8 @@ import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
-import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { useTranslation } from "react-i18next";
 import { openDonateSingleProject } from "../../actions/donateAction";
-import {
-  getModalName,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
 import { NavLink } from "react-router-dom";
 
 interface DonateToTheProjectProps {

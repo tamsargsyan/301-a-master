@@ -17,6 +17,7 @@
 .donationCard_title {
   color: var(--text-color);
   font-weight: 600;
+  text-transform: uppercase;
 }
 .donation_info,
 .donationCard_title {

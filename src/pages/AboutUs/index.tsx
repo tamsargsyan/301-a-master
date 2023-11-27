@@ -2,7 +2,7 @@ import Background from "../../components/Background";
 import SIDE_PATTERN from "../../assets/patterns/side-about-us.svg";
 import SIDE_PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import Header from "../../components/Header";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
@@ -18,10 +18,7 @@ import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { Helmet } from "react-helmet";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import {
-  getAgreementTerms,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
+import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { NavLink } from "react-router-dom";
 
 const { Panel } = Collapse;

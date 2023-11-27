@@ -38,7 +38,7 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
     },
     {
       id: 7,
-      name: "fund-friends",
+      name: "friends",
     },
   ];
   const contactInfo = [

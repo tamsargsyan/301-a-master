@@ -9,11 +9,6 @@ import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
 import { useState } from "react";
 import { usePostRequest } from "../../actions/apiActions";
-import { useDispatch } from "react-redux";
-import {
-  getModalName,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
 import { NavLink } from "react-router-dom";
 
 interface OneTimeDonationProps {
@@ -32,7 +27,6 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
     option: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [summa, setSumma] = useState("");
   const { postRequest } = usePostRequest();

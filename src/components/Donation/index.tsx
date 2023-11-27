@@ -31,19 +31,19 @@ const Donation: React.FC<DonationProps> = ({
     {
       id: 1,
       title: t("btns.one-time-donation"),
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
+      desc: t("donation.one-time-donation"),
       img: ONE_TIME_DONATION,
     },
     {
       id: 2,
       title: t("btns.donate-to-project"),
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the",
+      desc: t("donation.donate-to-project"),
       img: PROJECT_DONATION,
     },
     {
       id: 3,
       title: t("btns.become-301"),
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
+      desc: t("donation.become-301"),
       img: DONATION_301,
     },
   ];

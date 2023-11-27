@@ -14,17 +14,10 @@ import OneTimeDonation from "./components/OneTimeDonation";
 import DonationProjectsModal from "./components/DonationProjectsModal";
 import DonateToTheProject from "./components/DonateToTheProject";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  isHomePageModal,
-  openAccountTypeModal,
-  openDonateModal,
-  openDonateSingleProject,
-} from "./actions/donateAction";
+import { openDonateModal } from "./actions/donateAction";
 import { RootState } from "./store/configureStore";
-import { useSearchParams } from "react-router-dom";
 import RecommentedModal from "./components/RecommentedModal";
 import Conragts from "./components/Congrats";
-import { openPrivacyPolicy } from "./actions/privacyPolicyAction";
 
 function App() {
   const [signIn, setSignIn] = useState(false);
@@ -35,7 +28,6 @@ function App() {
     (state: RootState) => state.privacyPolicy
   );
   const dispatch = useDispatch();
-  const { modalName } = useSelector((state: RootState) => state.privacyPolicy);
   const { isDonateModal } = useSelector(
     (state: RootState) => state.projectDetails
   );
@@ -64,18 +56,6 @@ function App() {
     oneTimeDonation,
     donateProjects,
   ]);
-
-  useEffect(() => {
-    signUp && setSignIn(false);
-  }, [signUp]);
-  const { isHomePage } = useSelector((state: RootState) => state.homeData);
-
-  const [searchParams] = useSearchParams();
-  const signInActive = searchParams.get("signIn") === "active";
-
-  useEffect(() => {
-    if (signInActive) setSignIn(true);
-  }, [signInActive]);
 
   const ct = document.querySelectorAll(".ecosystemDetails_partners");
 

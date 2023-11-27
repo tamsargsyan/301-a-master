@@ -146,10 +146,18 @@
   "select-acount-type": "SELECT ACCOUNT TYPE",
   "budget": "Budget",
   "collected": "Collected",
-  "project-in-progress": "These projects are in progress. The detailed information will be available later.",
+  "project-in-progress": "The project is under development. Detailed information will be available later.",
   "add-to-interesting": "add to interesting",
   "congrats": {
     "contact-us": "Thanks for your feedback! We will reply to you as soon as possible.",
     "register": "Thank you for registration! Now you are a part of the “301. Land of Wisdom« foundation."
-  }
+  },
+  "donation": {
+    "one-time-donation": "You can donate any amount, it will go to the needs of the '301. Land of Wisdom' Foundation.",
+    "donate-to-project": "You can choose any of our projects and direct assistance specifically to it",
+    "become-301": "You can join our Foundation and send us donations regularly"
+  },
+  "buy": "Buy",
+  "book": "Book",
+  "donate": "Donate"
 }
