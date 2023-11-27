@@ -6,41 +6,37 @@ import { fetchingPrivacyPolicy } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { Spin } from "antd";
 import { HeaderKeyOf } from "../../utils/keyof.type";
+import { useLocation, useNavigate } from "react-router";
 
-interface PrivacyProps {
-  handleClose: () => void;
-}
-
-const Privacy: React.FC<PrivacyProps> = ({ handleClose }) => {
+const Privacy = () => {
   const dispatch = useDispatch();
-  const { privacyHeader, privacy, modal } = useSelector(
-    (state: RootState) => state.privacyPolicy.privacyPolicy
-  );
-  const endpoint = privacy?.toLowerCase().split(" ").join("-");
 
-  const toCamelCase = (input: string) => {
-    return input
-      .toLowerCase()
-      .replace(/[^a-zA-Z0-9]+(.)/g, (_, char) => char.toUpperCase());
-  };
+  const location = useLocation();
+  const showPrivacy =
+    location.pathname === "/privacy-policy" ||
+    location.pathname === "/terms-of-services";
 
+  const endpoint = location.pathname.split("/")[1];
   useEffect(() => {
     //@ts-ignore
     endpoint && dispatch(fetchingPrivacyPolicy(endpoint));
-  }, [dispatch, modal, endpoint]);
+  }, [dispatch, endpoint]);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.privacyPolicy
   );
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  //@ts-ignore
-  const jsonData = data[toCamelCase(privacy || "")];
+  const jsonData =
+    //@ts-ignore
+    data[endpoint === "privacy-policy" ? "privacyPolicy" : "termsOfServices"];
+
+  const navigate = useNavigate();
 
   return (
-    <Modal setOpenModal={handleClose} openModal={modal}>
+    <Modal setOpenModal={() => navigate(-1)} openModal={showPrivacy}>
       <EcosystemModal
-        onClose={handleClose}
-        header={privacyHeader || ""}
+        onClose={() => navigate(-1)}
+        header={jsonData ? jsonData[`title_${lang}`] : ""}
         className='modal_back'>
         <div
           className={`agreementTerms_${loading && "loading"} agreementTerms`}

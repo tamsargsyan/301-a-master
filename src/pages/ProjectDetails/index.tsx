@@ -103,6 +103,7 @@ const ProjectDetails = () => {
       };
     }
   }, [project]);
+
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const scrollAmount = 100;
@@ -227,7 +228,8 @@ const ProjectDetails = () => {
                       className='ourProject_author_img'
                     />
                     <span>
-                      {data?.user?.name} {data?.user?.last_name}
+                      {data?.user && data.user[`name_${lang}`]}{" "}
+                      {data?.user && data.user[`last_name_${lang}`]}
                     </span>
                   </div>
                 </div>
@@ -274,22 +276,22 @@ const ProjectDetails = () => {
                 )}
                 <div className='roadMapContainer'>
                   {project &&
-                    project.month_data &&
-                    project.month_data[0].month_am !== "-" && (
-                      <div className='roadMap_heading problem_heading'>
-                        <img src={PATTERN} alt='Pattern' />
-                        <h2>
-                          {+project.budget_price !== 0
-                            ? t("project-details.road-map")
-                            : t("project-in-progress")}
-                        </h2>
-                      </div>
-                    )}
+                  project.month_data &&
+                  project.month_data[0]?.month_am !== "-" ? (
+                    <div className='roadMap_heading problem_heading'>
+                      <img src={PATTERN} alt='Pattern' />
+                      <h2>
+                        {+project.budget_price !== 0
+                          ? t("project-details.road-map")
+                          : t("project-in-progress")}
+                      </h2>
+                    </div>
+                  ) : null}
                   {project &&
                     (+project.budget_price !== 0 ? (
                       <div className='roadMap_inner _inner'>
                         <div className='fullProject_slider'>
-                          {project?.month_data.lnegth && (
+                          {project?.month_data.length ? (
                             <div className='chartContainer'>
                               <div className='chart_line'></div>
                               {project?.month_data.map(
@@ -322,7 +324,7 @@ const ProjectDetails = () => {
                                 }
                               )}
                             </div>
-                          )}
+                          ) : null}
                         </div>
                         <div className='budgetContainer'>
                           <div className='budget'>
@@ -468,7 +470,6 @@ const ProjectDetails = () => {
                       onClick={() => {
                         const container = sliderRef.current;
                         if (container) {
-                          console.log(container);
                           //@ts-ignore
                           container.scrollLeft -= scrollAmount;
                         }

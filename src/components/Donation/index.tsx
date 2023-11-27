@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openDonateModal } from "../../actions/donateAction";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 interface DonationProps {
   setSignUp: (arg: boolean) => void;
@@ -48,11 +49,12 @@ const Donation: React.FC<DonationProps> = ({
   ];
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCard = (id: number) => {
     id === 1 && setOneTimeDonation(true);
     id === 2 && setDonateProjects(true);
-    id === 3 && setSignUp(true);
+    id === 3 && navigate("/signUp");
     // setDonation(false);
     dispatch(openDonateModal(false));
   };

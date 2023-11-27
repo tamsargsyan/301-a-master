@@ -18,6 +18,7 @@ import { openAccountTypeModal } from "../../actions/donateAction";
 import CardSlider from "../CardSlider";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router";
 
 interface SignUpProps {
   signUp: boolean;
@@ -27,26 +28,10 @@ interface SignUpProps {
   handleClose: () => void;
 }
 
-interface AccountType {
-  id: number;
-  name: string;
-  type: string;
-  icon: string;
-  mainImg: string;
-  btn: string;
-  btnStyle: React.CSSProperties;
-}
-
-const SignUp: React.FC<SignUpProps> = ({
-  signUp,
-  setSignUp,
-  setSignIn,
-  // setAccountType,
-  handleClose,
-}) => {
+const SignUp = () => {
   const { t } = useTranslation();
 
-  const accountTypes: AccountType[] = [
+  const accountTypes = [
     {
       id: 1,
       name: t("footer.ecosystem.donor"),
@@ -97,7 +82,7 @@ const SignUp: React.FC<SignUpProps> = ({
     },
     {
       id: 5,
-      name: t("footer.ecosystem.fund-friends"),
+      name: t("footer.ecosystem.friends"),
       type: "friends",
       icon: FRIENDS,
       mainImg: FRIENDS_MAIN,
@@ -118,17 +103,24 @@ const SignUp: React.FC<SignUpProps> = ({
         type,
       })
     );
-    setSignUp(false);
+    // setSignUp(false);
   };
   const windowSize = useWindowSize();
   // https://codepen.io/hk2002/pen/yLQPNgQ
+
+  const location = useLocation();
+  const showSignUp = location.pathname === "/signUp";
+  const navigate = useNavigate();
+
   return (
     <Modal
-      setOpenModal={handleClose}
-      openModal={signUp}
+      setOpenModal={() => navigate(-1)}
+      openModal={showSignUp}
       className='signUp_overlay'
       headerShow={false}>
-      <EcosystemModal onClose={handleClose} header={t("select-acount-type")}>
+      <EcosystemModal
+        onClose={() => navigate(-1)}
+        header={t("select-acount-type")}>
         <div className='signUp_content_accountTypes'>
           <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
           {windowSize.width >= 800 ? (
@@ -152,11 +144,8 @@ const SignUp: React.FC<SignUpProps> = ({
                     border: "none",
                   }}
                   className='accountType_btn'
-                  link={false}
-                  to={""}
-                  onClick={() =>
-                    handleAccountType(account.id, account.name, account.type)
-                  }
+                  link={true}
+                  to={`/accountType?id=${account.id}?type=${account.type}`}
                 />
               </div>
             ))

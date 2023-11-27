@@ -16,6 +16,7 @@ import {
   getModalName,
   openPrivacyPolicy,
 } from "../../actions/privacyPolicyAction";
+import { NavLink } from "react-router-dom";
 
 interface DonateToTheProjectProps {
   setDonateProjects: (arg: boolean) => void;
@@ -38,13 +39,6 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const dispatch = useDispatch();
-
-  const handlePrivacy = (privacyHeader: string, e: any, privacy: string) => {
-    e.preventDefault();
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    dispatch(openDonateSingleProject(false, ""));
-    dispatch(getModalName("donateToProject"));
-  };
 
   const { openModal, from } = useSelector(
     (state: RootState) => state.projectData.donateSingleProject
@@ -168,29 +162,13 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                   <p>
                     {t("privacy.1")}
                     <br></br>
-                    <button
-                      className='mentioned_txt'
-                      onClick={e =>
-                        handlePrivacy(
-                          t("privacy.terms-of-services"),
-                          e,
-                          "Terms of Services"
-                        )
-                      }>
+                    <NavLink className='mentioned_txt' to='/terms-of-services'>
                       {t("privacy.terms")}
-                    </button>
-                    {t("privacy.and")}
-                    <button
-                      className='mentioned_txt'
-                      onClick={e =>
-                        handlePrivacy(
-                          t("privacy.privacy-policy"),
-                          e,
-                          "Privacy Policy"
-                        )
-                      }>
+                    </NavLink>{" "}
+                    {t("privacy.and")}{" "}
+                    <NavLink className='mentioned_txt' to='/privacy-policy'>
                       {t("privacy.privacy")}
-                    </button>
+                    </NavLink>
                   </p>
                 </div>
               </form>

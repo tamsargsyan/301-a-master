@@ -18,7 +18,12 @@ import { usePostRequest } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { connect } from "react-redux";
 import { login } from "../../actions/authActions";
-import { useSearchParams } from "react-router-dom";
+import {
+  NavLink,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
 import { history } from "../Navbar";
 import {
@@ -27,31 +32,22 @@ import {
 } from "../../actions/privacyPolicyAction";
 
 interface SignInProps {
-  signIn: boolean;
-  setSignIn: (arg: boolean) => void;
   setSignUp: (arg: boolean) => void;
   isAuthenticated: any;
   dispatch: any;
 }
 
-const SignIn: React.FC<SignInProps> = ({
-  signIn,
-  setSignIn,
-  setSignUp,
-  dispatch,
-}) => {
+const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const handleForgetPassword = () => setForgetPassword(true);
+  const location = useLocation();
+  const showLogin = location.pathname === "/login";
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    !signIn && setForgetPassword(false);
-  }, [signIn]);
+  // useEffect(() => {
+  //   !signIn && setForgetPassword(false);
+  // }, [signIn]);
 
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    setSignIn(false);
-    dispatch(getModalName("signInModal"));
-  };
   const windowSize = useWindowSize();
   const { t } = useTranslation();
   const { postRequest, postLoading, response } = usePostRequest();
@@ -60,10 +56,10 @@ const SignIn: React.FC<SignInProps> = ({
     if (response && response.status === 200) {
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      setSignIn(false);
+      navigate("/");
       dispatch(login());
     }
-  }, [response, setSignIn, dispatch]);
+  }, [response, dispatch]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -74,9 +70,9 @@ const SignIn: React.FC<SignInProps> = ({
   const [searchParams] = useSearchParams();
   const resetPass = searchParams.get("resetPass");
 
-  useEffect(() => {
-    if (resetPass) setSignIn(true);
-  }, [resetPass, setSignIn]);
+  // useEffect(() => {
+  //   if (resetPass) setSignIn(true);
+  // }, [resetPass, setSignIn]);
 
   const signInState = () => {
     if (forgetPassword) return forgetPassShcema;
@@ -103,7 +99,10 @@ const SignIn: React.FC<SignInProps> = ({
 
   return (
     <>
-      <Modal setOpenModal={setSignIn} openModal={signIn} headerShow={true}>
+      <Modal
+        setOpenModal={() => navigate(-1)}
+        openModal={showLogin}
+        headerShow={true}>
         <div className='modal_signIn'>
           {windowSize.width > 600 && (
             <div className='modal_signIn_leftSide'>
@@ -161,7 +160,6 @@ const SignIn: React.FC<SignInProps> = ({
                       },
                       {}
                     );
-                    setSignIn(false);
                   } else {
                     postRequest("login", values, {});
                   }
@@ -285,27 +283,13 @@ const SignIn: React.FC<SignInProps> = ({
                   <p>
                     {t("privacy.1")}
                     <br></br>
-                    <button
-                      className='mentioned_txt'
-                      onClick={() =>
-                        handlePrivacy(
-                          t("privacy.terms-of-services"),
-                          "Terms of Services"
-                        )
-                      }>
+                    <NavLink className='mentioned_txt' to='/terms-of-services'>
                       {t("privacy.terms")}
-                    </button>
-                    {t("privacy.and")}
-                    <button
-                      className='mentioned_txt'
-                      onClick={() =>
-                        handlePrivacy(
-                          t("privacy.privacy-policy"),
-                          "Privacy Policy"
-                        )
-                      }>
+                    </NavLink>{" "}
+                    {t("privacy.and")}{" "}
+                    <NavLink className='mentioned_txt' to='/privacy-policy'>
                       {t("privacy.privacy")}
-                    </button>
+                    </NavLink>
                   </p>
                 </div>
               </div>
@@ -336,11 +320,13 @@ const SignIn: React.FC<SignInProps> = ({
                 ) : (
                   <>
                     {t("sign-in.notHavingAcc")}
-                    <button
+                    <NavLink
                       className='mentioned_txt'
-                      onClick={() => setSignUp(true)}>
+                      to='/signUp'
+                      // onClick={() => setSignUp(true)}
+                    >
                       {t("sign-in.sign-up")}
-                    </button>
+                    </NavLink>
                   </>
                 )}
               </p>

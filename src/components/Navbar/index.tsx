@@ -297,13 +297,13 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
               />
               <Button
                 text={t(`navbar.sign-in`)}
-                link={false}
-                to=''
+                link={true}
+                to='/login'
                 className='signIn-btn'
                 onClick={() => {
-                  setOpenModal(true);
-                  dispatch(getModalName("signIn"));
-                  setSearchParams({ signIn: "active" });
+                  // setOpenModal(true);
+                  // dispatch(getModalName("signIn"));
+                  // setSearchParams({ signIn: "active" });
                 }}
                 style={{ padding: "9px 23px" }}
               />

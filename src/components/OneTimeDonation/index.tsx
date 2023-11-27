@@ -14,6 +14,7 @@ import {
   getModalName,
   openPrivacyPolicy,
 } from "../../actions/privacyPolicyAction";
+import { NavLink } from "react-router-dom";
 
 interface OneTimeDonationProps {
   oneTimeDonation: boolean;
@@ -32,12 +33,6 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const dispatch = useDispatch();
-
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    setOneTimeDonation(false);
-    dispatch(getModalName("oneTimeDonation"));
-  };
   const { t } = useTranslation();
   const [summa, setSumma] = useState("");
   const { postRequest } = usePostRequest();
@@ -173,27 +168,13 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                 <p>
                   {t("privacy.1")}
                   <br></br>
-                  <button
-                    className='mentioned_txt'
-                    onClick={() =>
-                      handlePrivacy(
-                        t("privacy.terms-of-services"),
-                        "Terms of Services"
-                      )
-                    }>
+                  <NavLink className='mentioned_txt' to='/terms-of-services'>
                     {t("privacy.terms")}
-                  </button>
-                  {t("privacy.and")}
-                  <button
-                    className='mentioned_txt'
-                    onClick={() =>
-                      handlePrivacy(
-                        t("privacy.privacy-policy"),
-                        "Privacy Policy"
-                      )
-                    }>
+                  </NavLink>{" "}
+                  {t("privacy.and")}{" "}
+                  <NavLink className='mentioned_txt' to='/privacy-policy'>
                     {t("privacy.privacy")}
-                  </button>
+                  </NavLink>
                 </p>
                 <Button
                   text={t("btns.donate")}

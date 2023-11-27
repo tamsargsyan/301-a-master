@@ -22,6 +22,7 @@ import {
   getAgreementTerms,
   openPrivacyPolicy,
 } from "../../actions/privacyPolicyAction";
+import { NavLink } from "react-router-dom";
 
 const { Panel } = Collapse;
 
@@ -55,10 +56,6 @@ const AboutUs = () => {
 
   const infos = Object.values(data);
   const faq = infos[5];
-
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-  };
 
   return (
     <>
@@ -208,24 +205,13 @@ const AboutUs = () => {
             <button className='support_form'>Форма поддержки</button>
           </Popconfirm>
           <p>
-            <button
-              className='mentioned_txt'
-              onClick={() =>
-                handlePrivacy(
-                  t("privacy.terms-of-services"),
-                  "Terms of Services"
-                )
-              }>
+            <NavLink className='mentioned_txt' to='/terms-of-services'>
               {t("privacy.terms")}
-            </button>
+            </NavLink>
             <button>{t("privacy.and")}</button>
-            <button
-              className='mentioned_txt'
-              onClick={() =>
-                handlePrivacy(t("privacy.privacy-policy"), "Privacy Policy")
-              }>
+            <NavLink className='mentioned_txt' to='/privacy-policy'>
               {t("privacy.privacy")}
-            </button>
+            </NavLink>
           </p>
         </div>
       </Background>

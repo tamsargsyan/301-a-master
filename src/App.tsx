@@ -115,53 +115,11 @@ function App() {
     <div className='container'>
       <Navbar setOpenModal={setSignIn} signIn={signIn} />
       <Router />
-      <SignIn signIn={signIn} setSignIn={setSignIn} setSignUp={setSignUp} />
-      <SignUp
-        signUp={signUp}
-        setSignUp={setSignUp}
-        setSignIn={setSignIn}
-        handleClose={() => {
-          setSignUp(false);
-          modalName === "signIn"
-            ? setSignIn(true)
-            : dispatch(openDonateModal(true));
-        }}
-      />
-      <AccountTypeModal
-        accountType={accountType}
-        setSignUp={setSignUp}
-        handleClose={() => {
-          !isHomePage && setSignUp(true);
-          dispatch(
-            openAccountTypeModal({
-              open: false,
-              id: 0,
-              name: "",
-              type: "",
-            })
-          );
-          dispatch(isHomePageModal(false));
-        }}
-      />
+      <SignIn setSignUp={setSignUp} />
+      <SignUp />
+      <AccountTypeModal />
       <AgreementTermsModal />
-      <Privacy
-        handleClose={() => {
-          dispatch(openPrivacyPolicy(false, null, null));
-          if (modalName === "oneTimeDonation") setOneTimeDonation(true);
-          if (modalName === "signInModal") setSignIn(true);
-          if (modalName === "accountTypeModal")
-            dispatch(
-              openAccountTypeModal({
-                name: "donor",
-                type: "",
-                id: 1,
-                open: true,
-              })
-            );
-          if (modalName === "donateToProject")
-            dispatch(openDonateSingleProject(true, "donation"));
-        }}
-      />
+      <Privacy />
       <Donation
         setSignUp={setSignUp}
         setOneTimeDonation={setOneTimeDonation}

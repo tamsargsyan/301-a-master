@@ -84,7 +84,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           name: t("btns.become-301"),
           become: "доноры «301»",
           id: 1,
-          link: "",
+          link: "/accountType?id=1?type=donor",
         },
         // {
         //   name: t("btns.learn-more"),
@@ -118,7 +118,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-ambassador"),
-          link: "",
+          link: "/accountType?id=2?type=ambassadors",
           become: "Амбассадор",
           id: 2,
         },
@@ -143,7 +143,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-expert"),
-          link: "",
+          link: "/accountType?id=3?type=experts",
           become: "Эксперты",
           id: 3,
         },
@@ -183,7 +183,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-partner"),
-          link: "",
+          link: "/accountType?id=4?type=partners",
           become: "Партнеры",
           id: 4,
         },
@@ -220,7 +220,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-fund-friend"),
-          link: "",
+          link: "/accountType?id=5?type=friends",
           become: "Друзья",
           id: 5,
         },
@@ -295,7 +295,6 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                     onClick={() => {
                       const container = sliderRef.current;
                       if (container) {
-                        console.log(container);
                         //@ts-ignore
                         container.scrollLeft -= scrollAmount;
                       }

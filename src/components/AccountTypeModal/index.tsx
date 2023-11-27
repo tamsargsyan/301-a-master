@@ -21,14 +21,10 @@ import {
   getModalName,
   openPrivacyPolicy,
 } from "../../actions/privacyPolicyAction";
+import { useLocation, useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const { Option } = Select;
-
-interface AccountTypeModalProps {
-  accountType: { open: boolean; id: number; name: string; type: string };
-  setSignUp: (arg: boolean) => void;
-  handleClose: () => void;
-}
 
 const filterOption = (
   input: string,
@@ -43,10 +39,7 @@ const filterOptionTel = (
 const filterOptionSages = (input: string, option: any) =>
   (option?.value ?? "").toLowerCase().includes(input.toLowerCase());
 
-const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
-  accountType,
-  handleClose,
-}) => {
+const AccountTypeModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const confirmAgreementTerms = () => {
@@ -80,19 +73,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     );
   };
 
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    dispatch(
-      openAccountTypeModal({
-        open: false,
-        id: 0,
-        name: "",
-        type: "",
-      })
-    );
-    dispatch(getModalName("accountTypeModal"));
-  };
-
   const [howDoYouKnow, setHowDoYouKnow] = useState<string>("");
   const handleHowDoYouKnowChange = (val: string) => setHowDoYouKnow(val);
   const handleCheckboxChange = (e: any, form: any) => {
@@ -115,7 +95,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
   const handleTelCode = (val: string) => setTelCode(val);
 
   const { postRequest, postLoading, response, error } = usePostRequest();
-  const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     if (response) {
@@ -131,30 +110,35 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
     }
   }, [response, dispatch, error]);
 
-  useEffect(() => {
-    //@ts-ignore
-    accountType.id === 3 && dispatch(fetchingRegisterData("get-register-data"));
-  }, [accountType.id, dispatch]);
   const { data } = useSelector((state: RootState) => state.registerData);
   const [agreementTermsChecked, setAgreementTearmsChecked] = useState(false);
   const [clubCodeOfEthics301Checked, setClubCodeOfEthics301Checked] =
     useState(false);
   const [supportFormChecked, setSupportFormChecked] = useState(false);
 
+  const location = useLocation();
+  const showAccountType = location.pathname === "/accountType";
+  const id = +location.search?.split("?")[1]?.split("=")[1];
+  const type = location.search?.split("?")[2]?.split("=")[1];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    //@ts-ignore
+    id === 3 && dispatch(fetchingRegisterData("get-register-data"));
+  }, [id, dispatch]);
+
   return (
     <Modal
-      setOpenModal={handleClose}
-      openModal={accountType.open}
+      setOpenModal={() => navigate(-1)}
+      openModal={showAccountType}
       className='signUp_overlay'
       headerShow={false}>
       <EcosystemModal
-        onClose={handleClose}
-        header={accountType.name}
+        onClose={() => navigate(-1)}
+        header={t(`footer.ecosystem.${type}`)}
         className='modal_back'>
         <Formik
-          validationSchema={
-            accountType.id === 3 ? otherSignUpSchema : signUpSchema
-          }
+          validationSchema={id === 3 ? otherSignUpSchema : signUpSchema}
           initialValues={{
             name: "",
             last_name: "",
@@ -175,7 +159,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
             const result = {
               ...values,
               phone: completePhoneNumber,
-              type: accountType.type,
+              type: type,
               agreement_terms: agreementTermsChecked,
               club_code_of_ethics_301: clubCodeOfEthics301Checked,
               support_form: supportFormChecked,
@@ -321,7 +305,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       className='error'
                     />
                   </div>
-                  {accountType.type === "experts" && (
+                  {type === "experts" && (
                     <div className='signUp_formGroup'>
                       <label htmlFor='signUp_sages'>{t("which_sages")}*</label>
                       <Field name='sages_id'>
@@ -496,7 +480,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       className='error'
                     />
                   </div>
-                  {accountType.id === 3 && (
+                  {id === 3 && (
                     <div className='signUp_formGroup'>
                       <label htmlFor='signUp_fund'>
                         {t("inputs.participation_form")}*
@@ -780,27 +764,13 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                 <p>
                   {t("privacy.1")}
                   <br></br>
-                  <button
-                    className='mentioned_txt'
-                    onClick={() =>
-                      handlePrivacy(
-                        t("privacy.terms-of-services"),
-                        "Terms of Services"
-                      )
-                    }>
+                  <NavLink className='mentioned_txt' to='/terms-of-services'>
                     {t("privacy.terms")}
-                  </button>
-                  {t("privacy.and")}
-                  <button
-                    className='mentioned_txt'
-                    onClick={() =>
-                      handlePrivacy(
-                        t("privacy.privacy-policy"),
-                        "Privacy Policy"
-                      )
-                    }>
+                  </NavLink>{" "}
+                  {t("privacy.and")}{" "}
+                  <NavLink className='mentioned_txt' to='/privacy-policy'>
                     {t("privacy.privacy")}
-                  </button>
+                  </NavLink>
                 </p>
               </div>
             </form>
