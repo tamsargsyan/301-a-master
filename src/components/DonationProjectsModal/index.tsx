@@ -65,26 +65,38 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
             <div className='donationProjects'>
               {p &&
                 //@ts-ignore
-                p.data?.map((p: any, i: number) => (
-                  <Fragment key={i}>
-                    <SingleProjectBox
-                      // title={p?.project[`project_name_${lang}`]}
-                      // description={removeHtmlTags(
-                      //   p?.project[`problem_description_${lang}`]
-                      // )}
-                      flag={p?.map_count}
-                      author={
-                        p && p.project && p?.project[`project_name_${lang}`]
-                      }
-                      authorImg={`${storageBase}/${p?.sages?.image}`}
-                      budget={p?.project?.budget_price}
-                      collected={p?.collectedPrice}
-                      projectImg={`${storageBase}/${p?.project?.image}`}
-                      className='donation_project'
-                      onClick={() => handleSingleProject(p?.project?.id)}
-                    />
-                  </Fragment>
-                ))}
+                p?.data
+                  .filter(
+                    (p: any) =>
+                      p.project.payment_type !== "buy" &&
+                      p.project.payment_type !== "book"
+                  )
+                  ?.map((p: any, i: number) => {
+                    return (
+                      <Fragment key={i}>
+                        <SingleProjectBox
+                          // title={p?.project[`project_name_${lang}`]}
+                          // description={removeHtmlTags(
+                          //   p?.project[`problem_description_${lang}`]
+                          // )}
+                          flag={
+                            p?.project?.payment_type !== "buy" &&
+                            p?.project?.payment_type !== "book" &&
+                            p.map_count
+                          }
+                          author={
+                            p && p.project && p?.project[`project_name_${lang}`]
+                          }
+                          authorImg={`${storageBase}/${p?.sages?.image}`}
+                          budget={p?.project?.budget_price}
+                          collected={p?.collectedPrice}
+                          projectImg={`${storageBase}/${p?.project?.image}`}
+                          className='donation_project'
+                          onClick={() => handleSingleProject(p?.project?.id)}
+                        />
+                      </Fragment>
+                    );
+                  })}
             </div>
           )}
         </div>

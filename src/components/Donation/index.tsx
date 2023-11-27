@@ -54,7 +54,7 @@ const Donation: React.FC<DonationProps> = ({
   const handleCard = (id: number) => {
     id === 1 && setOneTimeDonation(true);
     id === 2 && setDonateProjects(true);
-    id === 3 && navigate("/signUp");
+    id === 3 && navigate("/accountType?id=1?type=donor");
     // setDonation(false);
     dispatch(openDonateModal(false));
   };

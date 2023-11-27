@@ -131,7 +131,7 @@ const ProjectDetails = () => {
       sidePatter2Style={{ display: "none" }}
       style={{ flexDirection: "column", padding: "0" }}>
       <Helmet>
-        <title>Project {id}</title>
+        <title>{project && project[`project_name_${lang}`]}</title>
       </Helmet>
       {project && ourProject && (
         <>
@@ -216,10 +216,13 @@ const ProjectDetails = () => {
                 <div className='fullProject_titleInner'>
                   <div className='titlePart'>
                     <h2>{project[`project_name_${lang}`]}</h2>
-                    <div className='flag'>
-                      <img src={FLAG} alt='Flag' />
-                      <span>{data.map_count}</span>
-                    </div>
+                    {project.payment_type !== "buy" &&
+                      project.payment_type !== "book" && (
+                        <div className='flag'>
+                          <img src={FLAG} alt='Flag' />
+                          <span>{data.map_count}</span>
+                        </div>
+                      )}
                   </div>
                   <div className='ourProject__author'>
                     <img
@@ -274,7 +277,8 @@ const ProjectDetails = () => {
                     />
                   </div>
                 )}
-                {project.payment_type !== "buy" ? (
+                {project.payment_type !== "buy" &&
+                project.payment_type !== "book" ? (
                   <div className='roadMapContainer'>
                     {project &&
                     project.month_data &&
@@ -300,7 +304,7 @@ const ProjectDetails = () => {
                                     return (
                                       <div className='chart' key={i}>
                                         <div className='chart_info'>
-                                          <h1>{month.month}</h1>
+                                          {/* <h1>{month.month}</h1>asdasd */}
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
@@ -311,6 +315,18 @@ const ProjectDetails = () => {
                                           />
                                         </div>
                                         <div className='chart_month'>
+                                          {month.map_status ? (
+                                            <img
+                                              src={FLAG}
+                                              alt='Flag'
+                                              style={{
+                                                marginLeft: "16px",
+                                              }}
+                                            />
+                                          ) : (
+                                            <div
+                                              style={{ height: "19px" }}></div>
+                                          )}
                                           <div
                                             className='month_circle'
                                             style={{

@@ -6,6 +6,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
@@ -86,23 +87,50 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
       longName: "Հայերեն",
     },
   ];
+  const extractLanguageFromPathname = (pathname: string) => {
+    const languageRegex = /^\/([a-z]{2})(\/|$)/i;
+    const match = pathname.match(languageRegex);
+
+    if (match && match[1]) {
+      return match[1];
+    }
+
+    return null;
+  };
+
+  const handleLanguageChange = (language: string) => {
+    const currentLanguage = extractLanguageFromPathname(location.pathname);
+    let newPath = location.pathname;
+
+    if (currentLanguage) {
+      newPath = newPath.replace(`/${currentLanguage}`, `/${language}`);
+    } else {
+      newPath = `/${language}${newPath}`;
+    }
+
+    i18n.changeLanguage(language);
+    history.replace(newPath);
+    dispatch(languageDitactor(language));
+    setOpenLangs(false);
+  };
+
+  useEffect(() => {
+    i18n.changeLanguage(extractLanguageFromPathname(location.pathname) || "ru");
+    dispatch(
+      languageDitactor(extractLanguageFromPathname(location.pathname) || "ru")
+    );
+  }, []);
 
   const [openLangs, setOpenLangs] = useState(false);
-  const lang = i18next.language;
-  const copyLangs = langs.filter(item => item.shortName !== lang);
+  const langi18 = i18next.language;
+  const copyLangs = langs.filter(item => item.shortName !== langi18);
   const differentLang = langs.find(
     item1 => !copyLangs.some(item2 => item1.id === item2.id)
   );
   const { i18n, t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
-  const handleLanguageChange = (language: string) => {
-    i18n.changeLanguage(language);
-    const newPath = `/${language}${location.pathname}`;
-    history.replace(newPath);
-    dispatch(languageDitactor(language));
-    setOpenLangs(false);
-  };
+
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -245,9 +273,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             {copyLangs.map((lang, i) => (
               <Fragment key={i}>
                 <Button
-                  text={
-                    windowSize.width < 800 ? lang.shortName : lang.shortName
-                  }
+                  text={lang.shortName}
                   link={false}
                   to={""}
                   className={`${openLangs && "openedLang"} activeLang_${

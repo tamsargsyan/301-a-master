@@ -68,7 +68,11 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                   // description={removeHtmlTags(
                   //   data?.project?.problem_description_en
                   // )}
-                  flag={data?.map_count}
+                  flag={
+                    data?.project?.payment_type !== "buy" &&
+                    data?.project?.payment_type !== "book" &&
+                    data?.map_count
+                  }
                   author={
                     data &&
                     data.project &&
@@ -104,7 +108,12 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                         id='donateProject_sum'
                         name='signUp'
                         className='signUp_input'
-                        placeholder='0'
+                        placeholder={
+                          data?.project?.payment_type === "buy"
+                            ? data?.project?.budget_price
+                            : "0"
+                        }
+                        readOnly={data?.project?.payment_type === "buy"}
                       />
                     </div>
                   </div>
@@ -142,7 +151,11 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                 </div>
                 <div className='signUp_btns'>
                   <Button
-                    text={t("btns.donate")}
+                    text={
+                      data?.project?.payment_type === "buy"
+                        ? t("buy")
+                        : t("btns.donate")
+                    }
                     link={false}
                     to={""}
                     type='submit'

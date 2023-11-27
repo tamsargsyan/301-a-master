@@ -159,21 +159,27 @@ const OurProjects = () => {
             )}
           </div>
           {currentProjects.length ? (
-            currentProjects?.map((project: any, i: number) => (
-              <Fragment key={i}>
-                <Project
-                  author={project?.project[`project_name_${lang}`]}
-                  authorImg={`${storageBase}/${project?.user?.image}`}
-                  // title={project?.project[`project_name_${lang}`]}
-                  flag={project?.map_count}
-                  desc={project?.project[`problem_description_${lang}`]}
-                  projectImg={`${storageBase}/${project?.project?.image}`}
-                  heartit={() => heartit(project?.project?.id)}
-                  isSaved={project?.project?.id === projectId}
-                  id={project?.project?.id}
-                />
-              </Fragment>
-            ))
+            currentProjects?.map((project: any, i: number) => {
+              return (
+                <Fragment key={i}>
+                  <Project
+                    author={project?.project[`project_name_${lang}`]}
+                    authorImg={`${storageBase}/${project?.user?.image}`}
+                    title={project?.project[`project_name_en`]}
+                    flag={
+                      project?.project?.payment_type !== "buy" &&
+                      project?.project?.payment_type !== "book" &&
+                      project.map_count
+                    }
+                    desc={project?.project[`problem_description_${lang}`]}
+                    projectImg={`${storageBase}/${project?.project?.image}`}
+                    heartit={() => heartit(project?.project?.id)}
+                    isSaved={project?.project?.id === projectId}
+                    id={project?.project?.id}
+                  />
+                </Fragment>
+              );
+            })
           ) : (
             <div className='noProject'>There is no project</div>
           )}

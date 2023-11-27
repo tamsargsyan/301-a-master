@@ -113,7 +113,11 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                               //   ?.split(" ")
                               //   .slice(0, 2)
                               //   .join(" ")}
-                              flag={project.map_count}
+                              flag={
+                                project?.project?.payment_type !== "buy" &&
+                                project?.project?.payment_type !== "book" &&
+                                project.map_count
+                              }
                               author={
                                 project[`sector_${lang}` as keyof ProjectKeyOf]
                               }
@@ -146,7 +150,11 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                             //   ?.split(" ")
                             //   .slice(0, 2)
                             //   .join(" ")}
-                            flag={project.map_count}
+                            flag={
+                              project?.project?.payment_type !== "buy" &&
+                              project?.project?.payment_type !== "book" &&
+                              project.map_count
+                            }
                             author={
                               project[`sector_${lang}` as keyof ProjectKeyOf]
                             }

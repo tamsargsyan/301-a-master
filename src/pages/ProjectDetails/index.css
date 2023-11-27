@@ -148,6 +148,13 @@
   flex-direction: column;
   align-items: center;
 }
+.chart_info {
+  height: 110px;
+  overflow-y: auto;
+}
+.chart_info::-webkit-scrollbar {
+  display: none;
+}
 .chart_info h1 {
   font-size: clamp(1.2375rem, 0.0003rem + 1.031vw, 3.711875rem);
   color: #474a54;
@@ -155,6 +162,7 @@
 .chart_info p {
   font-size: 14px;
   color: #6e7175;
+  margin: 0;
 }
 .chart_month {
   gap: 7px;
@@ -222,6 +230,7 @@
 .chartContainer {
   display: flex;
   justify-content: space-between;
+  gap: 20px;
   align-items: center;
   position: relative;
   margin-bottom: 50px;
@@ -667,10 +676,10 @@ a.fx-Revolve:focus:before {
     height: 6px;
   }
   .month {
-    font-size: 5px;
+    font-size: 10px;
   }
   .chart_line {
-    bottom: 16px;
+    bottom: 22px;
   }
   .backBtn img {
     width: 16px;
