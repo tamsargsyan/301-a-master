@@ -83,41 +83,41 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
                   collected={data?.collectedPrice}
                   projectImg={`${storageBase}/${data?.project?.image}`}
                   className='donation_project donateToProject'
+                  buyBook={true}
                 />
               </div>
               <form>
-                <div className='signUp_formGroup'>
-                  <label htmlFor='donateProject_sum'>
-                    {t("inputs.enter-donation-amount")}
-                  </label>
-                  <div className='signUp_tel'>
-                    <Select
-                      className='signUp_selector'
-                      showSearch
-                      placeholder={t("inputs.choose")}
-                      optionFilterProp='children'
-                      onChange={onChange}
-                      onSearch={onSearch}
-                      //@ts-ignore
-                      filterOption={filterOption}
-                      options={country_currency}
-                    />
-                    <div className='signUp_telWrapper'>
-                      <input
-                        type='number'
-                        id='donateProject_sum'
-                        name='signUp'
-                        className='signUp_input'
-                        placeholder={
-                          data?.project?.payment_type === "buy"
-                            ? data?.project?.budget_price
-                            : "0"
-                        }
-                        readOnly={data?.project?.payment_type === "buy"}
-                      />
+                {data?.project?.payment_type !== "buy" &&
+                  data?.project?.payment_type !== "book" && (
+                    <div className='signUp_formGroup'>
+                      <label htmlFor='donateProject_sum'>
+                        {t("inputs.enter-donation-amount")}
+                      </label>
+                      <div className='signUp_tel'>
+                        <Select
+                          className='signUp_selector'
+                          showSearch
+                          placeholder={t("inputs.choose")}
+                          optionFilterProp='children'
+                          onChange={onChange}
+                          onSearch={onSearch}
+                          //@ts-ignore
+                          filterOption={filterOption}
+                          options={country_currency}
+                        />
+                        <div className='signUp_telWrapper'>
+                          <input
+                            type='number'
+                            id='donateProject_sum'
+                            name='signUp'
+                            className='signUp_input'
+                            placeholder={"0"}
+                            readOnly={data?.project?.payment_type === "buy"}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  )}
                 <div className='signUp_formGroup'>
                   <label htmlFor='donateProject_name'>{t("inputs.name")}</label>
                   <input

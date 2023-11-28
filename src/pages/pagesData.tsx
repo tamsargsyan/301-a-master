@@ -12,6 +12,7 @@ import AuthenticatedRoute from "./AuthRoute";
 import Media from "./Media";
 import Calendar from "./Calendar";
 import CalendarDetails from "./CalendarDetails";
+import ContactPage from "./Contact";
 
 const pagesData: routerType[] = [
   {
@@ -93,6 +94,16 @@ const pagesData: routerType[] = [
     path: "/:lang/ecosystem/:ecosystem",
     element: <EcoSystemDetails />,
     title: "Ecosystem Details",
+  },
+  {
+    path: "/contact",
+    element: <ContactPage />,
+    title: "Contact Us",
+  },
+  {
+    path: "/:lang/contact",
+    element: <ContactPage />,
+    title: "Contact Us",
   },
   {
     path: "/personal/personal-info",

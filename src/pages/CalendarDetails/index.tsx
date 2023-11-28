@@ -11,8 +11,6 @@ import "./index.css";
 import Button from "../../components/Button";
 import HEART from "../../assets/calendar/heart.svg";
 import Map from "../../components/Map";
-import { mapOptions } from "../../components/MapConfiguration";
-import { useJsApiLoader } from "@react-google-maps/api";
 import { events } from "../Calendar";
 import SingleEvent from "../../components/SingleEvent";
 import QR from "../../assets/calendar/qr-icon.svg";
@@ -22,13 +20,6 @@ import { useTranslation } from "react-i18next";
 
 const CalendarDetails = () => {
   const windowSize = useWindowSize();
-
-  const { isLoaded } = useJsApiLoader({
-    id: mapOptions.googleMapsApiKey,
-    //@ts-ignore
-    googleMapsApiKey: mapOptions.googleMapsApiKey,
-  });
-
   const [book, setBook] = useState(false);
   const { t } = useTranslation();
 
@@ -131,7 +122,7 @@ const CalendarDetails = () => {
                 </div>
               </div>
               <div className='calendar_details_1_info_map_wrapper'>
-                <Map isLoaded={isLoaded} />
+                <Map />
                 <div className='calendar_details_address'>
                   <p>Ереван, ул. Московяна 24</p>
                 </div>

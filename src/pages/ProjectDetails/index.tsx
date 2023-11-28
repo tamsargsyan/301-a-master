@@ -415,12 +415,13 @@ const ProjectDetails = () => {
                     </div>
                   </div>
                 )}
-                <div className='partnersContainer'>
-                  <div className='roadMap_heading problem_heading'>
-                    <img src={PATTERN} alt='Pattern' />
-                    <h2>{t("project-details.partners")}</h2>
-                  </div>
-                  {/* <div className='projectDetails_slider'>
+                {partners.length ? (
+                  <div className='partnersContainer'>
+                    <div className='roadMap_heading problem_heading'>
+                      <img src={PATTERN} alt='Pattern' />
+                      <h2>{t("project-details.partners")}</h2>
+                    </div>
+                    {/* <div className='projectDetails_slider'>
                     <button
                       className='leftBtn'
                       onClick={() => {
@@ -432,7 +433,7 @@ const ProjectDetails = () => {
                       }}>
                       <img src={ARROW} alt='Arrow' />
                     </button> */}
-                  {/* <div
+                    {/* <div
                       className='ecosystemDetails_partners partners _inner'
                       ref={carousel}>
                       <div className='innerPartners'>
@@ -448,7 +449,7 @@ const ProjectDetails = () => {
                         ))}
                       </div>
                     </div> */}
-                  {/* <div
+                    {/* <div
                       className='ecosystemDetails_partners partners _inner'
                       ref={sliderRef}>
                       {partners.map((partner: any) => {
@@ -461,16 +462,16 @@ const ProjectDetails = () => {
                               alt={partner.name}
                               className='image'
                             /> */}
-                  {/* <img
+                    {/* <img
                               className='image'
                               alt='sliderImage'
                               src={`${storageBase}/${partner.image}`}
                             /> */}
-                  {/* </div>
+                    {/* </div>
                         );
                       })}
                     </div> */}
-                  {/* <button
+                    {/* <button
                       className='rightBtn'
                       onClick={() => {
                         const container = sliderRef.current;
@@ -481,47 +482,48 @@ const ProjectDetails = () => {
                       }}>
                       <img src={ARROW} alt='Arrow' />
                     </button> */}
-                  {/* </div> */}
-                  <div className='projectDetails_slider_1 partners _inner'>
-                    <button
-                      className='leftBtn'
-                      onClick={() => {
-                        const container = sliderRef.current;
-                        if (container) {
-                          //@ts-ignore
-                          container.scrollLeft -= scrollAmount;
-                        }
-                      }}>
-                      <img src={ARROW} alt='Arrow' />
-                      {/* <ChevronLeftIcon /> */}
-                    </button>
-                    <div className='images-container' ref={sliderRef}>
-                      {partners.map((partner: any) => {
-                        return (
-                          <div
-                            className='ecosystemDetails_partners_item'
-                            key={partner.id}>
-                            <img
-                              alt='sliderImage'
-                              src={`${storageBase}/${partner.image}`}
-                            />
-                          </div>
-                        );
-                      })}
+                    {/* </div> */}
+                    <div className='projectDetails_slider_1 partners _inner'>
+                      <button
+                        className='leftBtn'
+                        onClick={() => {
+                          const container = sliderRef.current;
+                          if (container) {
+                            //@ts-ignore
+                            container.scrollLeft -= scrollAmount;
+                          }
+                        }}>
+                        <img src={ARROW} alt='Arrow' />
+                        {/* <ChevronLeftIcon /> */}
+                      </button>
+                      <div className='images-container' ref={sliderRef}>
+                        {partners.map((partner: any) => {
+                          return (
+                            <div
+                              className='ecosystemDetails_partners_item'
+                              key={partner.id}>
+                              <img
+                                alt='sliderImage'
+                                src={`${storageBase}/${partner.image}`}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <button
+                        className='rightBtn'
+                        onClick={() => {
+                          const container = sliderRef.current;
+                          if (container) {
+                            //@ts-ignore
+                            container.scrollLeft += scrollAmount;
+                          }
+                        }}>
+                        <img src={ARROW} alt='Arrow' />
+                      </button>
                     </div>
-                    <button
-                      className='rightBtn'
-                      onClick={() => {
-                        const container = sliderRef.current;
-                        if (container) {
-                          //@ts-ignore
-                          container.scrollLeft += scrollAmount;
-                        }
-                      }}>
-                      <img src={ARROW} alt='Arrow' />
-                    </button>
                   </div>
-                </div>
+                ) : null}
                 <div className='_inner dontaionBtns_wrapper' ref={donationsRef}>
                   <div
                     className={`${

@@ -4,6 +4,7 @@ import Button from "../Button";
 import "./index.css";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProjectProps {
   author: string;
@@ -30,13 +31,19 @@ const Project: React.FC<ProjectProps> = ({
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { width } = useWindowSize();
 
   return (
     <div className='ourProject__project'>
       <div className='ourProject__projectInner'>
         <div className='ourProject__projectInfo'>
           <div className='ourProject__author'>
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                alignItems: author.length < 40 ? "center" : "flex-start",
+              }}>
               <img
                 src={authorImg}
                 alt='Author'
@@ -69,7 +76,14 @@ const Project: React.FC<ProjectProps> = ({
           <div
             className='ourProject__desc'
             dangerouslySetInnerHTML={{
-              __html: desc.length > 100 ? `${desc.slice(0, 200)}. . .` : desc,
+              __html:
+                width < 1600
+                  ? desc.length > 100
+                    ? `${desc.slice(0, 140)}. . .`
+                    : desc
+                  : desc.length > 100
+                  ? `${desc.slice(0, 200)}. . .`
+                  : desc,
             }}
           />
         </div>

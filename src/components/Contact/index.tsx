@@ -15,9 +15,10 @@ import { congratsModal } from "../../actions/congratsAction";
 
 interface ContactProps {
   separatedPart?: Boolean;
+  contactPage?: boolean;
 }
 
-const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
+const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -60,7 +61,11 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
       {separatedPart && <div className='separatedPart'></div>}
       <Background
         pattern1={
-          windowSize.width < 975 ? SIDE_PATTERN_2_MOBILE : SIDE_PATTERN_2
+          !contactPage
+            ? windowSize.width < 975
+              ? SIDE_PATTERN_2_MOBILE
+              : SIDE_PATTERN_2
+            : ""
         }
         shoudHaveSidePattern={false}
         pattern2LeftStyle={{ display: "none" }}
@@ -139,6 +144,7 @@ const Contact: React.FC<ContactProps> = ({ separatedPart }) => {
                 background: "#DD264E",
                 boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
                 color: "#fff",
+                width: "200px",
               }}
               link={false}
               to=''

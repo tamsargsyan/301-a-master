@@ -165,7 +165,7 @@ const OurProjects = () => {
                   <Project
                     author={project?.project[`project_name_${lang}`]}
                     authorImg={`${storageBase}/${project?.user?.image}`}
-                    title={project?.project[`project_name_en`]}
+                    // title={project?.project[`project_name_en`]}
                     flag={
                       project?.project?.payment_type !== "buy" &&
                       project?.project?.payment_type !== "book" &&
