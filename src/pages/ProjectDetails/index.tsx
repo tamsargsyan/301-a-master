@@ -62,13 +62,13 @@ const ProjectDetails = () => {
   const donationsRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { name } = useParams();
   useEffect(() => {
     //@ts-ignore
     dispatch(fetchingProjects("project"));
     //@ts-ignore
-    dispatch(fetchingProjectDetails(`project-details/${id}`));
-  }, [dispatch, id]);
+    dispatch(fetchingProjectDetails(`project-details/${name}`));
+  }, [dispatch, name]);
 
   useEffect(() => {
     scrollToTop();
@@ -599,8 +599,8 @@ const ProjectDetails = () => {
                     {project && project.budget_price ? (
                       <Button
                         text={t(`${project.payment_type}`)}
-                        link={false}
-                        to={""}
+                        link={true}
+                        to={`projects-donation/project-${project.slug}`}
                         style={{
                           color: "#fff",
                           background: "#DD264E",
@@ -609,13 +609,13 @@ const ProjectDetails = () => {
                           width: !isVisible ? "auto" : "100%",
                         }}
                         onClick={() => {
-                          dispatch(
-                            openDonateSingleProject(true, "projectDetails")
-                          );
+                          // dispatch(
+                          //   openDonateSingleProject(true, "projectDetails")
+                          // );
                           dispatch(
                             //@ts-ignore
                             fetchingProjectDetails(
-                              `project-details/${project.id}`
+                              `project-details/${project.slug}`
                             )
                           );
                         }}

@@ -36,12 +36,12 @@ const pagesData: routerType[] = [
     title: "Projects",
   },
   {
-    path: "/projects/:id",
+    path: "/projects/:name",
     element: <ProjectDetails />,
     title: "Project",
   },
   {
-    path: "/:lang/projects/:id",
+    path: "/:lang/projects/:name",
     element: <ProjectDetails />,
     title: "Project",
   },

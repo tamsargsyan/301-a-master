@@ -176,6 +176,7 @@ const OurProjects = () => {
                     heartit={() => heartit(project?.project?.id)}
                     isSaved={project?.project?.id === projectId}
                     id={project?.project?.id}
+                    slug={project?.project.slug}
                   />
                 </Fragment>
               );

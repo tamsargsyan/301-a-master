@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openDonateModal } from "../../actions/donateAction";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 interface DonationProps {
   setSignUp: (arg: boolean) => void;
@@ -52,24 +52,25 @@ const Donation: React.FC<DonationProps> = ({
   const navigate = useNavigate();
 
   const handleCard = (id: number) => {
-    id === 1 && setOneTimeDonation(true);
-    id === 2 && setDonateProjects(true);
+    // id === 1 && setOneTimeDonation(true);
+    id === 1 && navigate("/one-time-donation");
+    // id === 2 && setDonateProjects(true);
+    id === 2 && navigate("/projects-donation");
     id === 3 && navigate("/accountType?id=1?type=donor");
     // setDonation(false);
     dispatch(openDonateModal(false));
   };
 
-  const { isDonateModal } = useSelector(
-    (state: RootState) => state.projectDetails
-  );
+  // const { isDonateModal } = useSelector(
+  //   (state: RootState) => state.projectDetails
+  // );
+
+  const location = useLocation();
+  const showDonation = location.pathname === "/donation";
 
   return (
-    <Modal
-      setOpenModal={() => dispatch(openDonateModal(false))}
-      openModal={isDonateModal}>
-      <EcosystemModal
-        onClose={() => dispatch(openDonateModal(false))}
-        header={t("btns.donate")}>
+    <Modal setOpenModal={() => navigate(-1)} openModal={showDonation}>
+      <EcosystemModal onClose={() => navigate(-1)} header={t("btns.donate")}>
         <div className='donationWrapper'>
           <div className='donation'>
             {/* <div className='donation_info'>

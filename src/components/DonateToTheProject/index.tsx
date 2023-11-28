@@ -10,16 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
 import { useTranslation } from "react-i18next";
-import { openDonateSingleProject } from "../../actions/donateAction";
 import { NavLink } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
-interface DonateToTheProjectProps {
-  setDonateProjects: (arg: boolean) => void;
-}
-
-const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
-  setDonateProjects,
-}) => {
+const DonateToTheProject = () => {
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
   };
@@ -33,24 +27,30 @@ const DonateToTheProject: React.FC<DonateToTheProjectProps> = ({
     option: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-  const dispatch = useDispatch();
-
-  const { openModal, from } = useSelector(
-    (state: RootState) => state.projectData.donateSingleProject
-  );
+  const navigate = useNavigate();
 
   const handleClose = () => {
-    if (from !== "projectDetails") setDonateProjects(true);
-    dispatch(openDonateSingleProject(false, ""));
+    navigate(-1);
+    // if (from !== "projectDetails") setDonateProjects(true);
+    // dispatch(openDonateSingleProject(false, ""));
   };
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const location = useLocation();
+  const showDonateToTheProject =
+    location.pathname.includes(`/projects-donation/project-`) ||
+    location.pathname.includes(
+      `/projects/${data?.project?.slug}/projects-donation/project-`
+    );
 
   return (
-    <Modal setOpenModal={handleClose} openModal={openModal} headerShow={true}>
+    <Modal
+      setOpenModal={handleClose}
+      openModal={showDonateToTheProject}
+      headerShow={true}>
       <EcosystemModal
         onClose={handleClose}
         header={t("btns.donate-to-project")}>

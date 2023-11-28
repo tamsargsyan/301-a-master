@@ -6,7 +6,6 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
-import { useParams } from "react-router";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
@@ -337,17 +336,18 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             <div className='btns' style={{ margin: 0 }}>
               <Button
                 text={t(`btns.donate`)}
-                link={false}
-                to=''
+                link={true}
+                to='/donation'
                 className='signIn-btn'
-                onClick={() => {
-                  dispatch(openDonateModal(true));
-                  dispatch(getModalName("donate"));
-                }}
+                // onClick={() => {
+                //   // dispatch(openDonateModal(true));
+                //   // dispatch(getModalName("donate"));
+                // }}
                 style={{
                   padding: "9px 23px",
                   background: "var(--main-color)",
                   color: "#fff  ",
+                  fontSize: "13px",
                 }}
               />
               <Button
@@ -355,7 +355,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                 link={true}
                 to='/login'
                 className='signIn-btn'
-                style={{ padding: "9px 23px" }}
+                style={{ padding: "9px 23px", fontSize: "13px" }}
               />
             </div>
           )}

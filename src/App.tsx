@@ -24,38 +24,7 @@ function App() {
   const [signUp, setSignUp] = useState(false);
   const [oneTimeDonation, setOneTimeDonation] = useState(false);
   const [donateProjects, setDonateProjects] = useState(false);
-  const { agreementTerms } = useSelector(
-    (state: RootState) => state.privacyPolicy
-  );
   const dispatch = useDispatch();
-  const { isDonateModal } = useSelector(
-    (state: RootState) => state.projectDetails
-  );
-  const { accountType } = useSelector((state: RootState) => state.homeData);
-
-  useEffect(() => {
-    document.body.classList.toggle(
-      "no-scroll",
-      signIn ||
-        signUp ||
-        accountType.open ||
-        agreementTerms.modal ||
-        isDonateModal ||
-        oneTimeDonation ||
-        donateProjects
-    );
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [
-    signIn,
-    signUp,
-    accountType.open,
-    agreementTerms.modal,
-    isDonateModal,
-    oneTimeDonation,
-    donateProjects,
-  ]);
 
   const ct = document.querySelectorAll(".ecosystemDetails_partners");
 
@@ -117,7 +86,7 @@ function App() {
         donateProjects={donateProjects}
         setDonateProjects={setDonateProjects}
       />
-      <DonateToTheProject setDonateProjects={setDonateProjects} />
+      <DonateToTheProject />
       <RecommentedModal />
       <Conragts />
     </div>

@@ -16,6 +16,7 @@ interface ProjectProps {
   isSaved: boolean;
   id: number;
   heartit: () => void;
+  slug: string;
 }
 
 const Project: React.FC<ProjectProps> = ({
@@ -28,6 +29,7 @@ const Project: React.FC<ProjectProps> = ({
   isSaved,
   id,
   heartit,
+  slug,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -95,7 +97,7 @@ const Project: React.FC<ProjectProps> = ({
           <Button
             text={t("btns.view")}
             link={true}
-            to={`${id}`}
+            to={slug}
             style={{
               padding: "9px 30px",
               height: "35px",
@@ -106,7 +108,7 @@ const Project: React.FC<ProjectProps> = ({
             className='view-btn'
             onClick={() => {
               //@ts-ignore
-              dispatch(fetchingProjectDetails(`project-details/${id}`));
+              dispatch(fetchingProjectDetails(`project-details/${slug}`));
             }}
           />
           <button

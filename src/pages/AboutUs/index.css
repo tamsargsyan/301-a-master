@@ -121,6 +121,9 @@
   color: #313a4b !important;
   font-weight: 500 !important;
 }
+.faq_panel p{
+  margin: 0;
+}
 @media screen and (max-width: 975px) {
   .aboutUs_privacy {
     width: 100%;

@@ -4,16 +4,14 @@ import SingleProjectBox from "../SingleProjectBox";
 import "./index.css";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  openDonateModal,
-  openDonateSingleProject,
-} from "../../actions/donateAction";
+import { openDonateSingleProject } from "../../actions/donateAction";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { storageBase } from "../../utils/storage";
-import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
+import { useLocation, useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
 
 interface DonationProjectsModalProps {
   donateProjects: boolean;
@@ -21,39 +19,43 @@ interface DonationProjectsModalProps {
 }
 
 const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
-  donateProjects,
   setDonateProjects,
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClose = () => {
     // setDonation(true);
-    dispatch(openDonateModal(true));
-    setDonateProjects(false);
+    // dispatch(openDonateModal(true));
+    // setDonateProjects(false);
+    navigate(-1);
   };
 
-  const handleSingleProject = (id: number) => {
-    dispatch(openDonateSingleProject(true, "donation"));
-    setDonateProjects(false);
+  const handleSingleProject = (slug: string) => {
+    // dispatch(openDonateSingleProject(true, "donation"));
+    // setDonateProjects(false);
     //@ts-ignore
-    dispatch(fetchingProjectDetails(`project-details/${id}`));
+    dispatch(fetchingProjectDetails(`project-details/${slug}`));
   };
   const [p, setP] = useState(null);
-
-  useEffect(() => {
-    // donateProjects && dispatch(fetchingProjects("project"));
-    donateProjects &&
-      fetch("https://301.machtech.site/api/get-all-project")
-        .then(response => response.json())
-        .then(data => setP(data))
-        .catch(error => console.error(error));
-  }, [donateProjects]);
 
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
 
+  const location = useLocation();
+  const showDonationProjects = location.pathname === "/projects-donation";
+
+  useEffect(() => {
+    // donateProjects && dispatch(fetchingProjects("project"));
+    showDonationProjects &&
+      fetch("https://301.machtech.site/api/get-all-project")
+        .then(response => response.json())
+        .then(data => setP(data))
+        .catch(error => console.error(error));
+  }, [showDonationProjects]);
+
   return (
-    <Modal setOpenModal={handleClose} openModal={donateProjects}>
+    <Modal setOpenModal={handleClose} openModal={showDonationProjects}>
       <EcosystemModal onClose={handleClose} header={t("btns.donate")}>
         <div className='donationProjects_wrapper'>
           <div className='donationProjects_title'>{t("select-project")}</div>
@@ -73,7 +75,9 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
                   )
                   ?.map((p: any, i: number) => {
                     return (
-                      <Fragment key={i}>
+                      <NavLink
+                        to={`/projects-donation/project-${p.project.slug}`}
+                        key={i}>
                         <SingleProjectBox
                           // title={p?.project[`project_name_${lang}`]}
                           // description={removeHtmlTags(
@@ -92,9 +96,9 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
                           collected={p?.collectedPrice}
                           projectImg={`${storageBase}/${p?.project?.image}`}
                           className='donation_project'
-                          onClick={() => handleSingleProject(p?.project?.id)}
+                          onClick={() => handleSingleProject(p?.project?.slug)}
                         />
-                      </Fragment>
+                      </NavLink>
                     );
                   })}
             </div>

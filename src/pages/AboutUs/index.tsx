@@ -103,12 +103,26 @@ const AboutUs = () => {
                       //@ts-ignore
                       f.question_answer.map((q, i) => (
                         <Panel
-                          header={removeHtmlTags(q[`question_${lang}`])}
+                          header={
+                            <div
+                              className='faq_panel'
+                              dangerouslySetInnerHTML={{
+                                __html: q[`question_${lang}`],
+                              }}
+                            />
+                            // removeHtmlTags(q[`question_${lang}`])
+                          }
                           key={i}
                           className='faq_q'>
-                          <p className='faq_a'>
+                          {/* <p className='faq_a'>
                             {removeHtmlTags(q[`answer_${lang}`])}
-                          </p>
+                          </p> */}
+                          <div
+                            className='faq_a'
+                            dangerouslySetInnerHTML={{
+                              __html: q[`answer_${lang}`],
+                            }}
+                          />
                         </Panel>
                       ))
                     }
@@ -119,9 +133,15 @@ const AboutUs = () => {
                     const answer = q[`answer_${lang}`].split("</p>");
                     return (
                       <Fragment key={i}>
-                        <p className='faq_q'>
+                        <div
+                          className='faq_q'
+                          dangerouslySetInnerHTML={{
+                            __html: q[`question_${lang}`],
+                          }}
+                        />
+                        {/* <p className='faq_q'>
                           {removeHtmlTags(q[`question_${lang}`])}
-                        </p>
+                        </p> */}
                         {answer.map((paragraph: string, index: number) => (
                           <div key={index} className={`faq_a_${index + 1}`}>
                             <p className='faq_a'>
@@ -132,9 +152,16 @@ const AboutUs = () => {
                                 }}>
                                 {removeHtmlTags(paragraph.split(" ")[0])}{" "}
                               </span>
-                              {removeHtmlTags(
+                              {/* {removeHtmlTags(
                                 paragraph.substring(paragraph.indexOf(" ") + 1)
-                              )}
+                              )} */}
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: paragraph.substring(
+                                    paragraph.indexOf(" ") + 1
+                                  ),
+                                }}
+                              />
                             </p>
                           </div>
                         ))}
