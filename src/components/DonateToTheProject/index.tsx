@@ -11,7 +11,9 @@ import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { useEffect } from "react";
+import { fetchingProjectDetails } from "../../actions/apiActions";
 
 const DonateToTheProject = () => {
   const onChange = (value: string) => {
@@ -40,11 +42,19 @@ const DonateToTheProject = () => {
   const { t } = useTranslation();
   const lang = useSelector((state: RootState) => state.languageDitactor.lang);
   const location = useLocation();
-  const showDonateToTheProject =
-    location.pathname.includes(`/projects-donation/project-`) ||
-    location.pathname.includes(
-      `/projects/${data?.project?.slug}/projects-donation/project-`
-    );
+  const showDonateToTheProject = location.pathname.includes(
+    `/projects-donation/project-`
+  );
+  const dispatch = useDispatch();
+  const slug =
+    location.pathname.split("/project-")[
+      location.pathname.split("/project-").length - 1
+    ];
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchingProjectDetails(`project-details/${slug}`));
+  }, []);
 
   return (
     <Modal
@@ -83,7 +93,10 @@ const DonateToTheProject = () => {
                   collected={data?.collectedPrice}
                   projectImg={`${storageBase}/${data?.project?.image}`}
                   className='donation_project donateToProject'
-                  buyBook={true}
+                  buyBook={
+                    data?.project?.payment_type === "buy" &&
+                    data?.project?.payment_type === "book"
+                  }
                 />
               </div>
               <form>

@@ -200,7 +200,9 @@ const ProjectDetails = () => {
             <div className='fullProjectInner'>
               <div className='fullProjectBg'>
                 <div className='overlay'></div>
-                <button className='backBtn' onClick={() => navigate(-1)}>
+                <button
+                  className='backBtn'
+                  onClick={() => navigate("/projects")}>
                   <img
                     src={ARROW}
                     alt='Back Button'
