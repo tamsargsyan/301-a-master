@@ -40,11 +40,21 @@ const CardSlider: React.FC<CardSliderProps> = ({ data, handleAccountType }) => {
             id={`accountType-${card.id}`}>
             <div className=''>
               <div className='accountType_header'>
-                <img src={card.icon} alt='Account' />
+                <img
+                  src={card.icon}
+                  alt='Account'
+                  decoding='async'
+                  loading='lazy'
+                />
                 <span>{card.name}</span>
               </div>
               <div className='accountType_mainImg'>
-                <img src={card.mainImg} alt='Account Main' />
+                <img
+                  src={card.mainImg}
+                  alt='Account Main'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
             </div>
             <Button
@@ -63,10 +73,10 @@ const CardSlider: React.FC<CardSliderProps> = ({ data, handleAccountType }) => {
         </div>
       ))}
       <button className='nav left' onClick={prevSlide}>
-        <img src={ARROW} alt='Arrow' />
+        <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
       </button>
       <button className='nav right' onClick={nextSlide}>
-        <img src={ARROW} alt='Arrow' />
+        <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
       </button>
     </div>
   );

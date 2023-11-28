@@ -43,12 +43,29 @@ const Main: React.FC<MainProps> = ({ lang }) => {
       }}>
       {windowSize.width < 975 && (
         <div className='bgLogo'>
-          <img src={BIG_PATTERN} className='mainBigPattern' alt='Pattern' />
-          <img src={LOGO_MOBILE} alt='301' className='logoMobile' />
+          <img
+            src={BIG_PATTERN}
+            className='mainBigPattern'
+            alt='Pattern'
+            decoding='async'
+            loading='lazy'
+          />
+          <img
+            src={LOGO_MOBILE}
+            alt='301'
+            className='logoMobile'
+            decoding='async'
+            loading='lazy'
+          />
         </div>
       )}
       <div className='bg'>
-        <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt='Background' />
+        <img
+          src={windowSize.width < 975 ? BG_MOBILE : BG}
+          alt='Background'
+          decoding='async'
+          loading='lazy'
+        />
       </div>
       <Header
         title={landOfWisdom[`title_${lang}` as keyof HeaderKeyOf]}
@@ -84,7 +101,7 @@ const Main: React.FC<MainProps> = ({ lang }) => {
       />
       {windowSize.width > 975 && (
         <div className='bgLogo'>
-          <img src={LOGO} alt='301' />
+          <img src={LOGO} alt='301' decoding='async' loading='lazy' />
         </div>
       )}
       <FollowUs className='mainFollowUs' />

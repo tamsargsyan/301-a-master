@@ -46,12 +46,14 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
                 src={authorImg}
                 alt='Author'
                 className='ourProject_author_img'
+                decoding='async'
+                loading='lazy'
               />
               <span>{author}</span>
             </div>
             {flag && (
               <span className='flag'>
-                <img src={FLAG} alt='Flag' />
+                <img src={FLAG} alt='Flag' decoding='async' loading='lazy' />
                 {flag}
               </span>
             )}
@@ -107,7 +109,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
             <h1>{title}</h1>
             {flag && (
               <span className='flag'>
-                <img src={FLAG} alt='Flag' />
+                <img src={FLAG} alt='Flag' decoding='async' loading='lazy' />
                 {flag}
               </span>
             )}
@@ -134,7 +136,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           <span>{author}</span>
           {flag && (
             <span className='flag'>
-              <img src={FLAG} alt='Flag' />
+              <img src={FLAG} alt='Flag' decoding='async' loading='lazy' />
               {flag}
             </span>
           )}

@@ -165,7 +165,12 @@ const EcoSystemDetails = () => {
             <div className='ecosystemDetails'>
               <div className='ecosystemDetails_'>
                 <div className='ecosystemDetails-title'>
-                  <img src={ecosystemResult?.icon} alt='Ecosystem' />
+                  <img
+                    src={ecosystemResult?.icon}
+                    alt='Ecosystem'
+                    decoding='async'
+                    loading='lazy'
+                  />
                   <h1>{header[`title_${lang}`]}</h1>
                 </div>
                 <div className='ecosystemDetails-header'>

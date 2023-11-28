@@ -24,9 +24,24 @@ const Conragts = () => {
         className='conragts_modal'
         headerChildren={
           <div className='congrats_pattern'>
-            <img src={PATTERN_1} alt='Pattern' />
-            <img src={PATTERN_2} alt='Pattern' />
-            <img src={PATTERN_1} alt='Pattern' />
+            <img
+              src={PATTERN_1}
+              alt='Pattern'
+              decoding='async'
+              loading='lazy'
+            />
+            <img
+              src={PATTERN_2}
+              alt='Pattern'
+              decoding='async'
+              loading='lazy'
+            />
+            <img
+              src={PATTERN_1}
+              alt='Pattern'
+              decoding='async'
+              loading='lazy'
+            />
           </div>
         }>
         <div className='conragts_modal_content'>

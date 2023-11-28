@@ -79,10 +79,20 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                 {projects.length > 2 && (
                   <>
                     <button className='leftBtn' onClick={handleBack}>
-                      <img src={ARROW} alt='Arrow' />
+                      <img
+                        src={ARROW}
+                        alt='Arrow'
+                        decoding='async'
+                        loading='lazy'
+                      />
                     </button>
                     <button className='rightBtn' onClick={handleNext}>
-                      <img src={ARROW} alt='Arrow' />
+                      <img
+                        src={ARROW}
+                        alt='Arrow'
+                        decoding='async'
+                        loading='lazy'
+                      />
                     </button>
                   </>
                 )}

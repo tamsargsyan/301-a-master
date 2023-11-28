@@ -32,8 +32,7 @@ const Button: React.FC<ButtonProps> = ({
           onClick={onClick}
           to={to}
           className={`${active && "activeBtn"} ${className} btn`}
-          style={style}
-        >
+          style={style}>
           {text}
         </NavLink>
       ) : (
@@ -42,10 +41,17 @@ const Button: React.FC<ButtonProps> = ({
           onClick={onClick}
           className={`${active && "activeBtn"} ${className} btn`}
           style={style}
-          type={type}
-        >
+          type={type}>
           {text}
-          {icon && <img className="btn_icon" src={icon} alt="Icon" />}
+          {icon && (
+            <img
+              className='btn_icon'
+              src={icon}
+              alt='Icon'
+              decoding='async'
+              loading='lazy'
+            />
+          )}
         </button>
       )}
     </>

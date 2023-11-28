@@ -285,7 +285,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                   className='homePageHeader'
                 />
                 <div className='img'>
-                  <img src={ecosystem.mainImg} alt='Icon' />
+                  <img
+                    src={ecosystem.mainImg}
+                    alt='Icon'
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </div>
               </div>
               {ecosystem.partners && (
@@ -299,7 +304,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                         container.scrollLeft -= scrollAmount;
                       }
                     }}>
-                    <img src={ARROW} alt='Arrow' />
+                    <img
+                      src={ARROW}
+                      alt='Arrow'
+                      decoding='async'
+                      loading='lazy'
+                    />
                   </button>
                   <div className='images-container' ref={sliderRef}>
                     {ecosystem.partners.map((partner: any) => {
@@ -310,6 +320,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                           <img
                             alt='sliderImage'
                             src={`${storageBase}/${partner.image}`}
+                            decoding='async'
+                            loading='lazy'
                           />
                         </div>
                       );
@@ -324,7 +336,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
                         container.scrollLeft += scrollAmount;
                       }
                     }}>
-                    <img src={ARROW} alt='Arrow' />
+                    <img
+                      src={ARROW}
+                      alt='Arrow'
+                      decoding='async'
+                      loading='lazy'
+                    />
                   </button>
                 </div>
               )}

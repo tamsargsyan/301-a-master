@@ -70,14 +70,14 @@ const Header: React.FC<HeaderProps> = ({
     <div className={`${className} headerContainer`} id={id} style={style}>
       {icon && !isEcosystem && (
         <div className='icon'>
-          <img src={icon} alt='Icon' />
+          <img src={icon} alt='Icon' decoding='async' loading='lazy' />
         </div>
       )}
       <div className='headerContent'>
         <div className={`${isEcosystem && "header_ecosystem"} header`}>
           {isEcosystem && (
             <div className='ecosystemImg'>
-              <img src={icon} alt='Ecosystem' />
+              <img src={icon} alt='Ecosystem' decoding='async' loading='lazy' />
             </div>
           )}
           <h1>{title}</h1>
@@ -97,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({
         </div>
         {windowSize.width < 975 && mainImg && (
           <div className='mainImgHeader'>
-            <img src={mainImg} alt='Main' />
+            <img src={mainImg} alt='Main' decoding='async' loading='lazy' />
           </div>
         )}
         {description !== "" && (

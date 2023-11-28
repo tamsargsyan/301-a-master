@@ -91,7 +91,12 @@ const Donation: React.FC<DonationProps> = ({
                   id={`donationCard-${card.id}`}
                   onClick={() => handleCard(card.id)}>
                   <div className='donationCard_img'>
-                    <img src={card.img} alt={card.title} />
+                    <img
+                      src={card.img}
+                      alt={card.title}
+                      decoding='async'
+                      loading='lazy'
+                    />
                   </div>
                   <div className='donationCard_info'>
                     <p className='donationCard_title'>{card.title}</p>

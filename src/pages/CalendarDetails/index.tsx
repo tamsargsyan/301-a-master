@@ -35,7 +35,12 @@ const CalendarDetails = () => {
         }}>
         <div className='calendar_details_1'>
           <div className='calendar_details_1_bg'>
-            <img src={IMG_1} alt='Calendar Details' />
+            <img
+              src={IMG_1}
+              alt='Calendar Details'
+              decoding='async'
+              loading='lazy'
+            />
             <p className='calendar_details_1_title'>
               Lorem Ipsum is simply dummy
             </p>
@@ -56,15 +61,30 @@ const CalendarDetails = () => {
                 </p>
                 <div className='calendar_details_address_wrapper'>
                   <div className='calendar_details_address'>
-                    <img src={ADDRESS} alt='Address' />
+                    <img
+                      src={ADDRESS}
+                      alt='Address'
+                      decoding='async'
+                      loading='lazy'
+                    />
                     <p>Ереван, ул. Московяна 24</p>
                   </div>
                   <div className='calendar_details_date'>
-                    <img src={DATE} alt='Date' />
+                    <img
+                      src={DATE}
+                      alt='Date'
+                      decoding='async'
+                      loading='lazy'
+                    />
                     <p>Fri, 10 Nov AM 10:30</p>
                   </div>
                   <div className='calendar_details_price'>
-                    <img src={PRICE} alt='Date' />
+                    <img
+                      src={PRICE}
+                      alt='Date'
+                      decoding='async'
+                      loading='lazy'
+                    />
                     <p>{20}$</p>
                   </div>
                 </div>

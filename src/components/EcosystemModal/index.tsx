@@ -35,11 +35,21 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
               <>
                 {t("btns.back")}
                 <div>
-                  <img src={ARROW} alt='Arrow' />
+                  <img
+                    src={ARROW}
+                    alt='Arrow'
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </div>
               </>
             ) : (
-              <img src={closeIcon ? closeIcon : CLOSE} alt='Close' />
+              <img
+                src={closeIcon ? closeIcon : CLOSE}
+                alt='Close'
+                decoding='async'
+                loading='lazy'
+              />
             )}
           </button>
           <div className='signUp_header'>

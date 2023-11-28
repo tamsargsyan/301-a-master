@@ -63,13 +63,13 @@ const AboutUs = () => {
         pattern1={windowSize.width < 800 ? SIDE_PATTERN_MOBILE : SIDE_PATTERN}
         style={{ flexDirection: "column", gap: "90px" }}>
         <div className='aboutUs-bigPattern-1'>
-          <img src={PATTERN_1} alt='Pattern' />
+          <img src={PATTERN_1} alt='Pattern' decoding='async' loading='lazy' />
         </div>
         <div className='aboutUs-bigPattern-2'>
-          <img src={PATTERN_2} alt='Pattern' />
+          <img src={PATTERN_2} alt='Pattern' decoding='async' loading='lazy' />
         </div>
         <div className='aboutUs-bigPattern-3'>
-          <img src={PATTERN_3} alt='Pattern' />
+          <img src={PATTERN_3} alt='Pattern' decoding='async' loading='lazy' />
         </div>
         {infos.map((info: any, i: number) => {
           return (

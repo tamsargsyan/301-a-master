@@ -48,6 +48,8 @@ const PersonalSidebar = () => {
               style={{ background: user.image ? "transparent" : "#fff" }}
               src={user.image ? `${storageBase}/${user?.image}` : NO_IMAGE}
               alt='Person'
+              decoding='async'
+              loading='lazy'
             />
           </div>
         </div>
@@ -57,7 +59,7 @@ const PersonalSidebar = () => {
         <button className='prof_sms'>
           <div className='sms_img'>
             <span className='sms_notif'>3</span>
-            <img src={SMS} alt='SMS ' />
+            <img src={SMS} alt='SMS ' decoding='async' loading='lazy' />
           </div>
           <span>{t("personal.my-message")}</span>
         </button>
@@ -70,7 +72,7 @@ const PersonalSidebar = () => {
             key={bar.id}
             className={`personal_bar_item`}>
             {bar.name}
-            <img src={ARROW} alt='Arrow' />
+            <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
           </NavLink>
         ))}
       </div>

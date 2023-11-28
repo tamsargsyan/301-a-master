@@ -661,7 +661,12 @@ const AccountTypeModal = () => {
                         okText='more'
                         cancelText={""}
                         title={undefined}>
-                        <img src={INFO_ICON} alt='Info' />
+                        <img
+                          src={INFO_ICON}
+                          alt='Info'
+                          decoding='async'
+                          loading='lazy'
+                        />
                       </Popconfirm>
                     </div>
                     <div className='signUp_info'>
@@ -694,7 +699,12 @@ const AccountTypeModal = () => {
                         okText='more'
                         cancelText={""}
                         title={undefined}>
-                        <img src={INFO_ICON} alt='Info' />
+                        <img
+                          src={INFO_ICON}
+                          alt='Info'
+                          decoding='async'
+                          loading='lazy'
+                        />
                       </Popconfirm>
                     </div>
                     <div className='signUp_info'>
@@ -732,7 +742,12 @@ const AccountTypeModal = () => {
                         okText={""}
                         cancelText={""}
                         title={undefined}>
-                        <img src={INFO_ICON} alt='Info' />
+                        <img
+                          src={INFO_ICON}
+                          alt='Info'
+                          decoding='async'
+                          loading='lazy'
+                        />
                       </Popconfirm>
                     </div>
                   </div>

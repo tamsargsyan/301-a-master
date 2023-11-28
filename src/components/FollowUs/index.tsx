@@ -54,20 +54,24 @@ const FollowUs: React.FC<FollowUsProps> = ({ className }) => {
 
   return (
     <div className={`${className} followUsContainer`}>
-      <div className="verticalText">
+      <div className='verticalText'>
         <span>Follow Us</span>
       </div>
-      <div className="line"></div>
-      <div className="socialMedias">
-        {medias.map((media) => (
+      <div className='line'></div>
+      <div className='socialMedias'>
+        {medias.map(media => (
           <a
             href={media.link}
-            target="_blank"
-            rel="noreferrer"
-            className="media"
-            key={media.id}
-          >
-            <img src={media.img} alt={media.name} />
+            target='_blank'
+            rel='noreferrer'
+            className='media'
+            key={media.id}>
+            <img
+              src={media.img}
+              alt={media.name}
+              decoding='async'
+              loading='lazy'
+            />
           </a>
         ))}
       </div>

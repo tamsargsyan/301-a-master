@@ -153,13 +153,28 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           {openMenu && (
             <div className='openedMobileMenu'>
               <div className='bigPatternNav'>
-                <img src={BIG_PATTERN} alt='Pattern' />
+                <img
+                  src={BIG_PATTERN}
+                  alt='Pattern'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
               <div className='sidePattern1'>
-                <img src={SIDE_PATTERN} alt='Pattern' />
+                <img
+                  src={SIDE_PATTERN}
+                  alt='Pattern'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
               <div className='sidePattern2'>
-                <img src={SIDE_PATTERN} alt='Pattern' />
+                <img
+                  src={SIDE_PATTERN}
+                  alt='Pattern'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
               <div className='menu'>
                 <div className='link'>
@@ -176,6 +191,8 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                               : NO_IMAGE
                           }
                           alt='Person'
+                          decoding='async'
+                          loading='lazy'
                         />
                         <p style={{ fontSize: "18px", margin: 0 }}>
                           {user?.name} {user?.last_name}
@@ -239,14 +256,19 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           />
           {isAuthenticated && (
             <button className='navbar_notif'>
-              <img src={NOTIFICATION} alt='Notification' />
+              <img
+                src={NOTIFICATION}
+                alt='Notification'
+                decoding='async'
+                loading='lazy'
+              />
               <span className='notification_number'>3</span>
             </button>
           )}
         </div>
       ) : (
         <button className='logo' onClick={scrollToTop}>
-          <img src={LOGO} alt='Logo' />
+          <img src={LOGO} alt='Logo' decoding='async' loading='lazy' />
         </button>
       )}
       <div className='menu'>
@@ -291,13 +313,20 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           {isAuthenticated ? (
             <div className='navbar_user_wrapper'>
               <button className='navbar_notif'>
-                <img src={NOTIFICATION} alt='Notification' />
+                <img
+                  src={NOTIFICATION}
+                  alt='Notification'
+                  decoding='async'
+                  loading='lazy'
+                />
                 <span className='notification_number'>3</span>
               </button>
               <NavLink to='personal/personal-info' className='navbar_user'>
                 <img
                   src={user.image ? `${storageBase}/${user.image}` : NO_IMAGE}
                   alt='Person'
+                  decoding='async'
+                  loading='lazy'
                 />
                 <p>
                   {user.name} {user.last_name}

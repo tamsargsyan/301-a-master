@@ -72,10 +72,10 @@ const News: React.FC<NewsProps> = ({ lang }) => {
           }}
         />
         <button className='leftBtn newsBtn' onClick={handleBack}>
-          <img src={ARROW} alt='Arrow' />
+          <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
         </button>
         <button className='rightBtn newsBtn' onClick={handleNext}>
-          <img src={ARROW} alt='Arrow' />
+          <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
         </button>
         <div className='newsContainer'>
           {news.map((item: any) => {
@@ -89,7 +89,12 @@ const News: React.FC<NewsProps> = ({ lang }) => {
                 } ${activeNews === 3 && item.id === 2 && "activeNews2"} news`}
                 key={item.id}>
                 <div className='newsImg'>
-                  <img src={NEWS_1} alt={altText} />
+                  <img
+                    src={NEWS_1}
+                    alt={altText}
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </div>
                 <div className='newsContent'>
                   <h1>{dynamicTitle}</h1>

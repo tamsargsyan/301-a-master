@@ -48,12 +48,14 @@ const Project: React.FC<ProjectProps> = ({
                 src={authorImg}
                 alt='Author'
                 className='ourProject_author_img'
+                decoding='async'
+                loading='lazy'
               />
               <span>{author}</span>
             </div>
             {flag ? (
               <div className='flag'>
-                <img src={FLAG} alt='FLAG' />
+                <img src={FLAG} alt='FLAG' decoding='async' loading='lazy' />
                 <span>{flag}</span>
               </div>
             ) : null}
@@ -120,7 +122,7 @@ const Project: React.FC<ProjectProps> = ({
         </div>
       </div>
       <div className='ourProject__projectImg'>
-        <img src={projectImg} alt='Project' />
+        <img src={projectImg} alt='Project' decoding='async' loading='lazy' />
       </div>
     </div>
   );

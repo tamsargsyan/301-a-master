@@ -119,9 +119,11 @@ const EditProfile = () => {
               src={formData.image ? formData.image : PROF_PIC}
               alt='Profile'
               className='prof_img'
+              decoding='async'
+              loading='lazy'
             />
             <label htmlFor='pic_upload'>
-              <img src={CLOUD} alt='Cloud' />
+              <img src={CLOUD} alt='Cloud' decoding='async' loading='lazy' />
               {t("personal.replace")}
             </label>
           </div>
@@ -242,7 +244,12 @@ const EditProfile = () => {
           <p className='onTheWeb'>{t("personal.social-media")}</p>
           <div className='socialMedia_inputs'>
             <div>
-              <img src={FACEBOOK} alt='Facebook' />
+              <img
+                src={FACEBOOK}
+                alt='Facebook'
+                decoding='async'
+                loading='lazy'
+              />
               {windowSize.width > 600 ? (
                 <p>Facebook</p>
               ) : (
@@ -262,13 +269,18 @@ const EditProfile = () => {
                 />
               )}
               <button>
-                <img src={CLOSE} alt='Close' />
+                <img src={CLOSE} alt='Close' decoding='async' loading='lazy' />
               </button>
             </div>
           </div>
           <div className='socialMedia_inputs'>
             <div>
-              <img src={INSTAGRAM} alt='Instagram' />
+              <img
+                src={INSTAGRAM}
+                alt='Instagram'
+                decoding='async'
+                loading='lazy'
+              />
               {windowSize.width > 600 ? (
                 <p>Instagram</p>
               ) : (
@@ -288,13 +300,18 @@ const EditProfile = () => {
                 />
               )}
               <button>
-                <img src={CLOSE} alt='Close' />
+                <img src={CLOSE} alt='Close' decoding='async' loading='lazy' />
               </button>
             </div>
           </div>
           <div className='socialMedia_inputs'>
             <div>
-              <img src={LINKEDIN} alt='Linked In' />
+              <img
+                src={LINKEDIN}
+                alt='Linked In'
+                decoding='async'
+                loading='lazy'
+              />
               {windowSize.width > 600 ? (
                 <p>Linked In</p>
               ) : (
@@ -314,13 +331,18 @@ const EditProfile = () => {
                 />
               )}
               <button>
-                <img src={CLOSE} alt='Close' />
+                <img src={CLOSE} alt='Close' decoding='async' loading='lazy' />
               </button>
             </div>
           </div>
           <div className='socialMedia_inputs'>
             <div>
-              <img src={TELEGRAM} alt='Telegram' />
+              <img
+                src={TELEGRAM}
+                alt='Telegram'
+                decoding='async'
+                loading='lazy'
+              />
               {windowSize.width > 600 ? (
                 <p>Telegram</p>
               ) : (
@@ -340,7 +362,7 @@ const EditProfile = () => {
                 />
               )}
               <button>
-                <img src={CLOSE} alt='Close' />
+                <img src={CLOSE} alt='Close' decoding='async' loading='lazy' />
               </button>
             </div>
           </div>
@@ -354,7 +376,7 @@ const EditProfile = () => {
               }}
               onClick={() => setOpenNewLink(!openNewLink)}>
               <div className='new_link_'>
-                <img src={VIBER} alt='Viber' />
+                <img src={VIBER} alt='Viber' decoding='async' loading='lazy' />
                 <p>Viber</p>
               </div>
               {windowSize.width < 600 && (
@@ -365,6 +387,8 @@ const EditProfile = () => {
                     transition: "0.3s ease",
                     transform: `rotate(${openNewLink ? 180 : 0}deg)`,
                   }}
+                  decoding='async'
+                  loading='lazy'
                 />
               )}
             </div>

@@ -114,7 +114,13 @@ const SignUp = () => {
         onClose={() => navigate(-1)}
         header={t("select-acount-type")}>
         <div className='signUp_content_accountTypes'>
-          <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
+          <img
+            src={PATTERN}
+            alt='Pattern'
+            className='accountTYpes_pattern'
+            decoding='async'
+            loading='lazy'
+          />
           {windowSize.width >= 800 ? (
             accountTypes.map(account => (
               <div
@@ -122,11 +128,21 @@ const SignUp = () => {
                 key={account.id}
                 id={`accountType-${account.id}`}>
                 <div className='accountType_header'>
-                  <img src={account.icon} alt='Account' />
+                  <img
+                    src={account.icon}
+                    alt='Account'
+                    decoding='async'
+                    loading='lazy'
+                  />
                   <span>{account.name}</span>
                 </div>
                 <div className='accountType_mainImg'>
-                  <img src={account.mainImg} alt='Account Main' />
+                  <img
+                    src={account.mainImg}
+                    alt='Account Main'
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </div>
                 <Button
                   text={account.btn}

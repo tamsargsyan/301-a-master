@@ -47,34 +47,69 @@ const ContactPage = () => {
             <p className='contactPage_address_title'>{t("contact.title")}</p>
             <div className='contactPage_adresses'>
               <div className='contactPage_address'>
-                <img src={LOCATION} alt='Location' />
+                <img
+                  src={LOCATION}
+                  alt='Location'
+                  decoding='async'
+                  loading='lazy'
+                />
                 {t("footer.address")}
               </div>
               <div className='contactPage_address'>
-                <img src={PHONE} alt='Phone' />
+                <img src={PHONE} alt='Phone' decoding='async' loading='lazy' />
                 +374 567890
               </div>
               <div className='contactPage_address'>
-                <img src={EMAIL} alt='Location' />
+                <img
+                  src={EMAIL}
+                  alt='Location'
+                  decoding='async'
+                  loading='lazy'
+                />
                 301@loftpineapple.com
               </div>
             </div>
             <p className='contactPage_address_title'>{t("follow-us")}</p>
             <div className='contactPage_medias'>
               <a href='facebook.com'>
-                <img src={FACEBOOK} alt='Facebook' />
+                <img
+                  src={FACEBOOK}
+                  alt='Facebook'
+                  decoding='async'
+                  loading='lazy'
+                />
               </a>
               <a href='instagram.com'>
-                <img src={INSTAGRAM} alt='Instagram' />
+                <img
+                  src={INSTAGRAM}
+                  alt='Instagram'
+                  decoding='async'
+                  loading='lazy'
+                />
               </a>
               <a href='linkedin.com'>
-                <img src={LINKEDIN} alt='Linked In' />
+                <img
+                  src={LINKEDIN}
+                  alt='Linked In'
+                  decoding='async'
+                  loading='lazy'
+                />
               </a>
               <a href='telegram.com'>
-                <img src={TELEGRAM} alt='Telegram' />
+                <img
+                  src={TELEGRAM}
+                  alt='Telegram'
+                  decoding='async'
+                  loading='lazy'
+                />
               </a>
               <a href='whatsapp.com'>
-                <img src={WHATSAPP} alt='Whats App' />
+                <img
+                  src={WHATSAPP}
+                  alt='Whats App'
+                  decoding='async'
+                  loading='lazy'
+                />
               </a>
             </div>
           </div>

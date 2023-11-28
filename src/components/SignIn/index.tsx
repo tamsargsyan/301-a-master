@@ -95,9 +95,24 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
         <div className='modal_signIn'>
           {windowSize.width > 600 && (
             <div className='modal_signIn_leftSide'>
-              <img src={PATTERN_1} alt='Pattern' />
-              <img src={PATTERN_2} alt='Pattern' />
-              <img src={PATTERN_1} alt='Pattern' />
+              <img
+                src={PATTERN_1}
+                alt='Pattern'
+                decoding='async'
+                loading='lazy'
+              />
+              <img
+                src={PATTERN_2}
+                alt='Pattern'
+                decoding='async'
+                loading='lazy'
+              />
+              <img
+                src={PATTERN_1}
+                alt='Pattern'
+                decoding='async'
+                loading='lazy'
+              />
             </div>
           )}
           <div className='modal_signIn_rightSide'>
@@ -122,7 +137,12 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
             </div>
             {forgetPassword && response?.status === 201 ? (
               <div className='checkEmail_icon'>
-                <img src={CHECK_EMAIL_ICON} alt='Check Email' />
+                <img
+                  src={CHECK_EMAIL_ICON}
+                  alt='Check Email'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
             ) : (
               <Formik
@@ -262,10 +282,20 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
                 </div>
                 <div className='signIn_another_icons'>
                   <a href='https://301.machtech.site/api/auth/google'>
-                    <img src={GMAIL} alt='Gmail' />
+                    <img
+                      src={GMAIL}
+                      alt='Gmail'
+                      decoding='async'
+                      loading='lazy'
+                    />
                   </a>
                   <a href='https://301.machtech.site/api/auth/facebook'>
-                    <img src={FB} alt='Facebook' />
+                    <img
+                      src={FB}
+                      alt='Facebook'
+                      decoding='async'
+                      loading='lazy'
+                    />
                   </a>
                 </div>
                 <div className='signIn_another_privacy'>

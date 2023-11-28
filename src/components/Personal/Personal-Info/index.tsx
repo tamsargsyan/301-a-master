@@ -29,7 +29,7 @@ const PersonalInfo = () => {
           <p className='personalInfo_title'>{t("personal.about-me")}</p>
           <NavLink to='/personal/personal-info/edit-profile'>
             <p>{t("personal.edit-profile")}</p>
-            <img src={EDIT} alt='Edit' />
+            <img src={EDIT} alt='Edit' decoding='async' loading='lazy' />
           </NavLink>
         </div>
         <p className='personalInfo_content'>
@@ -39,11 +39,11 @@ const PersonalInfo = () => {
       <div className='personalInfo_contact'>
         <p className='personalInfo_title'>{t("personal.contact")}</p>
         <div className='personalInfo_tel'>
-          <img src={TEL} alt='Telephone' />
+          <img src={TEL} alt='Telephone' decoding='async' loading='lazy' />
           <p>{user?.phone}</p>
         </div>
         <div className='personalInfo_tel'>
-          <img src={SMS} alt='Telephone' />
+          <img src={SMS} alt='Telephone' decoding='async' loading='lazy' />
           <p>{user?.email}</p>
         </div>
       </div>
@@ -54,13 +54,23 @@ const PersonalInfo = () => {
             <NavLink
               to='facebook.com'
               className='personalInfo_socialMedia_item'>
-              <img src={FACEBOOK} alt='Facebook' />
+              <img
+                src={FACEBOOK}
+                alt='Facebook'
+                decoding='async'
+                loading='lazy'
+              />
               Facebook
             </NavLink>
             <NavLink
               to='instagram.com'
               className='personalInfo_socialMedia_item'>
-              <img src={INSTAGRAM} alt='Instagram' />
+              <img
+                src={INSTAGRAM}
+                alt='Instagram'
+                decoding='async'
+                loading='lazy'
+              />
               Instagram
             </NavLink>
           </div>
@@ -68,19 +78,29 @@ const PersonalInfo = () => {
             <NavLink
               to='linkedin.com'
               className='personalInfo_socialMedia_item'>
-              <img src={LINKEDIN} alt='Linked In' />
+              <img
+                src={LINKEDIN}
+                alt='Linked In'
+                decoding='async'
+                loading='lazy'
+              />
               Linked In
             </NavLink>
             <NavLink
               to='telegram.com'
               className='personalInfo_socialMedia_item'>
-              <img src={TELEGRAM} alt='Telegram' />
+              <img
+                src={TELEGRAM}
+                alt='Telegram'
+                decoding='async'
+                loading='lazy'
+              />
               Telegram
             </NavLink>
           </div>
           <div className='personalInfo_socialMedia_items'>
             <NavLink to='viber.com' className='personalInfo_socialMedia_item'>
-              <img src={VIBER} alt='VIber' />
+              <img src={VIBER} alt='VIber' decoding='async' loading='lazy' />
               Viber
             </NavLink>
           </div>

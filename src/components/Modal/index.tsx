@@ -41,7 +41,7 @@ const Modal: React.FC<ModalProps> = ({
           {headerShow && (
             <div className='modal_close_mobile'>
               <button onClick={() => setOpenModal(false)}>
-                <img src={CLOSE} alt='Close' />
+                <img src={CLOSE} alt='Close' decoding='async' loading='lazy' />
               </button>
               <span>Menu</span>
             </div>

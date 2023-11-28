@@ -201,12 +201,19 @@ const ProjectDetails = () => {
               <div className='fullProjectBg'>
                 <div className='overlay'></div>
                 <button className='backBtn' onClick={() => navigate(-1)}>
-                  <img src={ARROW} alt='Back Button' />
+                  <img
+                    src={ARROW}
+                    alt='Back Button'
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </button>
                 <img
                   src={`${storageBase}/${project.banner_image}`}
                   alt='Project Background'
                   className='bgImg'
+                  decoding='async'
+                  loading='lazy'
                 />
                 <h1 className='fullProjectBg_title'>
                   {project[`project_name_${lang}`]}
@@ -219,7 +226,12 @@ const ProjectDetails = () => {
                     {project.payment_type !== "buy" &&
                       project.payment_type !== "book" && (
                         <div className='flag'>
-                          <img src={FLAG} alt='Flag' />
+                          <img
+                            src={FLAG}
+                            alt='Flag'
+                            decoding='async'
+                            loading='lazy'
+                          />
                           <span>{data.map_count}</span>
                         </div>
                       )}
@@ -229,6 +241,8 @@ const ProjectDetails = () => {
                       src={`${storageBase}/${data?.user?.image}`}
                       alt='Author'
                       className='ourProject_author_img'
+                      decoding='async'
+                      loading='lazy'
                     />
                     <span>
                       {data?.user && data.user[`name_${lang}`]}{" "}
@@ -239,7 +253,12 @@ const ProjectDetails = () => {
                 <div className='fullProject_problemInner'>
                   <div className='problem_header'>
                     <div className='problem_heading'>
-                      <img src={PATTERN} alt='Pattern' />
+                      <img
+                        src={PATTERN}
+                        alt='Pattern'
+                        decoding='async'
+                        loading='lazy'
+                      />
                       <h2>{t("project-details.problem")}</h2>
                     </div>
                     {/* {windowSize.width > 600 && (
@@ -322,6 +341,8 @@ const ProjectDetails = () => {
                                               style={{
                                                 marginLeft: "16px",
                                               }}
+                                              decoding='async'
+                                              loading='lazy'
                                             />
                                           ) : (
                                             <div
@@ -349,6 +370,8 @@ const ProjectDetails = () => {
                                 // src={`${storageBase}/${project?.budget_image}`}
                                 src={BUDGET}
                                 alt='Budget'
+                                decoding='async'
+                                loading='lazy'
                               />
                               <div className='budgetPrice'>
                                 <span>{t("budget")}</span>
@@ -360,6 +383,8 @@ const ProjectDetails = () => {
                                 // src={`${storageBase}/${project.collected_image}`}
                                 src={COLLECTED}
                                 alt='Collected'
+                                decoding='async'
+                                loading='lazy'
                               />
                               <div className='collectedPrice'>
                                 <span>{t("collected")}</span>
@@ -374,7 +399,12 @@ const ProjectDetails = () => {
                 {data.team[0].length === true && (
                   <div className='workTeamContainer'>
                     <div className='roadMap_heading problem_heading'>
-                      <img src={PATTERN} alt='Pattern' />
+                      <img
+                        src={PATTERN}
+                        alt='Pattern'
+                        decoding='async'
+                        loading='lazy'
+                      />
                       <h2>Work Team</h2>
                     </div>
                     <div className='teamMembers _inner'>
@@ -389,11 +419,15 @@ const ProjectDetails = () => {
                                       src={checkRole(t.role)}
                                       alt='Team Member'
                                       className='teamMember_bgImg'
+                                      decoding='async'
+                                      loading='lazy'
                                     />
                                     <img
                                       src={`${storageBase}/${t.image}`}
                                       alt='Team Member'
                                       className='teamMember_img'
+                                      decoding='async'
+                                      loading='lazy'
                                     />
                                     <RevolveText
                                       span={50}
@@ -418,7 +452,12 @@ const ProjectDetails = () => {
                 {partners.length ? (
                   <div className='partnersContainer'>
                     <div className='roadMap_heading problem_heading'>
-                      <img src={PATTERN} alt='Pattern' />
+                      <img
+                        src={PATTERN}
+                        alt='Pattern'
+                        decoding='async'
+                        loading='lazy'
+                      />
                       <h2>{t("project-details.partners")}</h2>
                     </div>
                     {/* <div className='projectDetails_slider'>
@@ -493,7 +532,12 @@ const ProjectDetails = () => {
                             container.scrollLeft -= scrollAmount;
                           }
                         }}>
-                        <img src={ARROW} alt='Arrow' />
+                        <img
+                          src={ARROW}
+                          alt='Arrow'
+                          decoding='async'
+                          loading='lazy'
+                        />
                         {/* <ChevronLeftIcon /> */}
                       </button>
                       <div className='images-container' ref={sliderRef}>
@@ -505,6 +549,8 @@ const ProjectDetails = () => {
                               <img
                                 alt='sliderImage'
                                 src={`${storageBase}/${partner.image}`}
+                                decoding='async'
+                                loading='lazy'
                               />
                             </div>
                           );
@@ -519,7 +565,12 @@ const ProjectDetails = () => {
                             container.scrollLeft += scrollAmount;
                           }
                         }}>
-                        <img src={ARROW} alt='Arrow' />
+                        <img
+                          src={ARROW}
+                          alt='Arrow'
+                          decoding='async'
+                          loading='lazy'
+                        />
                       </button>
                     </div>
                   </div>

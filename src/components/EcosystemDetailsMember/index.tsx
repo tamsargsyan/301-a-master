@@ -57,7 +57,12 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
       {project &&
         (ecosystem === "partners" ? (
           <div className='ecosystemDetails_partners_item' key={project.id}>
-            <img src={`${storageBase}/${project.image}`} alt='Partner' />
+            <img
+              src={`${storageBase}/${project.image}`}
+              alt='Partner'
+              decoding='async'
+              loading='lazy'
+            />
           </div>
         ) : (
           <div className='ecoSystemDetailsMember'>
@@ -73,6 +78,8 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                   }`}
                   alt='Member'
                   className='memberImg'
+                  decoding='async'
+                  loading='lazy'
                 />
               </div>
               <span>
@@ -112,7 +119,12 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                                 ? expertProject?.colorWeak
                                 : expertProject?.color,
                           }}>
-                          <img src={ARROW} alt='Arrow' />
+                          <img
+                            src={ARROW}
+                            alt='Arrow'
+                            decoding='async'
+                            loading='lazy'
+                          />
                         </button>
                         <button
                           onClick={handleNext}
@@ -122,7 +134,12 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                                 ? expertProject?.colorWeak
                                 : expertProject?.color,
                           }}>
-                          <img src={ARROW} alt='Arrow' />
+                          <img
+                            src={ARROW}
+                            alt='Arrow'
+                            decoding='async'
+                            loading='lazy'
+                          />
                         </button>
                       </div>
                     )}
