@@ -104,9 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
 
   const [openLangs, setOpenLangs] = useState(false);
   const lang = cookies.get("i18next");
-  console.log(lang, "---navbar");
   const copyLangs = langs.filter(item => item.code !== lang);
-  console.log(copyLangs);
   const differentLang = langs.find(
     item1 => !copyLangs.some(item2 => item1.id === item2.id)
   );
@@ -196,20 +194,15 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                   ))}
                 </div>
                 <div className='link logout'>
-                  <a
-                    href='/'
-                    onClick={e => {
-                      e.preventDefault();
-                      if (!isAuthenticated) {
-                        dispatch(getModalName("signIn"));
-                        setSearchParams({ signIn: "active" });
-                      }
-                      setOpenModal(true);
+                  <NavLink
+                    to={`/${lang}/login`}
+                    onClick={() => {
+                      setOpenMenu(false);
                     }}>
                     {!isAuthenticated
                       ? t("navbar.sign-in")
                       : t("navbar.logout")}
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </div>
@@ -221,12 +214,10 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           <span>Меню</span>
           <Button
             text={t(`btns.donate`)}
-            link={false}
-            to=''
+            link={true}
+            to={`/${lang}/donation`}
             className='signIn-btn'
             onClick={() => {
-              dispatch(openDonateModal(true));
-              dispatch(getModalName("donate"));
               setOpenMenu(false);
             }}
             style={{
@@ -234,6 +225,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
               background: "var(--main-color)",
               color: "#fff",
               display: "block",
+              fontSize: "12px",
             }}
           />
           {isAuthenticated && (
@@ -306,7 +298,9 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                 />
                 <span className='notification_number'>3</span>
               </button>
-              <NavLink to='personal/personal-info' className='navbar_user'>
+              <NavLink
+                to={`/${lang}/personal/personal-info`}
+                className='navbar_user'>
                 <img
                   src={user.image ? `${storageBase}/${user.image}` : NO_IMAGE}
                   alt='Person'

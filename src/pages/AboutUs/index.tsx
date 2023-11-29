@@ -36,7 +36,6 @@ const AboutUs = () => {
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
   const lang = cookies.get("i18next");
-  console.log(lang, "lang---about us");
   const faqRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

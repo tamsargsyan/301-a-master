@@ -14,9 +14,6 @@ const Privacy = () => {
   const location = useLocation();
   const endpoint =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-
-  console.log(endpoint, "endpoinnt-----");
-
   useEffect(() => {
     dispatch(
       //@ts-ignore
