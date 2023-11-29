@@ -19,6 +19,7 @@ import CardSlider from "../CardSlider";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
+import cookies from "js-cookie";
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -98,16 +99,13 @@ const SignUp = () => {
     // setSignUp(false);
   };
   const windowSize = useWindowSize();
-  // https://codepen.io/hk2002/pen/yLQPNgQ
-
-  const location = useLocation();
-  const showSignUp = location.pathname === "/signUp";
   const navigate = useNavigate();
+  const lang = cookies.get("i18next");
 
   return (
     <Modal
       setOpenModal={() => navigate(-1)}
-      openModal={showSignUp}
+      openModal={true}
       className='signUp_overlay'
       headerShow={false}>
       <EcosystemModal
@@ -153,7 +151,7 @@ const SignUp = () => {
                   }}
                   className='accountType_btn'
                   link={true}
-                  to={`/accountType?id=${account.id}?type=${account.type}`}
+                  to={`/${lang}/accountType?id=${account.id}?type=${account.type}`}
                 />
               </div>
             ))

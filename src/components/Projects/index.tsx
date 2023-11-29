@@ -107,7 +107,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                       {projects.map((project: any) => {
                         return (
                           <NavLink
-                            to={`/projects/${project.project.id}`}
+                            to={`/${lang}/projects/${project.project.slug}`}
                             key={project.project.id}>
                             <SingleProjectBox
                               title={
@@ -144,7 +144,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                     {projects.slice(0, 4).map((project: any) => {
                       return (
                         <NavLink
-                          to={`/projects/${project.project.id}`}
+                          to={`/${lang}/projects/${project.project.slug}`}
                           key={project.project.id}>
                           <SingleProjectBox
                             title={

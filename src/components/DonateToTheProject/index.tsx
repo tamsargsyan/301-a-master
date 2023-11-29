@@ -15,6 +15,7 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import cookies from "js-cookie";
+import Terms from "../Terms";
 
 const DonateToTheProject = () => {
   const onChange = (value: string) => {
@@ -42,30 +43,28 @@ const DonateToTheProject = () => {
   );
   const { t } = useTranslation();
   const lang = cookies.get("i18next");
-  const location = useLocation();
-  const showDonateToTheProject = location.pathname.includes(
-    `/projects-donation/project-`
-  );
   const dispatch = useDispatch();
-  const slug =
-    location.pathname.split("/project-")[
-      location.pathname.split("/project-").length - 1
-    ];
+
+  const { slug } = useParams();
 
   useEffect(() => {
-    showDonateToTheProject &&
-      //@ts-ignore
-      dispatch(fetchingProjectDetails(`project-details/${slug}`));
-  }, [showDonateToTheProject]);
+    //@ts-ignore
+    dispatch(fetchingProjectDetails(`project-details/${slug}`));
+  }, []);
+
+  const setHeader = () => {
+    let header = "";
+    if (data?.project?.payment_type === "donate")
+      header = t("btns.donate-to-project");
+    if (data?.project?.payment_type === "buy") header = t("buy");
+    if (data?.project?.payment_type === "book") header = t("book");
+
+    return header;
+  };
 
   return (
-    <Modal
-      setOpenModal={handleClose}
-      openModal={showDonateToTheProject}
-      headerShow={true}>
-      <EcosystemModal
-        onClose={handleClose}
-        header={t("btns.donate-to-project")}>
+    <Modal setOpenModal={handleClose} openModal={true} headerShow={true}>
+      <EcosystemModal onClose={handleClose} header={setHeader()}>
         <div className='chosenProject_wrapper'>
           {loading ? (
             <div className='donationProjects_spinner'>
@@ -182,17 +181,7 @@ const DonateToTheProject = () => {
                     }}
                     className='donation_btn'
                   />
-                  <p>
-                    {t("privacy.1")}
-                    <br></br>
-                    <NavLink className='mentioned_txt' to='/terms-of-services'>
-                      {t("privacy.terms")}
-                    </NavLink>{" "}
-                    {t("privacy.and")}{" "}
-                    <NavLink className='mentioned_txt' to='/privacy-policy'>
-                      {t("privacy.privacy")}
-                    </NavLink>
-                  </p>
+                  <Terms aboutUs={false} />
                 </div>
               </form>
             </>

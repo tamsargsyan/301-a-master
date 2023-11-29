@@ -89,22 +89,16 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   ];
   const handleLanguageChange = (language: string) => {
     i18next.changeLanguage(language).then(() => {
-      setOpenLangs(false); // Close language dropdown or modal
-
-      // Extract the current language prefix from the URL
+      setOpenLangs(false);
       const currentPath = window.location.pathname;
-      const languagePrefix = currentPath.split("/")[1]; // Assumes the language prefix is the first segment
-
+      const languagePrefix = currentPath.split("/")[1];
       let newPath;
       if (languagePrefix && languagePrefix.length === 2) {
-        // If a language prefix exists, replace it with the new language
         newPath = currentPath.replace(`/${languagePrefix}`, `/${language}`);
       } else {
-        // If there's no language prefix, simply add the new language
         newPath = `/${language}${currentPath}`;
       }
-
-      window.location.href = newPath; // Reload the page for the new language
+      window.location.href = newPath;
     });
   };
 
@@ -118,7 +112,6 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   );
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation();
 
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
@@ -196,7 +189,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                         scrollToTop();
                       }}
                       key={i}
-                      to={link.link}
+                      to={`/${lang}${link.link}`}
                       style={{ animationDelay: `${i * 0.1}s` }}>
                       {t(`navbar.${link.name}`)}
                     </NavLink>
@@ -263,7 +256,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
       <div className='menu'>
         <div className='link'>
           {menu.map((link, i) => (
-            <NavLink key={i} to={`${link.link}`} onClick={scrollToTop}>
+            <NavLink key={i} to={`/${lang}${link.link}`} onClick={scrollToTop}>
               {t(`navbar.${link.name}`)}
             </NavLink>
           ))}
@@ -330,7 +323,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
               <Button
                 text={t(`btns.donate`)}
                 link={true}
-                to='/donation'
+                to={`/${lang}/donation`}
                 className='signIn-btn'
                 // onClick={() => {
                 //   // dispatch(openDonateModal(true));
@@ -346,7 +339,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
               <Button
                 text={t(`navbar.sign-in`)}
                 link={true}
-                to='/login'
+                to={`/${lang}/login`}
                 className='signIn-btn'
                 style={{ padding: "9px 23px", fontSize: "13px" }}
               />

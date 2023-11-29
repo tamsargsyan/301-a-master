@@ -602,7 +602,7 @@ const ProjectDetails = () => {
                       <Button
                         text={t(`${project.payment_type}`)}
                         link={true}
-                        to={`projects-donation/project-${project.slug}`}
+                        to={`/${lang}/projects-donation/${project.slug}`}
                         style={{
                           color: "#fff",
                           background: "#DD264E",

@@ -13,6 +13,14 @@ import Media from "./Media";
 import Calendar from "./Calendar";
 import CalendarDetails from "./CalendarDetails";
 import ContactPage from "./Contact";
+import AccountTypeModal from "../components/AccountTypeModal";
+import Donation from "../components/Donation";
+import OneTimeDonation from "../components/OneTimeDonation";
+import DonationProjectsModal from "../components/DonationProjectsModal";
+import DonateToTheProject from "../components/DonateToTheProject";
+import Privacy from "../components/Privacy";
+import SignIn from "../components/SignIn";
+import SignUp from "../components/SignUp";
 
 const pagesData: routerType[] = [
   {
@@ -104,6 +112,52 @@ const pagesData: routerType[] = [
     path: "/:lang/contact",
     element: <ContactPage />,
     title: "Contact Us",
+  },
+  // modals
+  {
+    path: "/:lang/accountType",
+    element: <AccountTypeModal />,
+    title: "Account Type",
+  },
+  {
+    path: "/:lang/donation",
+    element: <Donation />,
+    title: "Donation",
+  },
+  {
+    path: "/:lang/one-time-donation",
+    element: <OneTimeDonation />,
+    title: "One Time Donation",
+  },
+  {
+    path: "/:lang/projects-donation",
+    element: <DonationProjectsModal />,
+    title: "Donation Project",
+  },
+  {
+    path: "/:lang/projects-donation/:slug",
+    element: <DonateToTheProject />,
+    title: "Donate Single Project",
+  },
+  {
+    path: "/:lang/terms-of-services",
+    element: <Privacy />,
+    title: "Terms Of Services",
+  },
+  {
+    path: "/:lang/privacy-policy",
+    element: <Privacy />,
+    title: "Privacy Policy",
+  },
+  {
+    path: "/:lang/login",
+    element: <SignIn />,
+    title: "Sign In",
+  },
+  {
+    path: "/:lang/signUp",
+    element: <SignUp />,
+    title: "Sign Up",
   },
   {
     path: "/personal/personal-info",

@@ -8,6 +8,7 @@ import "./index.css";
 import FollowUs from "../FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import cookies from "js-cookie";
 
 interface FooterProps {
   separatedPart?: Boolean;
@@ -59,6 +60,7 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
     },
   ];
   const windowSize = useWindowSize();
+  const lang = cookies.get("i18next");
 
   return (
     <>
@@ -87,7 +89,7 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
               <h2>{t("navbar.our-menu")}</h2>
               <div className='list'>
                 {menu.map(menu => (
-                  <a href={menu.link} key={menu.id}>
+                  <a href={`/${lang}${menu.link}`} key={menu.id}>
                     {t(`navbar.${menu.name}`)}
                   </a>
                 ))}

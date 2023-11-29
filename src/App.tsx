@@ -64,29 +64,29 @@ function App() {
     <div className='container'>
       <Navbar setOpenModal={setSignIn} signIn={signIn} />
       <Router />
-      <SignIn setSignUp={setSignUp} />
-      <SignUp />
-      <AccountTypeModal />
+      {/* <SignIn setSignUp={setSignUp} /> */}
+      {/* <SignUp /> */}
+      {/* <AccountTypeModal /> */}
       <AgreementTermsModal />
-      <Privacy />
-      <Donation
+      {/* <Privacy /> */}
+      {/* <Donation
         setSignUp={setSignUp}
         setOneTimeDonation={setOneTimeDonation}
         setDonateProjects={setDonateProjects}
-      />
-      <OneTimeDonation
+      /> */}
+      {/* <OneTimeDonation
         oneTimeDonation={oneTimeDonation}
         setOneTimeDonation={setOneTimeDonation}
         handleClose={() => {
           setOneTimeDonation(false);
           dispatch(openDonateModal(true));
         }}
-      />
-      <DonationProjectsModal
+      /> */}
+      {/* <DonationProjectsModal
         donateProjects={donateProjects}
         setDonateProjects={setDonateProjects}
-      />
-      <DonateToTheProject />
+      /> */}
+      {/* <DonateToTheProject /> */}
       <RecommentedModal />
       <Conragts />
     </div>

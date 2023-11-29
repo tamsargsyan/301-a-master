@@ -19,6 +19,7 @@ import { congratsModal } from "../../actions/congratsAction";
 import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { useLocation, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
+import Terms from "../Terms";
 
 const { Option } = Select;
 
@@ -126,7 +127,7 @@ const AccountTypeModal = () => {
   return (
     <Modal
       setOpenModal={() => navigate(-1)}
-      openModal={showAccountType}
+      openModal={true}
       className='signUp_overlay'
       headerShow={false}>
       <EcosystemModal
@@ -772,17 +773,7 @@ const AccountTypeModal = () => {
                   }}
                   className='donation_btn'
                 />
-                <p>
-                  {t("privacy.1")}
-                  <br></br>
-                  <NavLink className='mentioned_txt' to='/terms-of-services'>
-                    {t("privacy.terms")}
-                  </NavLink>{" "}
-                  {t("privacy.and")}{" "}
-                  <NavLink className='mentioned_txt' to='/privacy-policy'>
-                    {t("privacy.privacy")}
-                  </NavLink>
-                </p>
+                <Terms aboutUs={false} />
               </div>
             </form>
           )}

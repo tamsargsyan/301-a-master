@@ -16,7 +16,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { usePostRequest } from "../../actions/apiActions";
 import { Spin } from "antd";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { login } from "../../actions/authActions";
 import {
   NavLink,
@@ -26,18 +26,13 @@ import {
 } from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
 import { history } from "../Navbar";
+import Terms from "../Terms";
+import cookies from "js-cookie";
 
-interface SignInProps {
-  setSignUp: (arg: boolean) => void;
-  isAuthenticated: any;
-  dispatch: any;
-}
-
-const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
+const SignIn = () => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const handleForgetPassword = () => setForgetPassword(true);
   const location = useLocation();
-  const showLogin = location.pathname === "/login";
   const navigate = useNavigate();
 
   const windowSize = useWindowSize();
@@ -45,6 +40,8 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
   const { postRequest, postLoading, response } = usePostRequest();
 
   const [hasNavigated, setHasNavigated] = useState(false);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (response && response.status === 200 && !hasNavigated) {
       localStorage.setItem("token", response.data.access_token);
@@ -86,11 +83,13 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
     }
   }, []);
 
+  const lang = cookies.get("i18next");
+
   return (
     <>
       <Modal
         setOpenModal={() => navigate(-1)}
-        openModal={showLogin}
+        openModal={true}
         headerShow={true}>
         <div className='modal_signIn'>
           {windowSize.width > 600 && (
@@ -298,19 +297,7 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
                     />
                   </a>
                 </div>
-                <div className='signIn_another_privacy'>
-                  <p>
-                    {t("privacy.1")}
-                    <br></br>
-                    <NavLink className='mentioned_txt' to='/terms-of-services'>
-                      {t("privacy.terms")}
-                    </NavLink>{" "}
-                    {t("privacy.and")}{" "}
-                    <NavLink className='mentioned_txt' to='/privacy-policy'>
-                      {t("privacy.privacy")}
-                    </NavLink>
-                  </p>
-                </div>
+                <Terms aboutUs={false} />
               </div>
             ) : forgetPassword && response?.status === 201 ? null : (
               <div
@@ -341,7 +328,7 @@ const SignIn: React.FC<SignInProps> = ({ setSignUp, dispatch }) => {
                     {t("sign-in.notHavingAcc")}
                     <NavLink
                       className='mentioned_txt'
-                      to='/signUp'
+                      to={`/${lang}/signUp`}
                       // onClick={() => setSignUp(true)}
                     >
                       {t("sign-in.sign-up")}

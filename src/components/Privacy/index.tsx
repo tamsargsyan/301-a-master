@@ -11,33 +11,35 @@ import cookies from "js-cookie";
 
 const Privacy = () => {
   const dispatch = useDispatch();
-
   const location = useLocation();
-  const showPrivacy =
-    location.pathname === "/privacy-policy" ||
-    location.pathname === "/terms-of-services";
+  const endpoint =
+    location.pathname.split("/")[location.pathname.split("/").length - 1];
 
-  const endpoint = location.pathname.split("/")[1];
+  console.log(endpoint, "endpoinnt-----");
+
   useEffect(() => {
-    //@ts-ignore
-    endpoint && dispatch(fetchingPrivacyPolicy(endpoint));
-  }, [dispatch, endpoint]);
+    dispatch(
+      //@ts-ignore
+      fetchingPrivacyPolicy(endpoint)
+    );
+  }, [dispatch]);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.privacyPolicy
   );
   const lang = cookies.get("i18next");
-  const jsonData =
-    //@ts-ignore
-    data[endpoint === "privacy-policy" ? "privacyPolicy" : "termsOfServices"];
 
   const navigate = useNavigate();
 
   return (
-    <Modal setOpenModal={() => navigate(-1)} openModal={showPrivacy}>
+    <Modal setOpenModal={() => navigate(-1)} openModal={true}>
       <EcosystemModal
         onClose={() => navigate(-1)}
-        header={jsonData ? jsonData[`title_${lang}`] : ""}
+        header={
+          data
+            ? data.privacy && data.privacy[`title_${lang}` as keyof HeaderKeyOf]
+            : ""
+        }
         className='modal_back'>
         <div
           className={`agreementTerms_${loading && "loading"} agreementTerms`}
@@ -50,8 +52,9 @@ const Privacy = () => {
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  jsonData &&
-                  jsonData[`description_${lang}` as keyof HeaderKeyOf],
+                  data &&
+                  data.privacy &&
+                  data.privacy[`description_${lang}` as keyof HeaderKeyOf],
               }}
             />
           )}

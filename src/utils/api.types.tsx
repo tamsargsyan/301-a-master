@@ -123,5 +123,5 @@ export interface HomeData {
 }
 
 export interface PrivactPolicy {
-  privacyPolicy: HeaderTypes;
+  privacy: HeaderTypes;
 }

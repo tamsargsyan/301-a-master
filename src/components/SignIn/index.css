@@ -88,9 +88,6 @@
   padding: 10px 30px;
   width: 100%;
 }
-.signIn_another_privacy {
-  font-size: 14px;
-}
 .signIn_signUp {
   font-size: 16px;
   width: 100%;
@@ -99,7 +96,6 @@
   bottom: 70px;
   left: 0;
 }
-.signIn_another_privacy,
 .signIn_signUp,
 .forgetPass_desc {
   color: var(--text-color-2);
@@ -109,11 +105,6 @@
 }
 .forgetPass_desc {
   text-align: left;
-}
-.mentioned_txt {
-  color: var(--mention-color);
-  font-weight: 600;
-  cursor: pointer;
 }
 .signIn_another {
   margin-top: 20px;
@@ -159,8 +150,6 @@
   .signIn_another_title {
     font-size: 16px;
   }
-  .signIn_another_privacy,
-  .signIn_another_privacy .mentioned_txt,
   .forgetPass_desc {
     font-size: 14px;
   }

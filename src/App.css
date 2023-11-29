@@ -100,6 +100,21 @@ input[type="number"] {
 .ant-popover-content:has(.support_popover) .ant-popconfirm-buttons {
   visibility: hidden;
 }
+.mentioned_txt {
+  color: var(--mention-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+.signIn_another_privacy {
+  color: var(--text-color-2);
+  text-align: center;
+  font-weight: 500;
+  line-height: 132.143%;
+}
+.signIn_another_privacy p,
+.signIn_another_privacy .mentioned_txt {
+  font-size: 14px !important;
+}
 @media screen and (max-width: 975px) {
   .btns {
     flex-direction: column;

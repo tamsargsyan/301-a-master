@@ -76,11 +76,11 @@ const Main: React.FC<MainProps> = ({ lang }) => {
             name: t("btns.become-301"),
             become: "доноры «301»",
             id: 1,
-            link: "/accountType?id=1?type=donor",
+            link: `/accountType?id=1?type=donor`,
           },
           {
             name: t("btns.whole-project"),
-            link: "/projects",
+            link: `/projects`,
             become: "",
             id: null,
           },

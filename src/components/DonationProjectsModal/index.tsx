@@ -2,26 +2,17 @@ import EcosystemModal from "../EcosystemModal";
 import Modal from "../Modal";
 import SingleProjectBox from "../SingleProjectBox";
 import "./index.css";
-import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { openDonateSingleProject } from "../../actions/donateAction";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { storageBase } from "../../utils/storage";
 import { useTranslation } from "react-i18next";
-import { RootState } from "../../store/configureStore";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import cookies from "js-cookie";
 
-interface DonationProjectsModalProps {
-  donateProjects: boolean;
-  setDonateProjects: (arg: boolean) => void;
-}
-
-const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
-  setDonateProjects,
-}) => {
+const DonationProjectsModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -43,20 +34,15 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   const { t } = useTranslation();
   const lang = cookies.get("i18next");
 
-  const location = useLocation();
-  const showDonationProjects = location.pathname === "/projects-donation";
-
   useEffect(() => {
-    // donateProjects && dispatch(fetchingProjects("project"));
-    showDonationProjects &&
-      fetch("https://301.machtech.site/api/get-all-project")
-        .then(response => response.json())
-        .then(data => setP(data))
-        .catch(error => console.error(error));
-  }, [showDonationProjects]);
+    fetch("https://301.machtech.site/api/get-all-project")
+      .then(response => response.json())
+      .then(data => setP(data))
+      .catch(error => console.error(error));
+  }, []);
 
   return (
-    <Modal setOpenModal={handleClose} openModal={showDonationProjects}>
+    <Modal setOpenModal={handleClose} openModal={true}>
       <EcosystemModal onClose={handleClose} header={t("btns.donate")}>
         <div className='donationProjects_wrapper'>
           <div className='donationProjects_title'>{t("select-project")}</div>
@@ -77,7 +63,7 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
                   ?.map((p: any, i: number) => {
                     return (
                       <NavLink
-                        to={`/projects-donation/project-${p.project.slug}`}
+                        to={`/${lang}/projects-donation/${p.project.slug}`}
                         key={i}>
                         <SingleProjectBox
                           // title={p?.project[`project_name_${lang}`]}

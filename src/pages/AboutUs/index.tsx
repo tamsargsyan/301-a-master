@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { NavLink } from "react-router-dom";
 import cookies from "js-cookie";
+import Terms from "../../components/Terms";
 
 const { Panel } = Collapse;
 
@@ -34,8 +35,8 @@ const AboutUs = () => {
   }, [dispatch]);
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
-  const lang = cookies.get("i18next")
-  console.log(lang, "lang---about us")
+  const lang = cookies.get("i18next");
+  console.log(lang, "lang---about us");
   const faqRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -232,15 +233,7 @@ const AboutUs = () => {
               {t("checkboxes.support_form")}
             </button>
           </Popconfirm>
-          <p>
-            <NavLink className='mentioned_txt' to='/terms-of-services'>
-              {t("privacy.terms")}
-            </NavLink>
-            <button>{t("privacy.and")}</button>
-            <NavLink className='mentioned_txt' to='/privacy-policy'>
-              {t("privacy.privacy")}
-            </NavLink>
-          </p>
+          <Terms aboutUs={true} />
         </div>
       </Background>
       <Contact />

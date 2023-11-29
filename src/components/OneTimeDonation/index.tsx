@@ -9,19 +9,10 @@ import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
 import { useState } from "react";
 import { usePostRequest } from "../../actions/apiActions";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import Terms from "../Terms";
 
-interface OneTimeDonationProps {
-  oneTimeDonation: boolean;
-  handleClose: () => void;
-  setOneTimeDonation: (arg: boolean) => void;
-}
-
-const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
-  oneTimeDonation,
-  handleClose,
-  setOneTimeDonation,
-}) => {
+const OneTimeDonation = () => {
   const filterOption = (
     input: string,
     option: { label: string; value: string }
@@ -31,14 +22,12 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
   const [summa, setSumma] = useState("");
   const { postRequest } = usePostRequest();
 
-  const location = useLocation();
-  const showOneTimeDonation = location.pathname === "/one-time-donation";
   const navigate = useNavigate();
 
   return (
     <Modal
       setOpenModal={() => navigate(-1)}
-      openModal={showOneTimeDonation}
+      openModal={true}
       headerShow={false}>
       <EcosystemModal
         onClose={() => navigate(-1)}
@@ -163,17 +152,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                 </p>
               </div>
               <div className='signUp_btns'>
-                <p>
-                  {t("privacy.1")}
-                  <br></br>
-                  <NavLink className='mentioned_txt' to='/terms-of-services'>
-                    {t("privacy.terms")}
-                  </NavLink>{" "}
-                  {t("privacy.and")}{" "}
-                  <NavLink className='mentioned_txt' to='/privacy-policy'>
-                    {t("privacy.privacy")}
-                  </NavLink>
-                </p>
+                <Terms aboutUs={false} />
                 <Button
                   text={t("btns.donate")}
                   link={false}

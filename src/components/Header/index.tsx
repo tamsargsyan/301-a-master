@@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({
               <p>
                 {ourMission.txt}
                 <NavLink
-                  to='/about-us/#faq'
+                  to={`/${lang}/about-us/#faq`}
                   style={{ color: "var(--main-color)" }}>
                   {ourMission.link}
                 </NavLink>
@@ -122,7 +122,7 @@ const Header: React.FC<HeaderProps> = ({
                 text={btn.name}
                 style={btnStyles && btnStyles[index]}
                 link={btn.link !== ""}
-                to={btn.link}
+                to={`/${lang}${btn.link}`}
                 className={
                   className?.includes("homePageHeader")
                     ? "homePage_btn"
