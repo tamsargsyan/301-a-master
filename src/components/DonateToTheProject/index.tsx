@@ -35,8 +35,6 @@ const DonateToTheProject = () => {
 
   const handleClose = () => {
     navigate(-1);
-    // if (from !== "projectDetails") setDonateProjects(true);
-    // dispatch(openDonateSingleProject(false, ""));
   };
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
@@ -56,8 +54,8 @@ const DonateToTheProject = () => {
     let header = "";
     if (data?.project?.payment_type === "donate")
       header = t("btns.donate-to-project");
-    if (data?.project?.payment_type === "buy") header = t("buy");
-    if (data?.project?.payment_type === "book") header = t("book");
+    if (data?.project?.payment_type === "buy") header = t("buy-project");
+    if (data?.project?.payment_type === "book") header = t("book-project");
 
     return header;
   };

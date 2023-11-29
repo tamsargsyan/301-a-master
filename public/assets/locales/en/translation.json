@@ -159,6 +159,8 @@
   },
   "buy": "Buy",
   "book": "Book",
+  "buy-project": "Buy Project",
+  "book-project": "Book Project",
   "donate": "Donate",
   "follow-us": "Follow Us"
 }

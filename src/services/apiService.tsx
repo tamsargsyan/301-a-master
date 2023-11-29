@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://301.machtech.site/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const apiService = {
   get: async (data: any) => {
