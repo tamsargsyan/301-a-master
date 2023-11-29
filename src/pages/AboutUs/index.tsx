@@ -20,6 +20,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { NavLink } from "react-router-dom";
+import cookies from "js-cookie";
 
 const { Panel } = Collapse;
 
@@ -33,7 +34,8 @@ const AboutUs = () => {
   }, [dispatch]);
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next")
+  console.log(lang, "lang---about us")
   const faqRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -104,25 +106,25 @@ const AboutUs = () => {
                       f.question_answer.map((q, i) => (
                         <Panel
                           header={
-                            <div
-                              className='faq_panel'
-                              dangerouslySetInnerHTML={{
-                                __html: q[`question_${lang}`],
-                              }}
-                            />
-                            // removeHtmlTags(q[`question_${lang}`])
+                            // <div
+                            //   className='faq_panel'
+                            //   dangerouslySetInnerHTML={{
+                            //     __html: q[`question_${lang}`],
+                            //   }}
+                            // />
+                            removeHtmlTags(q[`question_${lang}`])
                           }
                           key={i}
                           className='faq_q'>
-                          {/* <p className='faq_a'>
+                          <p className='faq_a'>
                             {removeHtmlTags(q[`answer_${lang}`])}
-                          </p> */}
-                          <div
+                          </p>
+                          {/* <div
                             className='faq_a'
                             dangerouslySetInnerHTML={{
                               __html: q[`answer_${lang}`],
                             }}
-                          />
+                          /> */}
                         </Panel>
                       ))
                     }
@@ -133,15 +135,15 @@ const AboutUs = () => {
                     const answer = q[`answer_${lang}`].split("</p>");
                     return (
                       <Fragment key={i}>
-                        <div
+                        {/* <div
                           className='faq_q'
                           dangerouslySetInnerHTML={{
                             __html: q[`question_${lang}`],
                           }}
-                        />
-                        {/* <p className='faq_q'>
+                        /> */}
+                        <p className='faq_q'>
                           {removeHtmlTags(q[`question_${lang}`])}
-                        </p> */}
+                        </p>
                         {answer.map((paragraph: string, index: number) => (
                           <div key={index} className={`faq_a_${index + 1}`}>
                             <p className='faq_a'>
@@ -152,16 +154,16 @@ const AboutUs = () => {
                                 }}>
                                 {removeHtmlTags(paragraph.split(" ")[0])}{" "}
                               </span>
-                              {/* {removeHtmlTags(
+                              {removeHtmlTags(
                                 paragraph.substring(paragraph.indexOf(" ") + 1)
-                              )} */}
-                              <span
+                              )}
+                              {/* <span
                                 dangerouslySetInnerHTML={{
                                   __html: paragraph.substring(
                                     paragraph.indexOf(" ") + 1
                                   ),
                                 }}
-                              />
+                              /> */}
                             </p>
                           </div>
                         ))}
@@ -184,7 +186,7 @@ const AboutUs = () => {
                 )
               )
             }>
-            Соглашение условий *
+            {t("checkboxes.agreement_terms")} *
           </button>
           <button
             onClick={() =>
@@ -196,7 +198,7 @@ const AboutUs = () => {
                 )
               )
             }>
-            КОДЕКС ЭТИКИ КЛУБА 301*
+            {t("checkboxes.club_code_of_ethics_301")}*
           </button>
           <Popconfirm
             className='signUp_popover'
@@ -226,7 +228,9 @@ const AboutUs = () => {
             okText={""}
             cancelText={""}
             title={undefined}>
-            <button className='support_form'>Форма поддержки</button>
+            <button className='support_form'>
+              {t("checkboxes.support_form")}
+            </button>
           </Popconfirm>
           <p>
             <NavLink className='mentioned_txt' to='/terms-of-services'>

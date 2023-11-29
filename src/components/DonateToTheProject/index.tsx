@@ -14,6 +14,7 @@ import { NavLink } from "react-router-dom";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { fetchingProjectDetails } from "../../actions/apiActions";
+import cookies from "js-cookie";
 
 const DonateToTheProject = () => {
   const onChange = (value: string) => {
@@ -40,7 +41,7 @@ const DonateToTheProject = () => {
     (state: RootState) => state.projectDetails
   );
   const { t } = useTranslation();
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const location = useLocation();
   const showDonateToTheProject = location.pathname.includes(
     `/projects-donation/project-`
@@ -52,9 +53,10 @@ const DonateToTheProject = () => {
     ];
 
   useEffect(() => {
-    //@ts-ignore
-    dispatch(fetchingProjectDetails(`project-details/${slug}`));
-  }, []);
+    showDonateToTheProject &&
+      //@ts-ignore
+      dispatch(fetchingProjectDetails(`project-details/${slug}`));
+  }, [showDonateToTheProject]);
 
   return (
     <Modal
@@ -94,8 +96,8 @@ const DonateToTheProject = () => {
                   projectImg={`${storageBase}/${data?.project?.image}`}
                   className='donation_project donateToProject'
                   buyBook={
-                    data?.project?.payment_type === "buy" &&
-                    data?.project?.payment_type === "book"
+                    data?.project?.payment_type !== "buy" &&
+                    data?.project?.payment_type !== "book"
                   }
                 />
               </div>

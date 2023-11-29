@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
 import { useLocation, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
+import cookies from "js-cookie";
 
 interface DonationProjectsModalProps {
   donateProjects: boolean;
@@ -40,7 +41,7 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
   const [p, setP] = useState(null);
 
   const { t } = useTranslation();
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
 
   const location = useLocation();
   const showDonationProjects = location.pathname === "/projects-donation";
@@ -97,6 +98,10 @@ const DonationProjectsModal: React.FC<DonationProjectsModalProps> = ({
                           projectImg={`${storageBase}/${p?.project?.image}`}
                           className='donation_project'
                           onClick={() => handleSingleProject(p?.project?.slug)}
+                          buyBook={
+                            p?.project?.payment_type !== "buy" &&
+                            p?.project?.payment_type !== "book"
+                          }
                         />
                       </NavLink>
                     );

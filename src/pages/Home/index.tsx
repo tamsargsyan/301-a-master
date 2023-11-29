@@ -27,6 +27,7 @@ import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { Helmet } from "react-helmet";
+import cookies from "js-cookie";
 
 const Home = () => {
   const windowSize = useWindowSize();
@@ -38,7 +39,7 @@ const Home = () => {
     dispatch(fetchingHome("home"));
   }, [dispatch]);
 
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next") || "ru";
 
   const { loading, data } = useSelector((state: RootState) => state.homeData);
   if (loading)

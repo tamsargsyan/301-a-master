@@ -13,6 +13,7 @@
 .aboutUs_privacy button,
 .aboutUs_privacy p {
   margin: 0;
+  padding: 0;
   line-height: 155%;
   font-weight: 500;
   color: var(--mention-color);

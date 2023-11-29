@@ -7,17 +7,18 @@ import Button from "../Button";
 import "./index.css";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
-import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
-import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { languageDitactor } from "../../actions/language";
 import { openDonateModal } from "../../actions/donateAction";
 import { RootState } from "../../store/configureStore";
 import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
 import NO_IMAGE from "../../assets/no-image-user.png";
 import { getModalName } from "../../actions/privacyPolicyAction";
+import cookies from "js-cookie";
+import i18next from "i18next";
+import { Link } from "react-router-dom";
 
 export const history = createBrowserHistory(); // Create a history instance
 
@@ -72,63 +73,52 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   const langs = [
     {
       id: 1,
-      shortName: "en",
+      code: "en",
       longName: "ENGLISH",
     },
     {
       id: 2,
-      shortName: "ru",
+      code: "ru",
       longName: "Русский",
     },
     {
       id: 3,
-      shortName: "am",
+      code: "am",
       longName: "Հայերեն",
     },
   ];
-  const extractLanguageFromPathname = (pathname: string) => {
-    const languageRegex = /^\/([a-z]{2})(\/|$)/i;
-    const match = pathname.match(languageRegex);
-
-    if (match && match[1]) {
-      return match[1];
-    }
-
-    return null;
-  };
-
   const handleLanguageChange = (language: string) => {
-    const currentLanguage = extractLanguageFromPathname(location.pathname);
-    let newPath = location.pathname;
+    i18next.changeLanguage(language).then(() => {
+      setOpenLangs(false); // Close language dropdown or modal
 
-    if (currentLanguage) {
-      newPath = newPath.replace(`/${currentLanguage}`, `/${language}`);
-    } else {
-      newPath = `/${language}${newPath}`;
-    }
+      // Extract the current language prefix from the URL
+      const currentPath = window.location.pathname;
+      const languagePrefix = currentPath.split("/")[1]; // Assumes the language prefix is the first segment
 
-    i18n.changeLanguage(language);
-    history.replace(newPath);
-    dispatch(languageDitactor(language));
-    setOpenLangs(false);
+      let newPath;
+      if (languagePrefix && languagePrefix.length === 2) {
+        // If a language prefix exists, replace it with the new language
+        newPath = currentPath.replace(`/${languagePrefix}`, `/${language}`);
+      } else {
+        // If there's no language prefix, simply add the new language
+        newPath = `/${language}${currentPath}`;
+      }
+
+      window.location.href = newPath; // Reload the page for the new language
+    });
   };
-
-  useEffect(() => {
-    i18n.changeLanguage(extractLanguageFromPathname(location.pathname) || "ru");
-    dispatch(
-      languageDitactor(extractLanguageFromPathname(location.pathname) || "ru")
-    );
-  }, []);
 
   const [openLangs, setOpenLangs] = useState(false);
-  const langi18 = i18next.language;
-  const copyLangs = langs.filter(item => item.shortName !== langi18);
+  const lang = cookies.get("i18next");
+  console.log(lang, "---navbar");
+  const copyLangs = langs.filter(item => item.code !== lang);
+  console.log(copyLangs);
   const differentLang = langs.find(
     item1 => !copyLangs.some(item2 => item1.id === item2.id)
   );
-  const { i18n, t } = useTranslation();
-  const location = useLocation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
@@ -273,7 +263,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
       <div className='menu'>
         <div className='link'>
           {menu.map((link, i) => (
-            <NavLink key={i} to={link.link} onClick={scrollToTop}>
+            <NavLink key={i} to={`${link.link}`} onClick={scrollToTop}>
               {t(`navbar.${link.name}`)}
             </NavLink>
           ))}
@@ -281,9 +271,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
         <div className='langsWrapper'>
           <Button
             text={
-              windowSize.width < 800
-                ? differentLang?.shortName
-                : differentLang?.shortName
+              windowSize.width < 800 ? differentLang?.code : differentLang?.code
             }
             link={false}
             to={""}
@@ -291,18 +279,23 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             onClick={() => setOpenLangs(!openLangs)}
           />
           <div className='notActiveLangs_wrapper'>
-            {copyLangs.map((lang, i) => (
-              <Fragment key={i}>
+            {copyLangs.map((l, i) => (
+              <a
+                href={`/${l.code}${window.location.pathname}`}
+                key={i}
+                onClick={e => {
+                  e.preventDefault();
+                  handleLanguageChange(l.code);
+                }}>
                 <Button
-                  text={lang.shortName}
+                  text={l.code}
                   link={false}
                   to={""}
                   className={`${openLangs && "openedLang"} activeLang_${
                     i + 1
                   } lang`}
-                  onClick={() => handleLanguageChange(lang.shortName)}
                 />
-              </Fragment>
+              </a>
             ))}
           </div>
         </div>

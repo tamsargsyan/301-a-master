@@ -3,12 +3,12 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
 import { useEffect, useState } from "react";
-import { RootState } from "../../store/configureStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   isHomePageModal,
   openAccountTypeModal,
 } from "../../actions/donateAction";
+import cookies from "js-cookie";
 
 interface HeaderProps {
   title: string;
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
     txt: "Наша миссия — ",
     link: "формирование онтологической безопасности Армении.",
   });
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
 
   useEffect(() => {
     if (lang === "en") {

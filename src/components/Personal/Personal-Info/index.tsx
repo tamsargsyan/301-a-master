@@ -9,14 +9,13 @@ import VIBER from "../../../assets/personal-viber.svg";
 import "./index.css";
 import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/configureStore";
 import { useTranslation } from "react-i18next";
+import cookies from "js-cookie";
 
 const PersonalInfo = () => {
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const { t } = useTranslation();
 
   return (

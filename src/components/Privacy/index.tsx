@@ -7,6 +7,7 @@ import { RootState } from "../../store/configureStore";
 import { Spin } from "antd";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { useLocation, useNavigate } from "react-router";
+import cookies from "js-cookie";
 
 const Privacy = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Privacy = () => {
   const { data, loading } = useSelector(
     (state: RootState) => state.privacyPolicy
   );
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const jsonData =
     //@ts-ignore
     data[endpoint === "privacy-policy" ? "privacyPolicy" : "termsOfServices"];

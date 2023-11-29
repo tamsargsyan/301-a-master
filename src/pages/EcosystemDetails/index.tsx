@@ -29,6 +29,7 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { openRecommentedModal } from "../../actions/donateAction";
 import ClubIcon from "../../assets/info/7.svg";
+import cookies from "js-cookie";
 
 const EcoSystemDetails = () => {
   useEffect(() => {
@@ -136,7 +137,7 @@ const EcoSystemDetails = () => {
       }
     }
   }, [data, ecosystem, partners?.partners]);
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
   const { t } = useTranslation();

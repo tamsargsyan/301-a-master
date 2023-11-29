@@ -18,6 +18,8 @@ import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { Helmet } from "react-helmet";
+import cookies from "js-cookie";
+import i18next from "i18next";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
@@ -32,7 +34,7 @@ const OurProjects = () => {
     scrollToTop();
   }, []);
 
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next") || "ru";
 
   const { data, loading } = useSelector(
     (state: RootState) => state.projectData

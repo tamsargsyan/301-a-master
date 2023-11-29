@@ -69,7 +69,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           <div className='project_progress'>
             <div className='projectProgress_info'>
               <span className='sum'>{budget} USD</span>
-              {!buyBook && (
+              {buyBook && (
                 <span className='percent'>
                   {budget &&
                     collected &&
@@ -79,7 +79,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
                 </span>
               )}
             </div>
-            {!buyBook && (
+            {buyBook && (
               <div className='progress'>
                 <div
                   className='progress_line'

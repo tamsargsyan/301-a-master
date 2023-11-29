@@ -33,15 +33,15 @@ import { useTranslation } from "react-i18next";
 import ReactPlayer from "react-player";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
-import { openDonateSingleProject } from "../../actions/donateAction";
 import { Helmet } from "react-helmet";
 import "react-slideshow-image/dist/styles.css";
 import BUDGET from "../../assets/projectAuthor/budget.svg";
 import COLLECTED from "../../assets/projectAuthor/collected.svg";
+import cookies from "js-cookie";
 
 const ProjectDetails = () => {
   const { t } = useTranslation();
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const colors = [
     "#DD264E",
     "#189387",

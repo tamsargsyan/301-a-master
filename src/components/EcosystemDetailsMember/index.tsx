@@ -6,10 +6,8 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import SingleProjectBox from "../SingleProjectBox";
 import { storageBase } from "../../utils/storage";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
-import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
+import cookies from "js-cookie";
 
 interface EcoSystemDetailsMemberProps {
   expertProject?: {
@@ -48,7 +46,7 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
       setCurrentIndex(prevIndex => prevIndex + 1);
     }
   };
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const { t } = useTranslation();
   const { ecosystem } = useParams();
 
