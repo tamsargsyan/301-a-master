@@ -4,10 +4,7 @@ import ProjectDetails from "./ProjectDetails";
 import Home from "./Home";
 import OurProjects from "./OurProject";
 import EcoSystemDetails from "./EcosystemDetails";
-import PersonalInfo from "../components/Personal/Personal-Info";
 import Layout from "../hoc/layout";
-import PerosnalProjects from "../components/Personal/PersonalProjects";
-import EditProfile from "../components/Personal/EditProfile";
 import AuthenticatedRoute from "./AuthRoute";
 import Media from "./Media";
 import Calendar from "./Calendar";
@@ -21,6 +18,9 @@ import DonateToTheProject from "../components/DonateToTheProject";
 import Privacy from "../components/Privacy";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
+import PersonalInfo from "./Personal/Personal-Info";
+import PerosnalProjects from "./Personal/PersonalProjects";
+import EditProfile from "./Personal/EditProfile";
 
 const pagesData: routerType[] = [
   {
@@ -160,33 +160,11 @@ const pagesData: routerType[] = [
     title: "Sign Up",
   },
   {
-    path: "/personal/personal-info",
-    element: (
-      <AuthenticatedRoute>
-        <Layout>
-          <PersonalInfo />
-        </Layout>
-      </AuthenticatedRoute>
-    ),
-    title: "Personal Info",
-  },
-  {
     path: "/:lang/personal/personal-info",
     element: (
       <AuthenticatedRoute>
         <Layout>
           <PersonalInfo />
-        </Layout>
-      </AuthenticatedRoute>
-    ),
-    title: "Personal Info",
-  },
-  {
-    path: "/personal/my-project",
-    element: (
-      <AuthenticatedRoute>
-        <Layout>
-          <PerosnalProjects title='my-project' />
         </Layout>
       </AuthenticatedRoute>
     ),
@@ -204,36 +182,11 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
-    path: "/personal/personal-info/edit-profile",
-    element: (
-      <AuthenticatedRoute>
-        <Layout>
-          <EditProfile />
-        </Layout>
-      </AuthenticatedRoute>
-    ),
-    title: "Personal Info",
-  },
-  {
     path: "/:lang/personal/personal-info/edit-profile",
     element: (
       <AuthenticatedRoute>
         <Layout>
           <EditProfile />
-        </Layout>
-      </AuthenticatedRoute>
-    ),
-    title: "Personal Info",
-  },
-  {
-    path: "/personal/my-events",
-    element: (
-      <AuthenticatedRoute>
-        <Layout>
-          <PerosnalProjects
-            title='my-events'
-            content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"
-          />
         </Layout>
       </AuthenticatedRoute>
     ),

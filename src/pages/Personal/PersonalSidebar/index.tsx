@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { storageBase } from "../../../utils/storage";
 import { useTranslation } from "react-i18next";
 import NO_IMAGE from "../../../assets/no-image-user.png";
+import cookies from "js-cookie";
 
 const PersonalSidebar = () => {
   const { t } = useTranslation();
@@ -37,6 +38,7 @@ const PersonalSidebar = () => {
   ];
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
+  const lang = cookies.get("i18next");
 
   return (
     <div className='personal_bar_wrapper'>
@@ -68,7 +70,7 @@ const PersonalSidebar = () => {
         {bar.map(bar => (
           <NavLink
             end
-            to={`/${bar.path}`}
+            to={`/${lang}/${bar.path}`}
             key={bar.id}
             className={`personal_bar_item`}>
             {bar.name}

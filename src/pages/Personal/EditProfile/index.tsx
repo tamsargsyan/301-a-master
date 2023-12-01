@@ -5,7 +5,6 @@ import country_dial from "../../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import CLOUD from "../../../assets/cloud.svg";
 import PROF_PIC from "../../../assets/prof-pic.png";
-import Button from "../../Button";
 import FACEBOOK from "../../../assets/personal-fb.svg";
 import INSTAGRAM from "../../../assets/personal-instagram.svg";
 import LINKEDIN from "../../../assets/personal-linkedIn.svg";
@@ -17,6 +16,7 @@ import { useState } from "react";
 import { usePostRequest } from "../../../actions/apiActions";
 import ARROW from "../../../assets/edit-profile/arrow-down.svg";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import Button from "../../../components/Button";
 const { Option } = Select;
 
 const EditProfile = () => {

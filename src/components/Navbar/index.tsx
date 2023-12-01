@@ -161,7 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                   {isAuthenticated && (
                     <div className='navbar_user_wrapper'>
                       <NavLink
-                        to='personal/personal-info'
+                        to={`/${lang}/personal/personal-info`}
                         className='navbar_user'
                         onClick={() => setOpenMenu(false)}>
                         <img

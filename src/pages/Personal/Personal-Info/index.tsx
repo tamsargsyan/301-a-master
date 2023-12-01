@@ -26,7 +26,7 @@ const PersonalInfo = () => {
       <div className='personalInfo_about'>
         <div className='personalInfo_title_wrapper'>
           <p className='personalInfo_title'>{t("personal.about-me")}</p>
-          <NavLink to='/personal/personal-info/edit-profile'>
+          <NavLink to={`/${lang}/personal/personal-info/edit-profile`}>
             <p>{t("personal.edit-profile")}</p>
             <img src={EDIT} alt='Edit' decoding='async' loading='lazy' />
           </NavLink>

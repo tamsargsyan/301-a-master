@@ -1,10 +1,10 @@
 import React from "react";
-import SingleProjectBox from "../../SingleProjectBox";
 import AUTHOR_1 from "../../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../../assets/projectAuthor/project-1.png";
 import "./index.css";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import SingleProjectBox from "../../../components/SingleProjectBox";
 
 interface PersonalProjectsProps {
   title: string;
