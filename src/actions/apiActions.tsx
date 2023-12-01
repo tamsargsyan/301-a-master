@@ -27,6 +27,9 @@ import {
   GMAIL_LOGIN_START,
   GMAIL_LOGIN_SUCCESS,
   GMAIL_LOGIN_ERROR,
+  FETCH_FAVORITE_PROJECTS_START,
+  FETCH_FAVORITE_PROJECTS_SUCCESS,
+  FETCH_FAVORITE_PROJECTS_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -111,6 +114,17 @@ export const fetchingRegisterData = (data: string) => async (dispatch: any) => {
     dispatch({ type: FETCH_REGISTER_DATA_ERROR, payload: error.message });
   }
 };
+
+export const fetchingFavoriteProjects =
+  (data: string) => async (dispatch: any) => {
+    dispatch({ type: FETCH_FAVORITE_PROJECTS_START });
+    try {
+      const response = await apiService.get(data);
+      dispatch({ type: FETCH_FAVORITE_PROJECTS_SUCCESS, payload: response });
+    } catch (error: any) {
+      dispatch({ type: FETCH_FAVORITE_PROJECTS_ERROR, payload: error.message });
+    }
+  };
 
 export const fetchingGmail = (data: string) => async (dispatch: any) => {
   dispatch({ type: GMAIL_LOGIN_START });

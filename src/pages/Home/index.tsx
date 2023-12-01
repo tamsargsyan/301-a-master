@@ -58,8 +58,6 @@ const Home = () => {
     hypothesesForTheFuture,
     landOfWisdom,
   } = data;
-  const ourMissionShortDesc =
-    ourMission && removeHtmlTags(ourMission[0][`short_description_${lang}`]);
 
   const sections = [
     {
@@ -135,13 +133,11 @@ const Home = () => {
                 style={{ padding: "60px 0" }}>
                 <Header
                   title={section.title}
-                  shortDescription={section.shortDescription}
                   description={section.description}
                   btns={section.btn}
                   icon={section.icon}
                   innerClassName={section.innerClassName}
                   className='differedHeaderContainer homePageHeader'
-                  ourMissionDesc={section.id === 1 && ourMissionShortDesc}
                 />
               </Background>
             </Fragment>

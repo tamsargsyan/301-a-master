@@ -4,26 +4,14 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import AccountTypeModal from "./components/AccountTypeModal";
 import AgreementTermsModal from "./components/AgreementTermsModal";
-import Privacy from "./components/Privacy";
-import Donation from "./components/Donation";
-import OneTimeDonation from "./components/OneTimeDonation";
-import DonationProjectsModal from "./components/DonationProjectsModal";
-import DonateToTheProject from "./components/DonateToTheProject";
-import { useDispatch, useSelector } from "react-redux";
-import { openDonateModal } from "./actions/donateAction";
-import { RootState } from "./store/configureStore";
+import { useDispatch } from "react-redux";
 import RecommentedModal from "./components/RecommentedModal";
 import Conragts from "./components/Congrats";
+import { login } from "./actions/authActions";
 
 function App() {
   const [signIn, setSignIn] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const [oneTimeDonation, setOneTimeDonation] = useState(false);
-  const [donateProjects, setDonateProjects] = useState(false);
   const dispatch = useDispatch();
 
   const ct = document.querySelectorAll(".ecosystemDetails_partners");
@@ -59,6 +47,12 @@ function App() {
     ct[0].scrollLeft = scrollLeft - walk;
   });
   // });
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(login());
+    }
+  }, [dispatch]);
 
   return (
     <div className='container'>

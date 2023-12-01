@@ -43,20 +43,14 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (response && response.status === 200 && !hasNavigated) {
+    if (response && response.status === 200) {
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       dispatch(login());
       setHasNavigated(true);
-      navigate(`/${lang}/`);
+      !hasNavigated && navigate(`/${lang}/`);
     }
-  }, [response, dispatch, navigate, hasNavigated]);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(login());
-    }
-  }, [dispatch]);
+  }, [response, dispatch, navigate, hasNavigated, lang]);
 
   const [searchParams] = useSearchParams();
   const resetPass = searchParams.get("resetPass");

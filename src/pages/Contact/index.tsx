@@ -18,12 +18,10 @@ import WHATSAPP from "../../assets/wa.svg";
 import "./index.css";
 import { useTranslation } from "react-i18next";
 import { Spin } from "antd";
-import { useAddressCoordinates } from "../../hooks/useAddressCoordinates";
 
 const ContactPage = () => {
   const windowSize = useWindowSize();
   const { t } = useTranslation();
-  const { longitude, latitude } = useAddressCoordinates("Abovyan 25");
 
   return (
     <div className='media_container'>
@@ -117,11 +115,7 @@ const ContactPage = () => {
             </div>
           </div>
           <div className='contactPage_address_2'>
-            {longitude && latitude ? (
-              <Map long={+longitude} lat={+latitude} />
-            ) : (
-              <Spin size='small' />
-            )}
+            {true ? <Map /> : <Spin size='small' />}
           </div>
         </div>
       </Background>

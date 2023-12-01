@@ -1,10 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FLAG from "../../assets/flag.svg";
 import Button from "../Button";
 import "./index.css";
 import { fetchingProjectDetails } from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { RootState } from "../../store/configureStore";
+import { Spin } from "antd";
 
 interface ProjectProps {
   author: string;
@@ -17,6 +19,7 @@ interface ProjectProps {
   id: number;
   heartit: () => void;
   slug: string;
+  favoriteLoading?: boolean;
 }
 
 const Project: React.FC<ProjectProps> = ({
@@ -30,10 +33,12 @@ const Project: React.FC<ProjectProps> = ({
   id,
   heartit,
   slug,
+  favoriteLoading,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { width } = useWindowSize();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className='ourProject__project'>
@@ -111,14 +116,18 @@ const Project: React.FC<ProjectProps> = ({
               dispatch(fetchingProjectDetails(`project-details/${slug}`));
             }}
           />
-          <button
-            className={`heart-btn ${isSaved ? "liked" : ""}`}
-            onClick={heartit}>
+          <button className={`heart-btn`} onClick={heartit}>
             {/* <span>{t("btns.save-project")}</span> */}
             <div className='heartWrapper'>
-              <svg className='heart' viewBox='0 0 32 29.6'>
-                <path d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z' />
-              </svg>
+              {favoriteLoading ? (
+                <Spin size='small' />
+              ) : (
+                <svg
+                  className={`heart ${isSaved ? "liked" : ""}`}
+                  viewBox='0 0 32 29.6'>
+                  <path d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z' />
+                </svg>
+              )}
             </div>
           </button>
         </div>

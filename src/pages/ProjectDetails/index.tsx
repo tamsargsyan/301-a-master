@@ -9,15 +9,16 @@ import Button from "../../components/Button";
 import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import PATTERN from "../../assets/projectAuthor/pattern.svg";
-// import PDF from "../../assets/projectAuthor/pdf.svg";
-import HEART from "../../assets/projectAuthor/heart.svg";
+import ARROW_TEAM from "../../assets/arrow-left-team-member.svg";
 import "./index.css";
 import RevolveText from "../../components/Revolve";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchingFavoriteProjects,
   fetchingProjectDetails,
   fetchingProjects,
+  usePostRequest,
 } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useNavigate, useParams } from "react-router";
@@ -81,7 +82,6 @@ const ProjectDetails = () => {
   const { ourProject } = useSelector(
     (state: RootState) => state.projectData.data
   );
-
   const [showArrowBtns, setShowArrowBtns] = useState(false);
 
   useEffect(() => {
@@ -134,6 +134,75 @@ const ProjectDetails = () => {
     if (role === "partners") return PURPLE_CIRCLE;
     return ROSE_CIRCLE;
   };
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    //@ts-ignore
+    isAuthenticated && dispatch(fetchingFavoriteProjects("get-favorite"));
+  }, [isAuthenticated, dispatch]);
+
+  const { favoriteProjectsData } = useSelector(
+    (state: RootState) => state.favoriteProjects
+  );
+  const getFavortieLoading = useSelector(
+    (state: RootState) => state.favoriteProjects.loading
+  );
+
+  const { postRequest } = usePostRequest();
+  const [favoriteProjects, setFavoriteProjects] = useState<number[]>(
+    JSON.parse(localStorage.getItem("favoriteProjects") || "[]")
+  );
+
+  const heartit = async (project_id: number, user_id: number) => {
+    if (isAuthenticated) {
+      const existingFavorite = favoriteProjectsData.favorites.find(
+        (fav: any) => fav.project_id === project_id && fav.user_id === user_id
+      );
+
+      try {
+        if (existingFavorite) {
+          await postRequest(
+            "favorite",
+            { project_id, user_id, favorite: "remove" },
+            {}
+          );
+        } else {
+          await postRequest(
+            "favorite",
+            { project_id, user_id, favorite: "add" },
+            {}
+          );
+        }
+        //@ts-ignore
+        dispatch(fetchingFavoriteProjects("get-favorite"));
+      } catch (error) {
+        // Handle error if postRequest fails
+        console.error("Error occurred:", error);
+      }
+    } else {
+      const existingProjects = JSON.parse(
+        localStorage.getItem("favoriteProjects") || "[]"
+      );
+
+      const index = existingProjects.indexOf(project_id);
+
+      if (index !== -1) {
+        existingProjects.splice(index, 1);
+      } else {
+        existingProjects.push(project_id);
+      }
+      localStorage.setItem(
+        "favoriteProjects",
+        JSON.stringify(existingProjects)
+      );
+      setFavoriteProjects(
+        JSON.parse(localStorage.getItem("favoriteProjects") || "[]")
+      );
+    }
+  };
+
+  console.log(data.team);
 
   if (loading)
     return (
@@ -415,7 +484,7 @@ const ProjectDetails = () => {
                       ) : null)}
                   </div>
                 ) : null}
-                {data.team[0].length === true && (
+                {data.team && (
                   <div className='workTeamContainer'>
                     <div className='roadMap_heading problem_heading'>
                       <img
@@ -428,7 +497,7 @@ const ProjectDetails = () => {
                     </div>
                     <div className='teamMembers _inner'>
                       <div className='firstTeam'>
-                        {data?.team[0]?.map((t: any) => {
+                        {data?.team.map((t: any) => {
                           if (t.role !== "sages")
                             return (
                               <div className='memberWrapper' key={t.id}>
@@ -608,7 +677,29 @@ const ProjectDetails = () => {
                       text={t("add-to-interesting")}
                       link={false}
                       to=''
-                      icon={HEART}
+                      svg={
+                        getFavortieLoading ? (
+                          <Spin size='small' />
+                        ) : (
+                          <svg
+                            className={`heart ${
+                              isAuthenticated
+                                ? favoriteProjectsData?.favorites?.findIndex(
+                                    (item: any) =>
+                                      item.project_id === project?.id &&
+                                      item.user_id === data.user.id
+                                  ) !== -1
+                                  ? "liked"
+                                  : ""
+                                : favoriteProjects.indexOf(project?.id) !== -1
+                                ? "liked"
+                                : ""
+                            }`}
+                            viewBox='0 0 32 29.6'>
+                            <path d='M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z'></path>
+                          </svg>
+                        )
+                      }
                       style={{
                         color: "#717883",
                         border: "1px solid #000",
@@ -618,6 +709,7 @@ const ProjectDetails = () => {
                         width: "100%",
                       }}
                       className='donationBtn'
+                      onClick={() => heartit(project.id, data.user.id)}
                     />
                     {project && project.budget_price ? (
                       <Button

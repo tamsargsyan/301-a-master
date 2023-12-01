@@ -9,6 +9,7 @@ import expertProjectReducer from "../reducers/expertProjectReducer";
 import authReducer from "../reducers/authReducer";
 import registerDataReducer from "../reducers/registerDataReducer";
 import congratsReducer from "../reducers/congratsReducer";
+import favoriteProjectsReducer from "../reducers/favoriteProjectsReducer";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     auth: authReducer,
     registerData: registerDataReducer,
     congrats: congratsReducer,
+    favoriteProjects: favoriteProjectsReducer,
   },
 });
 

@@ -79,9 +79,7 @@ const AboutUs = () => {
               <div key={i}>
                 <Header
                   title={info[`title_${lang}`]}
-                  shortDescription={info[`short_description_${lang}`]}
                   description={info[`description_${lang}`]}
-                  ourMissionDesc={info[`short_description_${lang}`]}
                 />
               </div>
             )

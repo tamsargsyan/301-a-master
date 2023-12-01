@@ -1,19 +1,12 @@
-import { NavLink } from "react-router-dom";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  isHomePageModal,
-  openAccountTypeModal,
-} from "../../actions/donateAction";
+import { useSelector } from "react-redux";
 import cookies from "js-cookie";
 import { RootState } from "../../store/configureStore";
 
 interface HeaderProps {
   title: string;
-  shortDescription?: string;
   description: string;
   btns?: any;
   style?: Object;
@@ -23,14 +16,12 @@ interface HeaderProps {
   className?: string;
   isEcosystem?: boolean;
   innerClassName?: string;
-  ourMissionDesc?: string;
   id?: string;
   faqDesc?: any;
 }
 
 const Header: React.FC<HeaderProps> = ({
   title,
-  shortDescription,
   description,
   btns,
   icon,
@@ -40,32 +31,12 @@ const Header: React.FC<HeaderProps> = ({
   className,
   isEcosystem,
   innerClassName,
-  ourMissionDesc,
   id,
   faqDesc,
 }) => {
   const windowSize = useWindowSize();
-  const ourMissionTxt = ourMissionDesc && ourMissionDesc[0];
-  const dispatch = useDispatch();
-  const [ourMission, setOurMission] = useState({
-    txt: "Наша миссия — ",
-    link: "формирование онтологической безопасности Армении.",
-  });
-  const lang = cookies.get("i18next");
 
-  useEffect(() => {
-    if (lang === "en") {
-      setOurMission({
-        txt: "Our mission is ",
-        link: "the formation of the ontological security of Armenia.",
-      });
-    } else if (lang === "am") {
-      setOurMission({
-        txt: "Մեր առաքելությունը ",
-        link: "Հայաստանի գոյաբանական անվտանգության ձևավորումն է:",
-      });
-    }
-  }, [lang]);
+  const lang = cookies.get("i18next");
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
@@ -83,19 +54,6 @@ const Header: React.FC<HeaderProps> = ({
             </div>
           )}
           <h1>{title}</h1>
-          {shortDescription &&
-            (ourMissionTxt ? (
-              <p>
-                {ourMission.txt}
-                <NavLink
-                  to={`/${lang}/about-us/#faq`}
-                  style={{ color: "var(--main-color)" }}>
-                  {ourMission.link}
-                </NavLink>
-              </p>
-            ) : (
-              <h2 dangerouslySetInnerHTML={{ __html: shortDescription }}></h2>
-            ))}
         </div>
         {windowSize.width < 975 && mainImg && (
           <div className='mainImgHeader'>
@@ -119,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({
         {btns && (
           <div className='btns'>
             {btns.map((btn: any, index: number) => {
-              if (isAuthenticated) {
+              if (isAuthenticated && isEcosystem) {
                 return (
                   btn.become === "" && (
                     <Button
@@ -147,6 +105,32 @@ const Header: React.FC<HeaderProps> = ({
                       //   }
                       // }}
                     />
+                    // ) : (
+                    //   // <Button
+                    //   //   key={index}
+                    //   //   text={btn.name}
+                    //   //   style={btnStyles && btnStyles[index]}
+                    //   //   link={true}
+                    //   //   to={`/${lang}/ecosystem/ambassadors`}
+                    //   //   className={
+                    //   //     className?.includes("homePageHeader")
+                    //   //       ? "homePage_btn"
+                    //   //       : undefined
+                    //   //   }
+                    //   //   // onClick={() => {
+                    //   //   //   if (btn.become && btn.id) {
+                    //   //   //     dispatch(
+                    //   //   //       openAccountTypeModal({
+                    //   //   //         open: true,
+                    //   //   //         id: btn.id,
+                    //   //   //         name: btn.become,
+                    //   //   //         type: btn.type,
+                    //   //   //       })
+                    //   //   //     );
+                    //   //   //     dispatch(isHomePageModal(true));
+                    //   //   //   }
+                    //   //   // }}
+                    //   // />
                   )
                 );
               } else {

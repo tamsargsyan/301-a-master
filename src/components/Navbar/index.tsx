@@ -109,7 +109,6 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
     item1 => !copyLangs.some(item2 => item1.id === item2.id)
   );
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));

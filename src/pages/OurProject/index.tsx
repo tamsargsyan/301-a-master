@@ -13,13 +13,16 @@ import "./index.css";
 import Footer from "../../components/Footer";
 import ARROW_NEXT from "../../assets/arrow-next.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchingProjects } from "../../actions/apiActions";
+import {
+  fetchingFavoriteProjects,
+  fetchingProjects,
+  usePostRequest,
+} from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { Helmet } from "react-helmet";
 import cookies from "js-cookie";
-import i18next from "i18next";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
@@ -69,9 +72,77 @@ const OurProjects = () => {
     filteredProjects &&
     new Array(Math.ceil(filteredProjects?.length / projectsPerPage)).fill(0);
 
-  const [projectId, setProjectId] = useState<number | null>(null);
-  const heartit = (id: number) => {
-    setProjectId(id);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    //@ts-ignore
+    isAuthenticated && dispatch(fetchingFavoriteProjects("get-favorite"));
+  }, [isAuthenticated, dispatch]);
+
+  const { favoriteProjectsData } = useSelector(
+    (state: RootState) => state.favoriteProjects
+  );
+
+  const favoriteLoading = useSelector(
+    (state: RootState) => state.favoriteProjects.loading
+  );
+
+  const [favoriteProjects, setFavoriteProjects] = useState<number[]>(
+    JSON.parse(localStorage.getItem("favoriteProjects") || "[]")
+  );
+
+  const { postRequest } = usePostRequest();
+  const [clickedHeartBtnProjectId, setClickedHeartBtnProjectId] = useState<
+    null | number
+  >(null);
+
+  const heartit = async (project_id: number, user_id: number) => {
+    if (isAuthenticated) {
+      setClickedHeartBtnProjectId(project_id);
+      const existingFavorite = favoriteProjectsData.favorites.find(
+        (fav: any) => fav.project_id === project_id && fav.user_id === user_id
+      );
+
+      try {
+        if (existingFavorite) {
+          await postRequest(
+            "favorite",
+            { project_id, user_id, favorite: "remove" },
+            {}
+          );
+        } else {
+          await postRequest(
+            "favorite",
+            { project_id, user_id, favorite: "add" },
+            {}
+          );
+        }
+        //@ts-ignore
+        dispatch(fetchingFavoriteProjects("get-favorite"));
+      } catch (error) {
+        // Handle error if postRequest fails
+        console.error("Error occurred:", error);
+      }
+    } else {
+      const existingProjects = JSON.parse(
+        localStorage.getItem("favoriteProjects") || "[]"
+      );
+
+      const index = existingProjects.indexOf(project_id);
+
+      if (index !== -1) {
+        existingProjects.splice(index, 1);
+      } else {
+        existingProjects.push(project_id);
+      }
+      localStorage.setItem(
+        "favoriteProjects",
+        JSON.stringify(existingProjects)
+      );
+      setFavoriteProjects(
+        JSON.parse(localStorage.getItem("favoriteProjects") || "[]")
+      );
+    }
   };
 
   if (loading)
@@ -175,10 +246,24 @@ const OurProjects = () => {
                     }
                     desc={project?.project[`problem_description_${lang}`]}
                     projectImg={`${storageBase}/${project?.project?.image}`}
-                    heartit={() => heartit(project?.project?.id)}
-                    isSaved={project?.project?.id === projectId}
+                    heartit={() =>
+                      heartit(project?.project?.id, project?.user?.id)
+                    }
+                    isSaved={
+                      isAuthenticated
+                        ? favoriteProjectsData?.favorites?.findIndex(
+                            (item: any) =>
+                              item.project_id === project?.project?.id &&
+                              item.user_id === project.user.id
+                          ) !== -1
+                        : favoriteProjects.indexOf(project?.project?.id) !== -1
+                    }
                     id={project?.project?.id}
                     slug={project?.project.slug}
+                    favoriteLoading={
+                      favoriteLoading &&
+                      project?.project.id === clickedHeartBtnProjectId
+                    }
                   />
                 </Fragment>
               );

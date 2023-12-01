@@ -36,6 +36,9 @@
   line-height: 155%;
   color: var(--text-color);
 }
+.inner a {
+  color: var(--main-color);
+}
 .mainImgHeader {
   display: flex;
   justify-content: center;
