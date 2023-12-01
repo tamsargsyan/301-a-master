@@ -9,7 +9,8 @@ import Button from "../../components/Button";
 import ARROW from "../../assets/arrow.svg";
 import FLAG from "../../assets/flag.svg";
 import PATTERN from "../../assets/projectAuthor/pattern.svg";
-import ARROW_TEAM from "../../assets/arrow-left-team-member.svg";
+import ARROW_TEAM_LEFT from "../../assets/arrow-left-team-member.svg";
+import ARROW_TEAM_RIGHT from "../../assets/info/arrow-right-team-member.svg";
 import "./index.css";
 import RevolveText from "../../components/Revolve";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -201,8 +202,40 @@ const ProjectDetails = () => {
       );
     }
   };
+  const modifiedTeam = data?.team
+    ?.reduce((acc: any, member: any) => {
+      const foundIndex = acc.findIndex(
+        (item: any) => item.role === member.role
+      );
 
-  console.log(data.team);
+      if (foundIndex !== -1) {
+        acc[foundIndex].id.push(member.id);
+        acc[foundIndex].name.push(member.name);
+        acc[foundIndex].last_name.push(member.last_name);
+        acc[foundIndex].image?.push(member.last_name);
+      } else {
+        acc.push({
+          id: [member.id],
+          name: [member.name],
+          last_name: [member.last_name],
+          image: [member.image],
+          role: member.role,
+        });
+      }
+      return acc;
+    }, [])
+    .filter((t: any) => t.role !== "sages");
+  console.log(modifiedTeam);
+  const [nextMember, setNextMember] = useState({});
+
+  const handleNextMember = (memberIdx: number, direction: number) => {
+    const updatedNextMember = { ...nextMember };
+    //@ts-ignore
+    updatedNextMember[memberIdx] =
+      //@ts-ignore
+      (updatedNextMember[memberIdx] || 0) + direction;
+    setNextMember(updatedNextMember);
+  };
 
   if (loading)
     return (
@@ -484,7 +517,7 @@ const ProjectDetails = () => {
                       ) : null)}
                   </div>
                 ) : null}
-                {data.team && (
+                {modifiedTeam.length ? (
                   <div className='workTeamContainer'>
                     <div className='roadMap_heading problem_heading'>
                       <img
@@ -497,11 +530,24 @@ const ProjectDetails = () => {
                     </div>
                     <div className='teamMembers _inner'>
                       <div className='firstTeam'>
-                        {data?.team.map((t: any) => {
+                        {modifiedTeam?.map((t: any, i: number) => {
                           if (t.role !== "sages")
                             return (
                               <div className='memberWrapper' key={t.id}>
                                 <div className='memberWrapper_withoutName'>
+                                  {t?.id.length > 1 && (
+                                    <button
+                                      className='arrowBtn_teamMember'
+                                      onClick={() =>
+                                        //@ts-ignore
+                                        (nextMember[i] === undefined ||
+                                          //@ts-ignore
+                                          nextMember[i] > 0) &&
+                                        handleNextMember(i, -1)
+                                      }>
+                                      <img src={ARROW_TEAM_LEFT} alt='Arrow' />
+                                    </button>
+                                  )}
                                   <div className='member'>
                                     <img
                                       src={checkRole(t.role)}
@@ -511,7 +557,11 @@ const ProjectDetails = () => {
                                       loading='lazy'
                                     />
                                     <img
-                                      src={`${storageBase}/${t.image}`}
+                                      src={`${storageBase}/${
+                                        t.image &&
+                                        //@ts-ignore
+                                        (t.image[nextMember[i]] || t?.image[0])
+                                      }`}
                                       alt='Team Member'
                                       className='teamMember_img'
                                       decoding='async'
@@ -525,9 +575,30 @@ const ProjectDetails = () => {
                                       text={t.role.split("_").join(" ")}
                                     />
                                   </div>
+                                  {t?.id.length > 1 && (
+                                    <button
+                                      className='arrowBtn_teamMember'
+                                      onClick={() => {
+                                        //@ts-ignore
+                                        (nextMember[i] === undefined ||
+                                          //@ts-ignore
+                                          nextMember[i] < t.id.length) &&
+                                          handleNextMember(i, 1);
+                                      }}>
+                                      <img src={ARROW_TEAM_RIGHT} alt='Arrow' />
+                                    </button>
+                                  )}
                                 </div>
                                 <p className='member_name'>
-                                  {t.name} {t.last_name}
+                                  {
+                                    //@ts-ignore
+                                    t.name[nextMember[i]] || t?.name[0]
+                                  }{" "}
+                                  {
+                                    //@ts-ignore
+                                    t.last_name[nextMember[i]] ||
+                                      t?.last_name[0]
+                                  }
                                 </p>
                               </div>
                             );
@@ -536,7 +607,7 @@ const ProjectDetails = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                ) : null}
                 {partners.length ? (
                   <div className='partnersContainer'>
                     <div className='roadMap_heading problem_heading'>
