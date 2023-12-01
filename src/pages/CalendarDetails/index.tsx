@@ -142,7 +142,7 @@ const CalendarDetails = () => {
                 </div>
               </div>
               <div className='calendar_details_1_info_map_wrapper'>
-                <Map />
+                <Map long={0} lat={0} />
                 <div className='calendar_details_address'>
                   <p>Ереван, ул. Московяна 24</p>
                 </div>

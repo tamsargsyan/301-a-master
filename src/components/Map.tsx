@@ -1,8 +1,14 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { useState } from "react";
 import "leaflet/dist/leaflet.css";
 
-const Map = () => {
+interface MapsProps {
+  long: number;
+  lat: number;
+}
+
+const Map: React.FC<MapsProps> = ({ long, lat }) => {
   const mapCenter: [number, number] = [40.185959, 44.521062];
   const tileLayerUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
   const attribution = "Map data © OpenStreetMap contributors";

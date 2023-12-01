@@ -7,6 +7,7 @@ import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
 import PATTERN_1 from "../../assets/patterns/login-small.svg";
 import PATTERN_2 from "../../assets/patterns/login-big.svg";
+import { useTranslation } from "react-i18next";
 
 const Conragts = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const Conragts = () => {
   const handleClose = () => {
     dispatch(congratsModal(false, null));
   };
+
+  const { t } = useTranslation();
 
   return (
     <Modal setOpenModal={handleClose} openModal={open} headerShow={true}>
@@ -47,7 +50,7 @@ const Conragts = () => {
         <div className='conragts_modal_content'>
           <p className='conragts_text'>{text}</p>
           <Button
-            text='ok'
+            text={t("btns.ok")}
             link={false}
             to={""}
             style={{

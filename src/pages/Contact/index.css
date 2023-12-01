@@ -9,6 +9,9 @@
   /* background: green; */
 }
 .contactPage_address_2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 70%;
   height: 400px;
   padding: 28px;

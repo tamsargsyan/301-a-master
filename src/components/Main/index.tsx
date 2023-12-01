@@ -26,6 +26,7 @@ const Main: React.FC<MainProps> = ({ lang }) => {
   const { landOfWisdom } = useSelector(
     (state: RootState) => state.homeData.data
   );
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <Background
@@ -73,10 +74,12 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         description={landOfWisdom[`description_${lang}` as keyof HeaderKeyOf]}
         btns={[
           {
-            name: t("btns.become-301"),
+            name: isAuthenticated ? t("btns.donate") : t("btns.become-301"),
             become: "доноры «301»",
             id: 1,
-            link: `/accountType?id=1?type=donor`,
+            link: isAuthenticated
+              ? `/donation`
+              : `/accountType?id=1?type=donor`,
           },
           {
             name: t("btns.whole-project"),

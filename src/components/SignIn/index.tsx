@@ -14,7 +14,7 @@ import { Formik } from "formik";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import { usePostRequest } from "../../actions/apiActions";
+import { fetchingGmail, usePostRequest } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { connect, useDispatch } from "react-redux";
 import { login } from "../../actions/authActions";
@@ -32,8 +32,8 @@ import cookies from "js-cookie";
 const SignIn = () => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const handleForgetPassword = () => setForgetPassword(true);
-  const location = useLocation();
   const navigate = useNavigate();
+  const lang = cookies.get("i18next");
 
   const windowSize = useWindowSize();
   const { t } = useTranslation();
@@ -48,7 +48,7 @@ const SignIn = () => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       dispatch(login());
       setHasNavigated(true);
-      navigate("/");
+      navigate(`/${lang}/`);
     }
   }, [response, dispatch, navigate, hasNavigated]);
 
@@ -82,8 +82,6 @@ const SignIn = () => {
       });
     }
   }, []);
-
-  const lang = cookies.get("i18next");
 
   return (
     <>
@@ -280,7 +278,13 @@ const SignIn = () => {
                   <div className='line'></div>
                 </div>
                 <div className='signIn_another_icons'>
-                  <a href='https://301.machtech.site/api/auth/google'>
+                  <a
+                    href='https://301.machtech.site/api/auth/google'
+                    onClick={e => {
+                      e.preventDefault();
+                      //@ts-ignore
+                      dispatch(fetchingGmail("auth/google"));
+                    }}>
                     <img
                       src={GMAIL}
                       alt='Gmail'

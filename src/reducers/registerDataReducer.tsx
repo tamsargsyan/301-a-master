@@ -2,12 +2,14 @@ import {
   FETCH_REGISTER_DATA_START,
   FETCH_REGISTER_DATA_SUCCESS,
   FETCH_REGISTER_DATA_ERROR,
+  GMAIL_LOGIN_SUCCESS,
 } from "../utils/action.types";
 
 const initialState = {
   loading: false,
   data: null,
   error: null,
+  gmail: null,
 };
 
 const registerDataReducer = (state = initialState, action: any) => {
@@ -18,6 +20,11 @@ const registerDataReducer = (state = initialState, action: any) => {
       return { ...state, loading: false, data: action.payload };
     case FETCH_REGISTER_DATA_ERROR:
       return { ...state, loading: false, error: action.payload };
+    case GMAIL_LOGIN_SUCCESS:
+      return {
+        ...state,
+        gmail: action.payload,
+      };
     default:
       return state;
   }

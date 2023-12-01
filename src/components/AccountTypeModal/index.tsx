@@ -18,8 +18,8 @@ import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
 import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { useLocation, useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
 import Terms from "../Terms";
+import cookies from "js-cookie";
 
 const { Option } = Select;
 
@@ -114,15 +114,15 @@ const AccountTypeModal = () => {
   const [supportFormChecked, setSupportFormChecked] = useState(false);
 
   const location = useLocation();
-  const showAccountType = location.pathname === "/accountType";
   const id = +location.search?.split("?")[1]?.split("=")[1];
   const type = location.search?.split("?")[2]?.split("=")[1];
   const navigate = useNavigate();
-
   useEffect(() => {
     //@ts-ignore
-    id === 3 && dispatch(fetchingRegisterData("get-register-data"));
-  }, [id, dispatch]);
+    dispatch(fetchingRegisterData("get-register-data"));
+  }, [dispatch]);
+
+  const lang = cookies.get("i18next");
 
   return (
     <Modal
@@ -266,33 +266,27 @@ const AccountTypeModal = () => {
                         //@ts-ignore
                         ({ _, form }) => (
                           <Select
-                            // {...field}
                             showSearch
                             optionFilterProp='children'
                             className='signUp_selector'
                             onChange={(_, obj: any) => {
                               form.setFieldValue(
                                 "recommendation_from",
-                                obj.label
+                                obj.key
                               );
                             }}
                             //@ts-ignore
-                            filterOption={filterOption}
-                            options={[
-                              {
-                                value: "jack",
-                                label: "Jack",
-                              },
-                              {
-                                value: "lucy",
-                                label: "Lucy",
-                              },
-                              {
-                                value: "tom",
-                                label: "Tom",
-                              },
-                            ]}
-                          />
+                            filterOption={filterOption}>
+                            {data?.sages.map((sage: any) => (
+                              <Option
+                                key={sage.id}
+                                value={`${sage.name}${sage.last_name}`}>
+                                {`${sage[`name_${lang}`]}${
+                                  sage[`last_name_${lang}`]
+                                }`}
+                              </Option>
+                            ))}
+                          </Select>
                         )
                       }
                     </Field>
@@ -322,7 +316,9 @@ const AccountTypeModal = () => {
                                 <Option
                                   key={sage.id}
                                   value={`${sage.name}${sage.last_name}`}>
-                                  {`${sage.name}${sage.last_name}`}
+                                  {`${sage[`name_${lang}`]}${
+                                    sage[`last_name_${lang}`]
+                                  }`}
                                 </Option>
                               ))}
                             </Select>

@@ -82,6 +82,23 @@ const ProjectDetails = () => {
     (state: RootState) => state.projectData.data
   );
 
+  const [showArrowBtns, setShowArrowBtns] = useState(false);
+
+  useEffect(() => {
+    const partnersContainer = document.querySelector(".partners ");
+    const images = document.querySelectorAll(".ecosystemDetails_partners_item");
+    const gap = 30;
+    let totalWidth = 0;
+    if (partnersContainer && images) {
+      images.forEach(img => {
+        //@ts-ignore
+        totalWidth += img.offsetWidth + gap;
+      });
+      //@ts-ignore
+      setShowArrowBtns(totalWidth > partnersContainer.offsetWidth);
+    }
+  }, []);
+
   useEffect(() => {
     if (project) {
       const observer = new IntersectionObserver(entries => {
@@ -525,23 +542,25 @@ const ProjectDetails = () => {
                     </button> */}
                     {/* </div> */}
                     <div className='projectDetails_slider_1 partners _inner'>
-                      <button
-                        className='leftBtn'
-                        onClick={() => {
-                          const container = sliderRef.current;
-                          if (container) {
-                            //@ts-ignore
-                            container.scrollLeft -= scrollAmount;
-                          }
-                        }}>
-                        <img
-                          src={ARROW}
-                          alt='Arrow'
-                          decoding='async'
-                          loading='lazy'
-                        />
-                        {/* <ChevronLeftIcon /> */}
-                      </button>
+                      {showArrowBtns && (
+                        <button
+                          className='leftBtn'
+                          onClick={() => {
+                            const container = sliderRef.current;
+                            if (container) {
+                              //@ts-ignore
+                              container.scrollLeft -= scrollAmount;
+                            }
+                          }}>
+                          <img
+                            src={ARROW}
+                            alt='Arrow'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                          {/* <ChevronLeftIcon /> */}
+                        </button>
+                      )}
                       <div className='images-container' ref={sliderRef}>
                         {partners.map((partner: any) => {
                           return (
@@ -558,22 +577,24 @@ const ProjectDetails = () => {
                           );
                         })}
                       </div>
-                      <button
-                        className='rightBtn'
-                        onClick={() => {
-                          const container = sliderRef.current;
-                          if (container) {
-                            //@ts-ignore
-                            container.scrollLeft += scrollAmount;
-                          }
-                        }}>
-                        <img
-                          src={ARROW}
-                          alt='Arrow'
-                          decoding='async'
-                          loading='lazy'
-                        />
-                      </button>
+                      {showArrowBtns && (
+                        <button
+                          className='rightBtn'
+                          onClick={() => {
+                            const container = sliderRef.current;
+                            if (container) {
+                              //@ts-ignore
+                              container.scrollLeft += scrollAmount;
+                            }
+                          }}>
+                          <img
+                            src={ARROW}
+                            alt='Arrow'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </button>
+                      )}
                     </div>
                   </div>
                 ) : null}

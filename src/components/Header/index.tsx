@@ -3,12 +3,13 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   isHomePageModal,
   openAccountTypeModal,
 } from "../../actions/donateAction";
 import cookies from "js-cookie";
+import { RootState } from "../../store/configureStore";
 
 interface HeaderProps {
   title: string;
@@ -65,6 +66,7 @@ const Header: React.FC<HeaderProps> = ({
       });
     }
   }, [lang]);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className={`${className} headerContainer`} id={id} style={style}>
@@ -116,33 +118,67 @@ const Header: React.FC<HeaderProps> = ({
           ))}
         {btns && (
           <div className='btns'>
-            {btns.map((btn: any, index: number) => (
-              <Button
-                key={index}
-                text={btn.name}
-                style={btnStyles && btnStyles[index]}
-                link={btn.link !== ""}
-                to={`/${lang}${btn.link}`}
-                className={
-                  className?.includes("homePageHeader")
-                    ? "homePage_btn"
-                    : undefined
-                }
-                onClick={() => {
-                  if (btn.become && btn.id) {
-                    dispatch(
-                      openAccountTypeModal({
-                        open: true,
-                        id: btn.id,
-                        name: btn.become,
-                        type: btn.type,
-                      })
-                    );
-                    dispatch(isHomePageModal(true));
-                  }
-                }}
-              />
-            ))}
+            {btns.map((btn: any, index: number) => {
+              if (isAuthenticated) {
+                return (
+                  btn.become === "" && (
+                    <Button
+                      key={index}
+                      text={btn.name}
+                      style={btnStyles && btnStyles[index]}
+                      link={btn.link !== ""}
+                      to={`/${lang}${btn.link}`}
+                      className={
+                        className?.includes("homePageHeader")
+                          ? "homePage_btn"
+                          : undefined
+                      }
+                      // onClick={() => {
+                      //   if (btn.become && btn.id) {
+                      //     dispatch(
+                      //       openAccountTypeModal({
+                      //         open: true,
+                      //         id: btn.id,
+                      //         name: btn.become,
+                      //         type: btn.type,
+                      //       })
+                      //     );
+                      //     dispatch(isHomePageModal(true));
+                      //   }
+                      // }}
+                    />
+                  )
+                );
+              } else {
+                return (
+                  <Button
+                    key={index}
+                    text={btn.name}
+                    style={btnStyles && btnStyles[index]}
+                    link={btn.link !== ""}
+                    to={`/${lang}${btn.link}`}
+                    className={
+                      className?.includes("homePageHeader")
+                        ? "homePage_btn"
+                        : undefined
+                    }
+                    // onClick={() => {
+                    //   if (btn.become && btn.id) {
+                    //     dispatch(
+                    //       openAccountTypeModal({
+                    //         open: true,
+                    //         id: btn.id,
+                    //         name: btn.become,
+                    //         type: btn.type,
+                    //       })
+                    //     );
+                    //     dispatch(isHomePageModal(true));
+                    //   }
+                    // }}
+                  />
+                );
+              }
+            })}
           </div>
         )}
       </div>

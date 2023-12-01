@@ -86,12 +86,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           id: 1,
           link: "/accountType?id=1?type=donor",
         },
-        // {
-        //   name: t("btns.learn-more"),
-        //   link: "/ecosystem/club301",
-        //   become: "",
-        //   id: null,
-        // },
+        {
+          name: t("btns.learn-more"),
+          link: "/ecosystem/club301",
+          become: "",
+          id: null,
+        },
       ],
       btnStyle: [
         {
@@ -147,12 +147,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           become: "Эксперты",
           id: 3,
         },
-        // {
-        //   name: t("btns.learn-more"),
-        //   link: "/ecosystem/experts",
-        //   become: "",
-        //   id: null,
-        // },
+        {
+          name: t("btns.learn-more"),
+          link: "/ecosystem/experts",
+          become: "",
+          id: null,
+        },
       ],
       btnStyle: [
         {
@@ -224,12 +224,12 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           become: "Друзья",
           id: 5,
         },
-        // {
-        //   name: t("btns.learn-more"),
-        //   link: "/ecosystem/friends-foundation",
-        //   become: "",
-        //   id: null,
-        // },
+        {
+          name: t("btns.learn-more"),
+          link: "/ecosystem/friends-foundation",
+          become: "",
+          id: null,
+        },
       ],
       btnStyle: [
         {

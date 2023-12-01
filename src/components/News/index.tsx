@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { HeaderKeyOf } from "../../utils/keyof.type";
+import { storageBase } from "../../utils/storage";
 
 interface newsTypes {
   id: number;
@@ -78,7 +79,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
           <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
         </button>
         <div className='newsContainer'>
-          {news.map((item: any) => {
+          {news.slice(0, 4).map((item: any) => {
             const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
             const altText =
               typeof dynamicTitle === "string" ? dynamicTitle : "";
@@ -90,7 +91,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
                 key={item.id}>
                 <div className='newsImg'>
                   <img
-                    src={NEWS_1}
+                    src={`${storageBase}/${item.image}`}
                     alt={altText}
                     decoding='async'
                     loading='lazy'
