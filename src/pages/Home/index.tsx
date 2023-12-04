@@ -23,7 +23,6 @@ import { useDispatch } from "react-redux";
 import { fetchingHome } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
-import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { Helmet } from "react-helmet";

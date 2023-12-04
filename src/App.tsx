@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import RecommentedModal from "./components/RecommentedModal";
 import Conragts from "./components/Congrats";
 import { login } from "./actions/authActions";
+import { fetchingContact } from "./actions/apiActions";
 
 function App() {
   const [signIn, setSignIn] = useState(false);
@@ -52,6 +53,8 @@ function App() {
     if (localStorage.getItem("token")) {
       dispatch(login());
     }
+    //@ts-ignore
+    dispatch(fetchingContact("contact-us"));
   }, [dispatch]);
 
   return (
@@ -61,7 +64,7 @@ function App() {
       {/* <SignIn setSignUp={setSignUp} /> */}
       {/* <SignUp /> */}
       {/* <AccountTypeModal /> */}
-      <AgreementTermsModal />
+      {/* <AgreementTermsModal /> */}
       {/* <Privacy /> */}
       {/* <Donation
         setSignUp={setSignUp}

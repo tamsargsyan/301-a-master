@@ -124,7 +124,7 @@ input[type="number"] {
   visibility: hidden;
 }
 .mentioned_txt {
-  color: var(--mention-color);
+  color: var(--mention-color) !important;
   font-weight: 600;
   cursor: pointer;
 }

@@ -19,11 +19,11 @@ const Terms: React.FC<TermsProps> = ({ aboutUs }) => {
             <br></br>
           </>
         )}
-        <NavLink className='mentioned_txt' to={`/${lang}/terms-of-services`}>
+        <NavLink className='mentioned_txt' to={`/${lang}/termsOfService`}>
           {t("privacy.terms")}
         </NavLink>{" "}
         {t("privacy.and")}{" "}
-        <NavLink className='mentioned_txt' to={`/${lang}/privacy-policy`}>
+        <NavLink className='mentioned_txt' to={`/${lang}/privacyPolicy`}>
           {t("privacy.privacy")}
         </NavLink>
       </p>

@@ -10,6 +10,7 @@ import authReducer from "../reducers/authReducer";
 import registerDataReducer from "../reducers/registerDataReducer";
 import congratsReducer from "../reducers/congratsReducer";
 import favoriteProjectsReducer from "../reducers/favoriteProjectsReducer";
+import contactReducer from "../reducers/contactReducer";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     registerData: registerDataReducer,
     congrats: congratsReducer,
     favoriteProjects: favoriteProjectsReducer,
+    contact: contactReducer,
   },
 });
 

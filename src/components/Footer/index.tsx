@@ -9,7 +9,10 @@ import FollowUs from "../FollowUs";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import cookies from "js-cookie";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { RootState } from "../../store/configureStore";
+import { fetchingContact } from "../../actions/apiActions";
 interface FooterProps {
   separatedPart?: Boolean;
 }
@@ -42,25 +45,16 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
       name: "friends",
     },
   ];
-  const contactInfo = [
-    {
-      id: 1,
-      info: t("footer.address"),
-      icon: LOCATION,
-    },
-    {
-      id: 2,
-      info: "+374 567890",
-      icon: PHONE,
-    },
-    {
-      id: 3,
-      info: "301@loftpineapple.com",
-      icon: EMAIL,
-    },
-  ];
+  const { data } = useSelector((state: RootState) => state.contact);
   const windowSize = useWindowSize();
   const lang = cookies.get("i18next");
+
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   //@ts-ignore
+  //   dispatch(fetchingContact("contact-us"));
+  // }, []);
 
   return (
     <>
@@ -97,19 +91,27 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
             </div>
           </div>
           <div className='footerThirdPart'>
-            <div className='list'>
-              {contactInfo.map(contact => (
-                <span key={contact.id}>
+            {data && (
+              <div className='list'>
+                <span>
                   <img
-                    src={contact.icon}
+                    src={LOCATION}
                     alt='Icon'
                     decoding='async'
                     loading='lazy'
                   />
-                  {contact.info}
+                  {data.contact && data.contact[`address_${lang}`]}
                 </span>
-              ))}
-            </div>
+                <span>
+                  <img src={PHONE} alt='Icon' decoding='async' loading='lazy' />
+                  {data.contact?.phone}
+                </span>
+                <span>
+                  <img src={EMAIL} alt='Icon' decoding='async' loading='lazy' />
+                  {data.contact?.email}
+                </span>
+              </div>
+            )}
             {windowSize.width > 875 && (
               <div className='logo301Footer'>
                 <img src={LOGO} alt='301' decoding='async' loading='lazy' />

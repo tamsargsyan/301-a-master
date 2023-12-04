@@ -174,30 +174,12 @@ const AboutUs = () => {
         </div>
         <div className='aboutUs_dashedLine' />
         <div className='inner aboutUs_privacy'>
-          <button
-            onClick={() =>
-              dispatch(
-                getAgreementTerms(
-                  true,
-                  t("checkboxes.agreement_terms"),
-                  "about_us"
-                )
-              )
-            }>
+          <a href={`/${lang}/agreementTerms`} className='mentioned_txt'>
             {t("checkboxes.agreement_terms")} *
-          </button>
-          <button
-            onClick={() =>
-              dispatch(
-                getAgreementTerms(
-                  true,
-                  t("checkboxes.club_code_of_ethics_301"),
-                  "about_us"
-                )
-              )
-            }>
+          </a>
+          <a href={`/${lang}/clubCodeOfEthics`} className='mentioned_txt'>
             {t("checkboxes.club_code_of_ethics_301")}*
-          </button>
+          </a>
           <Popconfirm
             className='signUp_popover'
             description={
@@ -226,9 +208,12 @@ const AboutUs = () => {
             okText={""}
             cancelText={""}
             title={undefined}>
-            <button className='support_form'>
+            <a
+              href='/'
+              className='mentioned_txt support_form'
+              onClick={e => e.preventDefault()}>
               {t("checkboxes.support_form")}
-            </button>
+            </a>
           </Popconfirm>
           <Terms aboutUs={true} />
         </div>

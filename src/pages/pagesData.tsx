@@ -140,12 +140,27 @@ const pagesData: routerType[] = [
     title: "Donate Single Project",
   },
   {
-    path: "/:lang/terms-of-services",
+    path: "/:lang/agreementTerms",
     element: <Privacy />,
-    title: "Terms Of Services",
+    title: "Agreement Terms",
   },
   {
-    path: "/:lang/privacy-policy",
+    path: "/:lang/clubCodeOfEthics",
+    element: <Privacy />,
+    title: "Club Code of Ethics",
+  },
+  {
+    path: "/:lang/supportForms",
+    element: <Privacy />,
+    title: "Support Forms",
+  },
+  {
+    path: "/:lang/termsOfService",
+    element: <Privacy />,
+    title: "Terms of Services",
+  },
+  {
+    path: "/:lang/privacyPolicy",
     element: <Privacy />,
     title: "Privacy Policy",
   },

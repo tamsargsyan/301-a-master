@@ -8,16 +8,18 @@ import { Spin } from "antd";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { useLocation, useNavigate } from "react-router";
 import cookies from "js-cookie";
+import "./index.css";
 
 const Privacy = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const endpoint =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
+  console.log(endpoint);
   useEffect(() => {
     dispatch(
       //@ts-ignore
-      fetchingPrivacyPolicy(endpoint)
+      fetchingPrivacyPolicy("get-data")
     );
   }, [dispatch]);
 
@@ -26,6 +28,9 @@ const Privacy = () => {
   );
   const lang = cookies.get("i18next");
 
+  //@ts-ignore
+  // console.log(data[endpoint][`title_${lang}`]);
+
   const navigate = useNavigate();
 
   return (
@@ -33,9 +38,8 @@ const Privacy = () => {
       <EcosystemModal
         onClose={() => navigate(-1)}
         header={
-          data
-            ? data.privacy && data.privacy[`title_${lang}` as keyof HeaderKeyOf]
-            : ""
+          //@ts-ignore
+          (data && data[endpoint] && data[endpoint][`title_${lang}`]) || ""
         }
         className='modal_back'>
         <div
@@ -50,8 +54,10 @@ const Privacy = () => {
               dangerouslySetInnerHTML={{
                 __html:
                   data &&
-                  data.privacy &&
-                  data.privacy[`description_${lang}` as keyof HeaderKeyOf],
+                  //@ts-ignore
+                  data[endpoint] &&
+                  //@ts-ignore
+                  data[endpoint][`description_${lang}` as keyof HeaderKeyOf],
               }}
             />
           )}

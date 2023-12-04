@@ -10,6 +10,7 @@ import authReducer from "./authReducer";
 import registerDataReducer from "./registerDataReducer";
 import congratsReducer from "./congratsReducer";
 import favoriteProjectsReducer from "./favoriteProjectsReducer";
+import contactReducer from "./contactReducer";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   registerData: registerDataReducer,
   congrats: congratsReducer,
   favoriteProjects: favoriteProjectsReducer,
+  contact: contactReducer,
 });
 
 export default rootReducer;

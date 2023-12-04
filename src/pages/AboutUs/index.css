@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: flex-start;
 }
-.aboutUs_privacy button,
+.aboutUs_privacy a,
 .aboutUs_privacy p {
   margin: 0;
   padding: 0;

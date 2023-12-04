@@ -30,6 +30,9 @@ import {
   FETCH_FAVORITE_PROJECTS_START,
   FETCH_FAVORITE_PROJECTS_SUCCESS,
   FETCH_FAVORITE_PROJECTS_ERROR,
+  FETCH_CONTACT_START,
+  FETCH_CONTACT_SUCCESS,
+  FETCH_CONTACT_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -136,6 +139,15 @@ export const fetchingGmail = (data: string) => async (dispatch: any) => {
   }
 };
 
+export const fetchingContact = (data: string) => async (dispatch: any) => {
+  dispatch({ type: FETCH_CONTACT_START });
+  try {
+    const response = await apiService.get(data);
+    dispatch({ type: FETCH_CONTACT_SUCCESS, payload: response });
+  } catch (error: any) {
+    dispatch({ type: FETCH_CONTACT_ERROR, payload: error.message });
+  }
+};
 export const usePostRequest = () => {
   const [postLoading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);

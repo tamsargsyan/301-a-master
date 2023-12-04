@@ -225,7 +225,6 @@ const ProjectDetails = () => {
       return acc;
     }, [])
     .filter((t: any) => t.role !== "sages");
-  console.log(modifiedTeam);
   const [nextMember, setNextMember] = useState({});
 
   const handleNextMember = (memberIdx: number, direction: number) => {

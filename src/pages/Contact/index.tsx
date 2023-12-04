@@ -18,10 +18,23 @@ import WHATSAPP from "../../assets/wa.svg";
 import "./index.css";
 import { useTranslation } from "react-i18next";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
+import cookies from "js-cookie";
 
 const ContactPage = () => {
   const windowSize = useWindowSize();
   const { t } = useTranslation();
+  const lang = cookies.get("i18next");
+
+  const { data, loading } = useSelector((state: RootState) => state.contact);
+
+  if (loading)
+    return (
+      <div className='loadingContainer'>
+        <Spin size='large' />
+      </div>
+    );
 
   return (
     <div className='media_container'>
@@ -38,8 +51,10 @@ const ContactPage = () => {
         }}>
         <div className='media_header_wrapper'>
           <Header
-            title={t("contact.title")}
-            description="<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>"
+            title={data?.contactText && data.contactText[`title_${lang}`]}
+            description={
+              data?.contactText && data.contactText[`description_${lang}`]
+            }
           />
         </div>
         <Contact contactPage={true} />
@@ -54,11 +69,11 @@ const ContactPage = () => {
                   decoding='async'
                   loading='lazy'
                 />
-                {t("footer.address")}
+                {data?.contact && data.contact[`address_${lang}`]}
               </div>
               <div className='contactPage_address'>
                 <img src={PHONE} alt='Phone' decoding='async' loading='lazy' />
-                +374 567890
+                {data?.contact?.phone}
               </div>
               <div className='contactPage_address'>
                 <img
@@ -67,7 +82,7 @@ const ContactPage = () => {
                   decoding='async'
                   loading='lazy'
                 />
-                301@loftpineapple.com
+                {data?.contact?.email}
               </div>
             </div>
             <p className='contactPage_address_title'>{t("follow-us")}</p>
