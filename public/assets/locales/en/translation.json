@@ -163,5 +163,7 @@
   "buy-project": "Buy Project",
   "book-project": "Book Project",
   "donate": "Donate",
-  "follow-us": "Follow Us"
+  "follow-us": "Follow Us",
+  "login-with-fb": "Login with facebook, please wait...",
+  "login-with-gmail": "Login with gmail, please wait..."
 }

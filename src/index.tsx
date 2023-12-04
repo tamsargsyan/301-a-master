@@ -40,9 +40,9 @@ root.render(
     {/* <Suspense fallback='Loading'> */}
     <Provider store={store}>
       {/* <I18nextProvider i18n={i18n}> */}
-      <StrictMode>
-        <App />
-      </StrictMode>
+      {/* <StrictMode> */}
+      <App />
+      {/* </StrictMode> */}
       {/* </I18nextProvider> */}
     </Provider>
     {/* </Suspense> */}

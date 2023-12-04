@@ -74,7 +74,7 @@
   background-color: var(--text-color-2);
 }
 .signIn_another_icons,
-.signIn_another_icons a {
+.signIn_another_icons button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,7 +82,7 @@
 .signIn_another_icons {
   gap: 20px;
 }
-.signIn_another_icons a {
+.signIn_another_icons button {
   border-radius: 46px;
   border: 1px solid var(--text-color-2);
   padding: 10px 30px;

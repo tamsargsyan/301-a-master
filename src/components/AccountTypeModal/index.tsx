@@ -92,17 +92,12 @@ const AccountTypeModal = () => {
   const handleTelCode = (val: string) => setTelCode(val);
 
   const { postRequest, postLoading, response, error } = usePostRequest();
+  const [hasNavigated, setHasNavigated] = useState(false);
 
   useEffect(() => {
-    if (response) {
-      dispatch(
-        openAccountTypeModal({
-          open: false,
-          id: 0,
-          name: "",
-          type: "",
-        })
-      );
+    if (response && !hasNavigated) {
+      setHasNavigated(true);
+      !hasNavigated && navigate(`/${lang}/`);
       dispatch(congratsModal(true, t("congrats.register")));
     }
   }, [response, dispatch, error, t]);
@@ -122,6 +117,14 @@ const AccountTypeModal = () => {
     dispatch(fetchingRegisterData("get-register-data"));
   }, [dispatch]);
 
+  const gmailLoginCallbackData = useSelector(
+    (state: RootState) => state.gmailLoginCallback.data
+  );
+
+  const facebookLoginCallbackData = useSelector(
+    (state: RootState) => state.facebookLoginCallback.data
+  );
+
   const lang = cookies.get("i18next");
 
   return (
@@ -137,10 +140,22 @@ const AccountTypeModal = () => {
         <Formik
           validationSchema={id === 3 ? otherSignUpSchema : signUpSchema}
           initialValues={{
-            name: "",
-            last_name: "",
-            email: "",
-            phone: "",
+            name:
+              gmailLoginCallbackData?.user?.name ||
+              facebookLoginCallbackData?.user?.name ||
+              "",
+            last_name:
+              gmailLoginCallbackData?.user?.last_name ||
+              facebookLoginCallbackData?.user?.last_name ||
+              "",
+            email:
+              gmailLoginCallbackData?.user?.email ||
+              facebookLoginCallbackData?.user?.email ||
+              "",
+            phone:
+              gmailLoginCallbackData?.user?.phone ||
+              facebookLoginCallbackData?.user?.phone ||
+              "",
             organization: "",
             how_did_you_know: "",
             projects_interested: [],
@@ -187,7 +202,9 @@ const AccountTypeModal = () => {
                       value={values.name}
                     />
                     <p className='error'>
-                      {errors.name && touched.name && errors.name}
+                      {errors.name && touched.name
+                        ? (errors.name as string)
+                        : null}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -204,9 +221,9 @@ const AccountTypeModal = () => {
                       value={values.last_name}
                     />
                     <p className='error'>
-                      {errors.last_name &&
-                        touched.last_name &&
-                        errors.last_name}
+                      {errors.last_name && touched.last_name
+                        ? (errors.last_name as string)
+                        : null}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -223,9 +240,9 @@ const AccountTypeModal = () => {
                       onBlur={handleBlur}
                     />
                     <p className='error'>
-                      {errors.organization &&
-                        touched.organization &&
-                        errors.organization}
+                      {errors.organization && touched.organization
+                        ? (errors.organization as string)
+                        : null}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -548,7 +565,9 @@ const AccountTypeModal = () => {
                       onChange={handleChange}
                     />
                     <p className='error'>
-                      {errors.email && touched.email && errors.email}
+                      {errors.email && touched.email
+                        ? (errors.email as string)
+                        : null}{" "}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -589,43 +608,52 @@ const AccountTypeModal = () => {
                       </div>
                     </div>
                     <p className='error'>
-                      {errors.phone && touched.phone && errors.phone}
+                      {errors.phone && touched.phone
+                        ? (errors.phone as string)
+                        : null}{" "}
                     </p>
                   </div>
-                  <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_password'>
-                      {t("inputs.password")}*
-                    </label>
-                    <input
-                      type='text'
-                      id='signUp_password'
-                      name='password'
-                      className='signUp_input'
-                      value={values.password}
-                      onChange={handleChange}
-                    />
-                    <p className='error'>
-                      {errors.password && touched.password && errors.password}
-                    </p>
-                  </div>
-                  <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_repeatPassword'>
-                      {t("inputs.password_confirmation")}*
-                    </label>
-                    <input
-                      type='text'
-                      id='signUp_repeatPassword'
-                      name='password_confirmation'
-                      className='signUp_input'
-                      value={values.password_confirmation}
-                      onChange={handleChange}
-                    />
-                    <p className='error'>
-                      {errors.password_confirmation &&
-                        touched.password_confirmation &&
-                        errors.password_confirmation}
-                    </p>
-                  </div>
+                  {facebookLoginCallbackData ||
+                  gmailLoginCallbackData ? null : (
+                    <>
+                      <div className='signUp_formGroup'>
+                        <label htmlFor='signUp_password'>
+                          {t("inputs.password")}*
+                        </label>
+                        <input
+                          type='text'
+                          id='signUp_password'
+                          name='password'
+                          className='signUp_input'
+                          value={values.password}
+                          onChange={handleChange}
+                        />
+                        <p className='error'>
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </p>
+                      </div>
+                      <div className='signUp_formGroup'>
+                        <label htmlFor='signUp_repeatPassword'>
+                          {t("inputs.password_confirmation")}*
+                        </label>
+                        <input
+                          type='text'
+                          id='signUp_repeatPassword'
+                          name='password_confirmation'
+                          className='signUp_input'
+                          value={values.password_confirmation}
+                          onChange={handleChange}
+                        />
+                        <p className='error'>
+                          {errors.password_confirmation &&
+                            touched.password_confirmation &&
+                            errors.password_confirmation}
+                        </p>
+                      </div>
+                    </>
+                  )}
                   <div className='signUp_formGroup terms_formGroup'>
                     <div className='signUp_info'>
                       <Checkbox

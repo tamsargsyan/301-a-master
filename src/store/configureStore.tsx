@@ -11,6 +11,9 @@ import registerDataReducer from "../reducers/registerDataReducer";
 import congratsReducer from "../reducers/congratsReducer";
 import favoriteProjectsReducer from "../reducers/favoriteProjectsReducer";
 import contactReducer from "../reducers/contactReducer";
+import gmailLoginCallbackReducer from "../reducers/gmailLoginCallbackReducer";
+import facebookLoginCallbackReducer from "../reducers/facebookLoginCallback";
+import socialMediasReducer from "../reducers/socialMediasLogin";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +29,9 @@ const store = configureStore({
     congrats: congratsReducer,
     favoriteProjects: favoriteProjectsReducer,
     contact: contactReducer,
+    socialMediaLogin: socialMediasReducer,
+    gmailLoginCallback: gmailLoginCallbackReducer,
+    facebookLoginCallback: facebookLoginCallbackReducer,
   },
 });
 

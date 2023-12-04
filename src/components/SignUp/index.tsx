@@ -13,7 +13,7 @@ import PATTERN from "../../assets/signup-account-types/bg-pattern.svg";
 import "./index.css";
 import Button from "../Button";
 import EcosystemModal from "../EcosystemModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import CardSlider from "../CardSlider";
 import { useWindowSize } from "../../hooks/useWindowSize";

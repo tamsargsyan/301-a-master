@@ -21,6 +21,8 @@ import SignUp from "../components/SignUp";
 import PersonalInfo from "./Personal/Personal-Info";
 import PerosnalProjects from "./Personal/PersonalProjects";
 import EditProfile from "./Personal/EditProfile";
+import LoginGmail from "./LoginGmail";
+import LoginFacebook from "./LoginFacebook";
 
 const pagesData: routerType[] = [
   {
@@ -220,6 +222,16 @@ const pagesData: routerType[] = [
       </AuthenticatedRoute>
     ),
     title: "Personal Info",
+  },
+  {
+    path: "/:lang/loginGmail",
+    element: <LoginGmail />,
+    title: "Login Gmail",
+  },
+  {
+    path: "/:lang/loginFacebook",
+    element: <LoginFacebook />,
+    title: "Login Facebook",
   },
 ];
 

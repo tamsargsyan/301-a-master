@@ -24,15 +24,21 @@ import {
   FETCH_REGISTER_DATA_START,
   FETCH_REGISTER_DATA_SUCCESS,
   FETCH_REGISTER_DATA_ERROR,
-  GMAIL_LOGIN_START,
-  GMAIL_LOGIN_SUCCESS,
-  GMAIL_LOGIN_ERROR,
   FETCH_FAVORITE_PROJECTS_START,
   FETCH_FAVORITE_PROJECTS_SUCCESS,
   FETCH_FAVORITE_PROJECTS_ERROR,
   FETCH_CONTACT_START,
   FETCH_CONTACT_SUCCESS,
   FETCH_CONTACT_ERROR,
+  GMAIL_LOGIN_CALLBACK_ERROR,
+  GMAIL_LOGIN_CALLBACK_START,
+  GMAIL_LOGIN_CALLBACK_SUCCESS,
+  FACEBOOK_LOGIN_CALLBACK_START,
+  FACEBOOK_LOGIN_CALLBACK_SUCCESS,
+  FACEBOOK_LOGIN_CALLBACK_ERROR,
+  SOCIAL_MEDIAS_LOGIN_START,
+  SOCIAL_MEDIAS_LOGIN_SUCCESS,
+  SOCIAL_MEDIAS_LOGIN_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -129,15 +135,38 @@ export const fetchingFavoriteProjects =
     }
   };
 
-export const fetchingGmail = (data: string) => async (dispatch: any) => {
-  dispatch({ type: GMAIL_LOGIN_START });
-  try {
-    const response = await apiService.get(data);
-    dispatch({ type: GMAIL_LOGIN_SUCCESS, payload: response });
-  } catch (error: any) {
-    dispatch({ type: GMAIL_LOGIN_ERROR, payload: error.message });
-  }
-};
+export const fetchingSocialMediaLogin =
+  (data: string) => async (dispatch: any) => {
+    dispatch({ type: SOCIAL_MEDIAS_LOGIN_START });
+    try {
+      const response = await apiService.get(data);
+      dispatch({ type: SOCIAL_MEDIAS_LOGIN_SUCCESS, payload: response });
+    } catch (error: any) {
+      dispatch({ type: SOCIAL_MEDIAS_LOGIN_ERROR, payload: error.message });
+    }
+  };
+
+export const fetchingGmailCallback =
+  (data: string) => async (dispatch: any) => {
+    dispatch({ type: GMAIL_LOGIN_CALLBACK_START });
+    try {
+      const response = await apiService.get(data);
+      dispatch({ type: GMAIL_LOGIN_CALLBACK_SUCCESS, payload: response });
+    } catch (error: any) {
+      dispatch({ type: GMAIL_LOGIN_CALLBACK_ERROR, payload: error.message });
+    }
+  };
+
+export const fetchingFacebookCallback =
+  (data: string) => async (dispatch: any) => {
+    dispatch({ type: FACEBOOK_LOGIN_CALLBACK_START });
+    try {
+      const response = await apiService.get(data);
+      dispatch({ type: FACEBOOK_LOGIN_CALLBACK_SUCCESS, payload: response });
+    } catch (error: any) {
+      dispatch({ type: FACEBOOK_LOGIN_CALLBACK_ERROR, payload: error.message });
+    }
+  };
 
 export const fetchingContact = (data: string) => async (dispatch: any) => {
   dispatch({ type: FETCH_CONTACT_START });

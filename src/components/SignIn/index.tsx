@@ -14,20 +14,20 @@ import { Formik } from "formik";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import { fetchingGmail, usePostRequest } from "../../actions/apiActions";
-import { Spin } from "antd";
-import { connect, useDispatch } from "react-redux";
-import { login } from "../../actions/authActions";
 import {
-  NavLink,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+  fetchingSocialMediaLogin,
+  usePostRequest,
+} from "../../actions/apiActions";
+import { Spin } from "antd";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/authActions";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
 import { history } from "../Navbar";
 import Terms from "../Terms";
 import cookies from "js-cookie";
+import { RootState } from "../../store/configureStore";
+import axios from "axios";
 
 const SignIn = () => {
   const [forgetPassword, setForgetPassword] = useState(false);
@@ -76,6 +76,20 @@ const SignIn = () => {
       });
     }
   }, []);
+
+  const socialMediaRedirectedData = useSelector(
+    (state: RootState) => state.socialMediaLogin.data
+  );
+  useEffect(() => {
+    if (socialMediaRedirectedData && socialMediaRedirectedData.url) {
+      window.location.href = socialMediaRedirectedData.url;
+    }
+  }, [socialMediaRedirectedData]);
+
+  const onSubmit = async (values: any) => {
+    console.log(values);
+    await axios.post(`https://301.machtech.site/api/login`, values);
+  };
 
   return (
     <>
@@ -162,6 +176,7 @@ const SignIn = () => {
                     );
                   } else {
                     postRequest("login", values, {});
+                    // onSubmit(values);
                   }
                 }}>
                 {({
@@ -272,12 +287,13 @@ const SignIn = () => {
                   <div className='line'></div>
                 </div>
                 <div className='signIn_another_icons'>
-                  <a
-                    href='https://301.machtech.site/api/auth/google'
+                  <button
                     onClick={e => {
                       e.preventDefault();
-                      //@ts-ignore
-                      dispatch(fetchingGmail("auth/google"));
+                      dispatch(
+                        //@ts-ignore
+                        fetchingSocialMediaLogin(`auth/google?lang=${lang}`)
+                      );
                     }}>
                     <img
                       src={GMAIL}
@@ -285,15 +301,22 @@ const SignIn = () => {
                       decoding='async'
                       loading='lazy'
                     />
-                  </a>
-                  <a href='https://301.machtech.site/api/auth/facebook'>
+                  </button>
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      dispatch(
+                        //@ts-ignore
+                        fetchingSocialMediaLogin(`auth/facebook?lang=${lang}`)
+                      );
+                    }}>
                     <img
                       src={FB}
                       alt='Facebook'
                       decoding='async'
                       loading='lazy'
                     />
-                  </a>
+                  </button>
                 </div>
                 <Terms aboutUs={false} />
               </div>
@@ -323,7 +346,7 @@ const SignIn = () => {
                   </>
                 ) : (
                   <>
-                    {t("sign-in.notHavingAcc")}
+                    {t("sign-in.notHavingAcc")}{" "}
                     <NavLink
                       className='mentioned_txt'
                       to={`/${lang}/signUp`}

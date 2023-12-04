@@ -11,6 +11,9 @@ import registerDataReducer from "./registerDataReducer";
 import congratsReducer from "./congratsReducer";
 import favoriteProjectsReducer from "./favoriteProjectsReducer";
 import contactReducer from "./contactReducer";
+import gmailLoginCallbackReducer from "./gmailLoginCallbackReducer";
+import facebookLoginCallbackReducer from "./facebookLoginCallback";
+import socialMediasReducer from "./socialMediasLogin";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
   congrats: congratsReducer,
   favoriteProjects: favoriteProjectsReducer,
   contact: contactReducer,
+  socialMediaLogin: socialMediasReducer,
+  gmailLoginCallback: gmailLoginCallbackReducer,
+  facebookLoginCallback: facebookLoginCallbackReducer,
 });
 
 export default rootReducer;

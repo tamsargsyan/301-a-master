@@ -15,7 +15,6 @@ const Privacy = () => {
   const location = useLocation();
   const endpoint =
     location.pathname.split("/")[location.pathname.split("/").length - 1];
-  console.log(endpoint);
   useEffect(() => {
     dispatch(
       //@ts-ignore
@@ -27,10 +26,6 @@ const Privacy = () => {
     (state: RootState) => state.privacyPolicy
   );
   const lang = cookies.get("i18next");
-
-  //@ts-ignore
-  // console.log(data[endpoint][`title_${lang}`]);
-
   const navigate = useNavigate();
 
   return (
