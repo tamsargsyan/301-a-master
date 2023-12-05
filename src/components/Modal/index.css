@@ -28,10 +28,13 @@
     transform: translate(-50%, -50%) rotateX(0);
   }
 }
-/* .opened_modal {
+.modal:has(.conragts_modal) {
+  animation: none;
+}
+.opened_modal:has(.conragts_modal) {
   opacity: 1;
   transform: translate(-50%, -50%) rotateX(0);
-} */
+}
 @media screen and (max-width: 800px) {
   .modal {
     height: 100%;

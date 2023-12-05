@@ -44,7 +44,6 @@ const News: React.FC<NewsProps> = ({ lang }) => {
   const windowSize = useWindowSize();
   const { t } = useTranslation();
   const { news } = useSelector((state: RootState) => state.homeData.data);
-
   return (
     <>
       <div className='separatedPart'></div>

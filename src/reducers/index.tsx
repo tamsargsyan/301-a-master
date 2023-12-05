@@ -14,6 +14,7 @@ import contactReducer from "./contactReducer";
 import gmailLoginCallbackReducer from "./gmailLoginCallbackReducer";
 import facebookLoginCallbackReducer from "./facebookLoginCallback";
 import socialMediasReducer from "./socialMediasLogin";
+import getUserReducer from "./getUserReducer";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   socialMediaLogin: socialMediasReducer,
   gmailLoginCallback: gmailLoginCallbackReducer,
   facebookLoginCallback: facebookLoginCallbackReducer,
+  getUser: getUserReducer,
 });
 
 export default rootReducer;

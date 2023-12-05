@@ -111,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   const { t } = useTranslation();
 
   //@ts-ignore
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = useSelector((state: RootState) => state.auth.user);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const [searchParams, setSearchParams] = useSearchParams();
 

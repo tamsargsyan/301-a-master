@@ -12,6 +12,8 @@ import { usePostRequest } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { useDispatch } from "react-redux";
 import { congratsModal } from "../../actions/congratsAction";
+import { Formik } from "formik";
+import { contactSchema } from "../../Validation";
 
 interface ContactProps {
   separatedPart?: Boolean;
@@ -21,33 +23,10 @@ interface ContactProps {
 const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleChange = (event: { target: { name: string; value: string } }) => {
-    const { name, value } = event.target;
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
   const { postRequest, postLoading, response } = usePostRequest();
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    postRequest("write-to-us", formData, {});
+  const handleSubmit = (values: any) => {
+    postRequest("write-to-us", values, {});
   };
-  useEffect(() => {
-    !postLoading &&
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-  }, [postLoading]);
   const windowSize = useWindowSize();
 
   useEffect(() => {
@@ -86,73 +65,103 @@ const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
             alignItems: "center",
           }}
         />
-        <form className='formContainer' onSubmit={handleSubmit}>
-          <div className='formInner'>
-            <div className='formInputs'>
-              <div className='formGroup'>
-                <input
-                  type='text'
-                  name='name'
-                  id='name'
-                  placeholder={t("contact.your-name")}
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  aria-hidden={true}
-                  className='form'
+        <Formik
+          validationSchema={contactSchema}
+          initialValues={{
+            name: "",
+            email: "",
+            message: "",
+          }}
+          onSubmit={(values, { resetForm }) => {
+            handleSubmit(values);
+            resetForm();
+          }}>
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <form className='formContainer' noValidate onSubmit={handleSubmit}>
+              <div className='formInner'>
+                <div className='formInputs'>
+                  <div className='formGroup'>
+                    <input
+                      type='text'
+                      name='name'
+                      id='name'
+                      placeholder={t("contact.your-name")}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.name}
+                      aria-hidden={true}
+                      className='form'
+                    />
+                    {errors.name && touched.name && (
+                      <p className='error'>{errors.name}</p>
+                    )}
+                  </div>
+                  <div className='formGroup'>
+                    <input
+                      type='text'
+                      name='email'
+                      id='email'
+                      placeholder={t("contact.your-email")}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.email}
+                      aria-hidden={true}
+                      className='form'
+                    />
+                    {errors.email && touched.email && (
+                      <p className='error'>{errors.email}</p>
+                    )}
+                  </div>
+                </div>
+                <div className='formGroup'>
+                  <textarea
+                    id='message'
+                    name='message'
+                    placeholder={t("contact.write")}
+                    rows={4}
+                    cols={80}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.message}
+                    className='form'
+                  />
+                  {errors.message && touched.message && (
+                    <p className='error'>{errors.message}</p>
+                  )}
+                </div>
+              </div>
+              <div className='btns'>
+                <Button
+                  text={
+                    postLoading ? (
+                      <Spin size='small' className='btn_spinner' />
+                    ) : (
+                      t("btns.send")
+                    )
+                  }
+                  style={{
+                    // padding: "15px 70px",
+                    background: "#DD264E",
+                    boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
+                    color: "#fff",
+                    width: "200px",
+                  }}
+                  link={false}
+                  to=''
+                  className='homePage_btn'
+                  type='submit'
                 />
               </div>
-              <div className='formGroup'>
-                <input
-                  type='text'
-                  name='email'
-                  id='email'
-                  placeholder={t("contact.your-email")}
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  aria-hidden={true}
-                  className='form'
-                />
-              </div>
-            </div>
-            <div className='formGroup'>
-              <textarea
-                id='message'
-                name='message'
-                placeholder={t("contact.write")}
-                rows={4}
-                cols={80}
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className='form'
-              />
-            </div>
-          </div>
-          <div className='btns'>
-            <Button
-              text={
-                postLoading ? (
-                  <Spin size='small' className='btn_spinner' />
-                ) : (
-                  t("btns.send")
-                )
-              }
-              style={{
-                // padding: "15px 70px",
-                background: "#DD264E",
-                boxShadow: "-21px 16px 38px 0px rgba(191, 9, 48, 0.21)",
-                color: "#fff",
-                width: "200px",
-              }}
-              link={false}
-              to=''
-              className='homePage_btn'
-              type='submit'
-            />
-          </div>
-        </form>
+            </form>
+          )}
+        </Formik>
       </Background>
     </>
   );

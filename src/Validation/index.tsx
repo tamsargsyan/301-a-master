@@ -105,3 +105,39 @@ export const recommendationSchema = yup.object().shape({
     .matches(/^[0-9]+$/, "Phone number should contain only numbers"),
   country: yup.string().required("Country is a required field"),
 });
+
+export const socialMediaRegisterSchema = yup.object().shape({
+  name: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Name should only contain letters")
+    .required("Name is a required field"),
+  last_name: yup
+    .string()
+    .matches(/^[A-Za-z]+$/, "Last Name should only contain letters")
+    .required("Last Name is a required field"),
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Invalid email format"),
+  phone: yup
+    .string()
+    .matches(/^[0-9]+$/, "Phone number should contain only numbers"),
+  country: yup.string().required("Country is a required field"),
+  organization: yup.string().required("Organization is a required field"),
+  how_did_you_know: yup.string().required("This is a required field"),
+  projects_interested: yup
+    .array()
+    .of(yup.string())
+    .required("At least one project is required")
+    .min(1, "At least one project is required"),
+  recommendation_from: yup.string().required("This is a required field"),
+});
+
+export const contactSchema = yup.object().shape({
+  name: yup.string().required("This is a required field"),
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Invalid email format"),
+  message: yup.string().required("This is a required field"),
+});

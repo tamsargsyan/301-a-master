@@ -39,6 +39,9 @@ import {
   SOCIAL_MEDIAS_LOGIN_START,
   SOCIAL_MEDIAS_LOGIN_SUCCESS,
   SOCIAL_MEDIAS_LOGIN_ERROR,
+  GET_USER_START,
+  GET_USER_SUCCESS,
+  GET_USER_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -177,6 +180,17 @@ export const fetchingContact = (data: string) => async (dispatch: any) => {
     dispatch({ type: FETCH_CONTACT_ERROR, payload: error.message });
   }
 };
+
+export const getUser = (data: string) => async (dispatch: any) => {
+  dispatch({ type: GET_USER_START });
+  try {
+    const response = await apiService.get(data);
+    dispatch({ type: GET_USER_SUCCESS, payload: response });
+  } catch (error: any) {
+    dispatch({ type: GET_USER_ERROR, payload: error.message });
+  }
+};
+
 export const usePostRequest = () => {
   const [postLoading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);

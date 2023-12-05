@@ -1,18 +1,18 @@
 {
 	"info": {
-		"_postman_id": "7507f117-1efc-4c5c-932e-f73fafcf1aa9",
-		"name": "301 DataAboutUsLinkApi",
+		"_postman_id": "abc11faf-c7c0-4eb4-b7bb-bd8509698c5b",
+		"name": "301getLoginUserData",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29136911"
 	},
 	"item": [
 		{
-			"name": "aboutUsLink",
+			"name": "userdata",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://301.machtech.site/api/get-data",
+					"raw": "https://301.machtech.site/api/get-user",
 					"protocol": "https",
 					"host": [
 						"301",
@@ -21,7 +21,7 @@
 					],
 					"path": [
 						"api",
-						"get-data"
+						"get-user"
 					]
 				}
 			},

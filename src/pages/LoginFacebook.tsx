@@ -7,13 +7,9 @@ import cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 
 const LoginFacebook = () => {
-  //   const [searchParams] = useSearchParams();
   const location = useLocation();
-  //   const state = searchParams.get("state");
   const dispatch = useDispatch();
-  //   console.log(location.search.split("state=")[1]);
   const state = location.search.split("code=")[1];
-  console.log(location);
   useEffect(() => {
     state &&
       dispatch(

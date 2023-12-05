@@ -10,7 +10,11 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
-import { otherSignUpSchema, signUpSchema } from "../../Validation";
+import {
+  otherSignUpSchema,
+  signUpSchema,
+  socialMediaRegisterSchema,
+} from "../../Validation";
 import { useEffect, useState } from "react";
 import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
@@ -20,6 +24,7 @@ import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { useLocation, useNavigate } from "react-router";
 import Terms from "../Terms";
 import cookies from "js-cookie";
+import { login } from "../../actions/authActions";
 
 const { Option } = Select;
 
@@ -93,12 +98,23 @@ const AccountTypeModal = () => {
 
   const { postRequest, postLoading, response, error } = usePostRequest();
   const [hasNavigated, setHasNavigated] = useState(false);
+  const gmailLoginCallbackData = useSelector(
+    (state: RootState) => state.gmailLoginCallback.data
+  );
+
+  const facebookLoginCallbackData = useSelector(
+    (state: RootState) => state.facebookLoginCallback.data
+  );
 
   useEffect(() => {
     if (response && !hasNavigated) {
       setHasNavigated(true);
       !hasNavigated && navigate(`/${lang}/`);
-      dispatch(congratsModal(true, t("congrats.register")));
+      if (gmailLoginCallbackData || facebookLoginCallbackData) {
+        // dispatch(login());
+        localStorage.setItem("token", response.data.access_token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      } else dispatch(congratsModal(true, t("congrats.register")));
     }
   }, [response, dispatch, error, t]);
 
@@ -117,15 +133,27 @@ const AccountTypeModal = () => {
     dispatch(fetchingRegisterData("get-register-data"));
   }, [dispatch]);
 
-  const gmailLoginCallbackData = useSelector(
-    (state: RootState) => state.gmailLoginCallback.data
-  );
-
-  const facebookLoginCallbackData = useSelector(
-    (state: RootState) => state.facebookLoginCallback.data
-  );
-
   const lang = cookies.get("i18next");
+
+  const schema = () => {
+    if (gmailLoginCallbackData || facebookLoginCallbackData)
+      return socialMediaRegisterSchema;
+    else if (id == 3) return otherSignUpSchema;
+    else return signUpSchema;
+  };
+
+  useEffect(() => {
+    if (error && error.response) {
+      const value1 = Object.values(JSON.parse(error.response.data)).flat()[0];
+      const value2 = Object.values(JSON.parse(error.response.data)).flat()[1];
+      if (value1) {
+        dispatch(congratsModal(true, `${value1}`));
+      }
+      if (value1 && value2) {
+        dispatch(congratsModal(true, `${value1} and ${value2}`));
+      }
+    }
+  }, [error]);
 
   return (
     <Modal
@@ -138,7 +166,7 @@ const AccountTypeModal = () => {
         header={t(`footer.ecosystem.${type}`)}
         className='modal_back'>
         <Formik
-          validationSchema={id === 3 ? otherSignUpSchema : signUpSchema}
+          validationSchema={schema()}
           initialValues={{
             name:
               gmailLoginCallbackData?.user?.name ||
@@ -152,10 +180,7 @@ const AccountTypeModal = () => {
               gmailLoginCallbackData?.user?.email ||
               facebookLoginCallbackData?.user?.email ||
               "",
-            phone:
-              gmailLoginCallbackData?.user?.phone ||
-              facebookLoginCallbackData?.user?.phone ||
-              "",
+            phone: "",
             organization: "",
             how_did_you_know: "",
             projects_interested: [],
@@ -175,8 +200,14 @@ const AccountTypeModal = () => {
               agreement_terms: agreementTermsChecked,
               club_code_of_ethics_301: clubCodeOfEthics301Checked,
               support_form: supportFormChecked,
+              user_id: (gmailLoginCallbackData || facebookLoginCallbackData)
+                ?.user?.id,
             };
-            postRequest("register-user", result, {});
+            if (gmailLoginCallbackData || facebookLoginCallbackData) {
+              postRequest("update-user", result, {});
+            } else {
+              postRequest("register-user", result, {});
+            }
           }}>
           {({
             values,
@@ -289,14 +320,14 @@ const AccountTypeModal = () => {
                             onChange={(_, obj: any) => {
                               form.setFieldValue(
                                 "recommendation_from",
-                                obj.key
+                                obj.value
                               );
                             }}
                             //@ts-ignore
-                            filterOption={filterOption}>
-                            {data?.sages.map((sage: any) => (
+                            filterOption={filterOptionSages}>
+                            {data?.sages.map((sage: any, i: number) => (
                               <Option
-                                key={sage.id}
+                                key={i}
                                 value={`${sage.name}${sage.last_name}`}>
                                 {`${sage[`name_${lang}`]}${
                                   sage[`last_name_${lang}`]
@@ -325,13 +356,13 @@ const AccountTypeModal = () => {
                               showSearch
                               optionFilterProp='children'
                               onChange={(_, obj: any) => {
-                                form.setFieldValue("sages_id", obj.key);
+                                form.setFieldValue("sages_id", obj.value);
                               }}
                               //@ts-ignore
                               filterOption={filterOptionSages}>
-                              {data?.sages.map((sage: any) => (
+                              {data?.sages.map((sage: any, i: number) => (
                                 <Option
-                                  key={sage.id}
+                                  key={i}
                                   value={`${sage.name}${sage.last_name}`}>
                                   {`${sage[`name_${lang}`]}${
                                     sage[`last_name_${lang}`]

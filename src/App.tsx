@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import RecommentedModal from "./components/RecommentedModal";
 import Conragts from "./components/Congrats";
 import { login } from "./actions/authActions";
-import { fetchingContact } from "./actions/apiActions";
+import { fetchingContact, getUser } from "./actions/apiActions";
 
 function App() {
   const [signIn, setSignIn] = useState(false);
@@ -50,11 +50,13 @@ function App() {
   // });
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(login());
-    }
+    // if (localStorage.getItem("token")) {
+    //   dispatch(login());
+    // }
     //@ts-ignore
     dispatch(fetchingContact("contact-us"));
+    //@ts-ignore
+    // dispatch(getUser("get-user"));
   }, [dispatch]);
 
   return (

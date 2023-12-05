@@ -7,11 +7,8 @@ import cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 
 const LoginGmail = () => {
-  //   const [searchParams] = useSearchParams();
   const location = useLocation();
-  //   const state = searchParams.get("state");
   const dispatch = useDispatch();
-  //   console.log(location.search.split("state=")[1]);
   const state = location.search.split("state=")[1];
 
   useEffect(() => {
