@@ -23,6 +23,8 @@ import PerosnalProjects from "./Personal/PersonalProjects";
 import EditProfile from "./Personal/EditProfile";
 import LoginGmail from "./LoginGmail";
 import LoginFacebook from "./LoginFacebook";
+import Status from "./Personal/Status";
+import Thanks from "./Thanks";
 
 const pagesData: routerType[] = [
   {
@@ -224,6 +226,17 @@ const pagesData: routerType[] = [
     title: "Personal Info",
   },
   {
+    path: "/:lang/personal/status",
+    element: (
+      <AuthenticatedRoute>
+        <Layout>
+          <Status />
+        </Layout>
+      </AuthenticatedRoute>
+    ),
+    title: "Personal Info",
+  },
+  {
     path: "/:lang/loginGmail",
     element: <LoginGmail />,
     title: "Login Gmail",
@@ -232,6 +245,11 @@ const pagesData: routerType[] = [
     path: "/:lang/loginFacebook",
     element: <LoginFacebook />,
     title: "Login Facebook",
+  },
+  {
+    path: "/:lang/thanks",
+    element: <Thanks />,
+    title: "Thanks",
   },
 ];
 

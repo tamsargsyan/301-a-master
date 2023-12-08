@@ -11,10 +11,13 @@ import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/configureStore";
 
 const PersonalInfo = () => {
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
+  // const user = useSelector((state: RootState) => state.auth.user);
   const lang = cookies.get("i18next");
   const { t } = useTranslation();
 

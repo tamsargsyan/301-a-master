@@ -39,9 +39,9 @@ import {
   SOCIAL_MEDIAS_LOGIN_START,
   SOCIAL_MEDIAS_LOGIN_SUCCESS,
   SOCIAL_MEDIAS_LOGIN_ERROR,
-  GET_USER_START,
-  GET_USER_SUCCESS,
-  GET_USER_ERROR,
+  FETCH_DONATION_START,
+  FETCH_DONATION_SUCCESS,
+  FETCH_DONATION_ERROR,
 } from "../utils/action.types";
 
 export const fetchingHome = (data: string) => async (dispatch: any) => {
@@ -181,13 +181,13 @@ export const fetchingContact = (data: string) => async (dispatch: any) => {
   }
 };
 
-export const getUser = (data: string) => async (dispatch: any) => {
-  dispatch({ type: GET_USER_START });
+export const fetchingDonation = (data: string) => async (dispatch: any) => {
+  dispatch({ type: FETCH_DONATION_START });
   try {
     const response = await apiService.get(data);
-    dispatch({ type: GET_USER_SUCCESS, payload: response });
+    dispatch({ type: FETCH_DONATION_SUCCESS, payload: response });
   } catch (error: any) {
-    dispatch({ type: GET_USER_ERROR, payload: error.message });
+    dispatch({ type: FETCH_DONATION_ERROR, payload: error.message });
   }
 };
 

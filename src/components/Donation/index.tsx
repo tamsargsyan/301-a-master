@@ -7,6 +7,8 @@ import "./index.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/configureStore";
 
 const Donation = () => {
   const { t } = useTranslation();
@@ -37,6 +39,7 @@ const Donation = () => {
   ];
 
   const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <Modal setOpenModal={() => navigate(-1)} openModal={true}>
@@ -55,7 +58,10 @@ const Donation = () => {
               </p>
             </div> */}
             <div className='donation_cards'>
-              {donations_cards.map(card => (
+              {(isAuthenticated
+                ? donations_cards.slice(0, 2)
+                : donations_cards
+              ).map(card => (
                 <a
                   href={`/${lang}/${card.to}`}
                   className='donation_card'

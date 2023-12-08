@@ -141,3 +141,18 @@ export const contactSchema = yup.object().shape({
     .email("Invalid email format"),
   message: yup.string().required("This is a required field"),
 });
+
+export const editProfileSchema = yup.object().shape({
+  name: yup.string().required("Name is a required field"),
+  last_name: yup.string().required("Last Name is a required field"),
+  about_me: yup.string(),
+  // .matches(/^[A-Za-z]+$/, "Last Name should only contain letters"),
+  // .required("Last Name is a required field"),
+  phone: yup
+    .string()
+    .matches(/^[0-9]+$/, "Phone number should contain only numbers"),
+  email: yup
+    .string()
+    .required("Email is a required field")
+    .email("Invalid email format"),
+});

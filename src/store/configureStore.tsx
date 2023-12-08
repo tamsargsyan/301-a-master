@@ -14,7 +14,7 @@ import contactReducer from "../reducers/contactReducer";
 import gmailLoginCallbackReducer from "../reducers/gmailLoginCallbackReducer";
 import facebookLoginCallbackReducer from "../reducers/facebookLoginCallback";
 import socialMediasReducer from "../reducers/socialMediasLogin";
-import getUserReducer from "../reducers/getUserReducer";
+import donationReducer from "../reducers/donationReducer";
 
 const store = configureStore({
   reducer: {
@@ -33,7 +33,7 @@ const store = configureStore({
     socialMediaLogin: socialMediasReducer,
     gmailLoginCallback: gmailLoginCallbackReducer,
     facebookLoginCallback: facebookLoginCallbackReducer,
-    getUser: getUserReducer,
+    donation: donationReducer,
   },
 });
 

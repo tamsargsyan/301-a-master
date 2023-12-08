@@ -115,7 +115,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
             )}
           </div>
           <span className='donationProject_desc'>
-            {description?.slice(0, 3)}
+            {description?.slice(0, 40)}...
           </span>
         </div>
       </motion.div>

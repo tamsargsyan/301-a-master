@@ -111,9 +111,8 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   const { t } = useTranslation();
 
   //@ts-ignore
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = JSON.parse(localStorage.getItem("user"));
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div
@@ -166,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                         <img
                           src={
                             user?.image
-                              ? `${storageBase}/${user?.image}`
+                              ? `${storageBase}/upload/user_image/${user?.image}`
                               : NO_IMAGE
                           }
                           alt='Person'
@@ -301,7 +300,11 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                 to={`/${lang}/personal/personal-info`}
                 className='navbar_user'>
                 <img
-                  src={user.image ? `${storageBase}/${user.image}` : NO_IMAGE}
+                  src={
+                    user?.image
+                      ? `${storageBase}/upload/user_image/${user?.image}`
+                      : NO_IMAGE
+                  }
                   alt='Person'
                   decoding='async'
                   loading='lazy'

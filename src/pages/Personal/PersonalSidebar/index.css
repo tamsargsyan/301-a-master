@@ -65,6 +65,7 @@
   color: #313a4b;
   font-size: 32px;
   font-weight: 600;
+  padding: 0 20px;
 }
 .prof_sms {
   width: 100%;
@@ -303,7 +304,8 @@
   .pic {
     margin: 25px 0;
   }
-  .socialMedia_addLink, .socialMedia_addLink .signUp_formGroup {
+  .socialMedia_addLink,
+  .socialMedia_addLink .signUp_formGroup {
     flex-direction: column;
     gap: 10px;
     width: 100% !important;

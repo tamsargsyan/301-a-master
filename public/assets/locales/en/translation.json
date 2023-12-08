@@ -38,8 +38,8 @@
   },
   "contact": {
     "title": "Write to us",
-    "your-name": "Your name",
-    "your-email": "Your email",
+    "your-name": "Name",
+    "your-email": "Email",
     "write": "Write"
   },
   "news-301": "News '301'",
@@ -142,7 +142,24 @@
     "my-events": "My Events",
     "settings": "Settings",
     "replace": "Replace",
-    "on_the_web": "ON THE WEB"
+    "on_the_web": "ON THE WEB",
+    "status": "Status",
+    "history": "History"
+  },
+  "payments": {
+    "one_time": "One Time",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "new": "New",
+    "paid": "Paid",
+    "rejected": "Rejected",
+    "subscription": "subscription",
+    "year": "year",
+    "your_card": "Your Card",
+    "change_card": "change to another card",
+    "date": "Date",
+    "type": "Type",
+    "amount": "Amount"
   },
   "select-acount-type": "SELECT ACCOUNT TYPE",
   "budget": "Budget",
@@ -156,7 +173,12 @@
   "donation": {
     "one-time-donation": "You can donate any amount, it will go to the needs of the '301. Land of Wisdom' Foundation.",
     "donate-to-project": "You can choose any of our projects and direct assistance specifically to it",
-    "become-301": "You can join our Foundation and send us donations regularly"
+    "become-301": "You can join our Foundation and send us donations regularly",
+    "payment": {
+      "completed": "Payment successfully completed",
+      "declined": "Payment declined",
+      "checking": "Checking payment, please wait..."
+    }
   },
   "buy": "Buy",
   "book": "Book",
@@ -165,5 +187,8 @@
   "donate": "Donate",
   "follow-us": "Follow Us",
   "login-with-fb": "Login with facebook, please wait...",
-  "login-with-gmail": "Login with gmail, please wait..."
+  "login-with-gmail": "Login with gmail, please wait...",
+  "validationErrors": {
+    "emailRequired": "Email is a required field"
+  }
 }

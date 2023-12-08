@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
-import AgreementTermsModal from "./components/AgreementTermsModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RecommentedModal from "./components/RecommentedModal";
 import Conragts from "./components/Congrats";
-import { login } from "./actions/authActions";
-import { fetchingContact, getUser } from "./actions/apiActions";
+import { getUser, login } from "./actions/authActions";
+import { fetchingContact, usePostRequest } from "./actions/apiActions";
+import { RootState } from "./store/configureStore";
 
 function App() {
   const [signIn, setSignIn] = useState(false);
@@ -47,17 +47,43 @@ function App() {
     //@ts-ignore
     ct[0].scrollLeft = scrollLeft - walk;
   });
-  // });
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    // if (localStorage.getItem("token")) {
-    //   dispatch(login());
-    // }
-    //@ts-ignore
+    if (localStorage.getItem("token") && !isAuthenticated) {
+      dispatch(login());
+    }
+    // @ts-ignore
     dispatch(fetchingContact("contact-us"));
-    //@ts-ignore
-    // dispatch(getUser("get-user"));
   }, [dispatch]);
+
+  // });
+  // const { postRequest, response } = usePostRequest();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     // dispatch(login());
+  //     postRequest(
+  //       "get-user",
+  //       {
+  //         token: localStorage.getItem("token"),
+  //       },
+  //       {}
+  //     );
+  //     // dispatch(login());
+  //   }
+  //   //@ts-ignore
+  //   dispatch(fetchingContact("contact-us"));
+  //   //@ts-ignore
+  //   // dispatch(getUser("get-user"));
+  // }, [dispatch, postRequest]);
+
+  // useEffect(() => {
+  //   if (response && response.status === 200) {
+  //     dispatch(login());
+  //     dispatch(getUser(response.data));
+  //   }
+  // }, [response, dispatch]);
 
   return (
     <div className='container'>

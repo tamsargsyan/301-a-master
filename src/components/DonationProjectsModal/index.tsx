@@ -51,7 +51,9 @@ const DonationProjectsModal = () => {
               <Spin size='large' />
             </div>
           ) : (
-            <div className='donationProjects'>
+            <div
+              className='donationProjects'
+              style={{ justifyContent: "flex-start" }}>
               {p &&
                 //@ts-ignore
                 p?.data

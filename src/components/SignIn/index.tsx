@@ -16,19 +16,17 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import {
   fetchingSocialMediaLogin,
-  getUser,
   usePostRequest,
 } from "../../actions/apiActions";
 import { Spin } from "antd";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { login } from "../../actions/authActions";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
 import { history } from "../Navbar";
 import Terms from "../Terms";
 import cookies from "js-cookie";
 import { RootState } from "../../store/configureStore";
-import axios from "axios";
+import { login } from "../../actions/authActions";
 import { congratsModal } from "../../actions/congratsAction";
 
 const SignIn = () => {
@@ -39,7 +37,7 @@ const SignIn = () => {
 
   const windowSize = useWindowSize();
   const { t } = useTranslation();
-  const { postRequest, postLoading, response } = usePostRequest();
+  const { postRequest, postLoading, response, error } = usePostRequest();
 
   const [hasNavigated, setHasNavigated] = useState(false);
   const dispatch = useDispatch();
@@ -76,85 +74,15 @@ const SignIn = () => {
       window.location.href = socialMediaRedirectedData.url;
     }
   }, [socialMediaRedirectedData]);
-
-  const [jwt, setJwt] = useState(false);
-
-  const submit = async (values: any) => {
-    try {
-      const loginResp = await fetch("https://301.machtech.site/api/login", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(values),
-      });
-      //@ts-ignore
-      if (loginResp.status === 401) {
-        dispatch(congratsModal(true, "Your email or password is wrong"));
-      }
-    } catch (error) {
-      console.log("there is no such user");
-      // console.log("Error------------:", error.message);
-    }
-  };
-
-  // const jwt = cookies.get("jwt_token");
-  // console.log(jwt);
-
   useEffect(() => {
-    jwt &&
-      postRequest(
-        "get-user",
-        {
-          token:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzMwMS5tYWNodGVjaC5zaXRlL2FwaS9sb2dpbiIsImlhdCI6MTcwMTc4MjQ3OCwiZXhwIjoxNzAxNzg2MDc4LCJuYmYiOjE3MDE3ODI0NzgsImp0aSI6IlpoRjdJNmF3ZWRzVEREaE4iLCJzdWIiOiIyNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LScB0NGGquEwYitzwLpQ92-y6NkU1JKyzoyfS3_mRCY",
-        },
-        {}
-      );
-  }, [jwt]);
-
-  useEffect(() => {
-    if (response && response.status === 200) {
-      // dispatch(login(response.data));
-      // setHasNavigated(true);
-      // !hasNavigated && navigate(`/${lang}/`);
-    }
-  }, [response]);
-
-  // const fetchData = async (values: any) => {
-  //   try {
-  //     const response = await axios.post(
-  //       "https://301.machtech.site/api/login",
-  //       values,
-  //       {
-  //         headers: { "Content-Type": "application/json" },
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     // Handle the response
-  //     console.log(response);
-
-  //     //@ts-ignore
-  //     console.log(response?.headers["set-cookie"]);
-  //   } catch (error) {
-  //     // Handle errors
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (content && content.message) {
-  //     // localStorage.setItem("token", response.data.access_token);
-  //     // localStorage.setItem("user", JSON.stringify(response.data.user));
-  //     //@ts-ignore
-  //     // dispatch(getUser("get-user"));
-  //     // dispatch(login());
-  //     // setHasNavigated(true);
-  //     // !hasNavigated && navigate(`/${lang}/`);
-  //   }
-  // }, [response, dispatch, navigate, hasNavigated, lang]);
+    if (response && response.data?.access_token) {
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      dispatch(login());
+      setHasNavigated(true);
+      !hasNavigated && navigate(`/${lang}/`);
+    } else if (error) dispatch(congratsModal(true, "Your data is invalid"));
+  }, [response, dispatch, navigate, hasNavigated, lang]);
 
   return (
     <>
@@ -240,8 +168,8 @@ const SignIn = () => {
                       {}
                     );
                   } else {
-                    // postRequest("login", values, {});
-                    submit(values);
+                    postRequest("login", values, {});
+                    // submit(values);
                     // fetchData(values);
                   }
                 }}>

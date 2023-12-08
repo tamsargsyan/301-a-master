@@ -5,6 +5,12 @@ import "./index.css";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import SingleProjectBox from "../../../components/SingleProjectBox";
+import { useEffect } from "react";
+import { usePostRequest } from "../../../actions/apiActions";
+import { Spin } from "antd";
+import cookies from "js-cookie";
+import { storageBase } from "../../../utils/storage";
+import { removeHtmlTags } from "../../../globalFunctions/removeHtmlTags";
 
 interface PersonalProjectsProps {
   title: string;
@@ -16,27 +22,55 @@ const PerosnalProjects: React.FC<PersonalProjectsProps> = ({
   content,
 }) => {
   const { t } = useTranslation();
+  const { postRequest, postLoading, response, error } = usePostRequest();
+  const lang = cookies.get("i18next");
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      postRequest(
+        "my-project",
+        {},
+        {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      );
+    }
+  }, []);
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div className='personalInfo_wrapper'>
       <Helmet>
-        <title>Peter Nemoy | {t(`personal.${title}`)}</title>
+        <title>
+          {user.name} | {t(`personal.${title}`)}
+        </title>
       </Helmet>
       <p className='personalInfo_title'>{t(`personal.${title}`)}</p>
       {content && <p className='personalInfo_event_content'>{content}</p>}
       <div className='donationProjects'>
-        <SingleProjectBox
-          title='301 Land of Wisdom'
-          description='Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-          flag={10}
-          author='Peter Nemoy'
-          authorImg={AUTHOR_1}
-          budget='20.000'
-          collected={"80"}
-          projectImg={PROJECT_1}
-          className='personal_project'
-          // onClick={handleSingleProject}
-        />
+        {response?.data ? (
+          response.data.map((p: any) => (
+            <SingleProjectBox
+              title={p[`project_name_${lang}`]}
+              description={removeHtmlTags(p[`description_${lang}`])}
+              flag={
+                p?.payment_type !== "buy" &&
+                p?.payment_type !== "book" &&
+                p?.map_count
+              }
+              author='Peter Nemoy'
+              authorImg={AUTHOR_1}
+              budget={p.budget_price}
+              collected={p.collected_price}
+              projectImg={`${storageBase}/${p.image}`}
+              className='personal_project'
+              // onClick={handleSingleProject}
+            />
+          ))
+        ) : (
+          <Spin size='large' />
+        )}
       </div>
     </div>
   );

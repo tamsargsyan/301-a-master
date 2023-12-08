@@ -12,11 +12,9 @@ export const apiService = {
     const config = {
       headers,
     };
-    const response = await axios.post(
-      `${BASE_URL}/${data}`,
-      payload,
-      config.headers
-    );
+    const response = await axios.post(`${BASE_URL}/${data}`, payload, {
+      headers: headers,
+    });
     setResponse(response);
   },
 };

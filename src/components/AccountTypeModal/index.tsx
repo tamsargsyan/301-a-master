@@ -16,7 +16,11 @@ import {
   socialMediaRegisterSchema,
 } from "../../Validation";
 import { useEffect, useState } from "react";
-import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
+import {
+  fetchingPrivacyPolicy,
+  fetchingRegisterData,
+  usePostRequest,
+} from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
@@ -45,34 +49,10 @@ const AccountTypeModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const confirmAgreementTerms = () => {
-    dispatch(
-      getAgreementTerms(true, t("checkboxes.agreement_terms"), "sign_up")
-    );
-    dispatch(
-      openAccountTypeModal({
-        open: false,
-        id: 0,
-        name: "",
-        type: "",
-      })
-    );
+    navigate(`/${lang}/agreementTerms`);
   };
   const confirmClubCodeEthics = () => {
-    dispatch(
-      getAgreementTerms(
-        true,
-        t("checkboxes.club_code_of_ethics_301"),
-        "sign_up"
-      )
-    );
-    dispatch(
-      openAccountTypeModal({
-        open: false,
-        id: 0,
-        name: "",
-        type: "",
-      })
-    );
+    navigate(`/${lang}/clubCodeOfEthics`);
   };
 
   const [howDoYouKnow, setHowDoYouKnow] = useState<string>("");
@@ -107,14 +87,22 @@ const AccountTypeModal = () => {
   );
 
   useEffect(() => {
-    if (response && !hasNavigated) {
+    if (
+      response &&
+      response.data &&
+      (response.data.access_token || response.data.user) &&
+      !hasNavigated
+    ) {
       setHasNavigated(true);
       !hasNavigated && navigate(`/${lang}/`);
       if (gmailLoginCallbackData || facebookLoginCallbackData) {
-        // dispatch(login());
-        localStorage.setItem("token", response.data.access_token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-      } else dispatch(congratsModal(true, t("congrats.register")));
+        if (gmailLoginCallbackData)
+          localStorage.setItem("token", gmailLoginCallbackData.access_token);
+        else if (facebookLoginCallbackData)
+          localStorage.setItem("token", facebookLoginCallbackData.access_token);
+      } else localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      dispatch(login());
     }
   }, [response, dispatch, error, t]);
 
@@ -132,6 +120,18 @@ const AccountTypeModal = () => {
     //@ts-ignore
     dispatch(fetchingRegisterData("get-register-data"));
   }, [dispatch]);
+  
+    useEffect(() => {
+      dispatch(
+        //@ts-ignore
+        fetchingPrivacyPolicy("get-data")
+      );
+    }, [dispatch]);
+
+  const privacyData = useSelector(
+    (state: RootState) => state.privacyPolicy.data
+  );
+  console.log(privacyData, "privacy dataaa")
 
   const lang = cookies.get("i18next");
 
@@ -204,7 +204,14 @@ const AccountTypeModal = () => {
                 ?.user?.id,
             };
             if (gmailLoginCallbackData || facebookLoginCallbackData) {
-              postRequest("update-user", result, {});
+              let token = "";
+              if (gmailLoginCallbackData)
+                token = gmailLoginCallbackData.access_token;
+              if (facebookLoginCallbackData)
+                token = facebookLoginCallbackData.access_token;
+              postRequest("update-user", result, {
+                Authorization: `Bearer ${token}`,
+              });
             } else {
               postRequest("register-user", result, {});
             }
@@ -328,8 +335,8 @@ const AccountTypeModal = () => {
                             {data?.sages.map((sage: any, i: number) => (
                               <Option
                                 key={i}
-                                value={`${sage.name}${sage.last_name}`}>
-                                {`${sage[`name_${lang}`]}${
+                                value={`${sage.name} ${sage.last_name}`}>
+                                {`${sage[`name_${lang}`]} ${
                                   sage[`last_name_${lang}`]
                                 }`}
                               </Option>
@@ -363,8 +370,8 @@ const AccountTypeModal = () => {
                               {data?.sages.map((sage: any, i: number) => (
                                 <Option
                                   key={i}
-                                  value={`${sage.name}${sage.last_name}`}>
-                                  {`${sage[`name_${lang}`]}${
+                                  value={`${sage.name} ${sage.last_name}`}>
+                                  {`${sage[`name_${lang}`]} ${
                                     sage[`last_name_${lang}`]
                                   }`}
                                 </Option>

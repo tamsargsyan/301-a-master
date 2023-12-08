@@ -1,11 +1,15 @@
 import ARROW from "../../../assets/arrow-next-red.svg";
 import SMS from "../../../assets/sms.svg";
 import "./index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { storageBase } from "../../../utils/storage";
 import { useTranslation } from "react-i18next";
 import NO_IMAGE from "../../../assets/no-image-user.png";
 import cookies from "js-cookie";
+import { usePostRequest } from "../../../actions/apiActions";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../actions/authActions";
 
 const PersonalSidebar = () => {
   const { t } = useTranslation();
@@ -31,14 +35,33 @@ const PersonalSidebar = () => {
     },
     {
       id: 4,
-      name: t("personal.settings"),
-      path: "personal/settings",
+      name: t("personal.status"),
+      path: "personal/status",
       isActive: false,
     },
   ];
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
+  // const user = useSelector((state: RootState) => state.auth.user);
   const lang = cookies.get("i18next");
+  const { postRequest, postLoading, response, error } = usePostRequest();
+  const navigate = useNavigate();
+  const [hasNavigated, setHasNavigated] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (
+      response &&
+      response.data.message === "User successfully signed out" &&
+      !hasNavigated
+    ) {
+      setHasNavigated(true);
+      !hasNavigated && navigate(`/${lang}/`);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      dispatch(logout());
+    }
+  }, [response]);
 
   return (
     <div className='personal_bar_wrapper'>
@@ -48,7 +71,11 @@ const PersonalSidebar = () => {
           <div className='prof_pic'>
             <img
               style={{ background: user.image ? "transparent" : "#fff" }}
-              src={user.image ? `${storageBase}/${user?.image}` : NO_IMAGE}
+              src={
+                user?.image
+                  ? `${storageBase}/upload/user_image/${user?.image}`
+                  : NO_IMAGE
+              }
               alt='Person'
               decoding='async'
               loading='lazy'
@@ -77,6 +104,19 @@ const PersonalSidebar = () => {
             <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
           </NavLink>
         ))}
+        <button
+          onClick={() => {
+            const token = localStorage.getItem("token");
+            postRequest(
+              "logout",
+              {},
+              {
+                Authorization: `Bearer ${token}`,
+              }
+            );
+          }}>
+          Logout
+        </button>
       </div>
     </div>
   );

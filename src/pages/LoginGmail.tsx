@@ -5,6 +5,7 @@ import { fetchingGmailCallback } from "../actions/apiActions";
 import { RootState } from "../store/configureStore";
 import cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
+import { login } from "../actions/authActions";
 
 const LoginGmail = () => {
   const location = useLocation();
@@ -27,10 +28,12 @@ const LoginGmail = () => {
   useEffect(() => {
     if (data && data.access_token) {
       //   if (data.user.role === null) {
-      // localStorage.setItem("token", data.access_token);
-      // localStorage.setItem("user", JSON.stringify(data.user));
-      // dispatch(login());
-      navigate(`/${lang}/signUp`);
+      if (data.registered === "registered") {
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        dispatch(login());
+        navigate(`/${lang}`);
+      } else navigate(`/${lang}/signUp`);
       //   } else navigate(`/${lang}/`);
       setHasNavigated(true);
     }

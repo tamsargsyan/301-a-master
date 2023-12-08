@@ -1,0 +1,135 @@
+import { useTranslation } from "react-i18next";
+import "./index.css";
+import { usePostRequest } from "../../../actions/apiActions";
+import cookies from "js-cookie";
+import { Helmet } from "react-helmet";
+import LOGO_301 from "../../../assets/logo/301-white.svg";
+import ROTATE from "../../../assets/logo/rotate.svg";
+import { useEffect } from "react";
+import { Spin } from "antd";
+
+const Status = () => {
+  const { t } = useTranslation();
+  const { postRequest, postLoading, response, error } = usePostRequest();
+  const lang = cookies.get("i18next");
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    postRequest(
+      "get-user-donate",
+      {},
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+  }, []);
+
+  const payment_type = (type: string) => {
+    if (type === "one_time") return t("payments.one_time");
+    if (type === "monthly") return t("payments.monthly");
+    if (type === "annual") return t("payments.annual");
+  };
+
+  const payment_status = (status: string) => {
+    if (status === "new") return t("payments.new");
+    if (status === "paid") return t("payments.paid");
+    if (status === "rejected") return t("payments.rejected");
+  };
+
+  return (
+    <div className='personalInfo_wrapper'>
+      <Helmet>
+        <title>
+          {user.name} | {t(`personal.status`)}
+        </title>
+      </Helmet>
+      <p className='personalInfo_title'>{t(`personal.status`)}</p>
+      <p className='personalInfo_event_content'>
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to
+      </p>
+      {response ? (
+        <div>
+          <div className='statusCardHolderWrapper'>
+            <div className='statusCard'>
+              <div className='statusCardInfo'>
+                <p>{t("payments.your_card")}</p>
+                <img src={LOGO_301} alt='301' />
+              </div>
+              <div className='statusCardHolder'>
+                <p className='statusCardId'>{response?.data?.card_number}</p>
+                <p className='statusCardHolderName'>
+                  {response?.data?.client_name}
+                </p>
+              </div>
+            </div>
+            <div className='statusSubscriptionWrapper'>
+              <p className='statusSubscriptionTitle'>
+                {t("payments.subscription")}
+              </p>
+              <div className='statusSubscriptionData'>
+                <p className='statusMonthlySubs'>
+                  {payment_type(response?.data?.subscription_type)}{" "}
+                  {t("payments.subscription")}
+                </p>
+                <p className='statusMonthlySubsDate'>
+                  3612 $
+                  <span>
+                    /
+                    {response?.data?.subscription_type === "annual"
+                      ? t("payments.year")
+                      : payment_type(response?.data?.subscription_type)}
+                  </span>
+                </p>
+              </div>
+              <button className='statusChangeCard'>
+                {t("payments.change_card")}
+                <img src={ROTATE} alt='Rotate' />
+              </button>
+            </div>
+          </div>
+          <div className='historyWrapper'>
+            <p className='personalInfo_title'>{t(`personal.history`)}</p>
+            <table id='historyTable'>
+              <thead>
+                <tr className='historyTableHeader'>
+                  <th>{t("payments.date")}</th>
+                  <th>{t("payments.type")}</th>
+                  <th>{t("payments.amount")}</th>
+                  <th>{t("personal.status")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {response?.data?.paymentHistory?.map(
+                  (pymnt: any, i: number) => {
+                    const date = pymnt.created_at?.split("T");
+                    return (
+                      <tr key={i}>
+                        <td>
+                          {date[0]} {date[1].slice(0, 5)}
+                        </td>
+                        <td>{payment_type(pymnt.type)}</td>
+                        <td>{pymnt.amount}$</td>
+                        <td className={`${pymnt.status}`}>
+                          {payment_status(pymnt.status)}
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <Spin size='large' />
+      )}
+    </div>
+  );
+};
+
+export default Status;

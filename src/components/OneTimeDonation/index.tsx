@@ -7,12 +7,16 @@ import country_currency from "../../locales/country_currency.json";
 import { useTranslation } from "react-i18next";
 import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePostRequest } from "../../actions/apiActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import Terms from "../Terms";
+import cookies from "js-cookie";
 
 const OneTimeDonation = () => {
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const filterOption = (
     input: string,
     option: { label: string; value: string }
@@ -20,9 +24,19 @@ const OneTimeDonation = () => {
 
   const { t } = useTranslation();
   const [summa, setSumma] = useState("");
-  const { postRequest } = usePostRequest();
+  const { postRequest, response } = usePostRequest();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (response) {
+      if (response.data?.redirectURL) {
+        window.location.href = response.data.redirectURL;
+      }
+    }
+  }, [response]);
+
+  const lang = cookies.get("i18next");
 
   return (
     <Modal
@@ -36,9 +50,9 @@ const OneTimeDonation = () => {
         <Formik
           validationSchema={donationSchema}
           initialValues={{
-            name: "",
-            last_name: "",
-            email: "",
+            name: user?.name || "",
+            last_name: user?.last_name || "",
+            email: user?.email || "",
             amount: "",
             currency_type: "",
           }}
@@ -47,6 +61,7 @@ const OneTimeDonation = () => {
               ...values,
               currency_type: summa,
               type: "one_time",
+              lang,
             };
             const token = localStorage.getItem("token");
             const config = {
@@ -114,7 +129,7 @@ const OneTimeDonation = () => {
                   onChange={handleChange}
                 />
                 <p className='error'>
-                  {errors.name && touched.name && errors.name}
+                  {errors.name && touched.name ? (errors.name as string) : null}{" "}
                 </p>
               </div>
               <div className='signUp_formGroup'>
@@ -131,7 +146,9 @@ const OneTimeDonation = () => {
                   onChange={handleChange}
                 />
                 <p className='error'>
-                  {errors.last_name && touched.last_name && errors.last_name}
+                  {errors.last_name && touched.last_name
+                    ? (errors.last_name as string)
+                    : null}{" "}
                 </p>
               </div>
               <div className='signUp_formGroup'>
@@ -148,7 +165,9 @@ const OneTimeDonation = () => {
                   onChange={handleChange}
                 />
                 <p className='error'>
-                  {errors.email && touched.email && errors.email}
+                  {errors.email && touched.email
+                    ? (errors.email as string)
+                    : null}{" "}
                 </p>
               </div>
               <div className='signUp_btns'>

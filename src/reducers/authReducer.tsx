@@ -9,6 +9,11 @@ const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthenticated: true,
+      };
+    case "GET_USER":
+      return {
+        ...state,
+        isAuthenticated: true,
         user: action.payload,
       };
     case "LOGOUT":
