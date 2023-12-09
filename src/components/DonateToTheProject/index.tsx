@@ -22,6 +22,7 @@ import { Formik } from "formik";
 import { donationSchema } from "../../Validation";
 import { history } from "../Navbar";
 import { useState } from "react";
+import { congratsModal } from "../../actions/congratsAction";
 
 const DonateToTheProject = () => {
   const onChange = (value: string) => {
@@ -68,16 +69,19 @@ const DonateToTheProject = () => {
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
   const { postRequest, response } = usePostRequest();
-  const [summa, setSumma] = useState("");
+  const [summa, setSumma] = useState("USD");
 
   useEffect(() => {
     if (response) {
       if (response.data?.redirectURL) {
         window.location.href = response.data.redirectURL;
+      } else if (response.data?.message) {
+        dispatch(congratsModal(true, response.data?.message));
+        response.data?.user &&
+          localStorage.setItem("user", JSON.stringify(response.data?.user));
       }
     }
   }, [response]);
-  console.log(data?.project)
 
   return (
     <Modal setOpenModal={handleClose} openModal={true} headerShow={true}>
@@ -124,23 +128,22 @@ const DonateToTheProject = () => {
                   last_name: user?.last_name || "",
                   email: user?.email || "",
                   amount: "",
-                  currency_type: "",
+                  currency_type: "USD",
                 }}
                 onSubmit={values => {
                   const result = {
                     ...values,
                     currency_type: summa,
-                    type: "monthly",
+                    subscription_type: "project",
                     project_id: data.project.id,
                     lang,
+                    user_id: user?.id,
                   };
-                  const token = localStorage.getItem("token");
-                  const config = {
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  };
-                  postRequest("donation", result, config);
+                  // const token = localStorage.getItem("token");
+                  // postRequest("donation", result, {
+                  //   Authorization: `Bearer ${token}`,
+                  // });
+                  console.log(result);
                 }}>
                 {({
                   values,
@@ -169,6 +172,7 @@ const DonateToTheProject = () => {
                               //@ts-ignore
                               filterOption={filterOption}
                               options={country_currency}
+                              defaultValue='USD'
                             />
                             <div className='signUp_telWrapper'>
                               <input

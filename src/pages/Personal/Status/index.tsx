@@ -28,8 +28,9 @@ const Status = () => {
 
   const payment_type = (type: string) => {
     if (type === "one_time") return t("payments.one_time");
-    if (type === "monthly") return t("payments.monthly");
+    if (type === "project") return t("payments.project");
     if (type === "annual") return t("payments.annual");
+    if (type === "monthly") return t("payments.monthly");
   };
 
   const payment_status = (status: string) => {
@@ -37,6 +38,27 @@ const Status = () => {
     if (status === "paid") return t("payments.paid");
     if (status === "rejected") return t("payments.rejected");
   };
+  const calcPriceOfSubscription = () => {
+    const subs_type = response?.data?.subscription_type;
+    const paymentSubsDate = new Date(response?.data?.subscription_date);
+    const currentDate = new Date();
+    const currMonth = currentDate.getMonth() + 1;
+    const month = paymentSubsDate.getMonth() + 1;
+    let price = 0;
+    if (subs_type === "annual") {
+      price = 12 * 301;
+    } else if (subs_type === "monthly") {
+      price = (12 - (currMonth - month)) * 301;
+    }
+    return price;
+  };
+  const sortedHistory = response?.data?.paymentHistory?.sort(
+    (a: any, b: any) => {
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    }
+  );
 
   return (
     <div className='personalInfo_wrapper'>
@@ -54,44 +76,46 @@ const Status = () => {
       </p>
       {response ? (
         <div>
-          <div className='statusCardHolderWrapper'>
-            <div className='statusCard'>
-              <div className='statusCardInfo'>
-                <p>{t("payments.your_card")}</p>
-                <img src={LOGO_301} alt='301' />
+          {+response?.data?.subscription_status === 1 && (
+            <div className='statusCardHolderWrapper'>
+              <div className='statusCard'>
+                <div className='statusCardInfo'>
+                  <p>{t("payments.your_card")}</p>
+                  <img src={LOGO_301} alt='301' />
+                </div>
+                <div className='statusCardHolder'>
+                  <p className='statusCardId'>{response?.data?.card_number}</p>
+                  <p className='statusCardHolderName'>
+                    {response?.data?.client_name}
+                  </p>
+                </div>
               </div>
-              <div className='statusCardHolder'>
-                <p className='statusCardId'>{response?.data?.card_number}</p>
-                <p className='statusCardHolderName'>
-                  {response?.data?.client_name}
-                </p>
-              </div>
-            </div>
-            <div className='statusSubscriptionWrapper'>
-              <p className='statusSubscriptionTitle'>
-                {t("payments.subscription")}
-              </p>
-              <div className='statusSubscriptionData'>
-                <p className='statusMonthlySubs'>
-                  {payment_type(response?.data?.subscription_type)}{" "}
+              <div className='statusSubscriptionWrapper'>
+                <p className='statusSubscriptionTitle'>
                   {t("payments.subscription")}
                 </p>
-                <p className='statusMonthlySubsDate'>
-                  3612 $
-                  <span>
-                    /
-                    {response?.data?.subscription_type === "annual"
-                      ? t("payments.year")
-                      : payment_type(response?.data?.subscription_type)}
-                  </span>
-                </p>
+                <div className='statusSubscriptionData'>
+                  <p className='statusMonthlySubs'>
+                    {payment_type(response?.data?.subscription_type)}{" "}
+                    {t("payments.subscription")}
+                  </p>
+                  <p className='statusMonthlySubsDate'>
+                    {calcPriceOfSubscription()} $
+                    <span>
+                      /
+                      {response?.data?.subscription_type === "annual"
+                        ? t("payments.year")
+                        : payment_type(response?.data?.subscription_type)}
+                    </span>
+                  </p>
+                </div>
+                <button className='statusChangeCard'>
+                  {t("payments.change_card")}
+                  <img src={ROTATE} alt='Rotate' />
+                </button>
               </div>
-              <button className='statusChangeCard'>
-                {t("payments.change_card")}
-                <img src={ROTATE} alt='Rotate' />
-              </button>
             </div>
-          </div>
+          )}
           <div className='historyWrapper'>
             <p className='personalInfo_title'>{t(`personal.history`)}</p>
             <table id='historyTable'>
@@ -104,23 +128,21 @@ const Status = () => {
                 </tr>
               </thead>
               <tbody>
-                {response?.data?.paymentHistory?.map(
-                  (pymnt: any, i: number) => {
-                    const date = pymnt.created_at?.split("T");
-                    return (
-                      <tr key={i}>
-                        <td>
-                          {date[0]} {date[1].slice(0, 5)}
-                        </td>
-                        <td>{payment_type(pymnt.type)}</td>
-                        <td>{pymnt.amount}$</td>
-                        <td className={`${pymnt.status}`}>
-                          {payment_status(pymnt.status)}
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
+                {sortedHistory?.map((pymnt: any, i: number) => {
+                  const date = pymnt.created_at?.split("T");
+                  return (
+                    <tr key={i}>
+                      <td>
+                        {date[0]} {date[1].slice(0, 5)}
+                      </td>
+                      <td>{payment_type(pymnt.type)}</td>
+                      <td>{pymnt.amount}$</td>
+                      <td className={`${pymnt.status}`}>
+                        {payment_status(pymnt.status)}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

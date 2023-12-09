@@ -3,7 +3,7 @@ import Header from "../Header";
 import HeaderIcon from "../../assets/info/news.svg";
 import SIDE_PATTERN_2 from "../../assets/patterns/side-2.svg";
 import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
-import NEWS_1 from "../../assets/news1.png";
+// import NEWS_1 from "../../assets/news1.png";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import Button from "../Button";
@@ -71,6 +71,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
             width: "63vw",
             alignItems: "center",
           }}
+          id="news"
         />
         <button className='leftBtn newsBtn' onClick={handleBack}>
           <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
@@ -111,7 +112,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
             );
           })}
         </div>
-        <div
+        {/* <div
           className='btns newsBtns'
           style={{ margin: 0, padding: "0 20px", marginBottom: "40px" }}>
           <Button
@@ -126,7 +127,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
             to={""}
             className='homePage_btn'
           />
-        </div>
+        </div> */}
       </Background>
     </>
   );

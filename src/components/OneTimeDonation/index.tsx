@@ -12,6 +12,8 @@ import { usePostRequest } from "../../actions/apiActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import Terms from "../Terms";
 import cookies from "js-cookie";
+import { congratsModal } from "../../actions/congratsAction";
+import { useDispatch } from "react-redux";
 
 const OneTimeDonation = () => {
   //@ts-ignore
@@ -23,18 +25,25 @@ const OneTimeDonation = () => {
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const { t } = useTranslation();
-  const [summa, setSumma] = useState("");
+  const [summa, setSumma] = useState("USD");
   const { postRequest, response } = usePostRequest();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (response) {
       if (response.data?.redirectURL) {
         window.location.href = response.data.redirectURL;
+      } else if (response.data?.message) {
+        dispatch(congratsModal(true, response.data?.message));
+        response.data?.user &&
+          localStorage.setItem("user", JSON.stringify(response.data?.user));
       }
     }
   }, [response]);
+
+  console.log(response);
 
   const lang = cookies.get("i18next");
 
@@ -54,22 +63,21 @@ const OneTimeDonation = () => {
             last_name: user?.last_name || "",
             email: user?.email || "",
             amount: "",
-            currency_type: "",
+            currency_type: "USD",
           }}
           onSubmit={values => {
             const result = {
               ...values,
               currency_type: summa,
-              type: "one_time",
+              subscription_type: "one_time",
               lang,
+              user_id: user?.id,
             };
+            // console.log(result)
             const token = localStorage.getItem("token");
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
-            postRequest("donation", result, config);
+            postRequest("donation", result, {
+              Authorization: `Bearer ${token}`,
+            });
           }}>
           {({
             values,
@@ -99,6 +107,7 @@ const OneTimeDonation = () => {
                     filterOption={filterOption}
                     placeholder={t("inputs.choose")}
                     options={country_currency}
+                    defaultValue='USD'
                   />
                   <div className='signUp_telWrapper'>
                     <input

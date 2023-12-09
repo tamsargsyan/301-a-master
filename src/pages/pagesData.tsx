@@ -124,6 +124,11 @@ const pagesData: routerType[] = [
     title: "Account Type",
   },
   {
+    path: "/:lang/donation/accountType",
+    element: <AccountTypeModal />,
+    title: "Account Type Donation",
+  },
+  {
     path: "/:lang/donation",
     element: <Donation />,
     title: "Donation",

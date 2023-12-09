@@ -112,7 +112,8 @@
   box-shadow: -15px 15px 38px 0px rgba(39, 78, 151, 0.07);
   margin-top: 34px;
 }
-.personal_bar_item {
+.personal_bar_item,
+.personal_bar button {
   color: #313a4b;
   font-size: 24px;
   font-weight: 600;
@@ -123,6 +124,9 @@
   align-items: center;
   justify-content: space-between;
   /* transition: 0.3s ease; */
+}
+.personal_bar button {
+  width: 100%;
 }
 .personal_bar_item img {
   opacity: 0;
@@ -161,7 +165,8 @@
     padding-top: 295px;
   }
   .prof_sms,
-  .personal_bar_item {
+  .personal_bar_item,
+  .personal_bar button {
     font-size: 18px;
   }
   .sms_img {
@@ -180,7 +185,8 @@
     font-size: 18px;
   }
   .prof_sms,
-  .personal_bar_item {
+  .personal_bar_item,
+  .personal_bar button {
     font-size: 14px;
   }
   .person_profile {

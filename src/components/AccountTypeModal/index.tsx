@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
 import {
+  doanteSignUpSchema,
   otherSignUpSchema,
   signUpSchema,
   socialMediaRegisterSchema,
@@ -29,6 +30,7 @@ import { useLocation, useNavigate } from "react-router";
 import Terms from "../Terms";
 import cookies from "js-cookie";
 import { login } from "../../actions/authActions";
+import { history } from "../Navbar";
 
 const { Option } = Select;
 
@@ -77,6 +79,7 @@ const AccountTypeModal = () => {
   const handleTelCode = (val: string) => setTelCode(val);
 
   const { postRequest, postLoading, response, error } = usePostRequest();
+  const donatePostRequest = usePostRequest();
   const [hasNavigated, setHasNavigated] = useState(false);
   const gmailLoginCallbackData = useSelector(
     (state: RootState) => state.gmailLoginCallback.data
@@ -94,7 +97,6 @@ const AccountTypeModal = () => {
       !hasNavigated
     ) {
       setHasNavigated(true);
-      !hasNavigated && navigate(`/${lang}/`);
       if (gmailLoginCallbackData || facebookLoginCallbackData) {
         if (gmailLoginCallbackData)
           localStorage.setItem("token", gmailLoginCallbackData.access_token);
@@ -102,9 +104,46 @@ const AccountTypeModal = () => {
           localStorage.setItem("token", facebookLoginCallbackData.access_token);
       } else localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      dispatch(login());
+      // !location.pathname.includes("donation") && dispatch(login());
+      // !location.pathname.includes("donation") &&
+      //   !hasNavigated &&
+      //   navigate(`/${lang}/`);
     }
   }, [response, dispatch, error, t]);
+
+  useEffect(() => {
+    if (response?.data?.user) {
+      if (location.pathname.includes("donation")) {
+        localStorage.setItem("donationToRegister", "true");
+        const result = {
+          ...response.data.user,
+          lang,
+        };
+        donatePostRequest.postRequest("donation", result, {
+          Authorization: `Bearer ${response.data.access_token}`,
+        });
+        console.log(response.data);
+      } else {
+        dispatch(congratsModal(true, t("congrats.register")));
+      }
+    }
+  }, [response]);
+
+  useEffect(() => {
+    if (donatePostRequest.response) {
+      if (donatePostRequest.response.data?.redirectURL) {
+        console.log(donatePostRequest.response);
+        window.location.href = donatePostRequest.response.data.redirectURL;
+      } else if (donatePostRequest.response.data?.message) {
+        dispatch(congratsModal(true, donatePostRequest.response.data?.message));
+        donatePostRequest.response.data?.user &&
+          localStorage.setItem(
+            "user",
+            JSON.stringify(donatePostRequest.response.data?.user)
+          );
+      }
+    }
+  }, [donatePostRequest.response]);
 
   const { data } = useSelector((state: RootState) => state.registerData);
   const [agreementTermsChecked, setAgreementTearmsChecked] = useState(false);
@@ -120,26 +159,29 @@ const AccountTypeModal = () => {
     //@ts-ignore
     dispatch(fetchingRegisterData("get-register-data"));
   }, [dispatch]);
-  
-    useEffect(() => {
-      dispatch(
-        //@ts-ignore
-        fetchingPrivacyPolicy("get-data")
-      );
-    }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      //@ts-ignore
+      fetchingPrivacyPolicy("get-data")
+    );
+  }, [dispatch]);
 
   const privacyData = useSelector(
     (state: RootState) => state.privacyPolicy.data
   );
-  console.log(privacyData, "privacy dataaa")
 
   const lang = cookies.get("i18next");
 
   const schema = () => {
-    if (gmailLoginCallbackData || facebookLoginCallbackData)
-      return socialMediaRegisterSchema;
-    else if (id == 3) return otherSignUpSchema;
-    else return signUpSchema;
+    if (location.pathname.includes("donation")) {
+      return doanteSignUpSchema;
+    } else {
+      if (gmailLoginCallbackData || facebookLoginCallbackData)
+        return socialMediaRegisterSchema;
+      else if (id == 3) return otherSignUpSchema;
+      else return signUpSchema;
+    }
   };
 
   useEffect(() => {
@@ -188,8 +230,12 @@ const AccountTypeModal = () => {
             country: "",
             password: "",
             password_confirmation: "",
+            subscription_type: "annual",
             participation_form: "",
             sages_id: "",
+            agreement_terms: false,
+            club_code_of_ethics_301: false,
+            support_form: false,
           }}
           onSubmit={values => {
             const completePhoneNumber = `${telCode} ${values.phone}`;
@@ -197,24 +243,25 @@ const AccountTypeModal = () => {
               ...values,
               phone: completePhoneNumber,
               type: type,
-              agreement_terms: agreementTermsChecked,
-              club_code_of_ethics_301: clubCodeOfEthics301Checked,
-              support_form: supportFormChecked,
+              // agreement_terms: agreementTermsChecked,
+              // club_code_of_ethics_301: clubCodeOfEthics301Checked,
+              // support_form: supportFormChecked,
               user_id: (gmailLoginCallbackData || facebookLoginCallbackData)
                 ?.user?.id,
             };
-            if (gmailLoginCallbackData || facebookLoginCallbackData) {
-              let token = "";
-              if (gmailLoginCallbackData)
-                token = gmailLoginCallbackData.access_token;
-              if (facebookLoginCallbackData)
-                token = facebookLoginCallbackData.access_token;
-              postRequest("update-user", result, {
-                Authorization: `Bearer ${token}`,
-              });
-            } else {
-              postRequest("register-user", result, {});
-            }
+            console.log(result);
+            // if (gmailLoginCallbackData || facebookLoginCallbackData) {
+            //   let token = "";
+            //   if (gmailLoginCallbackData)
+            //     token = gmailLoginCallbackData.access_token;
+            //   if (facebookLoginCallbackData)
+            //     token = facebookLoginCallbackData.access_token;
+            //   postRequest("update-user", result, {
+            //     Authorization: `Bearer ${token}`,
+            //   });
+            // } else {
+            //   postRequest("register-user", result, {});
+            // }
           }}>
           {({
             values,
@@ -224,6 +271,7 @@ const AccountTypeModal = () => {
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue,
           }) => (
             <form noValidate onSubmit={handleSubmit} className='signUp_form'>
               <div className='signUp_formInputs'>
@@ -316,7 +364,16 @@ const AccountTypeModal = () => {
                     <label htmlFor='signUp_recommendation'>
                       {t("inputs.recommendation")}*
                     </label>
-                    <Field name='recommendation_from'>
+                    <input
+                      type='text'
+                      id='signUp_oraganization'
+                      name='recommendation_from'
+                      className='signUp_input'
+                      value={values.recommendation_from}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {/* <Field name='recommendation_from'>
                       {
                         //@ts-ignore
                         ({ _, form }) => (
@@ -344,7 +401,7 @@ const AccountTypeModal = () => {
                           </Select>
                         )
                       }
-                    </Field>
+                    </Field> */}
                     <ErrorMessage
                       name='recommendation_from'
                       component='p'
@@ -692,126 +749,217 @@ const AccountTypeModal = () => {
                       </div>
                     </>
                   )}
+                  {location.pathname.includes("donation") && (
+                    <div className='signUp_formGroup'>
+                      <label htmlFor='signUp_subs_type'>
+                        {t("inputs.subs_type")}*
+                      </label>
+                      <Field name='subscription_type'>
+                        {
+                          //@ts-ignore
+                          ({ _, form }) => (
+                            <Select
+                              // {...field}
+                              showSearch
+                              optionFilterProp='children'
+                              className='signUp_selector'
+                              onChange={(_, obj: any) => {
+                                form.setFieldValue(
+                                  "subscription_type",
+                                  obj.value
+                                );
+                              }}
+                              //@ts-ignore
+                              filterOption={filterOption}
+                              defaultValue='Annual'
+                              options={[
+                                {
+                                  label: `${t("payments.annual")} 3612$`,
+                                  value: "annual",
+                                },
+                                {
+                                  label: `${t("payments.monthly")} 301$`,
+                                  value: "monthly",
+                                },
+                              ]}
+                            />
+                          )
+                        }
+                      </Field>
+                      <ErrorMessage
+                        name='subscription_type'
+                        component='p'
+                        className='error'
+                      />
+                    </div>
+                  )}
                   <div className='signUp_formGroup terms_formGroup'>
-                    <div className='signUp_info'>
-                      <Checkbox
-                        className='signUp_radio'
-                        checked={agreementTermsChecked}
-                        onChange={e =>
-                          setAgreementTearmsChecked(e.target.checked)
-                        }>
-                        {t("checkboxes.agreement_terms")}*
-                      </Checkbox>
-                      <Popconfirm
-                        className='signUp_popover'
-                        icon={false}
-                        description={
-                          <span>
-                            КОДЕКС ЭТИКИ КЛУБА 301
-                            <br />
-                            Уважаемые Члены Клуба 301, пожалуйста, внимательно
-                            ознакомьтесь с правилами Клуба 301! Как
-                            действительный член Клуба 301 («Член Клуба»), Вы
-                            принимаете Кодекс Этики  Клуба 301 и обязуетесь
-                            соблюдать Правила клуба 301 (в дальнейшем
-                            “Правила”).
-                          </span>
-                        }
-                        //@ts-ignore
-                        onConfirm={confirmAgreementTerms}
-                        //@ts-ignore
-                        // onCancel={cancel}
-                        okText='more'
-                        cancelText={""}
-                        title={undefined}>
-                        <img
-                          src={INFO_ICON}
-                          alt='Info'
-                          decoding='async'
-                          loading='lazy'
-                        />
-                      </Popconfirm>
+                    <div
+                      className='signUp_info'
+                      style={{
+                        flexDirection: "column",
+                        width: "100%",
+                        alignItems: "flex-start",
+                      }}>
+                      <div>
+                        <Checkbox
+                          className='signUp_radio'
+                          checked={values.agreement_terms}
+                          onChange={() =>
+                            setFieldValue(
+                              "agreement_terms",
+                              !values.agreement_terms
+                            )
+                          }>
+                          {t("checkboxes.agreement_terms")}*
+                        </Checkbox>
+                        <Popconfirm
+                          className='signUp_popover'
+                          icon={false}
+                          description={
+                            <span>
+                              КОДЕКС ЭТИКИ КЛУБА 301
+                              <br />
+                              Уважаемые Члены Клуба 301, пожалуйста, внимательно
+                              ознакомьтесь с правилами Клуба 301! Как
+                              действительный член Клуба 301 («Член Клуба»), Вы
+                              принимаете Кодекс Этики  Клуба 301 и обязуетесь
+                              соблюдать Правила клуба 301 (в дальнейшем
+                              “Правила”).
+                            </span>
+                          }
+                          //@ts-ignore
+                          onConfirm={confirmAgreementTerms}
+                          //@ts-ignore
+                          // onCancel={cancel}
+                          okText='more'
+                          cancelText={""}
+                          title={undefined}>
+                          <img
+                            src={INFO_ICON}
+                            alt='Info'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </Popconfirm>
+                      </div>
+                      <ErrorMessage
+                        name='agreement_terms'
+                        component='p'
+                        className='error'
+                      />
                     </div>
-                    <div className='signUp_info'>
-                      <Checkbox
-                        className='signUp_radio'
-                        checked={clubCodeOfEthics301Checked}
-                        onChange={e =>
-                          setClubCodeOfEthics301Checked(e.target.checked)
-                        }>
-                        {t("checkboxes.club_code_of_ethics_301")}*
-                      </Checkbox>
-                      <Popconfirm
-                        className='signUp_popover'
-                        description={
-                          <span>
-                            КОДЕКС ЭТИКИ КЛУБА 301
-                            <br />
-                            Уважаемые Члены Клуба 301, пожалуйста, внимательно
-                            ознакомьтесь с правилами Клуба 301! Как
-                            действительный член Клуба 301 («Член Клуба»), Вы
-                            принимаете Кодекс Этики  Клуба 301 и обязуетесь
-                            соблюдать Правила клуба 301 (в дальнейшем
-                            “Правила”).
-                          </span>
-                        }
-                        icon={false}
-                        //@ts-ignore
-                        onConfirm={confirmClubCodeEthics}
-                        //@ts-ignore
-                        okText='more'
-                        cancelText={""}
-                        title={undefined}>
-                        <img
-                          src={INFO_ICON}
-                          alt='Info'
-                          decoding='async'
-                          loading='lazy'
-                        />
-                      </Popconfirm>
+                    <div
+                      className='signUp_info'
+                      style={{
+                        flexDirection: "column",
+                        width: "100%",
+                        alignItems: "flex-start",
+                      }}>
+                      <div>
+                        <Checkbox
+                          className='signUp_radio'
+                          checked={values.club_code_of_ethics_301}
+                          onChange={() =>
+                            setFieldValue(
+                              "club_code_of_ethics_301",
+                              !values.club_code_of_ethics_301
+                            )
+                          }>
+                          {t("checkboxes.club_code_of_ethics_301")}*
+                        </Checkbox>
+                        <Popconfirm
+                          className='signUp_popover'
+                          description={
+                            <span>
+                              КОДЕКС ЭТИКИ КЛУБА 301
+                              <br />
+                              Уважаемые Члены Клуба 301, пожалуйста, внимательно
+                              ознакомьтесь с правилами Клуба 301! Как
+                              действительный член Клуба 301 («Член Клуба»), Вы
+                              принимаете Кодекс Этики  Клуба 301 и обязуетесь
+                              соблюдать Правила клуба 301 (в дальнейшем
+                              “Правила”).
+                            </span>
+                          }
+                          icon={false}
+                          //@ts-ignore
+                          onConfirm={confirmClubCodeEthics}
+                          //@ts-ignore
+                          okText='more'
+                          cancelText={""}
+                          title={undefined}>
+                          <img
+                            src={INFO_ICON}
+                            alt='Info'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </Popconfirm>
+                      </div>
+                      <ErrorMessage
+                        name='club_code_of_ethics_301'
+                        component='p'
+                        className='error'
+                      />
                     </div>
-                    <div className='signUp_info'>
-                      <Checkbox
-                        className='signUp_radio'
-                        checked={supportFormChecked}
-                        onChange={e => setSupportFormChecked(e.target.checked)}>
-                        {t("checkboxes.support_form")}
-                      </Checkbox>
-                      <Popconfirm
-                        className='signUp_popover popover_support_from'
-                        description={
-                          <div className='support_popover'>
-                            <div className='support_popover-list-item'>
-                              <div className='support_popover-list-circle'></div>
-                              <div
-                                className='support_popover-list-text'
-                                dangerouslySetInnerHTML={{
-                                  __html: t("privacy.support_popover_1"),
-                                }}
-                              />
+                    <div
+                      className='signUp_info'
+                      style={{
+                        flexDirection: "column",
+                        width: "100%",
+                        alignItems: "flex-start",
+                      }}>
+                      <div>
+                        <Checkbox
+                          className='signUp_radio'
+                          checked={values.support_form}
+                          onChange={() =>
+                            setFieldValue("support_form", !values.support_form)
+                          }>
+                          {t("checkboxes.support_form")}
+                        </Checkbox>
+                        <Popconfirm
+                          className='signUp_popover popover_support_from'
+                          description={
+                            <div className='support_popover'>
+                              <div className='support_popover-list-item'>
+                                <div className='support_popover-list-circle'></div>
+                                <div
+                                  className='support_popover-list-text'
+                                  dangerouslySetInnerHTML={{
+                                    __html: t("privacy.support_popover_1"),
+                                  }}
+                                />
+                              </div>
+                              <div className='support_popover-list-item'>
+                                <div className='support_popover-list-circle'></div>
+                                <div
+                                  className='support_popover-list-text'
+                                  dangerouslySetInnerHTML={{
+                                    __html: t("privacy.support_popover_2"),
+                                  }}
+                                />
+                              </div>
                             </div>
-                            <div className='support_popover-list-item'>
-                              <div className='support_popover-list-circle'></div>
-                              <div
-                                className='support_popover-list-text'
-                                dangerouslySetInnerHTML={{
-                                  __html: t("privacy.support_popover_2"),
-                                }}
-                              />
-                            </div>
-                          </div>
-                        }
-                        icon={false}
-                        okText={""}
-                        cancelText={""}
-                        title={undefined}>
-                        <img
-                          src={INFO_ICON}
-                          alt='Info'
-                          decoding='async'
-                          loading='lazy'
-                        />
-                      </Popconfirm>
+                          }
+                          icon={false}
+                          okText={""}
+                          cancelText={""}
+                          title={undefined}>
+                          <img
+                            src={INFO_ICON}
+                            alt='Info'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </Popconfirm>
+                      </div>
+                      <ErrorMessage
+                        name='support_form'
+                        component='p'
+                        className='error'
+                      />
                     </div>
                   </div>
                 </div>

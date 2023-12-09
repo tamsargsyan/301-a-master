@@ -48,7 +48,9 @@ const Conragts = () => {
           </div>
         }>
         <div className='conragts_modal_content'>
-          <p className='conragts_text'>{text}</p>
+          <p
+            className='conragts_text'
+            dangerouslySetInnerHTML={{ __html: text }}></p>
           <Button
             text={t("btns.ok")}
             link={false}

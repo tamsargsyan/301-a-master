@@ -7,6 +7,7 @@
     "calendar": "Calendar",
     "about-us": "About Us",
     "contact": "Contact",
+    "news": "News",
     "sign-in": "Sign In",
     "logout": "Logout"
   },
@@ -109,7 +110,8 @@
     "password_new": "New Password",
     "choose": "Choose",
     "participation_form": "Participation form",
-    "activities": "Activities"
+    "activities": "Activities",
+    "subs_type": "Subscription Type"
   },
   "chosenProject": "You have chosen a project",
   "select-project": "Select Project",
@@ -159,10 +161,11 @@
     "change_card": "change to another card",
     "date": "Date",
     "type": "Type",
-    "amount": "Amount"
+    "amount": "Amount",
+    "project": "project"
   },
   "select-acount-type": "SELECT ACCOUNT TYPE",
-  "budget": "Budget",
+  "budget": "Total Budget",
   "collected": "Collected",
   "project-in-progress": "The project is under development. Detailed information will be available later.",
   "add-to-interesting": "add to interesting",

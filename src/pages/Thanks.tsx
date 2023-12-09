@@ -6,6 +6,7 @@ import { RootState } from "../store/configureStore";
 import cookies from "js-cookie";
 import { congratsModal } from "../actions/congratsAction";
 import { useTranslation } from "react-i18next";
+import { login } from "../actions/authActions";
 
 const Thanks = () => {
   const location = useLocation();
@@ -18,9 +19,15 @@ const Thanks = () => {
   useEffect(() => {
     if (location.search) {
       //@ts-ignore
-      dispatch(fetchingDonation(`thanks${location.search}`));
+      dispatch(fetchingDonation(`thanks${location.search + "&lang=" + lang}`));
     }
   }, [location]);
+
+  useEffect(() => {
+    if (localStorage.getItem("donationToRegister")) {
+      dispatch(login());
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (data) {
@@ -28,13 +35,47 @@ const Thanks = () => {
         data.message === "Payment successfully completed" &&
         data.donation?.status === "paid"
       ) {
-        dispatch(congratsModal(true, t("donation.payment.completed")));
+        if (localStorage.getItem("donationToRegister")) {
+          dispatch(
+            congratsModal(
+              true,
+              `${t("donation.payment.completed")} <br> <br> ${t(
+                "congrats.register"
+              )}`
+            )
+          );
+          localStorage.removeItem("donationToRegister");
+        } else {
+          dispatch(congratsModal(true, t("donation.payment.completed")));
+        }
         navigate(`/${lang}/`);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        fetch(
+          "https://machtech.bitrix24.com/rest/1/web91rw9otl9hmp4/crm.lead.add.json?FIELDS[NAME]=%D0%98%D0%B2%D0%B0%D0%BD&FIELDS[LAST_NAME]=%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2&FIELDS[EMAIL][0][VALUE]=mail@example.com&FIELDS[EMAIL][0][VALUE_TYPE]=WORK&FIELDS[COMMENTS]=&FIELDS[STATUS_ID]=UC_QCYPUE&FIELDS[UF_CRM_1702052932941]=" +
+            lang
+        );
       } else if (
         data.message === "Payment declined" &&
         data.donation?.status === "rejected"
       ) {
-        dispatch(congratsModal(true, t("donation.payment.declined")));
+        if (localStorage.getItem("donationToRegister")) {
+          dispatch(
+            congratsModal(
+              true,
+              `${t("donation.payment.declined")} <br> <br> ${
+                data?.reason
+              } <br> <br> ${t("congrats.register")}`
+            )
+          );
+          localStorage.removeItem("donationToRegister");
+        } else {
+          dispatch(
+            congratsModal(
+              true,
+              `${t("donation.payment.declined")} <br> <br> ${data?.reason}`
+            )
+          );
+        }
         navigate(`/${lang}/`);
       }
     }

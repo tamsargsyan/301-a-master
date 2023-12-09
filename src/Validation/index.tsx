@@ -59,6 +59,16 @@ export const signUpSchema = yup.object().shape({
     .string()
     .required("Password confirmation is a required field")
     .oneOf([yup.ref("password")], "Passwords must match"),
+  support_form: yup.boolean().oneOf([true], "This field must be true"),
+  club_code_of_ethics_301: yup
+    .boolean()
+    .oneOf([true], "This field must be true"),
+  agreement_terms: yup.boolean().oneOf([true], "This field must be true"),
+});
+
+export const doanteSignUpSchema = yup.object().shape({
+  ...signUpSchema.fields,
+  subscription_type: yup.string().required("This is a required field"),
 });
 
 export const otherSignUpSchema = yup.object().shape({

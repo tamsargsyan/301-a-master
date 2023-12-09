@@ -53,6 +53,11 @@ export const menu = [
     name: "contact",
     link: "/contact",
   },
+  {
+    id: 7,
+    name: "news",
+    link: "/#news",
+  },
 ];
 
 interface NavbarProps {
@@ -246,9 +251,9 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
       <div className='menu'>
         <div className='link'>
           {menu.map((link, i) => (
-            <NavLink key={i} to={`/${lang}${link.link}`} onClick={scrollToTop}>
+            <a key={i} href={`/${lang}${link.link}`}>
               {t(`navbar.${link.name}`)}
-            </NavLink>
+            </a>
           ))}
         </div>
         <div className='langsWrapper'>

@@ -30,17 +30,19 @@
   object-fit: cover;
 }
 .fullProjectBg_title {
-  width: 100%;
+  width: fit-content;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: clamp(2.5rem, 0rem + 2.0833vw, 7.5rem);
   font-weight: 900;
-  letter-spacing: 8.4px;
   text-transform: uppercase;
   color: #ffffff;
   text-align: center;
+  background: #dd264e7a;
+  padding-left: 9px ;
+  padding-right: 9px;
 }
 .overlay {
   position: absolute;
@@ -566,7 +568,7 @@ a.fx-Revolve:focus:before {
 @media screen and (max-width: 800px) {
   .member {
     width: 100%;
-    height: 100%
+    height: 100%;
   }
   .titlePart,
   .problem_heading,
