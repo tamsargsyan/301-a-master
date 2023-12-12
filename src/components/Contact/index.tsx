@@ -18,9 +18,14 @@ import { contactSchema } from "../../Validation";
 interface ContactProps {
   separatedPart?: Boolean;
   contactPage?: boolean;
+  className?: string;
 }
 
-const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
+const Contact: React.FC<ContactProps> = ({
+  separatedPart,
+  contactPage,
+  className,
+}) => {
   const { t } = useTranslation();
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
@@ -89,7 +94,10 @@ const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
             handleBlur,
             handleSubmit,
           }) => (
-            <form className='formContainer' noValidate onSubmit={handleSubmit}>
+            <form
+              className={`${className} formContainer`}
+              noValidate
+              onSubmit={handleSubmit}>
               <div className='formInner'>
                 <div className='formInputs'>
                   <div className='formGroup'>

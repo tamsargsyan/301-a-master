@@ -156,10 +156,7 @@ const SignUp = () => {
               </div>
             ))
           ) : (
-            <CardSlider
-              data={accountTypes}
-              handleAccountType={handleAccountType}
-            />
+            <CardSlider data={accountTypes} />
           )}
         </div>
       </EcosystemModal>

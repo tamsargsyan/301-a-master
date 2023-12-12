@@ -142,4 +142,10 @@
   .statusCardInfo img {
     width: 60px;
   }
+  .historyTableHeader th {
+    font-size: 14px;
+  }
+  #historyTable tbody td {
+    font-size: 12px;
+  }
 }

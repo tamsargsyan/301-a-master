@@ -81,7 +81,7 @@
     justify-content: space-between;
   }
   .ecosystem {
-    margin: 60px 0;
+    /* margin: 60px 0; */
   }
   .ecosystemContainer .partners .partner {
     width: 26vw;

@@ -57,7 +57,7 @@ const ContactPage = () => {
             }
           />
         </div>
-        <Contact contactPage={true} />
+        <Contact contactPage={true} className='contactPageContactForm' />
         <div className='contactPage_address_wrapper'>
           <div className='contactPage_address_1'>
             <p className='contactPage_address_title'>{t("contact.title")}</p>

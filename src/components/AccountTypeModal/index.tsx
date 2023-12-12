@@ -194,7 +194,7 @@ const AccountTypeModal = () => {
   }, [error]);
 
   const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false)
+  const [showPassword2, setShowPassword2] = useState(false);
 
   return (
     <Modal
@@ -729,6 +729,7 @@ const AccountTypeModal = () => {
                             onChange={handleChange}
                           />
                           <button
+                            type='button'
                             onClick={() => setShowPassword1(!showPassword1)}>
                             <img
                               src={showPassword1 ? EYE_OPEN : EYE_CLOSE}
@@ -756,6 +757,7 @@ const AccountTypeModal = () => {
                             onChange={handleChange}
                           />
                           <button
+                            type='button'
                             onClick={() => setShowPassword2(!showPassword2)}>
                             <img
                               src={showPassword2 ? EYE_OPEN : EYE_CLOSE}

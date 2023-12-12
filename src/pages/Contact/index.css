@@ -82,9 +82,17 @@
 @media screen and (max-width: 800px) {
   .contactPage_address_wrapper {
     flex-direction: column;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
   }
   .contactPage_address_2 {
     width: 100%;
     margin-top: 20px;
+  }
+  .contactPageContactForm {
+    width: 100vw !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 }

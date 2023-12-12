@@ -5,10 +5,9 @@ import Button from "../Button";
 import cookies from "js-cookie";
 interface CardSliderProps {
   data: any;
-  handleAccountType: any;
 }
 
-const CardSlider: React.FC<CardSliderProps> = ({ data, handleAccountType }) => {
+const CardSlider: React.FC<CardSliderProps> = ({ data }) => {
   const [active, setActive] = useState(0);
   const lang = cookies.get("i18next");
 

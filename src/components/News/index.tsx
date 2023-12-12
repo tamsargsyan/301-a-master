@@ -7,15 +7,17 @@ import SIDE_PATTERN_2_MOBILE from "../../assets/patterns/side-2-mobile.svg";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import Button from "../Button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { storageBase } from "../../utils/storage";
+import CardSlider from "../CardSlider";
+import NewsSlider from "../CardSlider/NewsSlider";
 
-interface newsTypes {
+export interface newsTypes {
   id: number;
   title_am: string;
   title_en: string;
@@ -32,14 +34,8 @@ interface NewsProps {
 }
 
 const News: React.FC<NewsProps> = ({ lang }) => {
-  const [activeNews, setActiveNews] = useState(2);
-  const handleBack = () => {
-    activeNews > 1 && setActiveNews(prevIndex => prevIndex - 1);
-  };
-
-  const handleNext = () => {
-    activeNews < 3 && setActiveNews(prevIndex => prevIndex + 1);
-  };
+  const sliderRef = useRef(null);
+  const scrollAmount = 100;
 
   const windowSize = useWindowSize();
   const { t } = useTranslation();
@@ -73,45 +69,72 @@ const News: React.FC<NewsProps> = ({ lang }) => {
           }}
           id='news'
         />
-        <button className='leftBtn newsBtn' onClick={handleBack}>
+        {/* <button className='leftBtn newsBtn' onClick={handleBack}>
           <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
         </button>
         <button className='rightBtn newsBtn' onClick={handleNext}>
           <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
-        </button>
-        <div className='newsContainer'>
-          {(windowSize.width < 900 ? news.slice(0, 3) : news.slice(0, 4)).map(
-            (item: any) => {
-              const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
-              const altText =
-                typeof dynamicTitle === "string" ? dynamicTitle : "";
-              return (
-                <div
-                  className={`${activeNews === item.id && "activeNews"} ${
-                    activeNews === 1 && item.id === 2 && "activeNews1"
-                  } ${activeNews === 3 && item.id === 2 && "activeNews2"} news`}
-                  key={item.id}>
-                  <div className='newsImg'>
-                    <img
-                      src={`${storageBase}/${item.image}`}
-                      alt={altText}
-                      decoding='async'
-                      loading='lazy'
-                    />
+        </button> */}
+        <div className='projectDetails_slider_1 partners _inner newsProjectDetailsSlider'>
+          {windowSize.width > 900 && (
+            <button
+              className='leftBtn'
+              onClick={() => {
+                const container = sliderRef.current;
+                if (container) {
+                  //@ts-ignore
+                  container.scrollLeft -= scrollAmount;
+                }
+              }}>
+              <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
+            </button>
+          )}
+          <div className='images-container newsWrapper' ref={sliderRef}>
+            {windowSize.width > 900 ? (
+              news.slice(0, 4).map((item: any) => {
+                const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
+                const altText =
+                  typeof dynamicTitle === "string" ? dynamicTitle : "";
+                return (
+                  <div className={`news`} key={item.id}>
+                    <div className='newsImg'>
+                      <img
+                        src={`${storageBase}/${item.image}`}
+                        alt={altText}
+                        decoding='async'
+                        loading='lazy'
+                      />
+                    </div>
+                    <div className='newsContent'>
+                      <h1>{dynamicTitle}</h1>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          //@ts-ignore
+                          __html:
+                            item[`description_${lang}` as keyof newsTypes],
+                        }}
+                      />
+                      <p>{item.created_at.split("T")[0] as keyof newsTypes}</p>
+                    </div>
                   </div>
-                  <div className='newsContent'>
-                    <h1>{dynamicTitle}</h1>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        //@ts-ignore
-                        __html: item[`description_${lang}` as keyof newsTypes],
-                      }}
-                    />
-                    <p>{item.created_at.split("T")[0] as keyof newsTypes}</p>
-                  </div>
-                </div>
-              );
-            }
+                );
+              })
+            ) : (
+              <NewsSlider data={news} />
+            )}
+          </div>
+          {windowSize.width > 900 && (
+            <button
+              className='rightBtn'
+              onClick={() => {
+                const container = sliderRef.current;
+                if (container) {
+                  //@ts-ignore
+                  container.scrollLeft += scrollAmount;
+                }
+              }}>
+              <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
+            </button>
           )}
         </div>
         {/* <div
