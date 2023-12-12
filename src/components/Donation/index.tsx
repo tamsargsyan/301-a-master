@@ -12,6 +12,7 @@ import { RootState } from "../../store/configureStore";
 import { usePostRequest } from "../../actions/apiActions";
 import { useEffect } from "react";
 import { congratsModal } from "../../actions/congratsAction";
+import { hasPreviousHistory } from "../Navbar";
 
 const Donation = () => {
   const { t } = useTranslation();
@@ -60,9 +61,19 @@ const Donation = () => {
     }
   }, [response]);
 
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
-    <Modal setOpenModal={() => navigate(-1)} openModal={true}>
-      <EcosystemModal onClose={() => navigate(-1)} header={t("btns.donate")}>
+    <Modal setOpenModal={navigateBack} openModal={true}>
+      <EcosystemModal
+        back={false}
+        onClose={navigateBack}
+        header={t("btns.donate")}>
         <div className='donationWrapper'>
           <div className='donation'>
             {/* <div className='donation_info'>

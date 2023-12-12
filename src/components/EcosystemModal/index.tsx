@@ -5,6 +5,7 @@ import "./index.css";
 import { useTranslation } from "react-i18next";
 import Footer from "../Footer";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { hasPreviousHistory } from "../Navbar";
 
 interface EcosystemModalProps {
   onClose: () => void;
@@ -13,6 +14,7 @@ interface EcosystemModalProps {
   className?: string;
   closeIcon?: string;
   headerChildren?: ReactNode;
+  back: Boolean;
 }
 
 const EcosystemModal: React.FC<EcosystemModalProps> = ({
@@ -22,6 +24,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
   className,
   closeIcon,
   headerChildren,
+  back,
 }) => {
   const { t } = useTranslation();
   const windowSize = useWindowSize();
@@ -31,7 +34,7 @@ const EcosystemModal: React.FC<EcosystemModalProps> = ({
       <div className='signUp_content'>
         <div className='signUp_content_header'>
           <button className='close' onClick={onClose}>
-            {className === "modal_back" ? (
+            {back ? (
               <>
                 {t("btns.back")}
                 <div>

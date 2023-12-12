@@ -11,16 +11,17 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import cookies from "js-cookie";
+import { hasPreviousHistory } from "../Navbar";
 
 const DonationProjectsModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleClose = () => {
-    // setDonation(true);
-    // dispatch(openDonateModal(true));
-    // setDonateProjects(false);
-    navigate(-1);
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
   };
 
   const handleSingleProject = (slug: string) => {
@@ -42,8 +43,12 @@ const DonationProjectsModal = () => {
   }, []);
 
   return (
-    <Modal setOpenModal={handleClose} openModal={true}>
-      <EcosystemModal onClose={handleClose} header={t("btns.donate")}>
+    <Modal setOpenModal={navigateBack} openModal={true}>
+      <EcosystemModal
+        back={true}
+        className='modal_back'
+        onClose={navigateBack}
+        header={t("btns.donate")}>
         <div className='donationProjects_wrapper'>
           <div className='donationProjects_title'>{t("select-project")}</div>
           {false ? (

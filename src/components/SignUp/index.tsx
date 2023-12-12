@@ -20,6 +20,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
 import cookies from "js-cookie";
+import { hasPreviousHistory } from "../Navbar";
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -86,30 +87,27 @@ const SignUp = () => {
       },
     },
   ];
-  const dispatch = useDispatch();
-  const handleAccountType = (id: number, name: string, type: string) => {
-    dispatch(
-      openAccountTypeModal({
-        open: true,
-        id,
-        name,
-        type,
-      })
-    );
-    // setSignUp(false);
-  };
   const windowSize = useWindowSize();
   const navigate = useNavigate();
   const lang = cookies.get("i18next");
 
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
     <Modal
-      setOpenModal={() => navigate(-1)}
+      setOpenModal={navigateBack}
       openModal={true}
       className='signUp_overlay'
       headerShow={false}>
       <EcosystemModal
-        onClose={() => navigate(-1)}
+        back={true}
+        className='modal_back'
+        onClose={navigateBack}
         header={t("select-acount-type")}>
         <div className='signUp_content_accountTypes'>
           <img

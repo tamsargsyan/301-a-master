@@ -15,7 +15,9 @@ const LoginFacebook = () => {
     state &&
       dispatch(
         //@ts-ignore
-        fetchingFacebookCallback(`auth/facebook/callback?code=${state}`)
+        fetchingFacebookCallback(
+          `auth/facebook/callback?lang=${lang}&code=${state}`
+        )
       );
   }, [state, dispatch]);
 

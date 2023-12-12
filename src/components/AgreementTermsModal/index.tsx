@@ -31,6 +31,7 @@ const AgreementTermsModal: React.FC<AgreementTermsModalProps> = ({}) => {
   return (
     <Modal setOpenModal={handleClose} openModal={agreementTerms.modal}>
       <EcosystemModal
+        back={false}
         onClose={handleClose}
         header={agreementTerms.text || ""}
         className='modal_back'>

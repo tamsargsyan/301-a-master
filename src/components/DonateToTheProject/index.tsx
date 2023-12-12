@@ -22,6 +22,7 @@ import { Formik } from "formik";
 import { donationSchema } from "../../Validation";
 import { useState } from "react";
 import { congratsModal } from "../../actions/congratsAction";
+import { hasPreviousHistory } from "../Navbar";
 
 const DonateToTheProject = () => {
   const onChange = (value: string) => {
@@ -38,10 +39,7 @@ const DonateToTheProject = () => {
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const navigate = useNavigate();
-  //@ts-ignore
-  const handleClose = () => {
-    navigate(-1);
-  };
+
   const { data, loading } = useSelector(
     (state: RootState) => state.projectDetails
   );
@@ -82,9 +80,16 @@ const DonateToTheProject = () => {
     }
   }, [response]);
 
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
-    <Modal setOpenModal={handleClose} openModal={true} headerShow={true}>
-      <EcosystemModal onClose={handleClose} header={setHeader()}>
+    <Modal setOpenModal={navigateBack} openModal={true} headerShow={true}>
+      <EcosystemModal back={true} onClose={navigateBack} header={setHeader()}>
         <div className='chosenProject_wrapper'>
           {loading ? (
             <div className='donationProjects_spinner'>

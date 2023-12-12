@@ -14,6 +14,7 @@ import Terms from "../Terms";
 import cookies from "js-cookie";
 import { congratsModal } from "../../actions/congratsAction";
 import { useDispatch } from "react-redux";
+import { hasPreviousHistory } from "../Navbar";
 
 const OneTimeDonation = () => {
   //@ts-ignore
@@ -43,19 +44,21 @@ const OneTimeDonation = () => {
     }
   }, [response]);
 
-  console.log(response);
-
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
   const lang = cookies.get("i18next");
 
   return (
-    <Modal
-      setOpenModal={() => navigate(-1)}
-      openModal={true}
-      headerShow={false}>
+    <Modal setOpenModal={navigateBack} openModal={true} headerShow={false}>
       <EcosystemModal
-        onClose={() => navigate(-1)}
+        onClose={navigateBack}
         header={t("btns.one-time-donation")}
-        className='oneTimeDonation_bg'>
+        className='oneTimeDonation_bg modal_back'
+        back={true}>
         <Formik
           validationSchema={donationSchema}
           initialValues={{

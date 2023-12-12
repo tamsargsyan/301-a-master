@@ -22,7 +22,7 @@ import { Spin } from "antd";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
-import { history } from "../Navbar";
+import { hasPreviousHistory, history } from "../Navbar";
 import Terms from "../Terms";
 import cookies from "js-cookie";
 import { RootState } from "../../store/configureStore";
@@ -88,12 +88,16 @@ const SignIn = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
     <>
-      <Modal
-        setOpenModal={() => navigate(-1)}
-        openModal={true}
-        headerShow={true}>
+      <Modal setOpenModal={navigateBack} openModal={true} headerShow={true}>
         <div className='modal_signIn'>
           {windowSize.width > 600 && (
             <div className='modal_signIn_leftSide'>

@@ -10,6 +10,7 @@ import { usePostRequest } from "../../../actions/apiActions";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/authActions";
+import { Spin } from "antd";
 
 const PersonalSidebar = () => {
   const { t } = useTranslation();
@@ -63,8 +64,28 @@ const PersonalSidebar = () => {
     }
   }, [response]);
 
+  // if (true) {
+  //   return (
+  //     <div className='logoutLoadingContainer'>
+  //       <Spin size='large' />
+  //     </div>
+  //   );
+  // }
+
+  useEffect(() => {
+    document.body.classList.toggle("no-scroll", postLoading);
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [postLoading]);
+
   return (
     <div className='personal_bar_wrapper'>
+      {postLoading && (
+        <div className='logoutLoadingContainer'>
+          <Spin size='large' />
+        </div>
+      )}
       <div className='person_wrapper'>
         <div className='person_bg'></div>
         <div className='person_profile'>

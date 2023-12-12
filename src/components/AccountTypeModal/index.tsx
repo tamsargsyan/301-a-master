@@ -122,7 +122,7 @@ const AccountTypeModal = () => {
         donatePostRequest.postRequest("donation", result, {
           Authorization: `Bearer ${response.data.access_token}`,
         });
-        console.log(response.data);
+        // console.log(response.data);
       } else {
         dispatch(congratsModal(true, t("congrats.register")));
       }
@@ -132,7 +132,7 @@ const AccountTypeModal = () => {
   useEffect(() => {
     if (donatePostRequest.response) {
       if (donatePostRequest.response.data?.redirectURL) {
-        console.log(donatePostRequest.response);
+        // console.log(donatePostRequest.response);
         window.location.href = donatePostRequest.response.data.redirectURL;
       } else if (donatePostRequest.response.data?.message) {
         dispatch(congratsModal(true, donatePostRequest.response.data?.message));
@@ -203,6 +203,7 @@ const AccountTypeModal = () => {
       className='signUp_overlay'
       headerShow={false}>
       <EcosystemModal
+        back={true}
         onClose={() => navigate(-1)}
         header={t(`footer.ecosystem.${type}`)}
         className='modal_back'>
@@ -250,7 +251,7 @@ const AccountTypeModal = () => {
               lang,
             };
             // console.log(result);
-            console.log(completePhoneNumber);
+            // console.log(completePhoneNumber);
             if (gmailLoginCallbackData || facebookLoginCallbackData) {
               let token = "";
               if (gmailLoginCallbackData)
@@ -841,16 +842,16 @@ const AccountTypeModal = () => {
                           className='signUp_popover'
                           icon={false}
                           description={
-                            <span>
-                              КОДЕКС ЭТИКИ КЛУБА 301
-                              <br />
-                              Уважаемые Члены Клуба 301, пожалуйста, внимательно
-                              ознакомьтесь с правилами Клуба 301! Как
-                              действительный член Клуба 301 («Член Клуба»), Вы
-                              принимаете Кодекс Этики  Клуба 301 и обязуетесь
-                              соблюдать Правила клуба 301 (в дальнейшем
-                              “Правила”).
-                            </span>
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: privacyData?.agreementTerms
+                                  ? //@ts-ignore
+                                    privacyData?.agreementTerms[
+                                      `description_${lang}`
+                                    ].slice(0, 230)
+                                  : "",
+                              }}
+                            />
                           }
                           //@ts-ignore
                           onConfirm={confirmAgreementTerms}
@@ -895,16 +896,16 @@ const AccountTypeModal = () => {
                         <Popconfirm
                           className='signUp_popover'
                           description={
-                            <span>
-                              КОДЕКС ЭТИКИ КЛУБА 301
-                              <br />
-                              Уважаемые Члены Клуба 301, пожалуйста, внимательно
-                              ознакомьтесь с правилами Клуба 301! Как
-                              действительный член Клуба 301 («Член Клуба»), Вы
-                              принимаете Кодекс Этики  Клуба 301 и обязуетесь
-                              соблюдать Правила клуба 301 (в дальнейшем
-                              “Правила”).
-                            </span>
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: privacyData?.clubCodeOfEthics
+                                  ? //@ts-ignore
+                                    privacyData?.clubCodeOfEthics[
+                                      `description_${lang}`
+                                    ].slice(0, 230)
+                                  : "",
+                              }}
+                            />
                           }
                           icon={false}
                           //@ts-ignore

@@ -157,6 +157,10 @@ const ProjectDetails = () => {
     JSON.parse(localStorage.getItem("favoriteProjects") || "[]")
   );
 
+  const existingProjects = JSON.parse(
+    localStorage.getItem("favoriteProjects") || "[]"
+  );
+
   const heartit = async (project_id: number, user_id: number) => {
     if (isAuthenticated) {
       const existingFavorite = favoriteProjectsData.favorites.find(
@@ -184,10 +188,6 @@ const ProjectDetails = () => {
         console.error("Error occurred:", error);
       }
     } else {
-      const existingProjects = JSON.parse(
-        localStorage.getItem("favoriteProjects") || "[]"
-      );
-
       const index = existingProjects.indexOf(project_id);
 
       if (index !== -1) {

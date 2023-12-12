@@ -65,7 +65,7 @@ const EditProfile = () => {
 
   const separatePhoneNumber = (phone: string) => {
     const regex = /^(\+\d{1,3})\s?(\d+)$/;
-    const matches = phone.match(regex);
+    const matches = phone?.match(regex);
     let countryCode = "";
     let restOfNumber = "";
 
@@ -80,7 +80,7 @@ const EditProfile = () => {
   };
 
   const [telCode, setTelCode] = useState(
-    separatePhoneNumber(user?.phone).countryCode
+    separatePhoneNumber(user?.phone).countryCode || ""
   );
 
   const { postRequest, postLoading, response, error } = usePostRequest();
@@ -295,7 +295,7 @@ const EditProfile = () => {
                   placeholder={t("inputs.choose")}
                   optionFilterProp='children'
                   onChange={val => setTelCode(val)}
-                  value={telCode}
+                  value={telCode || undefined}
                   //@ts-ignore
                   filterOption={filterOptionTel}
                   // options={country_dial}
@@ -610,20 +610,14 @@ const EditProfile = () => {
                     />
                     <p>Viber</p>
                   </div>
-                  {windowSize.width < 600 && (
-                    <img
-                      src={ARROW}
-                      alt='Arrow'
-                      style={{
-                        transition: "0.3s ease",
-                        transform: `rotate(${openNewLink ? 180 : 0}deg)`,
-                      }}
-                      decoding='async'
-                      loading='lazy'
-                    />
-                  )}
+                  <img
+                    src={CLOSE}
+                    alt='Close'
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </div>
-                {windowSize.width < 600 ? (
+                {/* {windowSize.width < 600 ? (
                   openNewLink && (
                     <div className='socialMedia_addLink'>
                       <div className='signUp_formGroup'>
@@ -704,7 +698,7 @@ const EditProfile = () => {
                       />
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
             <div className='signUp_btns'>

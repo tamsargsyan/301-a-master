@@ -149,3 +149,12 @@
     font-size: 12px;
   }
 }
+@media screen and (max-width: 1100px) {
+  .statusCardHolderWrapper {
+    flex-direction: column;
+  }
+  .statusCard,
+  .statusChangeCard {
+    width: 100%;
+  }
+}

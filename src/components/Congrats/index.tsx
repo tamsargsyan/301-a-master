@@ -22,6 +22,7 @@ const Conragts = () => {
   return (
     <Modal setOpenModal={handleClose} openModal={open} headerShow={true}>
       <EcosystemModal
+        back={false}
         onClose={handleClose}
         header=''
         className='conragts_modal'

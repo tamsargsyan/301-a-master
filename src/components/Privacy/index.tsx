@@ -9,6 +9,7 @@ import { HeaderKeyOf } from "../../utils/keyof.type";
 import { useLocation, useNavigate } from "react-router";
 import cookies from "js-cookie";
 import "./index.css";
+import { hasPreviousHistory, history } from "../Navbar";
 
 const Privacy = () => {
   const dispatch = useDispatch();
@@ -28,10 +29,18 @@ const Privacy = () => {
   const lang = cookies.get("i18next");
   const navigate = useNavigate();
 
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
-    <Modal setOpenModal={() => navigate(-1)} openModal={true}>
+    <Modal setOpenModal={navigateBack} openModal={true}>
       <EcosystemModal
-        onClose={() => navigate(-1)}
+        back={false}
+        onClose={navigateBack}
         header={
           //@ts-ignore
           (data && data[endpoint] && data[endpoint][`title_${lang}`]) || ""

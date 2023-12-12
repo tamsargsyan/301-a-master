@@ -5,22 +5,22 @@ import SIDE_PATTERN from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
-import { NavLink, useLocation, useSearchParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { createBrowserHistory } from "history";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { openDonateModal } from "../../actions/donateAction";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
 import NO_IMAGE from "../../assets/no-image-user.png";
-import { getModalName } from "../../actions/privacyPolicyAction";
 import cookies from "js-cookie";
 import i18next from "i18next";
-import { Link } from "react-router-dom";
 
 export const history = createBrowserHistory(); // Create a history instance
+export const hasPreviousHistory = () => {
+  return !!(window.history && window.history.length > 1);
+};
 
 export const menu = [
   {

@@ -11,19 +11,19 @@ const LoginGmail = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const state = location.search.split("state=")[1];
+  const lang = cookies.get("i18next");
 
   useEffect(() => {
     state &&
       dispatch(
         //@ts-ignore
-        fetchingGmailCallback(`callback/google?code=${state}`)
+        fetchingGmailCallback(`callback/google?lang=${lang}&code=${state}`)
       );
   }, [state, dispatch]);
 
   const [hasNavigated, setHasNavigated] = useState(false);
   const data = useSelector((state: RootState) => state.gmailLoginCallback.data);
   const navigate = useNavigate();
-  const lang = cookies.get("i18next");
 
   useEffect(() => {
     if (data && data.access_token) {

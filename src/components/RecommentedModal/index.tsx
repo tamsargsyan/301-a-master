@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router";
 import { usePostRequest } from "../../actions/apiActions";
 import cookies from "js-cookie";
 import { congratsModal } from "../../actions/congratsAction";
+import { hasPreviousHistory } from "../Navbar";
 const { Option } = Select;
 
 const RecommentedModal = () => {
@@ -53,9 +54,19 @@ const RecommentedModal = () => {
     }
   }, [response]);
 
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
-    <Modal setOpenModal={() => navigate(-1)} openModal={true}>
-      <EcosystemModal onClose={() => navigate(-1)} header={t("recommendation")}>
+    <Modal setOpenModal={navigateBack} openModal={true}>
+      <EcosystemModal
+        back={false}
+        onClose={navigateBack}
+        header={t("recommendation")}>
         <Formik
           validationSchema={recommendationSchema}
           initialValues={{

@@ -95,7 +95,7 @@ h2 {
   align-items: center;
 }
 body.no-scroll {
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

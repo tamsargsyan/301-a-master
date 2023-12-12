@@ -56,6 +56,29 @@ function App() {
     dispatch(fetchingContact("contact-us"));
   }, [dispatch]);
 
+  const existingProjects = JSON.parse(
+    localStorage.getItem("favoriteProjects") || "[]"
+  );
+
+  const { postRequest } = usePostRequest();
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [callUserFavorite, setCallUserFavorite] = useState(false);
+
+  useEffect(() => {
+    if (existingProjects && isAuthenticated && !callUserFavorite) {
+      postRequest(
+        "create-user-favorite",
+        {
+          project_id: existingProjects,
+          user_id: user?.id,
+        },
+        {}
+      );
+      setCallUserFavorite(true);
+    }
+  }, [existingProjects, isAuthenticated, callUserFavorite]);
+
   // });
   // const { postRequest, response } = usePostRequest();
 

@@ -230,6 +230,8 @@ const Media = () => {
       <div className='video_modal'>
         <Modal setOpenModal={setOpenVideo} openModal={openVideo}>
           <EcosystemModal
+            back={true}
+            className='modal_back'
             onClose={() => setOpenVideo(false)}
             header={""}
             closeIcon={CLOSE}>
@@ -246,7 +248,11 @@ const Media = () => {
       {/* )} */}
       {/* {openBook && ( */}
       <Modal setOpenModal={setOpenBook} openModal={openBook}>
-        <EcosystemModal onClose={() => setOpenBook(false)} header={"book"}>
+        <EcosystemModal
+          back={true}
+          className='modal_back'
+          onClose={() => setOpenBook(false)}
+          header={"book"}>
           <div className='media_pdf_modal_book_wrapper'>
             <div className='media_book_img'>
               <img src={IMG_3} alt='Book' decoding='async' loading='lazy' />
