@@ -53,6 +53,26 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
 
   const { projects } = useSelector((state: RootState) => state.homeData.data);
 
+  const [showArrowBtns, setShowArrowBtns] = useState(false);
+
+  useEffect(() => {
+    const partnersContainer = document.querySelector(".partners ");
+    const images = document.querySelectorAll(".ecosystemDetails_partners_item");
+    const gap = 30;
+    let totalWidth = 0;
+    if (partnersContainer && images) {
+      images.forEach(img => {
+        //@ts-ignore
+        totalWidth += img.offsetWidth + gap;
+      });
+      //@ts-ignore
+      setShowArrowBtns(totalWidth > partnersContainer.offsetWidth);
+    }
+  }, []);
+
+  const sliderRef = useRef(null);
+  const scrollAmount = 200;
+
   return (
     <>
       {projects && (
@@ -76,34 +96,31 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                 style={{ width: "100%" }}
               />
               <div className='slider'>
-                {projects.length > 2 && (
-                  <>
-                    <button className='leftBtn' onClick={handleBack}>
-                      <img
-                        src={ARROW}
-                        alt='Arrow'
-                        decoding='async'
-                        loading='lazy'
-                      />
-                    </button>
-                    <button className='rightBtn' onClick={handleNext}>
-                      <img
-                        src={ARROW}
-                        alt='Arrow'
-                        decoding='async'
-                        loading='lazy'
-                      />
-                    </button>
-                  </>
-                )}
                 {windowSize.width > 975 ? (
-                  <motion.div ref={carousel} className='carousel'>
-                    <motion.div
-                      className='innerCarousel'
-                      initial={{ x: 0 }}
-                      animate={{
-                        x: -width * currentIndex,
-                      }}>
+                  <div
+                    className='projectDetails_slider_1'
+                    style={{ padding: 0 }}>
+                    {showArrowBtns && (
+                      <button
+                        className='leftBtn'
+                        style={{ left: "-25px" }}
+                        onClick={() => {
+                          const container = sliderRef.current;
+                          if (container) {
+                            //@ts-ignore
+                            container.scrollLeft -= scrollAmount;
+                          }
+                        }}>
+                        <img
+                          src={ARROW}
+                          alt='Arrow'
+                          decoding='async'
+                          loading='lazy'
+                        />
+                        {/* <ChevronLeftIcon /> */}
+                      </button>
+                    )}
+                    <div className='images-container' ref={sliderRef}>
                       {projects.map((project: any) => {
                         return (
                           <NavLink
@@ -137,8 +154,27 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                           </NavLink>
                         );
                       })}
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                    {showArrowBtns && (
+                      <button
+                        className='rightBtn'
+                        style={{ right: "-25px" }}
+                        onClick={() => {
+                          const container = sliderRef.current;
+                          if (container) {
+                            //@ts-ignore
+                            container.scrollLeft += scrollAmount;
+                          }
+                        }}>
+                        <img
+                          src={ARROW}
+                          alt='Arrow'
+                          decoding='async'
+                          loading='lazy'
+                        />
+                      </button>
+                    )}
+                  </div>
                 ) : (
                   <div className='innerCarousel'>
                     {projects.slice(0, 4).map((project: any) => {

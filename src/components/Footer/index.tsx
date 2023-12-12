@@ -13,41 +13,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { RootState } from "../../store/configureStore";
 import { fetchingContact } from "../../actions/apiActions";
+import { NavLink } from "react-router-dom";
 interface FooterProps {
   separatedPart?: Boolean;
 }
 
 const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
   const { t } = useTranslation();
+  const lang = cookies.get("i18next");
   const ecosystem = [
     {
       id: 1,
       name: "sage",
+      to: `/${lang}/ecosystem/sages`,
     },
     {
       id: 2,
       name: "club301",
+      to: `/${lang}/accountType?id=1?type=donor`,
     },
     {
       id: 3,
       name: "ambassadors",
+      to: `/${lang}/accountType?id=2?type=ambassadors`,
     },
     {
       id: 5,
       name: "experts",
+      to: `/${lang}/accountType?id=3?type=experts`,
     },
     {
       id: 6,
       name: "partners",
+      to: `/${lang}/ecosystem/partners`,
     },
     {
       id: 7,
       name: "friends",
+      to: `/${lang}/accountType?id=5?type=friends`,
     },
   ];
   const { data } = useSelector((state: RootState) => state.contact);
   const windowSize = useWindowSize();
-  const lang = cookies.get("i18next");
 
   // const dispatch = useDispatch();
 
@@ -73,9 +80,9 @@ const Footer: React.FC<FooterProps> = ({ separatedPart }) => {
               <h2>{t("footer.ecosystem.title")}</h2>
               <div className='list'>
                 {ecosystem.map(system => (
-                  <span key={system.id}>
+                  <NavLink to={system.to} key={system.id}>
                     {t(`footer.ecosystem.${system.name}`)}
-                  </span>
+                  </NavLink>
                 ))}
               </div>
             </div>

@@ -35,7 +35,7 @@ interface NewsProps {
 
 const News: React.FC<NewsProps> = ({ lang }) => {
   const sliderRef = useRef(null);
-  const scrollAmount = 100;
+  const scrollAmount = 500;
 
   const windowSize = useWindowSize();
   const { t } = useTranslation();

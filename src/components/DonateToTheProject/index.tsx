@@ -89,7 +89,11 @@ const DonateToTheProject = () => {
 
   return (
     <Modal setOpenModal={navigateBack} openModal={true} headerShow={true}>
-      <EcosystemModal back={true} onClose={navigateBack} header={setHeader()}>
+      <EcosystemModal
+        back={true}
+        onClose={navigateBack}
+        header={setHeader()}
+        className='modal_back'>
         <div className='chosenProject_wrapper'>
           {loading ? (
             <div className='donationProjects_spinner'>
@@ -168,14 +172,17 @@ const DonateToTheProject = () => {
                           <div className='signUp_tel'>
                             <Select
                               className='signUp_selector'
-                              showSearch
+                              // showSearch
                               placeholder={t("inputs.choose")}
-                              optionFilterProp='children'
-                              onChange={(_, obj: any) => setSumma(obj.value)}
-                              onSearch={onSearch}
+                              // optionFilterProp='children'
+                              disabled
+                              // onChange={(_, obj: any) => setSumma(obj.value)}
+                              // aria-readonly
+                              // onSearch={onSearch}
                               //@ts-ignore
-                              filterOption={filterOption}
-                              options={country_currency}
+                              // filterOption={filterOption}
+                              // options={country_currency}
+                              suffixIcon={null}
                               defaultValue='USD'
                             />
                             <div className='signUp_telWrapper'>

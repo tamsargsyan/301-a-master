@@ -255,7 +255,7 @@ const ProjectDetails = () => {
       </Helmet>
       {project && ourProject && (
         <>
-          <div className='filteringWrapper'>
+          {/* <div className='filteringWrapper'>
             <Header
               title={ourProject[0][`title_${lang}`]}
               description={ourProject[0][`description_${lang}`]}
@@ -315,7 +315,7 @@ const ProjectDetails = () => {
                 objKey='name'
               />
             )}
-          </div>
+          </div> */}
           <div className='fullProjectContainer'>
             <div className='fullProjectInner'>
               <div className='fullProjectBg'>

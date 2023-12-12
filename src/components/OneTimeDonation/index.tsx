@@ -102,15 +102,17 @@ const OneTimeDonation = () => {
                 <div className='signUp_tel'>
                   <Select
                     // {...field}
-                    showSearch
-                    optionFilterProp='children'
+                    // showSearch
+                    // optionFilterProp='children'
                     className='signUp_selector'
-                    onChange={(_, obj: any) => setSumma(obj.value)}
+                    // onChange={(_, obj: any) => setSumma(obj.value)}
                     //@ts-ignore
-                    filterOption={filterOption}
+                    // filterOption={filterOption}
                     placeholder={t("inputs.choose")}
-                    options={country_currency}
+                    // options={country_currency}
                     defaultValue='USD'
+                    disabled
+                    suffixIcon={null}
                   />
                   <div className='signUp_telWrapper'>
                     <input

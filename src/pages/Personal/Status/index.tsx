@@ -109,10 +109,10 @@ const Status = () => {
                     </span>
                   </p>
                 </div>
-                <button className='statusChangeCard'>
+                {/* <button className='statusChangeCard'>
                   {t("payments.change_card")}
                   <img src={ROTATE} alt='Rotate' />
-                </button>
+                </button> */}
               </div>
             </div>
           )}

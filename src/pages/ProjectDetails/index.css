@@ -7,6 +7,7 @@
 .fullProjectBg {
   height: 348px;
   position: relative;
+  margin-top: 25px;
 }
 .backBtn {
   border-radius: 50%;
