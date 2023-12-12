@@ -122,4 +122,16 @@
     padding-top: 45px;
     padding-bottom: 45px;
   }
+  .conragts_modal_content .btn {
+    font-size: 14px;
+  }
+  .conragts_modal {
+    width: auto !important;
+  }
+  .conragts_modal_content {
+    padding: 30px 10px;
+  }
+  .congrats_pattern {
+    margin: auto;
+  }
 }

@@ -52,6 +52,25 @@ h2 {
   gap: 20px;
   margin-top: 20px;
 }
+.passwordInputField {
+  position: relative;
+}
+.passwordInputField button {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+.passwordInputField button img {
+  width: 20px;
+  height: 20px;
+}
+.passwordInputField input {
+  width: 100%;
+  padding-right: 50px;
+}
 /* .ant-dropdown-menu {
   top: -30px;
   padding-top: 40px !important;

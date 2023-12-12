@@ -28,6 +28,8 @@ import cookies from "js-cookie";
 import { RootState } from "../../store/configureStore";
 import { login } from "../../actions/authActions";
 import { congratsModal } from "../../actions/congratsAction";
+import EYE_OPEN from "../../assets/eye-open-gray.svg";
+import EYE_CLOSE from "../../assets/eye-close-gray.svg";
 
 const SignIn = () => {
   const [forgetPassword, setForgetPassword] = useState(false);
@@ -83,6 +85,8 @@ const SignIn = () => {
       !hasNavigated && navigate(`/${lang}/`);
     } else if (error) dispatch(congratsModal(true, "Your data is invalid"));
   }, [response, dispatch, navigate, hasNavigated, lang]);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -204,15 +208,28 @@ const SignIn = () => {
                       )}
                       {(!forgetPassword || resetPass) && (
                         <>
-                          <input
-                            placeholder={t("inputs.password")}
-                            type='password'
-                            name='password'
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                            className='form'
-                          />
+                          <div className='passwordInputField'>
+                            <input
+                              placeholder={t("inputs.password")}
+                              type={showPassword ? "text" : "password"}
+                              name='password'
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                              className='form'
+                            />
+                            <button
+                              type='button'
+                              onClick={e => {
+                                e.preventDefault();
+                                setShowPassword(!showPassword);
+                              }}>
+                              <img
+                                src={showPassword ? EYE_OPEN : EYE_CLOSE}
+                                alt='Eye'
+                              />
+                            </button>
+                          </div>
                           <p className='error'>
                             {errors.password &&
                               touched.password &&

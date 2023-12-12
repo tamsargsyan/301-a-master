@@ -20,7 +20,6 @@ import cookies from "js-cookie";
 import Terms from "../Terms";
 import { Formik } from "formik";
 import { donationSchema } from "../../Validation";
-import { history } from "../Navbar";
 import { useState } from "react";
 import { congratsModal } from "../../actions/congratsAction";
 
@@ -139,11 +138,11 @@ const DonateToTheProject = () => {
                     lang,
                     user_id: user?.id,
                   };
-                  // const token = localStorage.getItem("token");
-                  // postRequest("donation", result, {
-                  //   Authorization: `Bearer ${token}`,
-                  // });
-                  console.log(result);
+                  const token = localStorage.getItem("token");
+                  postRequest("donation", result, {
+                    Authorization: `Bearer ${token}`,
+                  });
+                  // console.log(result);
                 }}>
                 {({
                   values,

@@ -22,6 +22,10 @@ import { congratsModal } from "../../../actions/congratsAction";
 import cookies from "js-cookie";
 import { Formik } from "formik";
 import { editProfileSchema } from "../../../Validation";
+import { useNavigate } from "react-router";
+import { scrollToTop } from "../../../globalFunctions/scrollToTop";
+import EYE_OPEN from "../../../assets/eye-open-gray.svg";
+import EYE_CLOSE from "../../../assets/eye-close-gray.svg";
 const { Option } = Select;
 
 const EditProfile = () => {
@@ -58,19 +62,47 @@ const EditProfile = () => {
       setImage(data.getAll("image"));
     }
   };
-  const [telCode, setTelCode] = useState("+374");
+
+  const separatePhoneNumber = (phone: string) => {
+    const regex = /^(\+\d{1,3})\s?(\d+)$/;
+    const matches = phone.match(regex);
+    let countryCode = "";
+    let restOfNumber = "";
+
+    if (matches && matches.length === 3) {
+      countryCode = matches[1];
+      restOfNumber = matches[2];
+    }
+    return {
+      countryCode,
+      restOfNumber,
+    };
+  };
+
+  const [telCode, setTelCode] = useState(
+    separatePhoneNumber(user?.phone).countryCode
+  );
+
   const { postRequest, postLoading, response, error } = usePostRequest();
   const windowSize = useWindowSize();
   const [openNewLink, setOpenNewLink] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [hasNavigated, setHasNavigated] = useState(false);
 
   useEffect(() => {
     if (response) {
       if (response.data?.error)
         dispatch(congratsModal(true, response.data?.error));
-      if (response.data?.message === "User data updated successfully") {
+      if (
+        response.data?.message === "User data updated successfully" &&
+        !hasNavigated
+      ) {
         dispatch(congratsModal(true, response.data?.message));
         localStorage.setItem("user", JSON.stringify(response.data?.user));
+        navigate(`/${lang}/personal/personal-info`);
+        scrollToTop();
+        setHasNavigated(true);
         // if (response.data?.message === "User data update successfully")
       }
     } else if (error) {
@@ -88,6 +120,10 @@ const EditProfile = () => {
   });
   const shouldSendRequest = Object.values(validateFormData).some(val => val);
 
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
+
   return (
     <div className='personalInfo_wrapper'>
       <Helmet>
@@ -102,19 +138,22 @@ const EditProfile = () => {
           name: user?.name,
           last_name: user?.last_name,
           about_me: user[`about_me_en`],
-          phone: user?.phone,
+          phone: separatePhoneNumber(user?.phone).restOfNumber,
           email: user?.email,
           current_password: "",
           password: "",
           password_confirmation: "",
         }}
         onSubmit={values => {
+          const completePhoneNumber = `${telCode} ${values.phone}`;
           const formData = {
             id: user.id,
             about_me_en: values.about_me,
             image,
             ...values,
+            phone: completePhoneNumber,
           };
+          // console.log(formData);
           const token = localStorage.getItem("token");
           postRequest("edit-profile", formData, {
             Authorization: `Bearer ${token}`,
@@ -253,10 +292,10 @@ const EditProfile = () => {
                 <Select
                   className='signUp_selector'
                   showSearch
-                  value={telCode}
                   placeholder={t("inputs.choose")}
                   optionFilterProp='children'
                   onChange={val => setTelCode(val)}
+                  value={telCode}
                   //@ts-ignore
                   filterOption={filterOptionTel}
                   // options={country_dial}
@@ -297,13 +336,12 @@ const EditProfile = () => {
                     onBlur={handleBlur}
                     value={values.phone}
                   />
-                  <p className='error'>
-                    {errors.phone && touched.phone
-                      ? (errors.phone as string)
-                      : null}
-                  </p>
                 </div>
               </div>
+              <p className='error'>
+                {(values.phone && !telCode && "You should add tel code") ||
+                  (telCode && !values.phone && "You should add phone number")}
+              </p>
             </div>
             <div className='signUp_formGroup'>
               <label htmlFor='personal_email'>{t("sign-in.email")}</label>
@@ -339,43 +377,73 @@ const EditProfile = () => {
               <label htmlFor='personal_pass'>
                 {t("inputs.password_current")}
               </label>
-              <input
-                type='text'
-                id='personal_pass'
-                name='current_password'
-                className='signUp_input'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.current_password}
-              />
+              <div className='passwordInputField'>
+                <input
+                  type={showPassword1 ? "text" : "password"}
+                  id='personal_pass'
+                  name='current_password'
+                  className='signUp_input'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.current_password}
+                />
+                <button
+                  type='button'
+                  onClick={e => {
+                    e.preventDefault();
+                    setShowPassword1(!showPassword1);
+                  }}>
+                  <img src={showPassword1 ? EYE_OPEN : EYE_CLOSE} alt='Eye' />
+                </button>
+              </div>
             </div>
             <div className='signUp_formGroup'>
               <label htmlFor='personal_newPass'>
                 {t("inputs.password_new")}
               </label>
-              <input
-                type='text'
-                id='personal_newPass'
-                name='password'
-                className='signUp_input'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
+              <div className='passwordInputField'>
+                <input
+                  type={showPassword2 ? "text" : "password"}
+                  id='personal_newPass'
+                  name='password'
+                  className='signUp_input'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                />
+                <button
+                  type='button'
+                  onClick={e => {
+                    e.preventDefault();
+                    setShowPassword2(!showPassword2);
+                  }}>
+                  <img src={showPassword2 ? EYE_OPEN : EYE_CLOSE} alt='Eye' />
+                </button>
+              </div>
             </div>
             <div className='signUp_formGroup'>
               <label htmlFor='personal_repeatPass'>
                 {t("inputs.password_confirmation")}
               </label>
-              <input
-                type='text'
-                id='personal_repeatPass'
-                name='password_confirmation'
-                className='signUp_input'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password_confirmation}
-              />
+              <div className='passwordInputField'>
+                <input
+                  type={showPassword3 ? "text" : "password"}
+                  id='personal_repeatPass'
+                  name='password_confirmation'
+                  className='signUp_input'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password_confirmation}
+                />
+                <button
+                  type='button'
+                  onClick={e => {
+                    e.preventDefault();
+                    setShowPassword3(!showPassword3);
+                  }}>
+                  <img src={showPassword3 ? EYE_OPEN : EYE_CLOSE} alt='Eye' />
+                </button>
+              </div>
             </div>
             <p className='onTheWeb'>{t("personal.on_the_web")}</p>
             <div className='personal_add_socialMedias'>

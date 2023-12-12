@@ -96,7 +96,7 @@
   },
   "inputs": {
     "enter-donation-amount": "Enter donation amount",
-    "name": "Your name",
+    "name": "Name",
     "surname": "Surname",
     "organization": "Organization",
     "country": "Country of Residence",
@@ -162,7 +162,8 @@
     "date": "Date",
     "type": "Type",
     "amount": "Amount",
-    "project": "project"
+    "project": "project",
+    "subs_type": "Subscription Type"
   },
   "select-acount-type": "SELECT ACCOUNT TYPE",
   "budget": "Total Budget",
@@ -183,6 +184,8 @@
       "checking": "Checking payment, please wait..."
     }
   },
+  "recommendation": "Sage's Recommendation",
+  "no-project": "There is no project",
   "buy": "Buy",
   "book": "Book",
   "buy-project": "Buy Project",

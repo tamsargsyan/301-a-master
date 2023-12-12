@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Router from "./pages/router";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import RecommentedModal from "./components/RecommentedModal";
 import Conragts from "./components/Congrats";
 import { getUser, login } from "./actions/authActions";
 import { fetchingContact, usePostRequest } from "./actions/apiActions";
@@ -112,7 +111,7 @@ function App() {
         setDonateProjects={setDonateProjects}
       /> */}
       {/* <DonateToTheProject /> */}
-      <RecommentedModal />
+      {/* <RecommentedModal /> */}
       <Conragts />
     </div>
   );

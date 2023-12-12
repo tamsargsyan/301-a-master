@@ -17,6 +17,7 @@
   line-height: 155%;
   font-weight: 500;
   color: var(--mention-color);
+  font-size: 14px !important;
 }
 .aboutUs-bigPattern-1,
 .aboutUs-bigPattern-2,

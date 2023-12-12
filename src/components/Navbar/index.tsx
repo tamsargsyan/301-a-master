@@ -244,9 +244,9 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           )}
         </div>
       ) : (
-        <button className='logo' onClick={scrollToTop}>
+        <NavLink to={`/${lang}/`} className='logo' onClick={scrollToTop}>
           <img src={LOGO} alt='Logo' decoding='async' loading='lazy' />
-        </button>
+        </NavLink>
       )}
       <div className='menu'>
         <div className='link'>

@@ -25,6 +25,7 @@ import LoginGmail from "./LoginGmail";
 import LoginFacebook from "./LoginFacebook";
 import Status from "./Personal/Status";
 import Thanks from "./Thanks";
+import RecommentedModal from "../components/RecommentedModal";
 
 const pagesData: routerType[] = [
   {
@@ -182,6 +183,11 @@ const pagesData: routerType[] = [
     path: "/:lang/signUp",
     element: <SignUp />,
     title: "Sign Up",
+  },
+  {
+    path: "/:lang/recommendation",
+    element: <RecommentedModal />,
+    title: "Recomendation",
   },
   {
     path: "/:lang/personal/personal-info",

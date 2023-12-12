@@ -2,7 +2,7 @@ import { useState } from "react";
 import ARROW from "../../assets/arrow.svg";
 import "./index.css";
 import Button from "../Button";
-
+import cookies from "js-cookie";
 interface CardSliderProps {
   data: any;
   handleAccountType: any;
@@ -10,6 +10,7 @@ interface CardSliderProps {
 
 const CardSlider: React.FC<CardSliderProps> = ({ data, handleAccountType }) => {
   const [active, setActive] = useState(0);
+  const lang = cookies.get("i18next");
 
   const prevSlide = () => {
     setActive((active - 1 + data.length) % data.length);
@@ -65,9 +66,9 @@ const CardSlider: React.FC<CardSliderProps> = ({ data, handleAccountType }) => {
                 border: "none",
               }}
               className='accountType_btn'
-              link={false}
-              to={""}
-              onClick={() => handleAccountType(card.id, card.name, card.type)}
+              link={true}
+              to={`/${lang}/accountType?id=${card.id}?type=${card.type}`}
+              // onClick={() => handleAccountType(card.id, card.name, card.type)}
             />
           </div>
         </div>

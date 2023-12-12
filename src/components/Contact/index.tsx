@@ -22,6 +22,8 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
   const { t } = useTranslation();
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
   const { postRequest, postLoading, response } = usePostRequest();
   const handleSubmit = (values: any) => {
@@ -68,8 +70,11 @@ const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
         <Formik
           validationSchema={contactSchema}
           initialValues={{
-            name: "",
-            email: "",
+            name:
+              user?.name && user?.last_name
+                ? `${user?.name} ${user?.last_name}`
+                : "",
+            email: user?.email || "",
             message: "",
           }}
           onSubmit={(values, { resetForm }) => {
@@ -100,7 +105,11 @@ const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
                       className='form'
                     />
                     {errors.name && touched.name && (
-                      <p className='error'>{errors.name}</p>
+                      <p className='error'>
+                        {errors.name && touched.name
+                          ? (errors.name as string)
+                          : null}
+                      </p>
                     )}
                   </div>
                   <div className='formGroup'>
@@ -116,7 +125,11 @@ const Contact: React.FC<ContactProps> = ({ separatedPart, contactPage }) => {
                       className='form'
                     />
                     {errors.email && touched.email && (
-                      <p className='error'>{errors.email}</p>
+                      <p className='error'>
+                        {errors.email && touched.email
+                          ? (errors.email as string)
+                          : null}
+                      </p>
                     )}
                   </div>
                 </div>

@@ -148,7 +148,9 @@ const Status = () => {
           </div>
         </div>
       ) : (
-        <Spin size='large' />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Spin size='large' />
+        </div>
       )}
     </div>
   );

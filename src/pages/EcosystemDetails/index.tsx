@@ -184,8 +184,8 @@ const EcoSystemDetails = () => {
                   </div>
                   <Button
                     text={t("btns.recommended")}
-                    link={false}
-                    to={""}
+                    link={true}
+                    to={`/${lang}/recommendation?ecosystem=${ecosystem}`}
                     style={{
                       background: ecosystemResult?.color,
                       color: "#fff",
@@ -193,7 +193,7 @@ const EcoSystemDetails = () => {
                       border: "none",
                     }}
                     className='recommented'
-                    onClick={() => dispatch(openRecommentedModal(true))}
+                    // onClick={() => dispatch(openRecommentedModal(true))}
                   />
                 </div>
               </div>

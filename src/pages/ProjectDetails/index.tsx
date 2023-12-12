@@ -58,6 +58,8 @@ const ProjectDetails = () => {
     "#CFA81F",
     "#7BD7FF",
   ];
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const windowSize = useWindowSize();
   const [isVisible, setIsVisible] = useState(false);
@@ -158,20 +160,20 @@ const ProjectDetails = () => {
   const heartit = async (project_id: number, user_id: number) => {
     if (isAuthenticated) {
       const existingFavorite = favoriteProjectsData.favorites.find(
-        (fav: any) => fav.project_id === project_id && fav.user_id === user_id
+        (fav: any) => fav.project_id === project_id && fav.user_id === user?.id
       );
 
       try {
         if (existingFavorite) {
           await postRequest(
             "favorite",
-            { project_id, user_id, favorite: "remove" },
+            { project_id, user_id: user?.id, favorite: "remove" },
             {}
           );
         } else {
           await postRequest(
             "favorite",
-            { project_id, user_id, favorite: "add" },
+            { project_id, user_id: user?.id, favorite: "add" },
             {}
           );
         }
@@ -757,7 +759,7 @@ const ProjectDetails = () => {
                                 ? favoriteProjectsData?.favorites?.findIndex(
                                     (item: any) =>
                                       item.project_id === project?.id &&
-                                      item.user_id === data.user.id
+                                      item.user_id === user.id
                                   ) !== -1
                                   ? "liked"
                                   : ""

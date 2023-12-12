@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import AUTHOR_1 from "../../../assets/projectAuthor/1.svg";
 import PROJECT_1 from "../../../assets/projectAuthor/project-1.png";
 import "./index.css";
@@ -48,26 +48,32 @@ const PerosnalProjects: React.FC<PersonalProjectsProps> = ({
       </Helmet>
       <p className='personalInfo_title'>{t(`personal.${title}`)}</p>
       {content && <p className='personalInfo_event_content'>{content}</p>}
-      <div className='donationProjects'>
+      <div className='donationProjects' style={{ height: "auto" }}>
         {response?.data ? (
-          response.data.map((p: any) => (
-            <SingleProjectBox
-              title={p[`project_name_${lang}`]}
-              description={removeHtmlTags(p[`description_${lang}`])}
-              flag={
-                p?.payment_type !== "buy" &&
-                p?.payment_type !== "book" &&
-                p?.map_count
-              }
-              author='Peter Nemoy'
-              authorImg={AUTHOR_1}
-              budget={p.budget_price}
-              collected={p.collected_price}
-              projectImg={`${storageBase}/${p.image}`}
-              className='personal_project'
-              // onClick={handleSingleProject}
-            />
-          ))
+          response.data.length > 0 ? (
+            response.data.map((p: any, i: number) => (
+              <Fragment key={i}>
+                <SingleProjectBox
+                  title={p[`project_name_${lang}`]}
+                  description={removeHtmlTags(p[`description_${lang}`])}
+                  flag={
+                    p?.payment_type !== "buy" &&
+                    p?.payment_type !== "book" &&
+                    p?.map_count
+                  }
+                  author='Peter Nemoy'
+                  authorImg={AUTHOR_1}
+                  budget={p.budget_price}
+                  collected={p.collected_price}
+                  projectImg={`${storageBase}/${p.image}`}
+                  className='personal_project'
+                  // onClick={handleSingleProject}
+                />
+              </Fragment>
+            ))
+          ) : (
+            t("no-project")
+          )
         ) : (
           <Spin size='large' />
         )}

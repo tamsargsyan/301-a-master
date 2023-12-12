@@ -8,7 +8,6 @@ import countries from "../../locales/countries.json";
 import country_dial from "../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
 import {
   doanteSignUpSchema,
@@ -25,12 +24,12 @@ import {
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
-import { getAgreementTerms } from "../../actions/privacyPolicyAction";
 import { useLocation, useNavigate } from "react-router";
 import Terms from "../Terms";
 import cookies from "js-cookie";
 import { login } from "../../actions/authActions";
-import { history } from "../Navbar";
+import EYE_OPEN from "../../assets/eye-open-gray.svg";
+import EYE_CLOSE from "../../assets/eye-close-gray.svg";
 
 const { Option } = Select;
 
@@ -49,6 +48,7 @@ const filterOptionSages = (input: string, option: any) =>
 
 const AccountTypeModal = () => {
   const { t } = useTranslation();
+  const lang = cookies.get("i18next");
   const dispatch = useDispatch();
   const confirmAgreementTerms = () => {
     navigate(`/${lang}/agreementTerms`);
@@ -104,10 +104,10 @@ const AccountTypeModal = () => {
           localStorage.setItem("token", facebookLoginCallbackData.access_token);
       } else localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      // !location.pathname.includes("donation") && dispatch(login());
-      // !location.pathname.includes("donation") &&
-      //   !hasNavigated &&
-      //   navigate(`/${lang}/`);
+      !location.pathname.includes("donation") && dispatch(login());
+      !location.pathname.includes("donation") &&
+        !hasNavigated &&
+        navigate(`/${lang}/`);
     }
   }, [response, dispatch, error, t]);
 
@@ -146,11 +146,6 @@ const AccountTypeModal = () => {
   }, [donatePostRequest.response]);
 
   const { data } = useSelector((state: RootState) => state.registerData);
-  const [agreementTermsChecked, setAgreementTearmsChecked] = useState(false);
-  const [clubCodeOfEthics301Checked, setClubCodeOfEthics301Checked] =
-    useState(false);
-  const [supportFormChecked, setSupportFormChecked] = useState(false);
-
   const location = useLocation();
   const id = +location.search?.split("?")[1]?.split("=")[1];
   const type = location.search?.split("?")[2]?.split("=")[1];
@@ -171,8 +166,6 @@ const AccountTypeModal = () => {
     (state: RootState) => state.privacyPolicy.data
   );
 
-  const lang = cookies.get("i18next");
-
   const schema = () => {
     if (location.pathname.includes("donation")) {
       return doanteSignUpSchema;
@@ -191,11 +184,17 @@ const AccountTypeModal = () => {
       if (value1) {
         dispatch(congratsModal(true, `${value1}`));
       }
+      if (value2) {
+        dispatch(congratsModal(true, `${value2}`));
+      }
       if (value1 && value2) {
         dispatch(congratsModal(true, `${value1} and ${value2}`));
       }
     }
   }, [error]);
+
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false)
 
   return (
     <Modal
@@ -230,7 +229,7 @@ const AccountTypeModal = () => {
             country: "",
             password: "",
             password_confirmation: "",
-            subscription_type: "annual",
+            subscription_type: `annual`,
             participation_form: "",
             sages_id: "",
             agreement_terms: false,
@@ -242,26 +241,28 @@ const AccountTypeModal = () => {
             const result = {
               ...values,
               phone: completePhoneNumber,
-              type: type,
+              type,
               // agreement_terms: agreementTermsChecked,
               // club_code_of_ethics_301: clubCodeOfEthics301Checked,
               // support_form: supportFormChecked,
               user_id: (gmailLoginCallbackData || facebookLoginCallbackData)
                 ?.user?.id,
+              lang,
             };
-            console.log(result);
-            // if (gmailLoginCallbackData || facebookLoginCallbackData) {
-            //   let token = "";
-            //   if (gmailLoginCallbackData)
-            //     token = gmailLoginCallbackData.access_token;
-            //   if (facebookLoginCallbackData)
-            //     token = facebookLoginCallbackData.access_token;
-            //   postRequest("update-user", result, {
-            //     Authorization: `Bearer ${token}`,
-            //   });
-            // } else {
-            //   postRequest("register-user", result, {});
-            // }
+            // console.log(result);
+            console.log(completePhoneNumber);
+            if (gmailLoginCallbackData || facebookLoginCallbackData) {
+              let token = "";
+              if (gmailLoginCallbackData)
+                token = gmailLoginCallbackData.access_token;
+              if (facebookLoginCallbackData)
+                token = facebookLoginCallbackData.access_token;
+              postRequest("update-user", result, {
+                Authorization: `Bearer ${token}`,
+              });
+            } else {
+              postRequest("register-user", result, {});
+            }
           }}>
           {({
             values,
@@ -366,7 +367,7 @@ const AccountTypeModal = () => {
                     </label>
                     <input
                       type='text'
-                      id='signUp_oraganization'
+                      id='signUp_recommendation'
                       name='recommendation_from'
                       className='signUp_input'
                       value={values.recommendation_from}
@@ -420,7 +421,7 @@ const AccountTypeModal = () => {
                               showSearch
                               optionFilterProp='children'
                               onChange={(_, obj: any) => {
-                                form.setFieldValue("sages_id", obj.value);
+                                form.setFieldValue("sages_id", obj.key);
                               }}
                               //@ts-ignore
                               filterOption={filterOptionSages}>
@@ -703,9 +704,12 @@ const AccountTypeModal = () => {
                       </div>
                     </div>
                     <p className='error'>
-                      {errors.phone && touched.phone
-                        ? (errors.phone as string)
-                        : null}{" "}
+                      {(values.phone &&
+                        !telCode &&
+                        "You should add tel code") ||
+                        (telCode &&
+                          !values.phone &&
+                          "You should add phone number")}
                     </p>
                   </div>
                   {facebookLoginCallbackData ||
@@ -715,14 +719,23 @@ const AccountTypeModal = () => {
                         <label htmlFor='signUp_password'>
                           {t("inputs.password")}*
                         </label>
-                        <input
-                          type='text'
-                          id='signUp_password'
-                          name='password'
-                          className='signUp_input'
-                          value={values.password}
-                          onChange={handleChange}
-                        />
+                        <div className='passwordInputField'>
+                          <input
+                            type={showPassword1 ? "text" : "password"}
+                            id='signUp_password'
+                            name='password'
+                            className='signUp_input'
+                            value={values.password}
+                            onChange={handleChange}
+                          />
+                          <button
+                            onClick={() => setShowPassword1(!showPassword1)}>
+                            <img
+                              src={showPassword1 ? EYE_OPEN : EYE_CLOSE}
+                              alt='Eye'
+                            />
+                          </button>
+                        </div>
                         <p className='error'>
                           {errors.password &&
                             touched.password &&
@@ -733,14 +746,23 @@ const AccountTypeModal = () => {
                         <label htmlFor='signUp_repeatPassword'>
                           {t("inputs.password_confirmation")}*
                         </label>
-                        <input
-                          type='text'
-                          id='signUp_repeatPassword'
-                          name='password_confirmation'
-                          className='signUp_input'
-                          value={values.password_confirmation}
-                          onChange={handleChange}
-                        />
+                        <div className='passwordInputField'>
+                          <input
+                            type={showPassword2 ? "text" : "password"}
+                            id='signUp_repeatPassword'
+                            name='password_confirmation'
+                            className='signUp_input'
+                            value={values.password_confirmation}
+                            onChange={handleChange}
+                          />
+                          <button
+                            onClick={() => setShowPassword2(!showPassword2)}>
+                            <img
+                              src={showPassword2 ? EYE_OPEN : EYE_CLOSE}
+                              alt='Eye'
+                            />
+                          </button>
+                        </div>
                         <p className='error'>
                           {errors.password_confirmation &&
                             touched.password_confirmation &&
@@ -771,7 +793,7 @@ const AccountTypeModal = () => {
                               }}
                               //@ts-ignore
                               filterOption={filterOption}
-                              defaultValue='Annual'
+                              defaultValue={`${t("payments.annual")} 3612$`}
                               options={[
                                 {
                                   label: `${t("payments.annual")} 3612$`,
@@ -977,10 +999,19 @@ const AccountTypeModal = () => {
                   to={""}
                   type='submit'
                   style={{
-                    background: isValid ? "#dd264e" : "#A3A3A3",
+                    background:
+                      isValid &&
+                      ((values.phone === "" && telCode === "") ||
+                        (values.phone !== "" && telCode !== ""))
+                        ? "#dd264e"
+                        : "#A3A3A3",
                     border: "none",
                     color: "#fff",
                   }}
+                  disabled={
+                    (values.phone !== "" && telCode === "") ||
+                    (values.phone === "" && telCode !== "")
+                  }
                   className='donation_btn'
                 />
                 <Terms aboutUs={false} />

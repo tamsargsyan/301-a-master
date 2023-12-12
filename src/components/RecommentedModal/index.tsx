@@ -1,25 +1,29 @@
 import Modal from "../Modal";
 import EcosystemModal from "../EcosystemModal";
 import Button from "../Button";
-import { Select } from "antd";
+import { Select, Spin } from "antd";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import { useTranslation } from "react-i18next";
 import { openRecommentedModal } from "../../actions/donateAction";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Formik, Field } from "formik";
 import { recommendationSchema } from "../../Validation";
 import countries from "../../locales/countries.json";
 import country_dial from "../../locales/country_dial.json";
+import { useLocation, useNavigate } from "react-router";
+import { usePostRequest } from "../../actions/apiActions";
+import cookies from "js-cookie";
+import { congratsModal } from "../../actions/congratsAction";
 const { Option } = Select;
 
-interface RecommentedModalProps {}
-
-const RecommentedModal: React.FC<RecommentedModalProps> = () => {
+const RecommentedModal = () => {
   const { t } = useTranslation();
-  const { modalOpen } = useSelector((state: RootState) => state.expertProject);
+  const lang = cookies.get("i18next");
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
   const filterOption = (
     input: string,
@@ -34,26 +38,38 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
   const [telCode, setTelCode] = useState("");
   const handleTelCode = (val: string) => setTelCode(val);
 
+  const navigate = useNavigate();
+
+  const { postRequest, response, postLoading } = usePostRequest();
+  const location = useLocation();
+  const ecosystem = location.search.split("=")[1];
+
+  useEffect(() => {
+    if (response) {
+      if (response.data?.message) {
+        dispatch(congratsModal(true, response.data.message));
+        navigate(`/${lang}/ecosystem/${ecosystem}`);
+      }
+    }
+  }, [response]);
+
   return (
-    <Modal
-      setOpenModal={() => dispatch(openRecommentedModal(false))}
-      openModal={modalOpen}>
-      <EcosystemModal
-        onClose={() => dispatch(openRecommentedModal(false))}
-        header={"рекомендация мудреца"}>
+    <Modal setOpenModal={() => navigate(-1)} openModal={true}>
+      <EcosystemModal onClose={() => navigate(-1)} header={t("recommendation")}>
         <Formik
           validationSchema={recommendationSchema}
           initialValues={{
-            name: "",
-            last_name: "",
-            email: "",
-            country: "",
+            name: user?.name || "",
+            last_name: user?.last_name || "",
+            country: user?.country || "",
+            activities: "",
+            email: user?.email || "",
+            your_contacts: "",
             phone: "",
-            link: "",
-            yourContact: "",
+            url: "",
           }}
           onSubmit={values => {
-            console.log(values);
+            postRequest("sages-recommendation", values, {});
           }}>
           {({
             values,
@@ -62,6 +78,7 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
             handleChange,
             handleBlur,
             handleSubmit,
+            isValid,
           }) => (
             <form
               noValidate
@@ -83,7 +100,9 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                       onChange={handleChange}
                     />
                     <p className='error'>
-                      {errors.name && touched.name && errors.name}
+                      {errors.name && touched.name
+                        ? (errors.name as string)
+                        : null}{" "}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -100,9 +119,9 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                       onChange={handleChange}
                     />
                     <p className='error'>
-                      {errors.last_name &&
-                        touched.last_name &&
-                        errors.last_name}
+                      {errors.last_name && touched.last_name
+                        ? (errors.last_name as string)
+                        : null}{" "}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -124,17 +143,20 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                             //@ts-ignore
                             filterOption={filterOption}
                             options={countries}
+                            defaultValue={user?.country || ""}
                           />
                         )
                       }
                     </Field>
                     <p className='error'>
-                      {errors.country && touched.country && errors.country}
+                      {errors.country && touched.country
+                        ? (errors.country as string)
+                        : null}{" "}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
                     <label htmlFor='signUp_recommendation'>
-                      {t("inputs.activities")}
+                      {t("inputs.activities")}*
                     </label>
                     <Field name='recommendation_from'>
                       {
@@ -146,10 +168,7 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                             optionFilterProp='children'
                             className='signUp_selector'
                             onChange={(_, obj: any) => {
-                              form.setFieldValue(
-                                "recommendation_from",
-                                obj.label
-                              );
+                              form.setFieldValue("activities", obj.id);
                             }}
                             //@ts-ignore
                             filterOption={filterOption}
@@ -157,21 +176,28 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                               {
                                 value: "jack",
                                 label: "Jack",
+                                id: "1",
                               },
                               {
                                 value: "lucy",
                                 label: "Lucy",
+                                id: "2",
                               },
                               {
                                 value: "tom",
                                 label: "Tom",
+                                id: "3",
                               },
                             ]}
                           />
                         )
                       }
                     </Field>
-                    <p className='error'></p>
+                    <p className='error'>
+                      {errors.activities &&
+                        touched.activities &&
+                        errors.activities}
+                    </p>
                   </div>
                 </div>
                 <div className='recommendation_2nd'>
@@ -182,13 +208,15 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                     <input
                       type='text'
                       id='recommendation_link'
-                      name='email'
+                      name='url'
                       className='signUp_input'
-                      value={values.link}
+                      value={values.url}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
-                    <p className='error'></p>
+                    <p className='error'>
+                      {errors.url && touched.url && errors.url}
+                    </p>
                   </div>
                   <div className='signUp_formGroup'>
                     <label htmlFor='recommendation_yourContact'>
@@ -197,9 +225,9 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                     <input
                       type='text'
                       id='recommendation_yourContact'
-                      name='email'
+                      name='your_contacts'
                       className='signUp_input'
-                      value={values.yourContact}
+                      value={values.your_contacts}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
@@ -219,7 +247,9 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                       onChange={handleChange}
                     />
                     <p className='error'>
-                      {errors.email && touched.email && errors.email}
+                      {errors.email && touched.email
+                        ? (errors.email as string)
+                        : null}{" "}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -262,24 +292,44 @@ const RecommentedModal: React.FC<RecommentedModalProps> = () => {
                       </div>
                     </div>
                     <p className='error'>
-                      {errors.phone && touched.phone && errors.phone}
+                      {(values.phone &&
+                        !telCode &&
+                        "You should add tel code") ||
+                        (telCode &&
+                          !values.phone &&
+                          "You should add phone number")}
                     </p>
                   </div>
                 </div>
               </div>
               <div className='signUp_btns'>
                 <Button
-                  text={t("btns.recommended")}
+                  text={
+                    postLoading ? (
+                      <Spin size='small' className='btn_spinner' />
+                    ) : (
+                      t("btns.recommended")
+                    )
+                  }
                   link={false}
                   to={""}
                   type='submit'
                   style={{
                     width: "100%",
-                    background: "#A3A3A3",
+                    background:
+                      isValid &&
+                      ((values.phone === "" && telCode === "") ||
+                        (values.phone !== "" && telCode !== ""))
+                        ? "#dd264e"
+                        : "#A3A3A3",
                     border: "none",
                     color: "#fff",
                   }}
                   className='donation_btn'
+                  disabled={
+                    (values.phone !== "" && telCode === "") ||
+                    (values.phone === "" && telCode !== "")
+                  }
                 />
               </div>
             </form>

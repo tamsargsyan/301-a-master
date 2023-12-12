@@ -59,11 +59,11 @@ export const signUpSchema = yup.object().shape({
     .string()
     .required("Password confirmation is a required field")
     .oneOf([yup.ref("password")], "Passwords must match"),
-  support_form: yup.boolean().oneOf([true], "This field must be true"),
+  support_form: yup.boolean().oneOf([true], "This field must be selected"),
   club_code_of_ethics_301: yup
     .boolean()
-    .oneOf([true], "This field must be true"),
-  agreement_terms: yup.boolean().oneOf([true], "This field must be true"),
+    .oneOf([true], "This field must be selected"),
+  agreement_terms: yup.boolean().oneOf([true], "This field must be selected"),
 });
 
 export const doanteSignUpSchema = yup.object().shape({
@@ -106,6 +106,8 @@ export const recommendationSchema = yup.object().shape({
     .string()
     .matches(/^[A-Za-z]+$/, "Last Name should only contain letters")
     .required("Last Name is a required field"),
+  country: yup.string().required("Country is a required field"),
+  activities: yup.string().required("Activities is a required field"),
   email: yup
     .string()
     .required("Email is a required field")
@@ -113,7 +115,6 @@ export const recommendationSchema = yup.object().shape({
   phone: yup
     .string()
     .matches(/^[0-9]+$/, "Phone number should contain only numbers"),
-  country: yup.string().required("Country is a required field"),
 });
 
 export const socialMediaRegisterSchema = yup.object().shape({

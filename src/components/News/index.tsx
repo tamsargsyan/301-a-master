@@ -71,7 +71,7 @@ const News: React.FC<NewsProps> = ({ lang }) => {
             width: "63vw",
             alignItems: "center",
           }}
-          id="news"
+          id='news'
         />
         <button className='leftBtn newsBtn' onClick={handleBack}>
           <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
@@ -80,37 +80,39 @@ const News: React.FC<NewsProps> = ({ lang }) => {
           <img src={ARROW} alt='Arrow' decoding='async' loading='lazy' />
         </button>
         <div className='newsContainer'>
-          {news.slice(0, 4).map((item: any) => {
-            const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
-            const altText =
-              typeof dynamicTitle === "string" ? dynamicTitle : "";
-            return (
-              <div
-                className={`${activeNews === item.id && "activeNews"} ${
-                  activeNews === 1 && item.id === 2 && "activeNews1"
-                } ${activeNews === 3 && item.id === 2 && "activeNews2"} news`}
-                key={item.id}>
-                <div className='newsImg'>
-                  <img
-                    src={`${storageBase}/${item.image}`}
-                    alt={altText}
-                    decoding='async'
-                    loading='lazy'
-                  />
+          {(windowSize.width < 900 ? news.slice(0, 3) : news.slice(0, 4)).map(
+            (item: any) => {
+              const dynamicTitle = item[`title_${lang}` as keyof HeaderKeyOf];
+              const altText =
+                typeof dynamicTitle === "string" ? dynamicTitle : "";
+              return (
+                <div
+                  className={`${activeNews === item.id && "activeNews"} ${
+                    activeNews === 1 && item.id === 2 && "activeNews1"
+                  } ${activeNews === 3 && item.id === 2 && "activeNews2"} news`}
+                  key={item.id}>
+                  <div className='newsImg'>
+                    <img
+                      src={`${storageBase}/${item.image}`}
+                      alt={altText}
+                      decoding='async'
+                      loading='lazy'
+                    />
+                  </div>
+                  <div className='newsContent'>
+                    <h1>{dynamicTitle}</h1>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        //@ts-ignore
+                        __html: item[`description_${lang}` as keyof newsTypes],
+                      }}
+                    />
+                    <p>{item.created_at.split("T")[0] as keyof newsTypes}</p>
+                  </div>
                 </div>
-                <div className='newsContent'>
-                  <h1>{dynamicTitle}</h1>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      //@ts-ignore
-                      __html: item[`description_${lang}` as keyof newsTypes],
-                    }}
-                  />
-                  <p>{item.created_at.split("T")[0] as keyof newsTypes}</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            }
+          )}
         </div>
         {/* <div
           className='btns newsBtns'

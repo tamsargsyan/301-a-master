@@ -23,10 +23,14 @@ import { storageBase } from "../../utils/storage";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { Helmet } from "react-helmet";
 import cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 const OurProjects = () => {
   const windowSize = useWindowSize();
   const dispatch = useDispatch();
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
+  const {t} = useTranslation()
 
   useEffect(() => {
     //@ts-ignore
@@ -100,20 +104,20 @@ const OurProjects = () => {
     if (isAuthenticated) {
       setClickedHeartBtnProjectId(project_id);
       const existingFavorite = favoriteProjectsData.favorites.find(
-        (fav: any) => fav.project_id === project_id && fav.user_id === user_id
+        (fav: any) => fav.project_id === project_id && fav.user_id === user?.id
       );
 
       try {
         if (existingFavorite) {
           await postRequest(
             "favorite",
-            { project_id, user_id, favorite: "remove" },
+            { project_id, user_id: user?.id, favorite: "remove" },
             {}
           );
         } else {
           await postRequest(
             "favorite",
-            { project_id, user_id, favorite: "add" },
+            { project_id, user_id: user?.id, favorite: "add" },
             {}
           );
         }
@@ -254,7 +258,7 @@ const OurProjects = () => {
                         ? favoriteProjectsData?.favorites?.findIndex(
                             (item: any) =>
                               item.project_id === project?.project?.id &&
-                              item.user_id === project.user.id
+                              item.user_id === user?.id
                           ) !== -1
                         : favoriteProjects.indexOf(project?.project?.id) !== -1
                     }
@@ -269,7 +273,7 @@ const OurProjects = () => {
               );
             })
           ) : (
-            <div className='noProject'>There is no project</div>
+            <div className='noProject'>{t("no-project")}</div>
           )}
           {totalPages && totalPages.length > 1 && !!currentProjects?.length && (
             <div className='pagination'>
