@@ -858,7 +858,7 @@ const AccountTypeModal = () => {
                           //@ts-ignore
                           // onCancel={cancel}
                           okText='more'
-                          cancelText={""}
+                          showCancel={false}
                           title={undefined}>
                           <img
                             src={INFO_ICON}
@@ -912,7 +912,7 @@ const AccountTypeModal = () => {
                           onConfirm={confirmClubCodeEthics}
                           //@ts-ignore
                           okText='more'
-                          cancelText={""}
+                          showCancel={false}
                           title={undefined}>
                           <img
                             src={INFO_ICON}
@@ -970,7 +970,7 @@ const AccountTypeModal = () => {
                           }
                           icon={false}
                           okText={""}
-                          cancelText={""}
+                          showCancel={false}
                           title={undefined}>
                           <img
                             src={INFO_ICON}

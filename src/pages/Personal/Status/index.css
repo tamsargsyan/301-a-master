@@ -119,6 +119,23 @@
 .rejected {
   color: #dd264e !important;
 }
+.payment_status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.rejected_reason {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rejected_reason img {
+  width: 100%;
+  height: 100%;
+}
 @media screen and (max-width: 1280px) {
   .statusCardInfo p {
     font-size: 18px;

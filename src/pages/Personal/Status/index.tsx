@@ -4,9 +4,10 @@ import { usePostRequest } from "../../../actions/apiActions";
 import cookies from "js-cookie";
 import { Helmet } from "react-helmet";
 import LOGO_301 from "../../../assets/logo/301-white.svg";
-import ROTATE from "../../../assets/logo/rotate.svg";
+// import ROTATE from "../../../assets/logo/rotate.svg";
 import { useEffect } from "react";
-import { Spin } from "antd";
+import { Popconfirm, Spin } from "antd";
+import INFO_ICON from "../../../assets/info-icon.svg";
 
 const Status = () => {
   const { t } = useTranslation();
@@ -25,6 +26,8 @@ const Status = () => {
       }
     );
   }, []);
+
+  console.log(response);
 
   const payment_type = (type: string) => {
     if (type === "one_time") return t("payments.one_time");
@@ -137,8 +140,36 @@ const Status = () => {
                       </td>
                       <td>{payment_type(pymnt.type)}</td>
                       <td>{pymnt.amount}$</td>
-                      <td className={`${pymnt.status}`}>
+                      <td className={`${pymnt.status} payment_status`}>
                         {payment_status(pymnt.status)}
+                        {pymnt?.reason && (
+                          <div className='rejected_reason'>
+                            <Popconfirm
+                              className='signUp_popover'
+                              icon={false}
+                              description={
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: pymnt.reason,
+                                  }}
+                                />
+                              }
+                              //@ts-ignore
+                              // onConfirm={confirmAgreementTerms}
+                              //@ts-ignore
+                              // onCancel={cancel}
+                              okText='ok'
+                              showCancel={false}
+                              title={undefined}>
+                              <img
+                                src={INFO_ICON}
+                                alt='Info'
+                                decoding='async'
+                                loading='lazy'
+                              />
+                            </Popconfirm>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   );
