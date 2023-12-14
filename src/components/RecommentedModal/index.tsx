@@ -45,8 +45,8 @@ const RecommentedModal = () => {
 
   useEffect(() => {
     if (response) {
-      if (response.data?.message) {
-        dispatch(congratsModal(true, response.data.message));
+      if (response.data?.response_code === 21) {
+        dispatch(congratsModal(true, t("congrats.sages-recommendation")));
         navigate(`/${lang}/ecosystem/${ecosystem}`);
       }
     }
@@ -73,7 +73,7 @@ const RecommentedModal = () => {
             name: user?.name || "",
             last_name: user?.last_name || "",
             country: user?.country || "",
-            activities: "",
+            // activities: "",
             email: user?.email || "",
             your_contacts: "",
             phone: "",
@@ -165,7 +165,7 @@ const RecommentedModal = () => {
                         : null}{" "}
                     </p>
                   </div>
-                  <div className='signUp_formGroup'>
+                  {/* <div className='signUp_formGroup'>
                     <label htmlFor='signUp_recommendation'>
                       {t("inputs.activities")}*
                     </label>
@@ -209,9 +209,7 @@ const RecommentedModal = () => {
                         touched.activities &&
                         errors.activities}
                     </p>
-                  </div>
-                </div>
-                <div className='recommendation_2nd'>
+                  </div> */}
                   <div className='signUp_formGroup'>
                     <label htmlFor='recommendation_link'>
                       {t("sign-in.link")}
@@ -229,6 +227,25 @@ const RecommentedModal = () => {
                       {errors.url && touched.url && errors.url}
                     </p>
                   </div>
+                </div>
+                <div className='recommendation_2nd'>
+                  {/* <div className='signUp_formGroup'>
+                    <label htmlFor='recommendation_link'>
+                      {t("sign-in.link")}
+                    </label>
+                    <input
+                      type='text'
+                      id='recommendation_link'
+                      name='url'
+                      className='signUp_input'
+                      value={values.url}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                    />
+                    <p className='error'>
+                      {errors.url && touched.url && errors.url}
+                    </p>
+                  </div> */}
                   <div className='signUp_formGroup'>
                     <label htmlFor='recommendation_yourContact'>
                       {t("sign-in.your-contact")}

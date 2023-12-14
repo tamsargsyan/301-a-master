@@ -5,17 +5,20 @@ import SIDE_PATTERN from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
 import { createBrowserHistory } from "history";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
 import NO_IMAGE from "../../assets/no-image-user.png";
 import cookies from "js-cookie";
 import i18next from "i18next";
+import { usePostRequest } from "../../actions/apiActions";
+import { logout } from "../../actions/authActions";
+import { congratsModal } from "../../actions/congratsAction";
 
 export const history = createBrowserHistory(); // Create a history instance
 export const hasPreviousHistory = () => {
@@ -118,6 +121,42 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { postRequest, postLoading, response, error } = usePostRequest();
+  const dispatch = useDispatch();
+  const [hasNavigated, setHasNavigated] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (response && response?.data.response_code === 12 && !hasNavigated) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      dispatch(logout());
+      setHasNavigated(true);
+      !hasNavigated && navigate(`/${lang}/`);
+      // dispatch(congratsModal(true, t("validation-errors.data-invalid")));
+    } else if (error) {
+      if (
+        error.response?.status == 401 &&
+        error.response?.data.response_code === 13
+      ) {
+        dispatch(congratsModal(true, t("validation-errors.token-not-found")));
+      }
+    }
+  }, [response, error]);
+
+  useEffect(() => {
+    if (error) {
+      if (
+        error.response?.data?.response_code === 31 ||
+        error.response?.data?.response_code === 32
+      ) {
+        dispatch(congratsModal(true, t("congrats.login-again")));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        navigate(`/${lang}/`);
+      }
+    }
+  }, [error]);
 
   return (
     <div
@@ -200,7 +239,14 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                   <NavLink
                     to={`/${lang}/login`}
                     onClick={() => {
-                      setOpenMenu(false);
+                      const token = localStorage.getItem("token");
+                      postRequest(
+                        "logout",
+                        {},
+                        {
+                          Authorization: `Bearer ${token}`,
+                        }
+                      );
                     }}>
                     {!isAuthenticated
                       ? t("navbar.sign-in")
@@ -239,7 +285,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                 decoding='async'
                 loading='lazy'
               />
-              <span className='notification_number'>3</span>
+              <span className='notification_number'>0</span>
             </button>
           )}
         </div>
@@ -299,7 +345,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                   decoding='async'
                   loading='lazy'
                 />
-                <span className='notification_number'>3</span>
+                <span className='notification_number'>0</span>
               </button>
               <NavLink
                 to={`/${lang}/personal/personal-info`}

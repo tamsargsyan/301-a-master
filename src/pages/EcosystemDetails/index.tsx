@@ -163,10 +163,6 @@ const EcoSystemDetails = () => {
     }
   }, [partnersContainer, images]);
 
-  console.log(data);
-
-  console.log(showArrowBtns);
-
   if (loading)
     return (
       <div className='loadingContainer'>

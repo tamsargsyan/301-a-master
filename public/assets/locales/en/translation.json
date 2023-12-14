@@ -172,7 +172,9 @@
   "add-to-interesting": "Add to interesting",
   "congrats": {
     "contact-us": "Thanks for your feedback! We will reply to you as soon as possible.",
-    "register": "Thank you for registration! Now you are a part of the “301. Land of Wisdom« foundation."
+    "register": "Thank you for registration! Now you are a part of the “301. Land of Wisdom« foundation.",
+    "login-again": "Please login again",
+    "sages-recommendation": "Sage recommendation added successfully"
   },
   "donation": {
     "one-time-donation": "You can donate any amount, it will go to the needs of the '301. Land of Wisdom' Foundation.",
@@ -226,5 +228,16 @@
   "errors": {
     "old-pass-not-match": "Old Password Doesnt match!",
     "pass-field-confirmation": "The password field confirmation does not match."
+  },
+  "props": "Props",
+  "props-info": {
+    "title": "'301 Land of Wisdom' Educational Foundation",
+    "email": "Email",
+    "address-title": "Address",
+    "address": "RA, c. Yerevan Moskovyan 24:",
+    "executive-director": "Executive Director:",
+    "bank": "Bank",
+    "bank-title": "'AMERIABANK' CJSC",
+    "tin": "TIN:"
   }
 }

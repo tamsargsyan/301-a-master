@@ -26,6 +26,7 @@ import LoginFacebook from "./LoginFacebook";
 import Status from "./Personal/Status";
 import Thanks from "./Thanks";
 import RecommentedModal from "../components/RecommentedModal";
+import Props from "../components/Props";
 
 const pagesData: routerType[] = [
   {
@@ -172,6 +173,11 @@ const pagesData: routerType[] = [
   {
     path: "/:lang/privacyPolicy",
     element: <Privacy />,
+    title: "Privacy Policy",
+  },
+  {
+    path: "/:lang/props",
+    element: <Props />,
     title: "Privacy Policy",
   },
   {

@@ -18,8 +18,6 @@ import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { Helmet } from "react-helmet";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import { getAgreementTerms } from "../../actions/privacyPolicyAction";
-import { NavLink } from "react-router-dom";
 import cookies from "js-cookie";
 import Terms from "../../components/Terms";
 
@@ -216,6 +214,14 @@ const AboutUs = () => {
             </a>
           </Popconfirm>
           <Terms aboutUs={true} />
+          <a
+            href={`/${lang}/props`}
+            className='mentioned_txt support_form'
+            // onClick={e => e.preventDefault()}
+          >
+            {t("props")}
+            {/* {t("checkboxes.support_form")} */}
+          </a>
         </div>
       </Background>
       <Contact />

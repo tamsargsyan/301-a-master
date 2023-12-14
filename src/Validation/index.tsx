@@ -70,7 +70,7 @@ const ValidationSchema = () => {
       .oneOf([yup.ref("password")], t("validation-errors.pass-must-match")),
     support_form: yup
       .boolean()
-      .oneOf([true], t("validation-errors.selected-field-required")),
+      .oneOf([true, false], t("validation-errors.selected-field-required")),
     club_code_of_ethics_301: yup
       .boolean()
       .oneOf([true], t("validation-errors.selected-field-required")),
@@ -124,7 +124,7 @@ const ValidationSchema = () => {
       .matches(/^[A-Za-z]+$/, t("validation-errors.valid-last-name"))
       .required(t("validation-errors.last-name-required")),
     country: yup.string().required(t("validation-errors.country-required")),
-    activities: yup.string().required("Activities is a required field"),
+    // activities: yup.string().required("Activities is a required field"),
     email: yup
       .string()
       .required(t("validation-errors.email-required"))

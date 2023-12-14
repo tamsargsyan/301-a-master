@@ -51,6 +51,7 @@ const AccountTypeModal = () => {
   const confirmClubCodeEthics = () => {
     navigate(`/${lang}/clubCodeOfEthics`);
   };
+  const location = useLocation();
 
   const [howDoYouKnow, setHowDoYouKnow] = useState<string>("");
   const handleHowDoYouKnowChange = (val: string) => setHowDoYouKnow(val);
@@ -83,7 +84,6 @@ const AccountTypeModal = () => {
   const facebookLoginCallbackData = useSelector(
     (state: RootState) => state.facebookLoginCallback.data
   );
-
   useEffect(() => {
     if (
       response &&
@@ -99,12 +99,12 @@ const AccountTypeModal = () => {
           localStorage.setItem("token", facebookLoginCallbackData.access_token);
       } else localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      !location.pathname.includes("donation") && dispatch(login());
-      !location.pathname.includes("donation") &&
-        !hasNavigated &&
-        navigate(`/${lang}/`);
+      if (!location.pathname.includes("donation")) {
+        dispatch(login());
+        !hasNavigated && navigate(`/${lang}/`);
+      }
     }
-  }, [response, dispatch, error, t]);
+  }, [response, dispatch, error, t, location]);
 
   useEffect(() => {
     if (response?.data?.user) {
@@ -141,7 +141,6 @@ const AccountTypeModal = () => {
   }, [donatePostRequest.response]);
 
   const { data } = useSelector((state: RootState) => state.registerData);
-  const location = useLocation();
   const id = +location.search?.split("?")[1]?.split("=")[1];
   const type = location.search?.split("?")[2]?.split("=")[1];
   const navigate = useNavigate();

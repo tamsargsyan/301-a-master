@@ -29,8 +29,6 @@ const Status = () => {
     );
   }, []);
 
-  console.log(response);
-
   const payment_type = (type: string) => {
     if (type === "one_time") return t("payments.one_time");
     if (type === "project") return t("payments.project");
@@ -134,7 +132,7 @@ const Status = () => {
               </thead>
               <tbody>
                 {sortedHistory?.map((pymnt: any, i: number) => {
-                  const date = pymnt.created_at?.split("T");
+                  const date = pymnt.created_at?.split(" ");
                   return (
                     <tr key={i}>
                       <td>
@@ -144,7 +142,7 @@ const Status = () => {
                       <td>{pymnt.amount}$</td>
                       <td className={`${pymnt.status} payment_status`}>
                         {payment_status(pymnt.status)}
-                        {pymnt?.reason && (
+                        {pymnt?.reason && pymnt?.status !== "paid" && (
                           <div className='rejected_reason'>
                             <Popconfirm
                               className='signUp_popover'

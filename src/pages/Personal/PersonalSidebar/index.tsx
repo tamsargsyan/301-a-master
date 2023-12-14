@@ -69,6 +69,20 @@ const PersonalSidebar = () => {
     }
   }, [response, error]);
 
+  useEffect(() => {
+    if (error) {
+      if (
+        error.response?.data?.response_code === 31 ||
+        error.response?.data?.response_code === 32
+      ) {
+        dispatch(congratsModal(true, t("congrats.login-again")));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        navigate(`/${lang}/`);
+      }
+    }
+  }, [error]);
+
   // if (true) {
   //   return (
   //     <div className='logoutLoadingContainer'>

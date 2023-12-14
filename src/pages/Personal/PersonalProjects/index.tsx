@@ -11,6 +11,9 @@ import { Spin } from "antd";
 import cookies from "js-cookie";
 import { storageBase } from "../../../utils/storage";
 import { removeHtmlTags } from "../../../globalFunctions/removeHtmlTags";
+import { congratsModal } from "../../../actions/congratsAction";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 interface PersonalProjectsProps {
   title: string;
@@ -38,6 +41,22 @@ const PerosnalProjects: React.FC<PersonalProjectsProps> = ({
   }, []);
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      if (
+        error.response?.data?.response_code === 31 ||
+        error.response?.data?.response_code === 32
+      ) {
+        dispatch(congratsModal(true, t("congrats.login-again")));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        navigate(`/${lang}/`);
+      }
+    }
+  }, [error]);
 
   return (
     <div className='personalInfo_wrapper'>
