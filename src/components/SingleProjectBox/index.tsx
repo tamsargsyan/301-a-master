@@ -13,6 +13,7 @@ interface SingleProjectBoxProps {
   projectImg?: string;
   className?: string;
   onClick?: () => void;
+  buyBook?: boolean;
 }
 
 const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
@@ -26,6 +27,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
   projectImg,
   className,
   onClick,
+  buyBook,
 }) => {
   const calcPercent = (val1: number, val2: number) => {
     return Math.floor((val1 / val2) * 100);
@@ -44,12 +46,14 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
                 src={authorImg}
                 alt='Author'
                 className='ourProject_author_img'
+                decoding='async'
+                loading='lazy'
               />
               <span>{author}</span>
             </div>
             {flag && (
               <span className='flag'>
-                <img src={FLAG} alt='Flag' />
+                <img src={FLAG} alt='Flag' decoding='async' loading='lazy' />
                 {flag}
               </span>
             )}
@@ -65,26 +69,30 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           <div className='project_progress'>
             <div className='projectProgress_info'>
               <span className='sum'>{budget} USD</span>
-              <span className='percent'>
-                {budget &&
-                  collected &&
-                  (+collected >= +budget
-                    ? "100%"
-                    : `${calcPercent(+collected, +budget)}%`)}
-              </span>
-            </div>
-            <div className='progress'>
-              <div
-                className='progress_line'
-                style={{
-                  width:
-                    budget &&
+              {buyBook && (
+                <span className='percent'>
+                  {budget &&
                     collected &&
                     (+collected >= +budget
                       ? "100%"
-                      : `${calcPercent(+collected, +budget)}%`),
-                }}></div>
+                      : `${calcPercent(+collected, +budget)}%`)}
+                </span>
+              )}
             </div>
+            {buyBook && (
+              <div className='progress'>
+                <div
+                  className='progress_line'
+                  style={{
+                    width:
+                      budget &&
+                      collected &&
+                      (+collected >= +budget
+                        ? "100%"
+                        : `${calcPercent(+collected, +budget)}%`),
+                  }}></div>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
@@ -101,13 +109,13 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
             <h1>{title}</h1>
             {flag && (
               <span className='flag'>
-                <img src={FLAG} alt='Flag' />
+                <img src={FLAG} alt='Flag' decoding='async' loading='lazy' />
                 {flag}
               </span>
             )}
           </div>
           <span className='donationProject_desc'>
-            {description?.slice(0, 3)}
+            {description?.slice(0, 40)}...
           </span>
         </div>
       </motion.div>
@@ -128,7 +136,7 @@ const SingleProjectBox: React.FC<SingleProjectBoxProps> = ({
           <span>{author}</span>
           {flag && (
             <span className='flag'>
-              <img src={FLAG} alt='Flag' />
+              <img src={FLAG} alt='Flag' decoding='async' loading='lazy' />
               {flag}
             </span>
           )}

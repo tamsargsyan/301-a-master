@@ -3,76 +3,85 @@ import EcosystemModal from "../EcosystemModal";
 import Modal from "../Modal";
 import "./index.css";
 import Button from "../Button";
-import country_currency from "../../locales/country_currency.json";
 import { useTranslation } from "react-i18next";
-import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePostRequest } from "../../actions/apiActions";
+import { NavLink, useNavigate } from "react-router-dom";
+import Terms from "../Terms";
+import cookies from "js-cookie";
+import { congratsModal } from "../../actions/congratsAction";
 import { useDispatch } from "react-redux";
-import {
-  getModalName,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
+import { hasPreviousHistory } from "../Navbar";
+import ValidationSchema from "../../Validation";
 
-interface OneTimeDonationProps {
-  oneTimeDonation: boolean;
-  handleClose: () => void;
-  setOneTimeDonation: (arg: boolean) => void;
-}
+const OneTimeDonation = () => {
+  //@ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
 
-const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
-  oneTimeDonation,
-  handleClose,
-  setOneTimeDonation,
-}) => {
   const filterOption = (
     input: string,
     option: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
+  const { t } = useTranslation();
+  const [summa, setSumma] = useState("USD");
+  const { postRequest, response } = usePostRequest();
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    setOneTimeDonation(false);
-    dispatch(getModalName("oneTimeDonation"));
+  useEffect(() => {
+    if (response) {
+      if (response.data?.redirectURL) {
+        window.location.href = response.data.redirectURL;
+      } else if (response.data?.message) {
+        dispatch(congratsModal(true, response.data?.message));
+        response.data?.user &&
+          localStorage.setItem("user", JSON.stringify(response.data?.user));
+      }
+    }
+  }, [response]);
+
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
   };
-  const { t } = useTranslation();
-  const [summa, setSumma] = useState("");
-  const { postRequest } = usePostRequest();
+  const lang = cookies.get("i18next");
+
+  const { donationSchema } = ValidationSchema();
 
   return (
-    <Modal
-      setOpenModal={handleClose}
-      openModal={oneTimeDonation}
-      headerShow={false}>
+    <Modal setOpenModal={navigateBack} openModal={true} headerShow={false}>
       <EcosystemModal
-        onClose={handleClose}
+        onClose={navigateBack}
         header={t("btns.one-time-donation")}
-        className='oneTimeDonation_bg'>
+        className='oneTimeDonation_bg modal_back'
+        back={true}>
         <Formik
           validationSchema={donationSchema}
           initialValues={{
-            name: "",
-            last_name: "",
-            email: "",
+            name: user?.name || "",
+            last_name: user?.last_name || "",
+            email: user?.email || "",
             amount: "",
-            currency_type: "",
+            currency_type: "USD",
           }}
           onSubmit={values => {
             const result = {
               ...values,
               currency_type: summa,
-              type: "one_time",
+              subscription_type: "one_time",
+              lang,
+              user_id: user?.id,
             };
+            // console.log(result)
             const token = localStorage.getItem("token");
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
-            postRequest("donation", result, config);
+            postRequest("donation", result, {
+              Authorization: `Bearer ${token}`,
+            });
           }}>
           {({
             values,
@@ -94,14 +103,17 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                 <div className='signUp_tel'>
                   <Select
                     // {...field}
-                    showSearch
-                    optionFilterProp='children'
+                    // showSearch
+                    // optionFilterProp='children'
                     className='signUp_selector'
-                    onChange={(_, obj: any) => setSumma(obj.value)}
+                    // onChange={(_, obj: any) => setSumma(obj.value)}
                     //@ts-ignore
-                    filterOption={filterOption}
+                    // filterOption={filterOption}
                     placeholder={t("inputs.choose")}
-                    options={country_currency}
+                    // options={country_currency}
+                    defaultValue='USD'
+                    disabled
+                    suffixIcon={null}
                   />
                   <div className='signUp_telWrapper'>
                     <input
@@ -132,7 +144,7 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                   onChange={handleChange}
                 />
                 <p className='error'>
-                  {errors.name && touched.name && errors.name}
+                  {errors.name && touched.name ? (errors.name as string) : null}{" "}
                 </p>
               </div>
               <div className='signUp_formGroup'>
@@ -149,7 +161,9 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                   onChange={handleChange}
                 />
                 <p className='error'>
-                  {errors.last_name && touched.last_name && errors.last_name}
+                  {errors.last_name && touched.last_name
+                    ? (errors.last_name as string)
+                    : null}{" "}
                 </p>
               </div>
               <div className='signUp_formGroup'>
@@ -166,35 +180,13 @@ const OneTimeDonation: React.FC<OneTimeDonationProps> = ({
                   onChange={handleChange}
                 />
                 <p className='error'>
-                  {errors.email && touched.email && errors.email}
+                  {errors.email && touched.email
+                    ? (errors.email as string)
+                    : null}{" "}
                 </p>
               </div>
               <div className='signUp_btns'>
-                <p>
-                  {t("privacy.1")}
-                  <br></br>
-                  <button
-                    className='mentioned_txt'
-                    onClick={() =>
-                      handlePrivacy(
-                        t("privacy.terms-of-services"),
-                        "Terms of Services"
-                      )
-                    }>
-                    {t("privacy.terms")}
-                  </button>
-                  {t("privacy.and")}
-                  <button
-                    className='mentioned_txt'
-                    onClick={() =>
-                      handlePrivacy(
-                        t("privacy.privacy-policy"),
-                        "Privacy Policy"
-                      )
-                    }>
-                    {t("privacy.privacy")}
-                  </button>
-                </p>
+                <Terms aboutUs={false} />
                 <Button
                   text={t("btns.donate")}
                   link={false}

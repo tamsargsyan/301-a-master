@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import PersonalSidebar from "../components/Personal/PersonalSidebar";
 import Footer from "../components/Footer";
+import PersonalSidebar from "../pages/Personal/PersonalSidebar";
 
 interface LayoutProps {
   children: React.ReactNode;

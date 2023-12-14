@@ -104,6 +104,19 @@
   display: flex;
   gap: 10px;
 }
+@media screen and (max-width: 1180px) {
+  .logo {
+    display: none;
+  }
+  .navbarContainer .btns {
+    flex-direction: row !important;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .navbarContainer .btns {
+    gap: 10px !important;
+  }
+}
 @media screen and (max-width: 800px) {
   .navbarContainer {
     z-index: 999999;
@@ -288,7 +301,7 @@
     padding: 0;
     margin-left: 50px;
   }
-  .navbar_user p{
+  .navbar_user p {
     font-weight: 600;
   }
 }
@@ -298,7 +311,7 @@
   }
 }
 @media screen and (max-width: 400px) {
-    .navbar_notif {
+  .navbar_notif {
     margin-left: 10px;
   }
 }

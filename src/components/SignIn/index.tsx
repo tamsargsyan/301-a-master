@@ -5,78 +5,49 @@ import FB from "../../assets/logo/fb.svg";
 import GMAIL from "../../assets/logo/gmail.svg";
 import PATTERN_1 from "../../assets/patterns/login-small.svg";
 import PATTERN_2 from "../../assets/patterns/login-big.svg";
-import {
-  changePassSchema,
-  forgetPassShcema,
-  signInSchema,
-} from "../../Validation";
+// import {
+//   changePassSchema,
+//   forgetPassShcema,
+//   signInSchema,
+// } from "../../Validation";
 import { Formik } from "formik";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import { usePostRequest } from "../../actions/apiActions";
-import { Spin } from "antd";
-import { connect } from "react-redux";
-import { login } from "../../actions/authActions";
-import { useSearchParams } from "react-router-dom";
-import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
-import { history } from "../Navbar";
 import {
-  getModalName,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
+  fetchingSocialMediaLogin,
+  usePostRequest,
+} from "../../actions/apiActions";
+import { Spin } from "antd";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import CHECK_EMAIL_ICON from "../../assets/checkEmailIcon.svg";
+import { hasPreviousHistory, history } from "../Navbar";
+import Terms from "../Terms";
+import cookies from "js-cookie";
+import { RootState } from "../../store/configureStore";
+import { login } from "../../actions/authActions";
+import { congratsModal } from "../../actions/congratsAction";
+import EYE_OPEN from "../../assets/eye-open-gray.svg";
+import EYE_CLOSE from "../../assets/eye-close-gray.svg";
+import ValidationSchema from "../../Validation";
 
-interface SignInProps {
-  signIn: boolean;
-  setSignIn: (arg: boolean) => void;
-  setSignUp: (arg: boolean) => void;
-  isAuthenticated: any;
-  dispatch: any;
-}
-
-const SignIn: React.FC<SignInProps> = ({
-  signIn,
-  setSignIn,
-  setSignUp,
-  dispatch,
-}) => {
+const SignIn = () => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const handleForgetPassword = () => setForgetPassword(true);
+  const navigate = useNavigate();
+  const lang = cookies.get("i18next");
 
-  useEffect(() => {
-    !signIn && setForgetPassword(false);
-  }, [signIn]);
-
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-    setSignIn(false);
-    dispatch(getModalName("signInModal"));
-  };
   const windowSize = useWindowSize();
   const { t } = useTranslation();
-  const { postRequest, postLoading, response } = usePostRequest();
+  const { postRequest, postLoading, response, error } = usePostRequest();
 
-  useEffect(() => {
-    if (response && response.status === 200) {
-      localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      setSignIn(false);
-      dispatch(login());
-    }
-  }, [response, setSignIn, dispatch]);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(login());
-    }
-  }, [dispatch]);
-
+  const [hasNavigated, setHasNavigated] = useState(false);
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const resetPass = searchParams.get("resetPass");
-
-  useEffect(() => {
-    if (resetPass) setSignIn(true);
-  }, [resetPass, setSignIn]);
+  const { signInSchema, forgetPassShcema, changePassSchema } =
+    ValidationSchema();
 
   const signInState = () => {
     if (forgetPassword) return forgetPassShcema;
@@ -101,15 +72,80 @@ const SignIn: React.FC<SignInProps> = ({
     }
   }, []);
 
+  const socialMediaRedirectedData = useSelector(
+    (state: RootState) => state.socialMediaLogin.data
+  );
+  useEffect(() => {
+    if (socialMediaRedirectedData && socialMediaRedirectedData.url) {
+      window.location.href = socialMediaRedirectedData.url;
+    }
+  }, [socialMediaRedirectedData]);
+  useEffect(() => {
+    if (response && response.data?.access_token) {
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      dispatch(login());
+      setHasNavigated(true);
+      !hasNavigated && navigate(`/${lang}/`);
+    } else if (error && error.response?.data) {
+      if (
+        error.response?.status == 401 &&
+        error.response?.data.response_code === 34
+      )
+        dispatch(congratsModal(true, t("validation-errors.data-invalid")));
+    }
+    if (response) {
+      if (response.data?.response_code === 17) {
+        dispatch(congratsModal(true, t("validation-errors.pass-updated")));
+        navigate(`/${lang}/`);
+      }
+    }
+    if (error) {
+      if (error.response?.data.response_code === 16) {
+        dispatch(congratsModal(true, t("validation-errors.pass-not-updated")));
+      }
+      if (error.response?.data.response_code === 14) {
+        dispatch(congratsModal(true, t("validation-errors.email-not-exist")));
+      }
+      if (error.response?.data.response_code === 18) {
+        dispatch(congratsModal(true, t("validation-errors.user-not-exist")));
+      }
+    }
+  }, [response, dispatch, navigate, hasNavigated, lang, error]);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
     <>
-      <Modal setOpenModal={setSignIn} openModal={signIn} headerShow={true}>
+      <Modal setOpenModal={navigateBack} openModal={true} headerShow={true}>
         <div className='modal_signIn'>
-          {windowSize.width > 600 && (
+          {windowSize.width > 800 && (
             <div className='modal_signIn_leftSide'>
-              <img src={PATTERN_1} alt='Pattern' />
-              <img src={PATTERN_2} alt='Pattern' />
-              <img src={PATTERN_1} alt='Pattern' />
+              <img
+                src={PATTERN_1}
+                alt='Pattern'
+                decoding='async'
+                loading='lazy'
+              />
+              <img
+                src={PATTERN_2}
+                alt='Pattern'
+                decoding='async'
+                loading='lazy'
+              />
+              <img
+                src={PATTERN_1}
+                alt='Pattern'
+                decoding='async'
+                loading='lazy'
+              />
             </div>
           )}
           <div className='modal_signIn_rightSide'>
@@ -132,9 +168,16 @@ const SignIn: React.FC<SignInProps> = ({
                 </p>
               )}
             </div>
-            {forgetPassword && response?.status === 201 ? (
+            {forgetPassword &&
+            response?.status === 201 &&
+            response?.data.response_code === 15 ? (
               <div className='checkEmail_icon'>
-                <img src={CHECK_EMAIL_ICON} alt='Check Email' />
+                <img
+                  src={CHECK_EMAIL_ICON}
+                  alt='Check Email'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
             ) : (
               <Formik
@@ -148,7 +191,7 @@ const SignIn: React.FC<SignInProps> = ({
                   if (forgetPassword) {
                     postRequest(
                       "reset-password-request",
-                      { email: values.email },
+                      { email: values.email, lang },
                       {}
                     );
                   } else if (resetPass) {
@@ -161,9 +204,10 @@ const SignIn: React.FC<SignInProps> = ({
                       },
                       {}
                     );
-                    setSignIn(false);
                   } else {
                     postRequest("login", values, {});
+                    // submit(values);
+                    // fetchData(values);
                   }
                 }}>
                 {({
@@ -197,15 +241,28 @@ const SignIn: React.FC<SignInProps> = ({
                       )}
                       {(!forgetPassword || resetPass) && (
                         <>
-                          <input
-                            placeholder={t("inputs.password")}
-                            type='password'
-                            name='password'
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                            className='form'
-                          />
+                          <div className='passwordInputField'>
+                            <input
+                              placeholder={t("inputs.password")}
+                              type={showPassword ? "text" : "password"}
+                              name='password'
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                              className='form'
+                            />
+                            <button
+                              type='button'
+                              onClick={e => {
+                                e.preventDefault();
+                                setShowPassword(!showPassword);
+                              }}>
+                              <img
+                                src={showPassword ? EYE_OPEN : EYE_CLOSE}
+                                alt='Eye'
+                              />
+                            </button>
+                          </div>
                           <p className='error'>
                             {errors.password &&
                               touched.password &&
@@ -274,40 +331,38 @@ const SignIn: React.FC<SignInProps> = ({
                   <div className='line'></div>
                 </div>
                 <div className='signIn_another_icons'>
-                  <a href='gmail.com'>
-                    <img src={GMAIL} alt='Gmail' />
-                  </a>
-                  <a href='facebook.com'>
-                    <img src={FB} alt='Facebook' />
-                  </a>
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      dispatch(
+                        //@ts-ignore
+                        fetchingSocialMediaLogin(`auth/google?lang=${lang}`)
+                      );
+                    }}>
+                    <img
+                      src={GMAIL}
+                      alt='Gmail'
+                      decoding='async'
+                      loading='lazy'
+                    />
+                  </button>
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      dispatch(
+                        //@ts-ignore
+                        fetchingSocialMediaLogin(`auth/facebook?lang=${lang}`)
+                      );
+                    }}>
+                    <img
+                      src={FB}
+                      alt='Facebook'
+                      decoding='async'
+                      loading='lazy'
+                    />
+                  </button>
                 </div>
-                <div className='signIn_another_privacy'>
-                  <p>
-                    {t("privacy.1")}
-                    <br></br>
-                    <button
-                      className='mentioned_txt'
-                      onClick={() =>
-                        handlePrivacy(
-                          t("privacy.terms-of-services"),
-                          "Terms of Services"
-                        )
-                      }>
-                      {t("privacy.terms")}
-                    </button>
-                    {t("privacy.and")}
-                    <button
-                      className='mentioned_txt'
-                      onClick={() =>
-                        handlePrivacy(
-                          t("privacy.privacy-policy"),
-                          "Privacy Policy"
-                        )
-                      }>
-                      {t("privacy.privacy")}
-                    </button>
-                  </p>
-                </div>
+                <Terms aboutUs={false} />
               </div>
             ) : forgetPassword && response?.status === 201 ? null : (
               <div
@@ -335,12 +390,14 @@ const SignIn: React.FC<SignInProps> = ({
                   </>
                 ) : (
                   <>
-                    {t("sign-in.notHavingAcc")}
-                    <button
+                    {t("sign-in.notHavingAcc")}{" "}
+                    <NavLink
                       className='mentioned_txt'
-                      onClick={() => setSignUp(true)}>
+                      to={`/${lang}/signUp`}
+                      // onClick={() => setSignUp(true)}
+                    >
                       {t("sign-in.sign-up")}
-                    </button>
+                    </NavLink>
                   </>
                 )}
               </p>

@@ -7,6 +7,7 @@ import { RootState } from "../../store/configureStore";
 import { congratsModal } from "../../actions/congratsAction";
 import PATTERN_1 from "../../assets/patterns/login-small.svg";
 import PATTERN_2 from "../../assets/patterns/login-big.svg";
+import { useTranslation } from "react-i18next";
 
 const Conragts = () => {
   const dispatch = useDispatch();
@@ -16,23 +17,43 @@ const Conragts = () => {
     dispatch(congratsModal(false, null));
   };
 
+  const { t } = useTranslation();
+
   return (
     <Modal setOpenModal={handleClose} openModal={open} headerShow={true}>
       <EcosystemModal
+        back={false}
         onClose={handleClose}
         header=''
         className='conragts_modal'
         headerChildren={
           <div className='congrats_pattern'>
-            <img src={PATTERN_1} alt='Pattern' />
-            <img src={PATTERN_2} alt='Pattern' />
-            <img src={PATTERN_1} alt='Pattern' />
+            <img
+              src={PATTERN_1}
+              alt='Pattern'
+              decoding='async'
+              loading='lazy'
+            />
+            <img
+              src={PATTERN_2}
+              alt='Pattern'
+              decoding='async'
+              loading='lazy'
+            />
+            <img
+              src={PATTERN_1}
+              alt='Pattern'
+              decoding='async'
+              loading='lazy'
+            />
           </div>
         }>
         <div className='conragts_modal_content'>
-          <p className='conragts_text'>{text}</p>
+          <p
+            className='conragts_text'
+            dangerouslySetInnerHTML={{ __html: text }}></p>
           <Button
-            text='ok'
+            text={t("btns.ok")}
             link={false}
             to={""}
             style={{

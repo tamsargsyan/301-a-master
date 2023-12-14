@@ -9,6 +9,12 @@ import expertProjectReducer from "../reducers/expertProjectReducer";
 import authReducer from "../reducers/authReducer";
 import registerDataReducer from "../reducers/registerDataReducer";
 import congratsReducer from "../reducers/congratsReducer";
+import favoriteProjectsReducer from "../reducers/favoriteProjectsReducer";
+import contactReducer from "../reducers/contactReducer";
+import gmailLoginCallbackReducer from "../reducers/gmailLoginCallbackReducer";
+import facebookLoginCallbackReducer from "../reducers/facebookLoginCallback";
+import socialMediasReducer from "../reducers/socialMediasLogin";
+import donationReducer from "../reducers/donationReducer";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +28,12 @@ const store = configureStore({
     auth: authReducer,
     registerData: registerDataReducer,
     congrats: congratsReducer,
+    favoriteProjects: favoriteProjectsReducer,
+    contact: contactReducer,
+    socialMediaLogin: socialMediasReducer,
+    gmailLoginCallback: gmailLoginCallbackReducer,
+    facebookLoginCallback: facebookLoginCallbackReducer,
+    donation: donationReducer,
   },
 });
 

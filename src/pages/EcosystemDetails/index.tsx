@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Background from "../../components/Background";
 import SAGES from "../../assets/info/1.svg";
 import EXPERTS from "../../assets/info/10.svg";
@@ -29,6 +29,8 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import { openRecommentedModal } from "../../actions/donateAction";
 import ClubIcon from "../../assets/info/7.svg";
+import cookies from "js-cookie";
+import ARROW from "../../assets/arrow.svg";
 
 const EcoSystemDetails = () => {
   useEffect(() => {
@@ -136,10 +138,34 @@ const EcoSystemDetails = () => {
       }
     }
   }, [data, ecosystem, partners?.partners]);
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const ecosystemResult = ecosystemProject.find(e => e.name === ecosystem);
   const windowSize = useWindowSize();
   const { t } = useTranslation();
+
+  const sliderRef = useRef(null);
+  const scrollAmount = 200;
+
+  const [showArrowBtns, setShowArrowBtns] = useState(false);
+  const partnersContainer = document.querySelector(".partners");
+  const images = document.querySelectorAll(".ecosystemDetails_partners_item");
+
+  useEffect(() => {
+    const gap = 30;
+    let totalWidth = 0;
+    if (partnersContainer && images) {
+      images.forEach(img => {
+        //@ts-ignore
+        totalWidth += img.offsetWidth + gap;
+      });
+      //@ts-ignore
+      setShowArrowBtns(totalWidth > partnersContainer.offsetWidth);
+    }
+  }, [partnersContainer, images]);
+
+  console.log(data);
+
+  console.log(showArrowBtns);
 
   if (loading)
     return (
@@ -165,7 +191,12 @@ const EcoSystemDetails = () => {
             <div className='ecosystemDetails'>
               <div className='ecosystemDetails_'>
                 <div className='ecosystemDetails-title'>
-                  <img src={ecosystemResult?.icon} alt='Ecosystem' />
+                  <img
+                    src={ecosystemResult?.icon}
+                    alt='Ecosystem'
+                    decoding='async'
+                    loading='lazy'
+                  />
                   <h1>{header[`title_${lang}`]}</h1>
                 </div>
                 <div className='ecosystemDetails-header'>
@@ -178,8 +209,8 @@ const EcoSystemDetails = () => {
                   </div>
                   <Button
                     text={t("btns.recommended")}
-                    link={false}
-                    to={""}
+                    link={true}
+                    to={`/${lang}/recommendation?ecosystem=${ecosystem}`}
                     style={{
                       background: ecosystemResult?.color,
                       color: "#fff",
@@ -187,21 +218,74 @@ const EcoSystemDetails = () => {
                       border: "none",
                     }}
                     className='recommented'
-                    onClick={() => dispatch(openRecommentedModal(true))}
+                    // onClick={() => dispatch(openRecommentedModal(true))}
                   />
                 </div>
               </div>
               <div
                 className={`${
-                  ecosystem === "partners" && "ecosystemDetails_partners"
-                } ecoSystemDetailsMember_wrapper`}>
-                {project?.map((p: any, i: number) => (
-                  <EcoSystemDetailsMember
-                    key={i}
-                    expertProject={ecosystemResult}
-                    project={p}
-                  />
-                ))}
+                  ecosystem === "partners" &&
+                  "projectDetails_slider_1 ecosystemDetails_partners partners"
+                } ecoSystemDetailsMember_wrapper`}
+                style={{ margin: 0, overflow: "initial" }}>
+                {ecosystem === "partners" && (
+                  <button
+                    className='leftBtn'
+                    style={{ left: "-25px" }}
+                    onClick={() => {
+                      const container = sliderRef.current;
+                      if (container) {
+                        //@ts-ignore
+                        container.scrollLeft -= scrollAmount;
+                      }
+                    }}>
+                    <img
+                      src={ARROW}
+                      alt='Arrow'
+                      decoding='async'
+                      loading='lazy'
+                    />
+                    {/* <ChevronLeftIcon /> */}
+                  </button>
+                )}
+                {ecosystem === "partners" ? (
+                  <div className='images-container' ref={sliderRef}>
+                    {project?.map((p: any, i: number) => (
+                      <EcoSystemDetailsMember
+                        key={i}
+                        expertProject={ecosystemResult}
+                        project={p}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  project?.map((p: any, i: number) => (
+                    <EcoSystemDetailsMember
+                      key={i}
+                      expertProject={ecosystemResult}
+                      project={p}
+                    />
+                  ))
+                )}
+                {ecosystem === "partners" && (
+                  <button
+                    className='rightBtn'
+                    style={{ right: "-25px" }}
+                    onClick={() => {
+                      const container = sliderRef.current;
+                      if (container) {
+                        //@ts-ignore
+                        container.scrollLeft += scrollAmount;
+                      }
+                    }}>
+                    <img
+                      src={ARROW}
+                      alt='Arrow'
+                      decoding='async'
+                      loading='lazy'
+                    />
+                  </button>
+                )}
               </div>
             </div>
           </Background>

@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import ARROW from "../../assets/info/dropdown-arrow.svg";
 import Button from "../Button";
 import "./index.css";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/configureStore";
+import cookies from "js-cookie";
 
 interface Props {
   items: any;
@@ -45,7 +44,7 @@ const DropDown: React.FC<Props> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   return (
     <div className={`${className} dropdown`} style={style} ref={dropdownRef}>
       <Button
@@ -65,7 +64,7 @@ const DropDown: React.FC<Props> = ({
         }
       />
       {openDropdown && (
-        <div className="dropdownItems" style={itemsStyle}>
+        <div className='dropdownItems' style={itemsStyle}>
           {items.map((item: any, i: number) => (
             <button
               key={i}
@@ -83,8 +82,7 @@ const DropDown: React.FC<Props> = ({
                   onClickItem(item.id, "");
                 }
                 setOpenDropdown(false);
-              }}
-            >
+              }}>
               {item[`${objKey}_${lang}`]}
             </button>
           ))}

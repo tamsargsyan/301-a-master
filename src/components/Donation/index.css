@@ -17,6 +17,7 @@
 .donationCard_title {
   color: var(--text-color);
   font-weight: 600;
+  text-transform: uppercase;
 }
 .donation_info,
 .donationCard_title {
@@ -60,7 +61,8 @@
   align-items: center;
 }
 .donation_cards {
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 40px;
 }
 .donation_card {
   flex-direction: column;

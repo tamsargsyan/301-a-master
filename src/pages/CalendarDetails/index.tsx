@@ -11,8 +11,6 @@ import "./index.css";
 import Button from "../../components/Button";
 import HEART from "../../assets/calendar/heart.svg";
 import Map from "../../components/Map";
-import { mapOptions } from "../../components/MapConfiguration";
-import { useJsApiLoader } from "@react-google-maps/api";
 import { events } from "../Calendar";
 import SingleEvent from "../../components/SingleEvent";
 import QR from "../../assets/calendar/qr-icon.svg";
@@ -22,13 +20,6 @@ import { useTranslation } from "react-i18next";
 
 const CalendarDetails = () => {
   const windowSize = useWindowSize();
-
-  const { isLoaded } = useJsApiLoader({
-    id: mapOptions.googleMapsApiKey,
-    //@ts-ignore
-    googleMapsApiKey: mapOptions.googleMapsApiKey,
-  });
-
   const [book, setBook] = useState(false);
   const { t } = useTranslation();
 
@@ -44,7 +35,12 @@ const CalendarDetails = () => {
         }}>
         <div className='calendar_details_1'>
           <div className='calendar_details_1_bg'>
-            <img src={IMG_1} alt='Calendar Details' />
+            <img
+              src={IMG_1}
+              alt='Calendar Details'
+              decoding='async'
+              loading='lazy'
+            />
             <p className='calendar_details_1_title'>
               Lorem Ipsum is simply dummy
             </p>
@@ -65,15 +61,30 @@ const CalendarDetails = () => {
                 </p>
                 <div className='calendar_details_address_wrapper'>
                   <div className='calendar_details_address'>
-                    <img src={ADDRESS} alt='Address' />
+                    <img
+                      src={ADDRESS}
+                      alt='Address'
+                      decoding='async'
+                      loading='lazy'
+                    />
                     <p>Ереван, ул. Московяна 24</p>
                   </div>
                   <div className='calendar_details_date'>
-                    <img src={DATE} alt='Date' />
+                    <img
+                      src={DATE}
+                      alt='Date'
+                      decoding='async'
+                      loading='lazy'
+                    />
                     <p>Fri, 10 Nov AM 10:30</p>
                   </div>
                   <div className='calendar_details_price'>
-                    <img src={PRICE} alt='Date' />
+                    <img
+                      src={PRICE}
+                      alt='Date'
+                      decoding='async'
+                      loading='lazy'
+                    />
                     <p>{20}$</p>
                   </div>
                 </div>
@@ -131,7 +142,7 @@ const CalendarDetails = () => {
                 </div>
               </div>
               <div className='calendar_details_1_info_map_wrapper'>
-                <Map isLoaded={isLoaded} />
+                <Map />
                 <div className='calendar_details_address'>
                   <p>Ереван, ул. Московяна 24</p>
                 </div>

@@ -73,6 +73,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 @media screen and (max-width: 1600px) {
   .signUp_bg {
@@ -101,6 +102,14 @@
     width: 60rem;
   }
 }
+@media screen and (max-width: 970px) {
+  .signUp_bg {
+    width: 100%;
+  }
+  .modal {
+    width: 100%;
+  }
+}
 @media screen and (max-width: 800px) {
   .signUp_bg {
     width: 100vw;
@@ -121,5 +130,17 @@
     justify-content: flex-start;
     padding-top: 45px;
     padding-bottom: 45px;
+  }
+  .conragts_modal_content .btn {
+    font-size: 14px;
+  }
+  .conragts_modal {
+    width: auto !important;
+  }
+  .conragts_modal_content {
+    padding: 30px 10px;
+  }
+  .congrats_pattern {
+    margin: auto;
   }
 }

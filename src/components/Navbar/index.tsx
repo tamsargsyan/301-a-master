@@ -5,21 +5,22 @@ import SIDE_PATTERN from "../../assets/patterns/side-1-mobile.svg";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import Button from "../Button";
 import "./index.css";
-import { NavLink, useLocation, useSearchParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { scrollToTop } from "../../globalFunctions/scrollToTop";
-import { useTranslation } from "react-i18next";
 import { createBrowserHistory } from "history";
-import i18next from "i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { languageDitactor } from "../../actions/language";
-import { openDonateModal } from "../../actions/donateAction";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
 import NOTIFICATION from "../../assets/notification.svg";
 import { storageBase } from "../../utils/storage";
 import NO_IMAGE from "../../assets/no-image-user.png";
-import { getModalName } from "../../actions/privacyPolicyAction";
+import cookies from "js-cookie";
+import i18next from "i18next";
 
 export const history = createBrowserHistory(); // Create a history instance
+export const hasPreviousHistory = () => {
+  return !!(window.history && window.history.length > 1);
+};
 
 export const menu = [
   {
@@ -52,6 +53,11 @@ export const menu = [
     name: "contact",
     link: "/contact",
   },
+  {
+    id: 7,
+    name: "news",
+    link: "/#news",
+  },
 ];
 
 interface NavbarProps {
@@ -72,41 +78,46 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
   const langs = [
     {
       id: 1,
-      shortName: "en",
+      code: "en",
       longName: "ENGLISH",
     },
     {
       id: 2,
-      shortName: "ru",
+      code: "ru",
       longName: "Русский",
     },
     {
       id: 3,
-      shortName: "am",
+      code: "am",
       longName: "Հայերեն",
     },
   ];
+  const handleLanguageChange = (language: string) => {
+    i18next.changeLanguage(language).then(() => {
+      setOpenLangs(false);
+      const currentPath = window.location.pathname;
+      const languagePrefix = currentPath.split("/")[1];
+      let newPath;
+      if (languagePrefix && languagePrefix.length === 2) {
+        newPath = currentPath.replace(`/${languagePrefix}`, `/${language}`);
+      } else {
+        newPath = `/${language}${currentPath}`;
+      }
+      window.location.href = newPath;
+    });
+  };
 
   const [openLangs, setOpenLangs] = useState(false);
-  const lang = i18next.language;
-  const copyLangs = langs.filter(item => item.shortName !== lang);
+  const lang = cookies.get("i18next");
+  const copyLangs = langs.filter(item => item.code !== lang);
   const differentLang = langs.find(
     item1 => !copyLangs.some(item2 => item1.id === item2.id)
   );
-  const { i18n, t } = useTranslation();
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const handleLanguageChange = (language: string) => {
-    i18n.changeLanguage(language);
-    const newPath = `/${language}${location.pathname}`;
-    history.replace(newPath);
-    dispatch(languageDitactor(language));
-    setOpenLangs(false);
-  };
+  const { t } = useTranslation();
+
   //@ts-ignore
   const user = JSON.parse(localStorage.getItem("user"));
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div
@@ -125,29 +136,46 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           {openMenu && (
             <div className='openedMobileMenu'>
               <div className='bigPatternNav'>
-                <img src={BIG_PATTERN} alt='Pattern' />
+                <img
+                  src={BIG_PATTERN}
+                  alt='Pattern'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
               <div className='sidePattern1'>
-                <img src={SIDE_PATTERN} alt='Pattern' />
+                <img
+                  src={SIDE_PATTERN}
+                  alt='Pattern'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
               <div className='sidePattern2'>
-                <img src={SIDE_PATTERN} alt='Pattern' />
+                <img
+                  src={SIDE_PATTERN}
+                  alt='Pattern'
+                  decoding='async'
+                  loading='lazy'
+                />
               </div>
               <div className='menu'>
                 <div className='link'>
                   {isAuthenticated && (
                     <div className='navbar_user_wrapper'>
                       <NavLink
-                        to='personal/personal-info'
+                        to={`/${lang}/personal/personal-info`}
                         className='navbar_user'
                         onClick={() => setOpenMenu(false)}>
                         <img
                           src={
                             user?.image
-                              ? `${storageBase}/${user?.image}`
+                              ? `${storageBase}/upload/user_image/${user?.image}`
                               : NO_IMAGE
                           }
                           alt='Person'
+                          decoding='async'
+                          loading='lazy'
                         />
                         <p style={{ fontSize: "18px", margin: 0 }}>
                           {user?.name} {user?.last_name}
@@ -162,27 +190,22 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
                         scrollToTop();
                       }}
                       key={i}
-                      to={link.link}
+                      to={`/${lang}${link.link}`}
                       style={{ animationDelay: `${i * 0.1}s` }}>
                       {t(`navbar.${link.name}`)}
                     </NavLink>
                   ))}
                 </div>
                 <div className='link logout'>
-                  <a
-                    href='/'
-                    onClick={e => {
-                      e.preventDefault();
-                      if (!isAuthenticated) {
-                        dispatch(getModalName("signIn"));
-                        setSearchParams({ signIn: "active" });
-                      }
-                      setOpenModal(true);
+                  <NavLink
+                    to={`/${lang}/login`}
+                    onClick={() => {
+                      setOpenMenu(false);
                     }}>
                     {!isAuthenticated
                       ? t("navbar.sign-in")
                       : t("navbar.logout")}
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </div>
@@ -194,12 +217,10 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           <span>Меню</span>
           <Button
             text={t(`btns.donate`)}
-            link={false}
-            to=''
+            link={true}
+            to={`/${lang}/donation`}
             className='signIn-btn'
             onClick={() => {
-              dispatch(openDonateModal(true));
-              dispatch(getModalName("donate"));
               setOpenMenu(false);
             }}
             style={{
@@ -207,34 +228,38 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
               background: "var(--main-color)",
               color: "#fff",
               display: "block",
+              fontSize: "12px",
             }}
           />
           {isAuthenticated && (
             <button className='navbar_notif'>
-              <img src={NOTIFICATION} alt='Notification' />
+              <img
+                src={NOTIFICATION}
+                alt='Notification'
+                decoding='async'
+                loading='lazy'
+              />
               <span className='notification_number'>3</span>
             </button>
           )}
         </div>
       ) : (
-        <button className='logo' onClick={scrollToTop}>
-          <img src={LOGO} alt='Logo' />
-        </button>
+        <NavLink to={`/${lang}/`} className='logo' onClick={scrollToTop}>
+          <img src={LOGO} alt='Logo' decoding='async' loading='lazy' />
+        </NavLink>
       )}
       <div className='menu'>
         <div className='link'>
           {menu.map((link, i) => (
-            <NavLink key={i} to={link.link} onClick={scrollToTop}>
+            <a key={i} href={`/${lang}${link.link}`}>
               {t(`navbar.${link.name}`)}
-            </NavLink>
+            </a>
           ))}
         </div>
         <div className='langsWrapper'>
           <Button
             text={
-              windowSize.width < 800
-                ? differentLang?.shortName
-                : differentLang?.shortName
+              windowSize.width < 800 ? differentLang?.code : differentLang?.code
             }
             link={false}
             to={""}
@@ -242,20 +267,23 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             onClick={() => setOpenLangs(!openLangs)}
           />
           <div className='notActiveLangs_wrapper'>
-            {copyLangs.map((lang, i) => (
-              <Fragment key={i}>
+            {copyLangs.map((l, i) => (
+              <a
+                href={`/${l.code}${window.location.pathname}`}
+                key={i}
+                onClick={e => {
+                  e.preventDefault();
+                  handleLanguageChange(l.code);
+                }}>
                 <Button
-                  text={
-                    windowSize.width < 800 ? lang.shortName : lang.shortName
-                  }
+                  text={l.code}
                   link={false}
                   to={""}
                   className={`${openLangs && "openedLang"} activeLang_${
                     i + 1
                   } lang`}
-                  onClick={() => handleLanguageChange(lang.shortName)}
                 />
-              </Fragment>
+              </a>
             ))}
           </div>
         </div>
@@ -265,13 +293,26 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
           {isAuthenticated ? (
             <div className='navbar_user_wrapper'>
               <button className='navbar_notif'>
-                <img src={NOTIFICATION} alt='Notification' />
+                <img
+                  src={NOTIFICATION}
+                  alt='Notification'
+                  decoding='async'
+                  loading='lazy'
+                />
                 <span className='notification_number'>3</span>
               </button>
-              <NavLink to='personal/personal-info' className='navbar_user'>
+              <NavLink
+                to={`/${lang}/personal/personal-info`}
+                className='navbar_user'>
                 <img
-                  src={user.image ? `${storageBase}/${user.image}` : NO_IMAGE}
+                  src={
+                    user?.image
+                      ? `${storageBase}/upload/user_image/${user?.image}`
+                      : NO_IMAGE
+                  }
                   alt='Person'
+                  decoding='async'
+                  loading='lazy'
                 />
                 <p>
                   {user.name} {user.last_name}
@@ -282,30 +323,26 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
             <div className='btns' style={{ margin: 0 }}>
               <Button
                 text={t(`btns.donate`)}
-                link={false}
-                to=''
+                link={true}
+                to={`/${lang}/donation`}
                 className='signIn-btn'
-                onClick={() => {
-                  dispatch(openDonateModal(true));
-                  dispatch(getModalName("donate"));
-                }}
+                // onClick={() => {
+                //   // dispatch(openDonateModal(true));
+                //   // dispatch(getModalName("donate"));
+                // }}
                 style={{
                   padding: "9px 23px",
                   background: "var(--main-color)",
                   color: "#fff  ",
+                  fontSize: "13px",
                 }}
               />
               <Button
                 text={t(`navbar.sign-in`)}
-                link={false}
-                to=''
+                link={true}
+                to={`/${lang}/login`}
                 className='signIn-btn'
-                onClick={() => {
-                  setOpenModal(true);
-                  dispatch(getModalName("signIn"));
-                  setSearchParams({ signIn: "active" });
-                }}
-                style={{ padding: "9px 23px" }}
+                style={{ padding: "9px 23px", fontSize: "13px" }}
               />
             </div>
           )}

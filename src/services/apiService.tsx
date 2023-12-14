@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://301.machtech.site/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const apiService = {
   get: async (data: any) => {
@@ -12,11 +12,9 @@ export const apiService = {
     const config = {
       headers,
     };
-    const response = await axios.post(
-      `${BASE_URL}/${data}`,
-      payload,
-      config.headers
-    );
+    const response = await axios.post(`${BASE_URL}/${data}`, payload, {
+      headers,
+    });
     setResponse(response);
   },
 };

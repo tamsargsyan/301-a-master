@@ -23,17 +23,17 @@ const SingleEvent: React.FC<SingleEventProps> = ({
   return (
     <div className={`${className} event_wrapper`}>
       <div className='event_wrapper_img'>
-        <img src={img} alt='Event' />
+        <img src={img} alt='Event' decoding='async' loading='lazy' />
       </div>
       <div className='event_info'>
         <p className='event_title'>{title}</p>
         <p className='event_desc'>{desc}</p>
         <div className='event_address'>
-          <img src={ADDRESS} alt='Address' />
+          <img src={ADDRESS} alt='Address' decoding='async' loading='lazy' />
           <p>{address}</p>
         </div>
         <div className='event_date'>
-          <img src={DATE} alt='Address' />
+          <img src={DATE} alt='Address' decoding='async' loading='lazy' />
           <p>{date}</p>
         </div>
         <Button

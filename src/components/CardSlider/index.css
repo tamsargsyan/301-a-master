@@ -8,7 +8,17 @@
   align-items: center;
   justify-content: center;
 }
-
+.ecosystem_slider {
+  height: 40rem;
+  width: 100%;
+  align-items: flex-start;
+}
+.news_slider {
+  width: 33rem;
+}
+.ecosystem_slider .btn {
+  font-size: 10px !important;
+}
 .card-container {
   position: absolute;
   /* filter: blur(calc(var(--abs-offset) * 1rem)); */

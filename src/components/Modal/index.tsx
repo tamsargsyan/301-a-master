@@ -36,12 +36,12 @@ const Modal: React.FC<ModalProps> = ({
         top:
           windowSize.width < 800 && !headerShow ? `${navbarHeight}px` : "0px",
       }}>
-      {windowSize.width <= 600 ? (
+      {windowSize.width <= 800 ? (
         <div onClick={e => e.stopPropagation()} className='mobile_modal'>
           {headerShow && (
             <div className='modal_close_mobile'>
               <button onClick={() => setOpenModal(false)}>
-                <img src={CLOSE} alt='Close' />
+                <img src={CLOSE} alt='Close' decoding='async' loading='lazy' />
               </button>
               <span>Menu</span>
             </div>

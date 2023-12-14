@@ -13,40 +13,19 @@ import PATTERN from "../../assets/signup-account-types/bg-pattern.svg";
 import "./index.css";
 import Button from "../Button";
 import EcosystemModal from "../EcosystemModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openAccountTypeModal } from "../../actions/donateAction";
 import CardSlider from "../CardSlider";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router";
+import cookies from "js-cookie";
+import { hasPreviousHistory } from "../Navbar";
 
-interface SignUpProps {
-  signUp: boolean;
-  setSignUp: (arg: boolean) => void;
-  setSignIn: (arg: boolean) => void;
-  // setAccountType: (arg: { open: boolean; id: number; name: string }) => void;
-  handleClose: () => void;
-}
-
-interface AccountType {
-  id: number;
-  name: string;
-  type: string;
-  icon: string;
-  mainImg: string;
-  btn: string;
-  btnStyle: React.CSSProperties;
-}
-
-const SignUp: React.FC<SignUpProps> = ({
-  signUp,
-  setSignUp,
-  setSignIn,
-  // setAccountType,
-  handleClose,
-}) => {
+const SignUp = () => {
   const { t } = useTranslation();
 
-  const accountTypes: AccountType[] = [
+  const accountTypes = [
     {
       id: 1,
       name: t("footer.ecosystem.donor"),
@@ -97,7 +76,7 @@ const SignUp: React.FC<SignUpProps> = ({
     },
     {
       id: 5,
-      name: t("footer.ecosystem.fund-friends"),
+      name: t("footer.ecosystem.friends"),
       type: "friends",
       icon: FRIENDS,
       mainImg: FRIENDS_MAIN,
@@ -108,29 +87,36 @@ const SignUp: React.FC<SignUpProps> = ({
       },
     },
   ];
-  const dispatch = useDispatch();
-  const handleAccountType = (id: number, name: string, type: string) => {
-    dispatch(
-      openAccountTypeModal({
-        open: true,
-        id,
-        name,
-        type,
-      })
-    );
-    setSignUp(false);
-  };
   const windowSize = useWindowSize();
-  // https://codepen.io/hk2002/pen/yLQPNgQ
+  const navigate = useNavigate();
+  const lang = cookies.get("i18next");
+
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
+
   return (
     <Modal
-      setOpenModal={handleClose}
-      openModal={signUp}
+      setOpenModal={navigateBack}
+      openModal={true}
       className='signUp_overlay'
       headerShow={false}>
-      <EcosystemModal onClose={handleClose} header={t("select-acount-type")}>
+      <EcosystemModal
+        back={true}
+        className='modal_back'
+        onClose={navigateBack}
+        header={t("select-acount-type")}>
         <div className='signUp_content_accountTypes'>
-          <img src={PATTERN} alt='Pattern' className='accountTYpes_pattern' />
+          <img
+            src={PATTERN}
+            alt='Pattern'
+            className='accountTYpes_pattern'
+            decoding='async'
+            loading='lazy'
+          />
           {windowSize.width >= 800 ? (
             accountTypes.map(account => (
               <div
@@ -138,11 +124,21 @@ const SignUp: React.FC<SignUpProps> = ({
                 key={account.id}
                 id={`accountType-${account.id}`}>
                 <div className='accountType_header'>
-                  <img src={account.icon} alt='Account' />
+                  <img
+                    src={account.icon}
+                    alt='Account'
+                    decoding='async'
+                    loading='lazy'
+                  />
                   <span>{account.name}</span>
                 </div>
                 <div className='accountType_mainImg'>
-                  <img src={account.mainImg} alt='Account Main' />
+                  <img
+                    src={account.mainImg}
+                    alt='Account Main'
+                    decoding='async'
+                    loading='lazy'
+                  />
                 </div>
                 <Button
                   text={account.btn}
@@ -152,19 +148,13 @@ const SignUp: React.FC<SignUpProps> = ({
                     border: "none",
                   }}
                   className='accountType_btn'
-                  link={false}
-                  to={""}
-                  onClick={() =>
-                    handleAccountType(account.id, account.name, account.type)
-                  }
+                  link={true}
+                  to={`/${lang}/accountType?id=${account.id}?type=${account.type}`}
                 />
               </div>
             ))
           ) : (
-            <CardSlider
-              data={accountTypes}
-              handleAccountType={handleAccountType}
-            />
+            <CardSlider data={accountTypes} />
           )}
         </div>
       </EcosystemModal>

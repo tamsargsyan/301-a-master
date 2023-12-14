@@ -1,10 +1,13 @@
 .donationProjects {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
+  justify-content: center;
   gap: 44px;
   height: 50vh;
   overflow-y: auto;
+}
+.donationProjects:has(.personal_project) {
+  justify-content: flex-start;
 }
 .donationProjects_wrapper {
   background: #fff;

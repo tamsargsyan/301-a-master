@@ -1,42 +1,24 @@
-
-import LanguageDetector from "i18next-browser-languagedetector";
+import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-import i18n from "i18next";
-import en from "./locales/en.json";
-import am from "./locales/am.json";
-import ru from "./locales/ru.json";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-const resources = {
-  en: {
-    translation: en,
-  },
-  am: {
-    translation: am,
-  },
-  ru: {
-    translation: ru
-  }
-};
-
-i18n
-  .use(LanguageDetector)
+i18next
+  .use(HttpApi)
   .use(initReactI18next)
+  .use(LanguageDetector)
   .init({
-    lng: 'ru',
+    supportedLngs: ["ru", "en", "am"],
     fallbackLng: "ru",
-    resources,
+    // debug: false,
     detection: {
-      order: [
-        "querystring",
-        "cookie",
-        "localStorage",
-        "navigator",
-        "htmlTag",
-        "path",
-        "subdomain",
-      ],
+      order: ["path", "cookie", "htmlTag"],
       caches: ["cookie"],
+    },
+    react: { useSuspense: false },
+    backend: {
+      loadPath: "/assets/locales/{{lng}}/translation.json",
     },
   });
 
-  export default i18n;
+export default i18next;

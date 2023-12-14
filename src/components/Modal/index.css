@@ -20,8 +20,18 @@
   transform: translate(-50%, -60%) rotateX(25deg);
   opacity: 0;
   transition: 0.3s ease-in-out;
+  animation: openModal 0.3s ease-in-out forwards;
 }
-.opened_modal {
+@keyframes openModal {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotateX(0);
+  }
+}
+.modal:has(.conragts_modal) {
+  animation: none;
+}
+.opened_modal:has(.conragts_modal) {
   opacity: 1;
   transform: translate(-50%, -50%) rotateX(0);
 }

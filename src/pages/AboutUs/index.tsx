@@ -2,7 +2,7 @@ import Background from "../../components/Background";
 import SIDE_PATTERN from "../../assets/patterns/side-about-us.svg";
 import SIDE_PATTERN_MOBILE from "../../assets/patterns/side-1-mobile.svg";
 import Header from "../../components/Header";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/configureStore";
@@ -18,10 +18,10 @@ import { removeHtmlTags } from "../../globalFunctions/removeHtmlTags";
 import { Helmet } from "react-helmet";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
-import {
-  getAgreementTerms,
-  openPrivacyPolicy,
-} from "../../actions/privacyPolicyAction";
+import { getAgreementTerms } from "../../actions/privacyPolicyAction";
+import { NavLink } from "react-router-dom";
+import cookies from "js-cookie";
+import Terms from "../../components/Terms";
 
 const { Panel } = Collapse;
 
@@ -35,7 +35,7 @@ const AboutUs = () => {
   }, [dispatch]);
 
   const { data, loading } = useSelector((state: RootState) => state.aboutUs);
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
+  const lang = cookies.get("i18next");
   const faqRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,10 +56,6 @@ const AboutUs = () => {
   const infos = Object.values(data);
   const faq = infos[5];
 
-  const handlePrivacy = (privacyHeader: string, privacy: string) => {
-    dispatch(openPrivacyPolicy(true, privacyHeader, privacy));
-  };
-
   return (
     <>
       <Helmet>
@@ -69,13 +65,13 @@ const AboutUs = () => {
         pattern1={windowSize.width < 800 ? SIDE_PATTERN_MOBILE : SIDE_PATTERN}
         style={{ flexDirection: "column", gap: "90px" }}>
         <div className='aboutUs-bigPattern-1'>
-          <img src={PATTERN_1} alt='Pattern' />
+          <img src={PATTERN_1} alt='Pattern' decoding='async' loading='lazy' />
         </div>
         <div className='aboutUs-bigPattern-2'>
-          <img src={PATTERN_2} alt='Pattern' />
+          <img src={PATTERN_2} alt='Pattern' decoding='async' loading='lazy' />
         </div>
         <div className='aboutUs-bigPattern-3'>
-          <img src={PATTERN_3} alt='Pattern' />
+          <img src={PATTERN_3} alt='Pattern' decoding='async' loading='lazy' />
         </div>
         {infos.map((info: any, i: number) => {
           return (
@@ -83,9 +79,7 @@ const AboutUs = () => {
               <div key={i}>
                 <Header
                   title={info[`title_${lang}`]}
-                  shortDescription={info[`short_description_${lang}`]}
                   description={info[`description_${lang}`]}
-                  ourMissionDesc={info[`short_description_${lang}`]}
                 />
               </div>
             )
@@ -109,12 +103,26 @@ const AboutUs = () => {
                       //@ts-ignore
                       f.question_answer.map((q, i) => (
                         <Panel
-                          header={removeHtmlTags(q[`question_${lang}`])}
+                          header={
+                            // <div
+                            //   className='faq_panel'
+                            //   dangerouslySetInnerHTML={{
+                            //     __html: q[`question_${lang}`],
+                            //   }}
+                            // />
+                            removeHtmlTags(q[`question_${lang}`])
+                          }
                           key={i}
                           className='faq_q'>
                           <p className='faq_a'>
                             {removeHtmlTags(q[`answer_${lang}`])}
                           </p>
+                          {/* <div
+                            className='faq_a'
+                            dangerouslySetInnerHTML={{
+                              __html: q[`answer_${lang}`],
+                            }}
+                          /> */}
                         </Panel>
                       ))
                     }
@@ -125,6 +133,12 @@ const AboutUs = () => {
                     const answer = q[`answer_${lang}`].split("</p>");
                     return (
                       <Fragment key={i}>
+                        {/* <div
+                          className='faq_q'
+                          dangerouslySetInnerHTML={{
+                            __html: q[`question_${lang}`],
+                          }}
+                        /> */}
                         <p className='faq_q'>
                           {removeHtmlTags(q[`question_${lang}`])}
                         </p>
@@ -141,6 +155,13 @@ const AboutUs = () => {
                               {removeHtmlTags(
                                 paragraph.substring(paragraph.indexOf(" ") + 1)
                               )}
+                              {/* <span
+                                dangerouslySetInnerHTML={{
+                                  __html: paragraph.substring(
+                                    paragraph.indexOf(" ") + 1
+                                  ),
+                                }}
+                              /> */}
                             </p>
                           </div>
                         ))}
@@ -153,30 +174,12 @@ const AboutUs = () => {
         </div>
         <div className='aboutUs_dashedLine' />
         <div className='inner aboutUs_privacy'>
-          <button
-            onClick={() =>
-              dispatch(
-                getAgreementTerms(
-                  true,
-                  t("checkboxes.agreement_terms"),
-                  "about_us"
-                )
-              )
-            }>
-            Соглашение условий *
-          </button>
-          <button
-            onClick={() =>
-              dispatch(
-                getAgreementTerms(
-                  true,
-                  t("checkboxes.club_code_of_ethics_301"),
-                  "about_us"
-                )
-              )
-            }>
-            КОДЕКС ЭТИКИ КЛУБА 301*
-          </button>
+          <a href={`/${lang}/agreementTerms`} className='mentioned_txt'>
+            {t("checkboxes.agreement_terms")} *
+          </a>
+          <a href={`/${lang}/clubCodeOfEthics`} className='mentioned_txt'>
+            {t("checkboxes.club_code_of_ethics_301")}*
+          </a>
           <Popconfirm
             className='signUp_popover'
             description={
@@ -205,28 +208,14 @@ const AboutUs = () => {
             okText={""}
             cancelText={""}
             title={undefined}>
-            <button className='support_form'>Форма поддержки</button>
+            <a
+              href='/'
+              className='mentioned_txt support_form'
+              onClick={e => e.preventDefault()}>
+              {t("checkboxes.support_form")}
+            </a>
           </Popconfirm>
-          <p>
-            <button
-              className='mentioned_txt'
-              onClick={() =>
-                handlePrivacy(
-                  t("privacy.terms-of-services"),
-                  "Terms of Services"
-                )
-              }>
-              {t("privacy.terms")}
-            </button>
-            <button>{t("privacy.and")}</button>
-            <button
-              className='mentioned_txt'
-              onClick={() =>
-                handlePrivacy(t("privacy.privacy-policy"), "Privacy Policy")
-              }>
-              {t("privacy.privacy")}
-            </button>
-          </p>
+          <Terms aboutUs={true} />
         </div>
       </Background>
       <Contact />

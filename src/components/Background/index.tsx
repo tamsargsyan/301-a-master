@@ -29,10 +29,10 @@ const Background: React.FC<BgProps> = ({
   shoudHaveSidePattern,
 }) => {
   return (
-    <div className="bgContainer">
+    <div className='bgContainer'>
       {pattern1 && (
-        <div className="sidePattern1" style={sidePatter1Style}>
-          <img src={pattern1} alt="Pattern" />
+        <div className='sidePattern1' style={sidePatter1Style}>
+          <img src={pattern1} alt='Pattern' decoding='async' loading='lazy' />
         </div>
       )}
       {/* {pattern2 && (
@@ -41,8 +41,8 @@ const Background: React.FC<BgProps> = ({
         </div>
       )} */}
       {pattern3 && (
-        <div className="bigPattern" style={bigPatternStyle}>
-          <img src={pattern3} alt="Pattern" />
+        <div className='bigPattern' style={bigPatternStyle}>
+          <img src={pattern3} alt='Pattern' decoding='async' loading='lazy' />
         </div>
       )}
       {/* {pattern2 && (
@@ -50,12 +50,12 @@ const Background: React.FC<BgProps> = ({
           <img src={pattern2} alt="Pattern" />
         </div>
       )} */}
-      <div className="bgContent" style={style}>
+      <div className='bgContent' style={style}>
         {children}
       </div>
       {pattern1 && shoudHaveSidePattern && (
-        <div className="sidePattern2" style={sidePatter2Style}>
-          <img src={pattern1} alt="Pattern" />
+        <div className='sidePattern2' style={sidePatter2Style}>
+          <img src={pattern1} alt='Pattern' decoding='async' loading='lazy' />
         </div>
       )}
     </div>

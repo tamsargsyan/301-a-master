@@ -139,12 +139,23 @@ const Media = () => {
               }}
               key={i}>
               <div className='media_img_wrapper'>
-                <img src={media.img} alt='Media' className='media_img_bg' />
+                <img
+                  src={media.img}
+                  alt='Media'
+                  className='media_img_bg'
+                  decoding='async'
+                  loading='lazy'
+                />
                 {media.fileType === "video" && (
                   <button
                     className='media_play_btn'
                     onClick={() => setOpenVideo(true)}>
-                    <img src={PLAY_ICON} alt='Play' />
+                    <img
+                      src={PLAY_ICON}
+                      alt='Play'
+                      decoding='async'
+                      loading='lazy'
+                    />
                   </button>
                 )}
               </div>
@@ -154,7 +165,12 @@ const Media = () => {
                 {media.fileType === "pdf" && (
                   <div className='media_info_pdf_wrapper'>
                     <div className='media_info_pdf'>
-                      <img src={PDF} alt='Pdf' />
+                      <img
+                        src={PDF}
+                        alt='Pdf'
+                        decoding='async'
+                        loading='lazy'
+                      />
                       <p>Download</p>
                     </div>
                     <p className='media_pdf_price'>{20}$</p>
@@ -214,6 +230,8 @@ const Media = () => {
       <div className='video_modal'>
         <Modal setOpenModal={setOpenVideo} openModal={openVideo}>
           <EcosystemModal
+            back={true}
+            className='modal_back'
             onClose={() => setOpenVideo(false)}
             header={""}
             closeIcon={CLOSE}>
@@ -230,10 +248,14 @@ const Media = () => {
       {/* )} */}
       {/* {openBook && ( */}
       <Modal setOpenModal={setOpenBook} openModal={openBook}>
-        <EcosystemModal onClose={() => setOpenBook(false)} header={"book"}>
+        <EcosystemModal
+          back={true}
+          className='modal_back'
+          onClose={() => setOpenBook(false)}
+          header={"book"}>
           <div className='media_pdf_modal_book_wrapper'>
             <div className='media_book_img'>
-              <img src={IMG_3} alt='Book' />
+              <img src={IMG_3} alt='Book' decoding='async' loading='lazy' />
             </div>
             <div className='media_book_desc_wrapper'>
               <p className='media_book_desc_title media_info_title'>
@@ -253,7 +275,7 @@ const Media = () => {
               </p>
               <div className='media_book_pdf_wrapper'>
                 <div className='media_info_pdf'>
-                  <img src={PDF} alt='Pdf' />
+                  <img src={PDF} alt='Pdf' decoding='async' loading='lazy' />
                   <p>Download</p>
                 </div>
                 <div className='media_book_price media_pdf_price'>

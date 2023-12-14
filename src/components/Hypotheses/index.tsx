@@ -25,6 +25,7 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
     id: 1,
   });
   const windowSize = useWindowSize();
+
   return (
     <div className='aboutContainer'>
       <div className='aboutInner'>
@@ -52,7 +53,7 @@ const Hypotheses: React.FC<HypothesesProps> = ({ dataHypotheses, lang }) => {
         </div>
         {windowSize.width < 1100 && (
           <DropDown
-            items={dataHypotheses}
+            items={dataHypotheses?.filter(item => item !== activeItem.data)}
             onClickItem={setActiveItem}
             type='hypotheses'
             text={activeItem.data[`name_${lang}` as keyof DataHypotheses]}
