@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   data: null,
   error: null,
+  gmail: null,
 };
 
 const registerDataReducer = (state = initialState, action: any) => {

@@ -20,12 +20,22 @@
   transform: translate(-50%, -60%) rotateX(25deg);
   opacity: 0;
   transition: 0.3s ease-in-out;
+  animation: openModal 0.3s ease-in-out forwards;
 }
-.opened_modal {
+@keyframes openModal {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotateX(0);
+  }
+}
+.modal:has(.conragts_modal) {
+  animation: none;
+}
+.opened_modal:has(.conragts_modal) {
   opacity: 1;
   transform: translate(-50%, -50%) rotateX(0);
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .modal {
     height: 100%;
   }
@@ -36,9 +46,7 @@
     padding: 23px;
     color: #151c26;
     font-size: 15px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
     text-align: center;
   }
   .modal_close_mobile button {
@@ -47,5 +55,17 @@
     top: 50%;
     left: 30px;
     transform: translateY(-50%);
+  }
+  .overlay {
+    backdrop-filter: blur(0);
+    height: -webkit-fill-available;
+  }
+  .mobile_modal {
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .mobile_modal::-webkit-scrollbar {
+    display: none;
   }
 }

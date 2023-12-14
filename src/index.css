@@ -6,7 +6,12 @@
   font-display: block;
 }
 
+* {
+  font-family: "Montserrat", "Montserrat Arm", sans-serif;
+}
+input::placeholder {
+  font-family: "Montserrat", "Montserrat Arm", sans-serif;
+}
 body {
   margin: 0;
-  font-family: "Montserrat", sans-serif;
 }

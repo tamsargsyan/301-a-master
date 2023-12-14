@@ -26,6 +26,7 @@ const Main: React.FC<MainProps> = ({ lang }) => {
   const { landOfWisdom } = useSelector(
     (state: RootState) => state.homeData.data
   );
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   return (
     <Background
@@ -43,12 +44,29 @@ const Main: React.FC<MainProps> = ({ lang }) => {
       }}>
       {windowSize.width < 975 && (
         <div className='bgLogo'>
-          <img src={BIG_PATTERN} className='mainBigPattern' alt='Pattern' />
-          <img src={LOGO_MOBILE} alt='301' className='logoMobile' />
+          <img
+            src={BIG_PATTERN}
+            className='mainBigPattern'
+            alt='Pattern'
+            decoding='async'
+            loading='lazy'
+          />
+          <img
+            src={LOGO_MOBILE}
+            alt='301'
+            className='logoMobile'
+            decoding='async'
+            loading='lazy'
+          />
         </div>
       )}
       <div className='bg'>
-        <img src={windowSize.width < 975 ? BG_MOBILE : BG} alt='Background' />
+        <img
+          src={windowSize.width < 975 ? BG_MOBILE : BG}
+          alt='Background'
+          decoding='async'
+          loading='lazy'
+        />
       </div>
       <Header
         title={landOfWisdom[`title_${lang}` as keyof HeaderKeyOf]}
@@ -56,14 +74,16 @@ const Main: React.FC<MainProps> = ({ lang }) => {
         description={landOfWisdom[`description_${lang}` as keyof HeaderKeyOf]}
         btns={[
           {
-            name: t("btns.become-301"),
+            name: isAuthenticated ? t("btns.donate") : t("btns.become-301"),
             become: "доноры «301»",
             id: 1,
-            link: "",
+            link: isAuthenticated
+              ? `/donation`
+              : `/accountType?id=1?type=donor`,
           },
           {
             name: t("btns.whole-project"),
-            link: "/projects",
+            link: `/projects`,
             become: "",
             id: null,
           },
@@ -84,7 +104,7 @@ const Main: React.FC<MainProps> = ({ lang }) => {
       />
       {windowSize.width > 975 && (
         <div className='bgLogo'>
-          <img src={LOGO} alt='301' />
+          <img src={LOGO} alt='301' decoding='async' loading='lazy' />
         </div>
       )}
       <FollowUs className='mainFollowUs' />

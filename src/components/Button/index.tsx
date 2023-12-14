@@ -1,5 +1,6 @@
 import { NavLink, To } from "react-router-dom";
 import "./index.css";
+import { ReactElement } from "react";
 interface ButtonProps {
   text: string | any;
   style?: Object;
@@ -7,6 +8,7 @@ interface ButtonProps {
   link: boolean;
   to: To;
   icon?: string;
+  svg?: ReactElement;
   onClick?: (arg: any) => void;
   disabled?: boolean;
   className?: string;
@@ -20,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   link,
   to,
   icon,
+  svg,
   onClick,
   disabled,
   className,
@@ -32,8 +35,7 @@ const Button: React.FC<ButtonProps> = ({
           onClick={onClick}
           to={to}
           className={`${active && "activeBtn"} ${className} btn`}
-          style={style}
-        >
+          style={style}>
           {text}
         </NavLink>
       ) : (
@@ -42,10 +44,18 @@ const Button: React.FC<ButtonProps> = ({
           onClick={onClick}
           className={`${active && "activeBtn"} ${className} btn`}
           style={style}
-          type={type}
-        >
+          type={type}>
           {text}
-          {icon && <img className="btn_icon" src={icon} alt="Icon" />}
+          {icon && (
+            <img
+              className='btn_icon'
+              src={icon}
+              alt='Icon'
+              decoding='async'
+              loading='lazy'
+            />
+          )}
+          {svg && svg}
         </button>
       )}
     </>

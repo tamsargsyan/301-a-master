@@ -6,40 +6,45 @@ import { fetchingPrivacyPolicy } from "../../actions/apiActions";
 import { RootState } from "../../store/configureStore";
 import { Spin } from "antd";
 import { HeaderKeyOf } from "../../utils/keyof.type";
+import { useLocation, useNavigate } from "react-router";
+import cookies from "js-cookie";
+import "./index.css";
+import { hasPreviousHistory, history } from "../Navbar";
 
-interface PrivacyProps {
-  privacy: { modal: boolean; privacy: string };
-  setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
-  handleClose: () => void;
-}
-
-const Privacy: React.FC<PrivacyProps> = ({ privacy, handleClose }) => {
+const Privacy = () => {
   const dispatch = useDispatch();
-  const endpoint = privacy?.privacy?.toLowerCase().split(" ").join("-");
-
-  const toCamelCase = (input: string) => {
-    return input
-      .toLowerCase()
-      .replace(/[^a-zA-Z0-9]+(.)/g, (_, char) => char.toUpperCase());
-  };
-
+  const location = useLocation();
+  const endpoint =
+    location.pathname.split("/")[location.pathname.split("/").length - 1];
   useEffect(() => {
-    //@ts-ignore
-    endpoint && dispatch(fetchingPrivacyPolicy(endpoint));
-  }, [dispatch, privacy.modal, endpoint]);
+    dispatch(
+      //@ts-ignore
+      fetchingPrivacyPolicy("get-data")
+    );
+  }, [dispatch]);
 
   const { data, loading } = useSelector(
     (state: RootState) => state.privacyPolicy
   );
-  const lang = useSelector((state: RootState) => state.languageDitactor.lang);
-  //@ts-ignore
-  const jsonData = data[toCamelCase(privacy.privacy)];
+  const lang = cookies.get("i18next");
+  const navigate = useNavigate();
+
+  const navigateBack = () => {
+    if (hasPreviousHistory()) navigate(-1);
+    else {
+      navigate("/");
+    }
+  };
 
   return (
-    <Modal setOpenModal={handleClose} openModal={privacy.modal}>
+    <Modal setOpenModal={navigateBack} openModal={true}>
       <EcosystemModal
-        onClose={handleClose}
-        header={privacy.privacy}
+        back={false}
+        onClose={navigateBack}
+        header={
+          //@ts-ignore
+          (data && data[endpoint] && data[endpoint][`title_${lang}`]) || ""
+        }
         className='modal_back'>
         <div
           className={`agreementTerms_${loading && "loading"} agreementTerms`}
@@ -52,8 +57,11 @@ const Privacy: React.FC<PrivacyProps> = ({ privacy, handleClose }) => {
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  jsonData &&
-                  jsonData[`description_${lang}` as keyof HeaderKeyOf],
+                  data &&
+                  //@ts-ignore
+                  data[endpoint] &&
+                  //@ts-ignore
+                  data[endpoint][`description_${lang}` as keyof HeaderKeyOf],
               }}
             />
           )}

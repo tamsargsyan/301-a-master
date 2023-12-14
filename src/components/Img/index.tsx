@@ -15,6 +15,8 @@ const Img: React.FC<ImgProps> = ({ rotate, size }) => {
         transition: "0.3s ease",
         width: size === "large" ? "1.4322916666666667vw" : "",
       }}
+      decoding='async'
+      loading='lazy'
     />
   );
 };

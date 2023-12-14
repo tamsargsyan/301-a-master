@@ -123,5 +123,9 @@ export interface HomeData {
 }
 
 export interface PrivactPolicy {
+  agreementTerms: HeaderTypes;
+  clubCodeOfEthics: HeaderTypes;
+  supportForms: HeaderTypes;
+  termsOfService: HeaderTypes;
   privacyPolicy: HeaderTypes;
 }

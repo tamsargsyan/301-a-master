@@ -1,6 +1,6 @@
 import Modal from "../Modal";
 import EcosystemModal from "../EcosystemModal";
-import { Select, Checkbox, Popconfirm, Spin, notification } from "antd";
+import { Select, Checkbox, Popconfirm, Spin } from "antd";
 import "./index.css";
 import Button from "../Button";
 import INFO_ICON from "../../assets/info-icon.svg";
@@ -8,24 +8,25 @@ import countries from "../../locales/countries.json";
 import country_dial from "../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { openAccountTypeModal } from "../../actions/donateAction";
 import { Formik, Field, ErrorMessage } from "formik";
-import { signUpSchema } from "../../Validation";
-import { useCallback, useEffect, useState } from "react";
-import { fetchingRegisterData, usePostRequest } from "../../actions/apiActions";
+import { useEffect, useState } from "react";
+import {
+  fetchingPrivacyPolicy,
+  fetchingRegisterData,
+  usePostRequest,
+} from "../../actions/apiActions";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../../store/configureStore";
+import { congratsModal } from "../../actions/congratsAction";
+import { useLocation, useNavigate } from "react-router";
+import Terms from "../Terms";
+import cookies from "js-cookie";
+import { login } from "../../actions/authActions";
+import EYE_OPEN from "../../assets/eye-open-gray.svg";
+import EYE_CLOSE from "../../assets/eye-close-gray.svg";
+import ValidationSchema from "../../Validation";
 
 const { Option } = Select;
-
-interface AccountTypeModalProps {
-  accountType: { open: boolean; id: number; name: string };
-  setSignUp: (arg: boolean) => void;
-  setAgreementTerms: (arg: boolean) => void;
-  setPrivacy: (arg: { modal: boolean; privacy: string }) => void;
-  handleClose: () => void;
-  setModalName: (arg: string) => void;
-}
 
 const filterOption = (
   input: string,
@@ -40,42 +41,15 @@ const filterOptionTel = (
 const filterOptionSages = (input: string, option: any) =>
   (option?.value ?? "").toLowerCase().includes(input.toLowerCase());
 
-const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
-  accountType,
-  setAgreementTerms,
-  setPrivacy,
-  handleClose,
-  setModalName,
-}) => {
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
+const AccountTypeModal = () => {
+  const { t } = useTranslation();
+  const lang = cookies.get("i18next");
   const dispatch = useDispatch();
-  const confirm = (e: React.MouseEvent<HTMLElement>) => {
-    setAgreementTerms(true);
-    dispatch(
-      openAccountTypeModal({
-        open: false,
-        id: 0,
-        name: "",
-      })
-    );
+  const confirmAgreementTerms = () => {
+    navigate(`/${lang}/agreementTerms`);
   };
-
-  const handlePrivacy = (privacy: string) => {
-    setPrivacy({ modal: true, privacy });
-    dispatch(
-      openAccountTypeModal({
-        open: false,
-        id: 0,
-        name: "",
-      })
-    );
-    setModalName("accountTypeModal");
+  const confirmClubCodeEthics = () => {
+    navigate(`/${lang}/clubCodeOfEthics`);
   };
 
   const [howDoYouKnow, setHowDoYouKnow] = useState<string>("");
@@ -95,65 +69,165 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
 
     form.setFieldValue("projects_interested", updatedProjectsInterested);
   };
+  const [participation_form, setParticipation_form] = useState("");
   const [telCode, setTelCode] = useState("");
   const handleTelCode = (val: string) => setTelCode(val);
 
   const { postRequest, postLoading, response, error } = usePostRequest();
-  const [api, contextHolder] = notification.useNotification();
-
-  const openNotification = useCallback(
-    (message: string) => {
-      api.open({
-        message,
-        description: false,
-        duration: 0,
-      });
-    },
-    [api]
+  const donatePostRequest = usePostRequest();
+  const [hasNavigated, setHasNavigated] = useState(false);
+  const gmailLoginCallbackData = useSelector(
+    (state: RootState) => state.gmailLoginCallback.data
   );
-  console.log(telCode);
+
+  const facebookLoginCallbackData = useSelector(
+    (state: RootState) => state.facebookLoginCallback.data
+  );
 
   useEffect(() => {
-    if (response) {
-      dispatch(
-        openAccountTypeModal({
-          open: false,
-          id: 0,
-          name: "",
-        })
-      );
-      openNotification(response.data.message);
+    if (
+      response &&
+      response.data &&
+      (response.data.access_token || response.data.user) &&
+      !hasNavigated
+    ) {
+      setHasNavigated(true);
+      if (gmailLoginCallbackData || facebookLoginCallbackData) {
+        if (gmailLoginCallbackData)
+          localStorage.setItem("token", gmailLoginCallbackData.access_token);
+        else if (facebookLoginCallbackData)
+          localStorage.setItem("token", facebookLoginCallbackData.access_token);
+      } else localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      !location.pathname.includes("donation") && dispatch(login());
+      !location.pathname.includes("donation") &&
+        !hasNavigated &&
+        navigate(`/${lang}/`);
     }
-    if (error) {
-      openNotification(JSON.parse(error.response.data).email[0]);
-    }
-  }, [response, dispatch, error, openNotification]);
-
-  const { t } = useTranslation();
+  }, [response, dispatch, error, t]);
 
   useEffect(() => {
-    //@ts-ignore
-    accountType.id === 3 && dispatch(fetchingRegisterData("get-register-data"));
-  }, [accountType.id, dispatch]);
+    if (response?.data?.user) {
+      if (location.pathname.includes("donation")) {
+        localStorage.setItem("donationToRegister", "true");
+        const result = {
+          ...response.data.user,
+          lang,
+        };
+        donatePostRequest.postRequest("donation", result, {
+          Authorization: `Bearer ${response.data.access_token}`,
+        });
+        // console.log(response.data);
+      } else {
+        dispatch(congratsModal(true, t("congrats.register")));
+      }
+    }
+  }, [response]);
+
+  useEffect(() => {
+    if (donatePostRequest.response) {
+      if (donatePostRequest.response.data?.redirectURL) {
+        // console.log(donatePostRequest.response);
+        window.location.href = donatePostRequest.response.data.redirectURL;
+      } else if (donatePostRequest.response.data?.message) {
+        dispatch(congratsModal(true, donatePostRequest.response.data?.message));
+        donatePostRequest.response.data?.user &&
+          localStorage.setItem(
+            "user",
+            JSON.stringify(donatePostRequest.response.data?.user)
+          );
+      }
+    }
+  }, [donatePostRequest.response]);
 
   const { data } = useSelector((state: RootState) => state.registerData);
+  const location = useLocation();
+  const id = +location.search?.split("?")[1]?.split("=")[1];
+  const type = location.search?.split("?")[2]?.split("=")[1];
+  const navigate = useNavigate();
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchingRegisterData("get-register-data"));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      //@ts-ignore
+      fetchingPrivacyPolicy("get-data")
+    );
+  }, [dispatch]);
+
+  const privacyData = useSelector(
+    (state: RootState) => state.privacyPolicy.data
+  );
+
+  const {
+    doanteSignUpSchema,
+    otherSignUpSchema,
+    signUpSchema,
+    socialMediaRegisterSchema,
+  } = ValidationSchema();
+
+  const schema = () => {
+    if (location.pathname.includes("donation")) {
+      return doanteSignUpSchema;
+    } else {
+      if (gmailLoginCallbackData || facebookLoginCallbackData)
+        return socialMediaRegisterSchema;
+      else if (id == 3) return otherSignUpSchema;
+      else return signUpSchema;
+    }
+  };
+
+  useEffect(() => {
+    if (error && error.response) {
+      const value1 = Object.values(JSON.parse(error.response.data)).flat()[0];
+      const value2 = Object.values(JSON.parse(error.response.data)).flat()[1];
+      if (value1) {
+        dispatch(
+          congratsModal(true, t("validation-errors.email-already-taken"))
+        );
+      }
+      if (value2) {
+        dispatch(congratsModal(true, `${value2}`));
+      }
+      if (value1 && value2) {
+        dispatch(congratsModal(true, `${value1} and ${value2}`));
+      }
+    }
+  }, [error]);
+
+  // console.log(error?.response);
+
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   return (
     <Modal
-      setOpenModal={handleClose}
-      openModal={accountType.open}
-      className='signUp_overlay'>
-      {contextHolder}
+      setOpenModal={() => navigate(-1)}
+      openModal={true}
+      className='signUp_overlay'
+      headerShow={false}>
       <EcosystemModal
-        onClose={handleClose}
-        header={accountType.name}
+        back={true}
+        onClose={() => navigate(-1)}
+        header={t(`footer.ecosystem.${type}`)}
         className='modal_back'>
         <Formik
-          validationSchema={signUpSchema}
+          validationSchema={schema()}
           initialValues={{
-            name: "",
-            last_name: "",
-            email: "",
+            name:
+              gmailLoginCallbackData?.user?.name ||
+              facebookLoginCallbackData?.user?.name ||
+              "",
+            last_name:
+              gmailLoginCallbackData?.user?.last_name ||
+              facebookLoginCallbackData?.user?.last_name ||
+              "",
+            email:
+              gmailLoginCallbackData?.user?.email ||
+              facebookLoginCallbackData?.user?.email ||
+              "",
             phone: "",
             organization: "",
             how_did_you_know: "",
@@ -162,9 +236,40 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
             country: "",
             password: "",
             password_confirmation: "",
+            subscription_type: `annual`,
+            participation_form: "",
+            sages_id: "",
+            agreement_terms: false,
+            club_code_of_ethics_301: false,
+            support_form: false,
           }}
           onSubmit={values => {
-            postRequest("register-user", values);
+            const completePhoneNumber = `${telCode} ${values.phone}`;
+            const result = {
+              ...values,
+              phone: completePhoneNumber,
+              type,
+              // agreement_terms: agreementTermsChecked,
+              // club_code_of_ethics_301: clubCodeOfEthics301Checked,
+              // support_form: supportFormChecked,
+              user_id: (gmailLoginCallbackData || facebookLoginCallbackData)
+                ?.user?.id,
+              lang,
+            };
+            // console.log(result);
+            // console.log(completePhoneNumber);
+            if (gmailLoginCallbackData || facebookLoginCallbackData) {
+              let token = "";
+              if (gmailLoginCallbackData)
+                token = gmailLoginCallbackData.access_token;
+              if (facebookLoginCallbackData)
+                token = facebookLoginCallbackData.access_token;
+              postRequest("update-user", result, {
+                Authorization: `Bearer ${token}`,
+              });
+            } else {
+              postRequest("register-user", result, {});
+            }
           }}>
           {({
             values,
@@ -174,6 +279,7 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue,
           }) => (
             <form noValidate onSubmit={handleSubmit} className='signUp_form'>
               <div className='signUp_formInputs'>
@@ -190,7 +296,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       value={values.name}
                     />
                     <p className='error'>
-                      {errors.name && touched.name && errors.name}
+                      {errors.name && touched.name
+                        ? (errors.name as string)
+                        : null}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -207,9 +315,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       value={values.last_name}
                     />
                     <p className='error'>
-                      {errors.last_name &&
-                        touched.last_name &&
-                        errors.last_name}
+                      {errors.last_name && touched.last_name
+                        ? (errors.last_name as string)
+                        : null}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -226,9 +334,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       onBlur={handleBlur}
                     />
                     <p className='error'>
-                      {errors.organization &&
-                        touched.organization &&
-                        errors.organization}
+                      {errors.organization && touched.organization
+                        ? (errors.organization as string)
+                        : null}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -247,7 +355,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                             onChange={(_, obj: any) => {
                               form.setFieldValue("country", obj.label);
                             }}
-                            onSearch={onSearch}
                             //@ts-ignore
                             filterOption={filterOption}
                             options={countries}
@@ -265,69 +372,87 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     <label htmlFor='signUp_recommendation'>
                       {t("inputs.recommendation")}*
                     </label>
-                    <Field name='recommendation_from'>
+                    <input
+                      type='text'
+                      id='signUp_recommendation'
+                      name='recommendation_from'
+                      className='signUp_input'
+                      value={values.recommendation_from}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {/* <Field name='recommendation_from'>
                       {
                         //@ts-ignore
                         ({ _, form }) => (
                           <Select
-                            // {...field}
                             showSearch
                             optionFilterProp='children'
                             className='signUp_selector'
                             onChange={(_, obj: any) => {
                               form.setFieldValue(
                                 "recommendation_from",
-                                obj.label
+                                obj.value
                               );
                             }}
-                            onSearch={onSearch}
                             //@ts-ignore
-                            filterOption={filterOption}
-                            options={[
-                              {
-                                value: "jack",
-                                label: "Jack",
-                              },
-                              {
-                                value: "lucy",
-                                label: "Lucy",
-                              },
-                              {
-                                value: "tom",
-                                label: "Tom",
-                              },
-                            ]}
-                          />
+                            filterOption={filterOptionSages}>
+                            {data?.sages.map((sage: any, i: number) => (
+                              <Option
+                                key={i}
+                                value={`${sage.name} ${sage.last_name}`}>
+                                {`${sage[`name_${lang}`]} ${
+                                  sage[`last_name_${lang}`]
+                                }`}
+                              </Option>
+                            ))}
+                          </Select>
                         )
                       }
-                    </Field>
+                    </Field> */}
                     <ErrorMessage
                       name='recommendation_from'
                       component='p'
                       className='error'
                     />
                   </div>
-                  {accountType.id === 3 && (
+                  {type === "experts" && (
                     <div className='signUp_formGroup'>
-                      <label htmlFor='signUp_recommendation'>
-                        {t("which_sages")}*
-                      </label>
-                      <Select
-                        className='signUp_selector'
-                        showSearch
-                        optionFilterProp='children'
-                        onChange={onChange}
-                        onSearch={onSearch}
-                        //@ts-ignore
-                        filterOption={filterOptionSages}>
-                        {data?.sages.map((sage: any) => (
-                          <Option
-                            key={sage.id}
-                            value={`${sage.name}${sage.last_name}`}>
-                            {`${sage.name}${sage.last_name}`}
-                          </Option>
-                        ))}
-                      </Select>
+                      <label htmlFor='signUp_sages'>{t("which_sages")}*</label>
+                      <Field name='sages_id'>
+                        {
+                          //@ts-ignore
+                          ({ _, form }) => (
+                            <Select
+                              className='signUp_selector'
+                              showSearch
+                              optionFilterProp='children'
+                              onChange={(_, obj: any) => {
+                                form.setFieldValue("sages_id", obj.key);
+                              }}
+                              //@ts-ignore
+                              filterOption={filterOptionSages}>
+                              {data?.sages.map((sage: any, i: number) => (
+                                <Option
+                                  key={i}
+                                  value={`${sage.name} ${sage.last_name}`}>
+                                  {`${sage[`name_${lang}`]} ${
+                                    sage[`last_name_${lang}`]
+                                  }`}
+                                </Option>
+                              ))}
+                            </Select>
+                          )
+                        }
+                      </Field>
+                      <p className='error'>
+                        {errors.sages_id && touched.sages_id && errors.sages_id}
+                      </p>
+                      {/* <ErrorMessage
+                        name='sages_id'
+                        component='p'
+                        className='error'
+                      /> */}
                     </div>
                   )}
                 </div>
@@ -406,14 +531,18 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                     <label htmlFor='signUp_project'>
                       {t("inputs.projects_interested")}
                     </label>
-                    <Checkbox className='signUp_radio'>
-                      {t("checkboxes.education")}
-                    </Checkbox>
                     <Field name='projects_interested'>
                       {
                         //@ts-ignore
                         ({ _, form }) => (
                           <>
+                            <Checkbox
+                              className='signUp_radio'
+                              onChange={e => {
+                                handleCheckboxChange(e, form);
+                              }}>
+                              {t("checkboxes.education")}
+                            </Checkbox>
                             <Checkbox
                               className='signUp_radio'
                               value='All directions'
@@ -464,20 +593,66 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       className='error'
                     />
                   </div>
-                  {accountType.id === 3 && (
+                  {id === 3 && (
                     <div className='signUp_formGroup'>
                       <label htmlFor='signUp_fund'>
-                        {t("checkboxes.participation_form")}*
+                        {t("inputs.participation_form")}*
                       </label>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.consultations")}
-                      </Checkbox>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.project_activities")}
-                      </Checkbox>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.both_options")}
-                      </Checkbox>
+                      <Field name='participation_form'>
+                        {
+                          //@ts-ignore
+                          ({ _, form }) => (
+                            <>
+                              <Checkbox
+                                value='Consultations'
+                                checked={participation_form === "Consultations"}
+                                className='signUp_radio'
+                                onChange={e => {
+                                  setParticipation_form(e.target.value);
+                                  form.setFieldValue(
+                                    "participation_form",
+                                    e.target.value
+                                  );
+                                }}>
+                                {t("checkboxes.consultations")}
+                              </Checkbox>
+                              <Checkbox
+                                value='Project activities'
+                                checked={
+                                  participation_form === "Project activities"
+                                }
+                                className='signUp_radio'
+                                onChange={e => {
+                                  setParticipation_form(e.target.value);
+                                  form.setFieldValue(
+                                    "participation_form",
+                                    e.target.value
+                                  );
+                                }}>
+                                {t("checkboxes.project_activities")}
+                              </Checkbox>
+                              <Checkbox
+                                value='both options'
+                                checked={participation_form === "both options"}
+                                className='signUp_radio'
+                                onChange={e => {
+                                  setParticipation_form(e.target.value);
+                                  form.setFieldValue(
+                                    "participation_form",
+                                    e.target.value
+                                  );
+                                }}>
+                                {t("checkboxes.both_options")}
+                              </Checkbox>
+                            </>
+                          )
+                        }
+                      </Field>
+                      <ErrorMessage
+                        name='how_did_you_know'
+                        component='p'
+                        className='error'
+                      />
                     </div>
                   )}
                 </div>
@@ -493,7 +668,9 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       onChange={handleChange}
                     />
                     <p className='error'>
-                      {errors.email && touched.email && errors.email}
+                      {errors.email && touched.email
+                        ? (errors.email as string)
+                        : null}{" "}
                     </p>
                   </div>
                   <div className='signUp_formGroup'>
@@ -505,7 +682,6 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                         placeholder={t("inputs.choose")}
                         optionFilterProp='children'
                         onChange={handleTelCode}
-                        onSearch={onSearch}
                         //@ts-ignore
                         filterOption={filterOptionTel}
                         // options={country_dial}
@@ -535,73 +711,286 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                       </div>
                     </div>
                     <p className='error'>
-                      {errors.phone && touched.phone && errors.phone}
+                      {(values.phone &&
+                        !telCode &&
+                        "You should add tel code") ||
+                        (telCode &&
+                          !values.phone &&
+                          "You should add phone number")}
                     </p>
                   </div>
-                  <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_password'>
-                      {t("inputs.password")}*
-                    </label>
-                    <input
-                      type='text'
-                      id='signUp_password'
-                      name='password'
-                      className='signUp_input'
-                      value={values.password}
-                      onChange={handleChange}
-                    />
-                    <p className='error'>
-                      {errors.password && touched.password && errors.password}
-                    </p>
-                  </div>
-                  <div className='signUp_formGroup'>
-                    <label htmlFor='signUp_repeatPassword'>
-                      {t("inputs.password_confirmation")}*
-                    </label>
-                    <input
-                      type='text'
-                      id='signUp_repeatPassword'
-                      name='password_confirmation'
-                      className='signUp_input'
-                      value={values.password_confirmation}
-                      onChange={handleChange}
-                    />
-                    <p className='error'>
-                      {errors.password_confirmation &&
-                        touched.password_confirmation &&
-                        errors.password_confirmation}
-                    </p>
-                  </div>
+                  {facebookLoginCallbackData ||
+                  gmailLoginCallbackData ? null : (
+                    <>
+                      <div className='signUp_formGroup'>
+                        <label htmlFor='signUp_password'>
+                          {t("inputs.password")}*
+                        </label>
+                        <div className='passwordInputField'>
+                          <input
+                            type={showPassword1 ? "text" : "password"}
+                            id='signUp_password'
+                            name='password'
+                            className='signUp_input'
+                            value={values.password}
+                            onChange={handleChange}
+                          />
+                          <button
+                            type='button'
+                            onClick={() => setShowPassword1(!showPassword1)}>
+                            <img
+                              src={showPassword1 ? EYE_OPEN : EYE_CLOSE}
+                              alt='Eye'
+                            />
+                          </button>
+                        </div>
+                        <p className='error'>
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </p>
+                      </div>
+                      <div className='signUp_formGroup'>
+                        <label htmlFor='signUp_repeatPassword'>
+                          {t("inputs.password_confirmation")}*
+                        </label>
+                        <div className='passwordInputField'>
+                          <input
+                            type={showPassword2 ? "text" : "password"}
+                            id='signUp_repeatPassword'
+                            name='password_confirmation'
+                            className='signUp_input'
+                            value={values.password_confirmation}
+                            onChange={handleChange}
+                          />
+                          <button
+                            type='button'
+                            onClick={() => setShowPassword2(!showPassword2)}>
+                            <img
+                              src={showPassword2 ? EYE_OPEN : EYE_CLOSE}
+                              alt='Eye'
+                            />
+                          </button>
+                        </div>
+                        <p className='error'>
+                          {errors.password_confirmation &&
+                            touched.password_confirmation &&
+                            errors.password_confirmation}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {location.pathname.includes("donation") && (
+                    <div className='signUp_formGroup'>
+                      <label htmlFor='signUp_subs_type'>
+                        {t("inputs.subs_type")}*
+                      </label>
+                      <Field name='subscription_type'>
+                        {
+                          //@ts-ignore
+                          ({ _, form }) => (
+                            <Select
+                              // {...field}
+                              showSearch
+                              optionFilterProp='children'
+                              className='signUp_selector'
+                              onChange={(_, obj: any) => {
+                                form.setFieldValue(
+                                  "subscription_type",
+                                  obj.value
+                                );
+                              }}
+                              //@ts-ignore
+                              filterOption={filterOption}
+                              defaultValue={`${t("payments.annual")} 3612$`}
+                              options={[
+                                {
+                                  label: `${t("payments.annual")} 3612$`,
+                                  value: "annual",
+                                },
+                                {
+                                  label: `${t("payments.monthly")} 301$`,
+                                  value: "monthly",
+                                },
+                              ]}
+                            />
+                          )
+                        }
+                      </Field>
+                      <ErrorMessage
+                        name='subscription_type'
+                        component='p'
+                        className='error'
+                      />
+                    </div>
+                  )}
                   <div className='signUp_formGroup terms_formGroup'>
-                    <div className='signUp_info'>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.agreement_terms")}*
-                      </Checkbox>
-                      <Popconfirm
-                        className='signUp_popover'
-                        // title='Delete the task'
-                        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
-                        icon={false}
-                        //@ts-ignore
-                        onConfirm={confirm}
-                        //@ts-ignore
-                        // onCancel={cancel}
-                        okText='more'
-                        cancelText={false}>
-                        <img src={INFO_ICON} alt='Info' />
-                      </Popconfirm>
+                    <div
+                      className='signUp_info'
+                      style={{
+                        flexDirection: "column",
+                        width: "100%",
+                        alignItems: "flex-start",
+                      }}>
+                      <div>
+                        <Checkbox
+                          className='signUp_radio'
+                          checked={values.agreement_terms}
+                          onChange={() =>
+                            setFieldValue(
+                              "agreement_terms",
+                              !values.agreement_terms
+                            )
+                          }>
+                          {t("checkboxes.agreement_terms")}*
+                        </Checkbox>
+                        <Popconfirm
+                          className='signUp_popover'
+                          icon={false}
+                          description={
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: privacyData?.agreementTerms
+                                  ? //@ts-ignore
+                                    privacyData?.agreementTerms[
+                                      `description_${lang}`
+                                    ].slice(0, 230)
+                                  : "",
+                              }}
+                            />
+                          }
+                          //@ts-ignore
+                          onConfirm={confirmAgreementTerms}
+                          //@ts-ignore
+                          // onCancel={cancel}
+                          okText='more'
+                          showCancel={false}
+                          title={undefined}>
+                          <img
+                            src={INFO_ICON}
+                            alt='Info'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </Popconfirm>
+                      </div>
+                      <ErrorMessage
+                        name='agreement_terms'
+                        component='p'
+                        className='error'
+                      />
                     </div>
-                    <div className='signUp_info'>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.club_code_of_ethics_301")}*
-                      </Checkbox>
-                      <img src={INFO_ICON} alt='Info' />
+                    <div
+                      className='signUp_info'
+                      style={{
+                        flexDirection: "column",
+                        width: "100%",
+                        alignItems: "flex-start",
+                      }}>
+                      <div>
+                        <Checkbox
+                          className='signUp_radio'
+                          checked={values.club_code_of_ethics_301}
+                          onChange={() =>
+                            setFieldValue(
+                              "club_code_of_ethics_301",
+                              !values.club_code_of_ethics_301
+                            )
+                          }>
+                          {t("checkboxes.club_code_of_ethics_301")}*
+                        </Checkbox>
+                        <Popconfirm
+                          className='signUp_popover'
+                          description={
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: privacyData?.clubCodeOfEthics
+                                  ? //@ts-ignore
+                                    privacyData?.clubCodeOfEthics[
+                                      `description_${lang}`
+                                    ].slice(0, 230)
+                                  : "",
+                              }}
+                            />
+                          }
+                          icon={false}
+                          //@ts-ignore
+                          onConfirm={confirmClubCodeEthics}
+                          //@ts-ignore
+                          okText='more'
+                          showCancel={false}
+                          title={undefined}>
+                          <img
+                            src={INFO_ICON}
+                            alt='Info'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </Popconfirm>
+                      </div>
+                      <ErrorMessage
+                        name='club_code_of_ethics_301'
+                        component='p'
+                        className='error'
+                      />
                     </div>
-                    <div className='signUp_info'>
-                      <Checkbox className='signUp_radio'>
-                        {t("checkboxes.support_form")}
-                      </Checkbox>
-                      <img src={INFO_ICON} alt='Info' />
+                    <div
+                      className='signUp_info'
+                      style={{
+                        flexDirection: "column",
+                        width: "100%",
+                        alignItems: "flex-start",
+                      }}>
+                      <div>
+                        <Checkbox
+                          className='signUp_radio'
+                          checked={values.support_form}
+                          onChange={() =>
+                            setFieldValue("support_form", !values.support_form)
+                          }>
+                          {t("checkboxes.support_form")}
+                        </Checkbox>
+                        <Popconfirm
+                          className='signUp_popover popover_support_from'
+                          description={
+                            <div className='support_popover'>
+                              <div className='support_popover-list-item'>
+                                <div className='support_popover-list-circle'></div>
+                                <div
+                                  className='support_popover-list-text'
+                                  dangerouslySetInnerHTML={{
+                                    __html: t("privacy.support_popover_1"),
+                                  }}
+                                />
+                              </div>
+                              <div className='support_popover-list-item'>
+                                <div className='support_popover-list-circle'></div>
+                                <div
+                                  className='support_popover-list-text'
+                                  dangerouslySetInnerHTML={{
+                                    __html: t("privacy.support_popover_2"),
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          }
+                          icon={false}
+                          okText={""}
+                          showCancel={false}
+                          title={undefined}>
+                          <img
+                            src={INFO_ICON}
+                            alt='Info'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </Popconfirm>
+                      </div>
+                      <ErrorMessage
+                        name='support_form'
+                        component='p'
+                        className='error'
+                      />
                     </div>
                   </div>
                 </div>
@@ -619,26 +1008,22 @@ const AccountTypeModal: React.FC<AccountTypeModalProps> = ({
                   to={""}
                   type='submit'
                   style={{
-                    background: isValid ? "#dd264e" : "#A3A3A3",
+                    background:
+                      isValid &&
+                      ((values.phone === "" && telCode === "") ||
+                        (values.phone !== "" && telCode !== ""))
+                        ? "#dd264e"
+                        : "#A3A3A3",
                     border: "none",
                     color: "#fff",
                   }}
+                  disabled={
+                    (values.phone !== "" && telCode === "") ||
+                    (values.phone === "" && telCode !== "")
+                  }
+                  className='donation_btn'
                 />
-                <p>
-                  {t("privacy.1")}
-                  <br></br>
-                  <button
-                    className='mentioned_txt'
-                    onClick={() => handlePrivacy("Terms of Services")}>
-                    {t("privacy.terms")}
-                  </button>
-                  {t("privacy.and")}
-                  <button
-                    className='mentioned_txt'
-                    onClick={() => handlePrivacy("Privacy Policy")}>
-                    {t("privacy.privacy")}
-                  </button>
-                </p>
+                <Terms aboutUs={false} />
               </div>
             </form>
           )}

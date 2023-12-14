@@ -49,16 +49,17 @@
 }
 .donation_project.project:not(.donateToProject) {
   cursor: pointer;
-  height: fit-content;
 }
 .donation_project.project .projectImg {
   width: 100%;
   height: 155px;
 }
+
 .donation_project.project .ourProject__author,
 .ourProject__title {
   margin-bottom: 0;
   gap: 10px;
+  align-items: flex-start;
 }
 .personal_project {
   height: fit-content;
@@ -95,10 +96,21 @@
 .donation_project.project .ourProject__author span {
   color: var(--text-color);
   font-weight: 700;
+  width: auto;
 }
 .donation_project.project .ourProject__author img {
-  width: 2.3vw;
+  width: 55px;
+  height: 55px;
   aspect-ratio: 1 / 1;
+}
+.ecosystemDetails_project  {
+  border-radius: 6px;
+}
+@media screen and (max-width: 1600px) {
+  .donation_project.project .ourProject__author img {
+    width: 35px;
+    height: 35px;
+  }
 }
 .donation_project.project .projectInfo .flag img {
   width: 1vw !important;
@@ -115,6 +127,12 @@
 .personal_project .donationProject_desc {
   font-size: 12px;
 }
+.projectInfo_withoutDesc_home {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 @media screen and (max-width: 975px) {
   .projectImg {
     width: 100%;
@@ -128,6 +146,12 @@
   }
   .author {
     font-size: clamp(0.625rem, 0rem + 3.125vw, 1.171875rem);
+  }
+  .projectInfo h1,
+  .flag,
+  .projectInfo span,
+  .author {
+    font-size: 16px;
   }
 }
 @media screen and (max-width: 600px) {
@@ -145,6 +169,30 @@
     font-size: clamp(0.6875rem, -0.0004rem + 3.4393vw, 1.289375rem);
     font-size: clamp(0.5625rem, -0.0004rem + 2.8143vw, 1.055rem);
   }
+  .home_project {
+    width: 175px !important;
+  }
+  .donation_project.project .ourProject__author span {
+    width: auto;
+  }
+  .home_project .flag img {
+    width: 10px;
+  }
+  .home_project .projectInfo h1 {
+    font-size: 6px;
+  }
+}
+@media screen and (max-width: 395px) {
+  .home_project {
+    width: 165px !important;
+  }
+}
+@media screen and (max-width: 372px) {
+  .home_project {
+    width: 160px !important;
+  }
+}
+@media screen and (max-width: 360px) {
   .home_project {
     width: 134px !important;
   }

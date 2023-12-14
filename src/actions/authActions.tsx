@@ -1,8 +1,13 @@
-// authActions.js
 export const login = () => {
   return {
     type: "LOGIN",
-    // payload: user,
+  };
+};
+
+export const getUser = (user: any) => {
+  return {
+    type: "GET_USER",
+    payload: user,
   };
 };
 

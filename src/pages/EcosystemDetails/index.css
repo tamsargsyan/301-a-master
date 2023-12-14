@@ -1,5 +1,5 @@
 .ecosystemDetails {
-  width: 55vw;
+  width: 63vw;
   display: flex;
   flex-direction: column;
   gap: 90px;
@@ -7,6 +7,7 @@
 }
 .ecosystemDetails_ {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   gap: 10px;
 }
@@ -32,6 +33,9 @@
   display: flex;
   flex-direction: column;
   gap: 80px;
+}
+.ecosystemDetails-header {
+  width: 100%;
 }
 @media screen and (max-width: 1920px) {
   .ecosystemDetails-content,
@@ -73,7 +77,8 @@
   .ecosystemDetails {
     width: 90vw;
   }
-  .ecosystemDetails-content, .memberContent {
+  .ecosystemDetails-content,
+  .memberContent {
     font-size: 14px;
   }
 }

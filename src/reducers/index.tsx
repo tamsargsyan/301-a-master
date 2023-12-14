@@ -8,6 +8,13 @@ import privacyPolicyReducer from "./privacyPolicyReducer";
 import expertProjectReducer from "./expertProjectReducer";
 import authReducer from "./authReducer";
 import registerDataReducer from "./registerDataReducer";
+import congratsReducer from "./congratsReducer";
+import favoriteProjectsReducer from "./favoriteProjectsReducer";
+import contactReducer from "./contactReducer";
+import gmailLoginCallbackReducer from "./gmailLoginCallbackReducer";
+import facebookLoginCallbackReducer from "./facebookLoginCallback";
+import socialMediasReducer from "./socialMediasLogin";
+import donationReducer from "./donationReducer";
 
 const rootReducer = combineReducers({
   homeData: homeReducer,
@@ -19,6 +26,13 @@ const rootReducer = combineReducers({
   expertProject: expertProjectReducer,
   auth: authReducer,
   registerData: registerDataReducer,
+  congrats: congratsReducer,
+  favoriteProjects: favoriteProjectsReducer,
+  contact: contactReducer,
+  socialMediaLogin: socialMediasReducer,
+  gmailLoginCallback: gmailLoginCallbackReducer,
+  facebookLoginCallback: facebookLoginCallbackReducer,
+  donation: donationReducer,
 });
 
 export default rootReducer;

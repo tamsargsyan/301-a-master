@@ -53,6 +53,26 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
 
   const { projects } = useSelector((state: RootState) => state.homeData.data);
 
+  const [showArrowBtns, setShowArrowBtns] = useState(false);
+
+  useEffect(() => {
+    const partnersContainer = document.querySelector(".partners ");
+    const images = document.querySelectorAll(".ecosystemDetails_partners_item");
+    const gap = 30;
+    let totalWidth = 0;
+    if (partnersContainer && images) {
+      images.forEach(img => {
+        //@ts-ignore
+        totalWidth += img.offsetWidth + gap;
+      });
+      //@ts-ignore
+      setShowArrowBtns(totalWidth > partnersContainer.offsetWidth);
+    }
+  }, []);
+
+  const sliderRef = useRef(null);
+  const scrollAmount = 200;
+
   return (
     <>
       {projects && (
@@ -76,28 +96,35 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                 style={{ width: "100%" }}
               />
               <div className='slider'>
-                {projects.length > 2 && (
-                  <>
-                    <button className='leftBtn' onClick={handleBack}>
-                      <img src={ARROW} alt='Arrow' />
-                    </button>
-                    <button className='rightBtn' onClick={handleNext}>
-                      <img src={ARROW} alt='Arrow' />
-                    </button>
-                  </>
-                )}
                 {windowSize.width > 975 ? (
-                  <motion.div ref={carousel} className='carousel'>
-                    <motion.div
-                      className='innerCarousel'
-                      initial={{ x: 0 }}
-                      animate={{
-                        x: -width * currentIndex,
-                      }}>
+                  <div
+                    className='projectDetails_slider_1'
+                    style={{ padding: 0 }}>
+                    {true && (
+                      <button
+                        className='leftBtn'
+                        style={{ left: "-25px" }}
+                        onClick={() => {
+                          const container = sliderRef.current;
+                          if (container) {
+                            //@ts-ignore
+                            container.scrollLeft -= scrollAmount;
+                          }
+                        }}>
+                        <img
+                          src={ARROW}
+                          alt='Arrow'
+                          decoding='async'
+                          loading='lazy'
+                        />
+                        {/* <ChevronLeftIcon /> */}
+                      </button>
+                    )}
+                    <div className='images-container' ref={sliderRef}>
                       {projects.map((project: any) => {
                         return (
                           <NavLink
-                            to={`/projects/${project.project.id}`}
+                            to={`/${lang}/projects/${project.project.slug}`}
                             key={project.project.id}>
                             <SingleProjectBox
                               title={
@@ -105,15 +132,19 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                   `project_name_${lang}` as keyof ProjectKeyOf
                                 ]
                               }
-                              description={removeHtmlTags(
-                                project.project[
-                                  `description_${lang}` as keyof ProjectKeyOf
-                                ]
-                              )
-                                ?.split(" ")
-                                .slice(0, 2)
-                                .join(" ")}
-                              flag={project.map_count}
+                              // description={removeHtmlTags(
+                              //   project.project[
+                              //     `description_${lang}` as keyof ProjectKeyOf
+                              //   ]
+                              // )
+                              //   ?.split(" ")
+                              //   .slice(0, 2)
+                              //   .join(" ")}
+                              flag={
+                                project?.project?.payment_type !== "buy" &&
+                                project?.project?.payment_type !== "book" &&
+                                project.map_count
+                              }
                               author={
                                 project[`sector_${lang}` as keyof ProjectKeyOf]
                               }
@@ -123,14 +154,33 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                           </NavLink>
                         );
                       })}
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                    {true && (
+                      <button
+                        className='rightBtn'
+                        style={{ right: "-25px" }}
+                        onClick={() => {
+                          const container = sliderRef.current;
+                          if (container) {
+                            //@ts-ignore
+                            container.scrollLeft += scrollAmount;
+                          }
+                        }}>
+                        <img
+                          src={ARROW}
+                          alt='Arrow'
+                          decoding='async'
+                          loading='lazy'
+                        />
+                      </button>
+                    )}
+                  </div>
                 ) : (
                   <div className='innerCarousel'>
-                    {projects.map((project: any) => {
+                    {projects.slice(0, 4).map((project: any) => {
                       return (
                         <NavLink
-                          to={`/projects/${project.project.id}`}
+                          to={`/${lang}/projects/${project.project.slug}`}
                           key={project.project.id}>
                           <SingleProjectBox
                             title={
@@ -138,15 +188,19 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                                 `project_name_${lang}` as keyof ProjectKeyOf
                               ]
                             }
-                            description={removeHtmlTags(
-                              project.project[
-                                `description_${lang}` as keyof ProjectKeyOf
-                              ]
-                            )
-                              ?.split(" ")
-                              .slice(0, 2)
-                              .join(" ")}
-                            flag={project.map_count}
+                            // description={removeHtmlTags(
+                            //   project.project[
+                            //     `description_${lang}` as keyof ProjectKeyOf
+                            //   ]
+                            // )
+                            //   ?.split(" ")
+                            //   .slice(0, 2)
+                            //   .join(" ")}
+                            flag={
+                              project?.project?.payment_type !== "buy" &&
+                              project?.project?.payment_type !== "book" &&
+                              project.map_count
+                            }
                             author={
                               project[`sector_${lang}` as keyof ProjectKeyOf]
                             }

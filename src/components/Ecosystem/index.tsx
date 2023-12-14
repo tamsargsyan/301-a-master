@@ -23,8 +23,10 @@ import { RootState } from "../../store/configureStore";
 import { HeaderTypes } from "../../utils/api.types";
 import { HeaderKeyOf } from "../../utils/keyof.type";
 import { storageBase } from "../../utils/storage";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { fetchingPartners } from "../../actions/apiActions";
+import ARROW from "../../assets/arrow.svg";
+import EcosystemSlider from "../CardSlider/EcosystemSlider";
 
 interface EcosystemProps {
   lang: string;
@@ -34,6 +36,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
   const { t } = useTranslation();
   const {
     ourEcosystem,
+    //@ts-ignore
     sages,
     club301,
     ambassadors,
@@ -82,14 +85,14 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           name: t("btns.become-301"),
           become: "доноры «301»",
           id: 1,
-          link: "",
+          link: "/accountType?id=1?type=donor",
         },
-        {
-          name: t("btns.learn-more"),
-          link: "/ecosystem/club301",
-          become: "",
-          id: null,
-        },
+        // {
+        //   name: t("btns.learn-more"),
+        //   link: "/ecosystem/club301",
+        //   become: "",
+        //   id: null,
+        // },
       ],
       btnStyle: [
         {
@@ -116,7 +119,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-ambassador"),
-          link: "",
+          link: "/accountType?id=2?type=ambassadors",
           become: "Амбассадор",
           id: 2,
         },
@@ -141,16 +144,16 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-expert"),
-          link: "",
+          link: "/accountType?id=3?type=experts",
           become: "Эксперты",
           id: 3,
         },
-        {
-          name: t("btns.learn-more"),
-          link: "/ecosystem/experts",
-          become: "",
-          id: null,
-        },
+        // {
+        //   name: t("btns.learn-more"),
+        //   link: "/ecosystem/experts",
+        //   become: "",
+        //   id: null,
+        // },
       ],
       btnStyle: [
         {
@@ -181,7 +184,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-partner"),
-          link: "",
+          link: "/accountType?id=4?type=partners",
           become: "Партнеры",
           id: 4,
         },
@@ -218,16 +221,16 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
       btn: [
         {
           name: t("btns.become-fund-friend"),
-          link: "",
+          link: "/accountType?id=5?type=friends",
           become: "Друзья",
           id: 5,
         },
-        {
-          name: t("btns.learn-more"),
-          link: "/ecosystem/friends-foundation",
-          become: "",
-          id: null,
-        },
+        // {
+        //   name: t("btns.learn-more"),
+        //   link: "/ecosystem/friends-foundation",
+        //   become: "",
+        //   id: null,
+        // },
       ],
       btnStyle: [
         {
@@ -246,6 +249,8 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
     },
   ];
   const windowSize = useWindowSize();
+  const sliderRef = useRef(null);
+  const scrollAmount = 200;
 
   return (
     <>
@@ -266,37 +271,87 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
           className='differedHeaderContainer'
         />
         <div className='ecosystemContainer'>
-          {data.map(ecosystem => (
-            <div className='ecosystem' key={ecosystem.id}>
-              <div className='ecosystemInner'>
-                <Header
-                  title={ecosystem.title}
-                  description={ecosystem.description}
-                  btns={ecosystem.btn}
-                  icon={ecosystem.headerIcon}
-                  btnStyles={ecosystem.btnStyle}
-                  style={{ padding: 0 }}
-                  mainImg={ecosystem.mainImg}
-                  isEcosystem={true}
-                  className='homePageHeader'
-                />
-                <div className='img'>
-                  <img src={ecosystem.mainImg} alt='Icon' />
+          {windowSize.width > 900 ? (
+            data.map(ecosystem => (
+              <div className='ecosystem' key={ecosystem.id}>
+                <div className='ecosystemInner'>
+                  <Header
+                    title={ecosystem.title}
+                    description={ecosystem.description}
+                    btns={ecosystem.btn}
+                    icon={ecosystem.headerIcon}
+                    btnStyles={ecosystem.btnStyle}
+                    style={{ padding: 0 }}
+                    mainImg={ecosystem.mainImg}
+                    isEcosystem={true}
+                    className='homePageHeader'
+                  />
+                  <div className='img'>
+                    <img
+                      src={ecosystem.mainImg}
+                      alt='Icon'
+                      decoding='async'
+                      loading='lazy'
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className='ecosystemDetails_partners partners'>
-                {ecosystem.partners &&
-                  ecosystem.partners.map((p: any) => (
-                    <div className='ecosystemDetails_partners_item' key={p?.id}>
+                {ecosystem.partners && (
+                  <div className='projectDetails_slider_1 partners _inner'>
+                    <button
+                      className='leftBtn'
+                      onClick={() => {
+                        const container = sliderRef.current;
+                        if (container) {
+                          //@ts-ignore
+                          container.scrollLeft -= scrollAmount;
+                        }
+                      }}>
                       <img
-                        src={`${storageBase}/${p?.image}`}
-                        alt={p?.title_en}
+                        src={ARROW}
+                        alt='Arrow'
+                        decoding='async'
+                        loading='lazy'
                       />
+                    </button>
+                    <div className='images-container' ref={sliderRef}>
+                      {ecosystem.partners.map((partner: any) => {
+                        return (
+                          <div
+                            className='ecosystemDetails_partners_item'
+                            key={partner.id}>
+                            <img
+                              alt='sliderImage'
+                              src={`${storageBase}/${partner.image}`}
+                              decoding='async'
+                              loading='lazy'
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
-                  ))}
+                    <button
+                      className='rightBtn'
+                      onClick={() => {
+                        const container = sliderRef.current;
+                        if (container) {
+                          //@ts-ignore
+                          container.scrollLeft += scrollAmount;
+                        }
+                      }}>
+                      <img
+                        src={ARROW}
+                        alt='Arrow'
+                        decoding='async'
+                        loading='lazy'
+                      />
+                    </button>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <EcosystemSlider data={data} />
+          )}
         </div>
       </Background>
     </>

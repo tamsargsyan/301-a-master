@@ -74,7 +74,7 @@
   background-color: var(--text-color-2);
 }
 .signIn_another_icons,
-.signIn_another_icons a {
+.signIn_another_icons button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,14 +82,11 @@
 .signIn_another_icons {
   gap: 20px;
 }
-.signIn_another_icons a {
+.signIn_another_icons button {
   border-radius: 46px;
   border: 1px solid var(--text-color-2);
   padding: 10px 30px;
   width: 100%;
-}
-.signIn_another_privacy {
-  font-size: 14px;
 }
 .signIn_signUp {
   font-size: 16px;
@@ -99,7 +96,6 @@
   bottom: 70px;
   left: 0;
 }
-.signIn_another_privacy,
 .signIn_signUp,
 .forgetPass_desc {
   color: var(--text-color-2);
@@ -110,11 +106,6 @@
 .forgetPass_desc {
   text-align: left;
 }
-.mentioned_txt {
-  color: var(--mention-color);
-  font-weight: 600;
-  cursor: pointer;
-}
 .signIn_another {
   margin-top: 20px;
   margin-bottom: 70px;
@@ -124,6 +115,11 @@
   color: var(--main-color);
   font-weight: 500;
   margin: 7px 0;
+}
+.checkEmail_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media screen and (max-height: 685px) {
   .modal_signIn_rightSide {
@@ -154,8 +150,6 @@
   .signIn_another_title {
     font-size: 16px;
   }
-  .signIn_another_privacy,
-  .signIn_another_privacy .mentioned_txt,
   .forgetPass_desc {
     font-size: 14px;
   }
@@ -172,7 +166,7 @@
     display: block;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   .modal_signIn_rightSide {
     width: 100%;
     padding: 23px;

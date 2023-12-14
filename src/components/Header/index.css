@@ -1,7 +1,7 @@
 .headerContainer {
   display: flex;
   gap: 20px;
-  width: 55vw;
+  width: 63vw;
   z-index: 2;
   position: relative;
 }
@@ -35,6 +35,9 @@
   text-align: justify;
   line-height: 155%;
   color: var(--text-color);
+}
+.inner a {
+  color: var(--main-color);
 }
 .mainImgHeader {
   display: flex;
@@ -148,18 +151,29 @@
     color: #151c26;
   }
   .header_ecosystem {
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
   }
 }
 @media screen and (max-width: 600px) {
+  .ecosystem {
+    width: 80vw;
+    /* height: 800px; */
+    /* margin-top: 650px; */
+    margin: 0 !important;
+    background: #fff;
+  }
   .header h1 {
     font-size: clamp(1.125rem, 0rem + 5.625vw, 2.109375rem);
   }
-}
-@media screen and (max-width: 500px) {
-  .mainImgHeader,
+  .mainImgHeader {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+  }
   .mainImgHeader img {
     height: 100%;
     width: 100%;
   }
+}
+@media screen and (max-width: 500px) {
 }
