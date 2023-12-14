@@ -100,7 +100,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                   <div
                     className='projectDetails_slider_1'
                     style={{ padding: 0 }}>
-                    {showArrowBtns && (
+                    {true && (
                       <button
                         className='leftBtn'
                         style={{ left: "-25px" }}
@@ -155,7 +155,7 @@ const Projects: React.FC<ProjectsProps> = ({ OurProjects, lang }) => {
                         );
                       })}
                     </div>
-                    {showArrowBtns && (
+                    {true && (
                       <button
                         className='rightBtn'
                         style={{ right: "-25px" }}

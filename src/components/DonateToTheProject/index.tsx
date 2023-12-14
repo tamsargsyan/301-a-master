@@ -19,25 +19,12 @@ import {
 import cookies from "js-cookie";
 import Terms from "../Terms";
 import { Formik } from "formik";
-import { donationSchema } from "../../Validation";
 import { useState } from "react";
 import { congratsModal } from "../../actions/congratsAction";
 import { hasPreviousHistory } from "../Navbar";
+import ValidationSchema from "../../Validation";
 
 const DonateToTheProject = () => {
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
-
-  const filterOption = (
-    input: string,
-    option: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
   const navigate = useNavigate();
 
   const { data, loading } = useSelector(
@@ -86,6 +73,8 @@ const DonateToTheProject = () => {
       navigate("/");
     }
   };
+
+  const { donationSchema } = ValidationSchema();
 
   return (
     <Modal setOpenModal={navigateBack} openModal={true} headerShow={true}>

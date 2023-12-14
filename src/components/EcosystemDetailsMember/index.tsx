@@ -25,30 +25,33 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
   project,
 }) => {
   const windowSize = useWindowSize();
-  const [width, setWidth] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const carousel = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    carousel.current &&
-      windowSize.width &&
-      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-  }, [windowSize.width]);
-
-  const handleBack = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(prevIndex => prevIndex - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < 1) {
-      setCurrentIndex(prevIndex => prevIndex + 1);
-    }
-  };
   const lang = cookies.get("i18next");
   const { t } = useTranslation();
   const { ecosystem } = useParams();
+  const sliderRef = useRef(null);
+  const scrollAmount = 250;
+
+  // const [showArrowBtns, setShowArrowBtns] = useState(false);
+
+  // console.log(showArrowBtns);
+
+  // useEffect(() => {
+  //   const partnersContainer = document.querySelector(
+  //     ".ecosystemDetailsProject_wrapper"
+  //   );
+  //   console.log(partnersContainer)
+  //   const images = document.querySelectorAll(".ecosystemDetailsProject_item");
+  //   const gap = 30;
+  //   let totalWidth = 0;
+  //   if (partnersContainer && images) {
+  //     images.forEach(img => {
+  //       //@ts-ignore
+  //       totalWidth += img.offsetWidth + gap;
+  //     });
+  //     //@ts-ignore
+  //     setShowArrowBtns(totalWidth > partnersContainer.offsetWidth);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -107,69 +110,115 @@ const EcoSystemDetailsMember: React.FC<EcoSystemDetailsMemberProps> = ({
                 <div className='memberProjects'>
                   <div className='memberProjectHeader'>
                     <p>Project</p>
-                    {windowSize.width > 600 && (
-                      <div className='btns'>
-                        <button
-                          onClick={handleBack}
-                          style={{
-                            background:
-                              currentIndex === 0
-                                ? expertProject?.colorWeak
-                                : expertProject?.color,
-                          }}>
-                          <img
-                            src={ARROW}
-                            alt='Arrow'
-                            decoding='async'
-                            loading='lazy'
-                          />
-                        </button>
-                        <button
-                          onClick={handleNext}
-                          style={{
-                            background:
-                              currentIndex === 1
-                                ? expertProject?.colorWeak
-                                : expertProject?.color,
-                          }}>
-                          <img
-                            src={ARROW}
-                            alt='Arrow'
-                            decoding='async'
-                            loading='lazy'
-                          />
-                        </button>
-                      </div>
-                    )}
+                    {windowSize.width > 600 &&
+                      project.all_project?.length > 4 && (
+                        <div className='btns'>
+                          <button
+                            onClick={() => {
+                              const container = sliderRef.current;
+                              if (container) {
+                                //@ts-ignore
+                                container.scrollLeft -= scrollAmount;
+                              }
+                            }}
+                            style={{
+                              background: expertProject?.color,
+                            }}>
+                            <img
+                              src={ARROW}
+                              alt='Arrow'
+                              decoding='async'
+                              loading='lazy'
+                            />
+                          </button>
+                          <button
+                            onClick={() => {
+                              const container = sliderRef.current;
+                              if (container) {
+                                //@ts-ignore
+                                container.scrollLeft += scrollAmount;
+                              }
+                            }}
+                            style={{
+                              background: expertProject?.color,
+                            }}>
+                            <img
+                              src={ARROW}
+                              alt='Arrow'
+                              decoding='async'
+                              loading='lazy'
+                            />
+                          </button>
+                        </div>
+                      )}
                   </div>
                   {windowSize.width > 600 ? (
-                    <motion.div ref={carousel} className='carousel'>
-                      <motion.div
-                        className='innerCarousel'
-                        initial={{ x: 0 }}
-                        animate={{
-                          x: -width * currentIndex,
-                        }}>
-                        {project?.all_project?.map((p: any, i: number) => (
-                          <Fragment key={i}>
-                            <SingleProjectBox
-                              title={p?.project[`project_name_${lang}`]}
-                              // description={removeHtmlTags(
-                              //   p?.project[`problem_description_${lang}`]
-                              // )
-                              //   .split(" ")
-                              //   .slice(0, 2)
-                              //   .join(" ")}
-                              flag={p?.map_count}
-                              author={`${p[1]?.user?.name} ${p[1]?.user?.last_name}`}
-                              authorImg={`${storageBase}/${p?.user?.image}`}
-                              projectImg={`${storageBase}/${p?.project?.image}`}
-                              className='personal_project ecosystemDetails_project'
-                            />
-                          </Fragment>
-                        ))}
-                      </motion.div>
-                    </motion.div>
+                    <div className='ecosystemDetailsProject_wrapper'>
+                      <div
+                        className='projectDetails_slider_1'
+                        style={{ padding: 0, justifyContent: "flex-start" }}>
+                        {/* {true && (
+                        <button
+                          className='leftBtn'
+                          style={{ left: "-25px" }}
+                          onClick={() => {
+                            const container = sliderRef.current;
+                            if (container) {
+                              //@ts-ignore
+                              container.scrollLeft -= scrollAmount;
+                            }
+                          }}>
+                          <img
+                            src={ARROW}
+                            alt='Arrow'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </button>
+                      )} */}
+                        <div className='images-container' ref={sliderRef}>
+                          {project?.all_project?.map((p: any, i: number) => (
+                            <div
+                              key={i}
+                              className='ecosystemDetailsProject_item'>
+                              <SingleProjectBox
+                                title={p?.project[`project_name_${lang}`]}
+                                // description={removeHtmlTags(
+                                //   p?.project[`problem_description_${lang}`]
+                                // )
+                                //   .split(" ")
+                                //   .slice(0, 2)
+                                //   .join(" ")}
+                                flag={p?.map_count}
+                                author={`${p[1]?.user?.name} ${p[1]?.user?.last_name}`}
+                                authorImg={`${storageBase}/${p?.user?.image}`}
+                                projectImg={`${storageBase}/${p?.project?.image}`}
+                                className='personal_project ecosystemDetails_project'
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        {/* {true && (
+                        <button
+                          className='rightBtn'
+                          style={{ right: "-25px" }}
+                          onClick={() => {
+                            const container = sliderRef.current;
+                            if (container) {
+                              //@ts-ignore
+                              container.scrollLeft += scrollAmount;
+                            }
+                          }}>
+                          <img
+                            src={ARROW}
+                            alt='Arrow'
+                            decoding='async'
+                            loading='lazy'
+                          />
+                        </button>
+                      )} */}
+                      </div>
+                    </div>
                   ) : (
                     <div className='ecosystemDetails_projects'>
                       {project?.all_project?.map((p: any, i: number) => (

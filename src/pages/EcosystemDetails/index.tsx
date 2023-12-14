@@ -144,7 +144,7 @@ const EcoSystemDetails = () => {
   const { t } = useTranslation();
 
   const sliderRef = useRef(null);
-  const scrollAmount = 100;
+  const scrollAmount = 200;
 
   const [showArrowBtns, setShowArrowBtns] = useState(false);
   const partnersContainer = document.querySelector(".partners");
@@ -227,7 +227,7 @@ const EcoSystemDetails = () => {
                   ecosystem === "partners" &&
                   "projectDetails_slider_1 ecosystemDetails_partners partners"
                 } ecoSystemDetailsMember_wrapper`}
-                style={{ margin: 0, overflowX: "initial" }}>
+                style={{ margin: 0, overflow: "initial" }}>
                 {ecosystem === "partners" && (
                   <button
                     className='leftBtn'

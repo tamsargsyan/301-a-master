@@ -14,7 +14,7 @@ interface EcosystemSliderProps {
 const EcosystemSlider: React.FC<EcosystemSliderProps> = ({ data }) => {
   const { partners } = useSelector((state: RootState) => state.expertProject);
   const sliderRef = useRef(null);
-  const scrollAmount = 100;
+  const scrollAmount = 200;
 
   const [active, setActive] = useState(0);
   const lang = cookies.get("i18next");

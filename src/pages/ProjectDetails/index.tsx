@@ -13,7 +13,7 @@ import ARROW_TEAM_LEFT from "../../assets/arrow-left-team-member.svg";
 import ARROW_TEAM_RIGHT from "../../assets/info/arrow-right-team-member.svg";
 import "./index.css";
 import RevolveText from "../../components/Revolve";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchingFavoriteProjects,
@@ -25,11 +25,8 @@ import { RootState } from "../../store/configureStore";
 import { useNavigate, useParams } from "react-router";
 import Footer from "../../components/Footer";
 import Background from "../../components/Background";
-import DropDown from "../../components/Dropdown";
 import PATTERN_SIDE from "../../assets/patterns/side-2.svg";
-import ICON from "../../assets/info/4.svg";
 import PATTERN_MOBILE from "../../assets/patterns/side-2-mobile.svg";
-import Header from "../../components/Header";
 import { Spin } from "antd";
 import { useTranslation } from "react-i18next";
 import ReactPlayer from "react-player";
@@ -126,7 +123,7 @@ const ProjectDetails = () => {
 
   const navigate = useNavigate();
   const sliderRef = useRef(null);
-  const scrollAmount = 100;
+  const scrollAmount = 200;
 
   const checkRole = (role: string) => {
     if (role === "project_manager") return ROSE_CIRCLE;

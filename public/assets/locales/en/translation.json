@@ -194,7 +194,37 @@
   "follow-us": "Follow Us",
   "login-with-fb": "Login with facebook, please wait...",
   "login-with-gmail": "Login with gmail, please wait...",
-  "validationErrors": {
-    "emailRequired": "Email is a required field"
+  "validation-errors": {
+    "email-required": "Email is a required field",
+    "invalid-email": "Invalid email format",
+    "pass-required": "Password is a required field",
+    "valid-pass": "Password must be at least 8 characters",
+    "pass-confirm-required": "Password confirmation is a required field",
+    "pass-must-match": "Passwords must match",
+    "name-required": "Name is a required field",
+    "valid-name": "Name should only contain letters",
+    "last-name-required": "Last Name is a required field",
+    "valid-last-name": "Last Name should only contain letters",
+    "organization-required": "Organization is a required field",
+    "valid-phone": "Phone number should contain only numbers",
+    "this-is-required": "This is a required field",
+    "at-least-one-project-required": "At least one project is required",
+    "country-required": "Country is a required field",
+    "selected-field-required": "This field must be selected",
+    "amount-number-valid": "Amount must be a number",
+    "amount-positive-valid": "Amount must be a positive number",
+    "amount-required": "Amount is a required field",
+    "data-invalid": "Your data is invalid",
+    "token-not-found": "Authorization Token not found",
+    "user-update-successfully": "Your data updated successfully",
+    "email-already-taken": "The email has already been taken.",
+    "pass-updated": "Password has been updated",
+    "pass-not-updated": "Your data is wrong",
+    "email-not-exist": "Email does not exist.",
+    "user-not-exist": "User does not exist."
+  },
+  "errors": {
+    "old-pass-not-match": "Old Password Doesnt match!",
+    "pass-field-confirmation": "The password field confirmation does not match."
   }
 }

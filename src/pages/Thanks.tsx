@@ -31,10 +31,7 @@ const Thanks = () => {
 
   useEffect(() => {
     if (data) {
-      if (
-        data.message === "Payment successfully completed" &&
-        data.donation?.status === "paid"
-      ) {
+      if (data.response_code === 25 && data.donation?.status === "paid") {
         if (localStorage.getItem("donationToRegister")) {
           dispatch(
             congratsModal(
@@ -55,7 +52,7 @@ const Thanks = () => {
             lang
         );
       } else if (
-        data.message === "Payment declined" &&
+        data.response_code === 26 &&
         data.donation?.status === "rejected"
       ) {
         if (localStorage.getItem("donationToRegister")) {

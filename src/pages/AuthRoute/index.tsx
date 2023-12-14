@@ -9,7 +9,7 @@ interface Props {
 const AuthenticatedRoute: React.FC<Props> = ({ children }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const lang = cookies.get("i18next");
-
+  console.log(localStorage.getItem("token"));
   if (!isAuthenticated && !localStorage.getItem("token")) {
     return <Navigate to={`/${lang}/login`} />;
   }

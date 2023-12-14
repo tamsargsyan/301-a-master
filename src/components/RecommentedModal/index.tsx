@@ -4,13 +4,10 @@ import Button from "../Button";
 import { Select, Spin } from "antd";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import "./index.css";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/configureStore";
+import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { openRecommentedModal } from "../../actions/donateAction";
 import { useEffect, useState } from "react";
 import { Formik, Field } from "formik";
-import { recommendationSchema } from "../../Validation";
 import countries from "../../locales/countries.json";
 import country_dial from "../../locales/country_dial.json";
 import { useLocation, useNavigate } from "react-router";
@@ -18,6 +15,7 @@ import { usePostRequest } from "../../actions/apiActions";
 import cookies from "js-cookie";
 import { congratsModal } from "../../actions/congratsAction";
 import { hasPreviousHistory } from "../Navbar";
+import ValidationSchema from "../../Validation";
 const { Option } = Select;
 
 const RecommentedModal = () => {
@@ -60,6 +58,8 @@ const RecommentedModal = () => {
       navigate("/");
     }
   };
+
+  const { recommendationSchema } = ValidationSchema();
 
   return (
     <Modal setOpenModal={navigateBack} openModal={true}>

@@ -250,7 +250,7 @@ const Ecosystem: React.FC<EcosystemProps> = ({ lang }) => {
   ];
   const windowSize = useWindowSize();
   const sliderRef = useRef(null);
-  const scrollAmount = 100;
+  const scrollAmount = 200;
 
   return (
     <>

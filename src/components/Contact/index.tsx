@@ -13,7 +13,7 @@ import { Spin } from "antd";
 import { useDispatch } from "react-redux";
 import { congratsModal } from "../../actions/congratsAction";
 import { Formik } from "formik";
-import { contactSchema } from "../../Validation";
+import ValidationSchema from "../../Validation";
 
 interface ContactProps {
   separatedPart?: Boolean;
@@ -37,10 +37,16 @@ const Contact: React.FC<ContactProps> = ({
   const windowSize = useWindowSize();
 
   useEffect(() => {
-    !postLoading &&
+    if (
+      !postLoading &&
       response &&
+      response.status === 201 &&
+      response.data.response_code === 10
+    )
       dispatch(congratsModal(true, t("congrats.contact-us")));
   }, [postLoading, response]);
+
+  const { contactSchema } = ValidationSchema();
 
   return (
     <>

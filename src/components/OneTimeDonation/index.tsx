@@ -3,9 +3,7 @@ import EcosystemModal from "../EcosystemModal";
 import Modal from "../Modal";
 import "./index.css";
 import Button from "../Button";
-import country_currency from "../../locales/country_currency.json";
 import { useTranslation } from "react-i18next";
-import { donationSchema } from "../../Validation";
 import { Formik } from "formik";
 import { useState, useEffect } from "react";
 import { usePostRequest } from "../../actions/apiActions";
@@ -15,6 +13,7 @@ import cookies from "js-cookie";
 import { congratsModal } from "../../actions/congratsAction";
 import { useDispatch } from "react-redux";
 import { hasPreviousHistory } from "../Navbar";
+import ValidationSchema from "../../Validation";
 
 const OneTimeDonation = () => {
   //@ts-ignore
@@ -51,6 +50,8 @@ const OneTimeDonation = () => {
     }
   };
   const lang = cookies.get("i18next");
+
+  const { donationSchema } = ValidationSchema();
 
   return (
     <Modal setOpenModal={navigateBack} openModal={true} headerShow={false}>

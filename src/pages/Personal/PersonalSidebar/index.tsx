@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/authActions";
 import { Spin } from "antd";
+import { congratsModal } from "../../../actions/congratsAction";
 
 const PersonalSidebar = () => {
   const { t } = useTranslation();
@@ -51,18 +52,22 @@ const PersonalSidebar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (
-      response &&
-      response.data.message === "User successfully signed out" &&
-      !hasNavigated
-    ) {
-      setHasNavigated(true);
-      !hasNavigated && navigate(`/${lang}/`);
+    if (response && response?.data.response_code === 12 && !hasNavigated) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       dispatch(logout());
+      setHasNavigated(true);
+      !hasNavigated && navigate(`/${lang}/`);
+      // dispatch(congratsModal(true, t("validation-errors.data-invalid")));
+    } else if (error) {
+      if (
+        error.response?.status == 401 &&
+        error.response?.data.response_code === 13
+      ) {
+        dispatch(congratsModal(true, t("validation-errors.token-not-found")));
+      }
     }
-  }, [response]);
+  }, [response, error]);
 
   // if (true) {
   //   return (

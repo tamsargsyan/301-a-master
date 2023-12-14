@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({
         top:
           windowSize.width < 800 && !headerShow ? `${navbarHeight}px` : "0px",
       }}>
-      {windowSize.width <= 600 ? (
+      {windowSize.width <= 800 ? (
         <div onClick={e => e.stopPropagation()} className='mobile_modal'>
           {headerShow && (
             <div className='modal_close_mobile'>

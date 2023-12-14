@@ -21,11 +21,12 @@ import { useDispatch } from "react-redux";
 import { congratsModal } from "../../../actions/congratsAction";
 import cookies from "js-cookie";
 import { Formik } from "formik";
-import { editProfileSchema } from "../../../Validation";
+// import { editProfileSchema } from "../../../Validation";
 import { useNavigate } from "react-router";
 import { scrollToTop } from "../../../globalFunctions/scrollToTop";
 import EYE_OPEN from "../../../assets/eye-open-gray.svg";
 import EYE_CLOSE from "../../../assets/eye-close-gray.svg";
+import ValidationSchema from "../../../Validation";
 const { Option } = Select;
 
 const EditProfile = () => {
@@ -92,13 +93,10 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (response) {
-      if (response.data?.error)
-        dispatch(congratsModal(true, response.data?.error));
-      if (
-        response.data?.message === "User data updated successfully" &&
-        !hasNavigated
-      ) {
-        dispatch(congratsModal(true, response.data?.message));
+      if (response.data?.response_code === 20 && !hasNavigated) {
+        dispatch(
+          congratsModal(true, t("validation-errors.user-update-successfully"))
+        );
         localStorage.setItem("user", JSON.stringify(response.data?.user));
         navigate(`/${lang}/personal/personal-info`);
         scrollToTop();
@@ -106,11 +104,16 @@ const EditProfile = () => {
         // if (response.data?.message === "User data update successfully")
       }
     } else if (error) {
-      if (error.response?.data?.password) {
-        dispatch(congratsModal(true, error.response?.data?.password[0]));
-      }
+      // if (error) {
+      if (
+        error.response?.status == 422 &&
+        error.response?.data?.response_code === 19
+      )
+        dispatch(congratsModal(true, t("errors.old-pass-not-match")));
+      // }
     }
   }, [response, error]);
+  console.log(error?.response);
 
   const [validateFormData, setValidateFormData] = useState({
     name: false,
@@ -123,6 +126,8 @@ const EditProfile = () => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
+
+  const { editProfileSchema } = ValidationSchema();
 
   return (
     <div className='personalInfo_wrapper'>
@@ -420,6 +425,11 @@ const EditProfile = () => {
                   <img src={showPassword2 ? EYE_OPEN : EYE_CLOSE} alt='Eye' />
                 </button>
               </div>
+              <p className='error'>
+                {errors.password && touched.password
+                  ? (errors.password as string)
+                  : null}
+              </p>
             </div>
             <div className='signUp_formGroup'>
               <label htmlFor='personal_repeatPass'>
@@ -444,6 +454,11 @@ const EditProfile = () => {
                   <img src={showPassword3 ? EYE_OPEN : EYE_CLOSE} alt='Eye' />
                 </button>
               </div>
+              <p className='error'>
+                {errors.password_confirmation && touched.password_confirmation
+                  ? (errors.password_confirmation as string)
+                  : null}
+              </p>
             </div>
             <p className='onTheWeb'>{t("personal.on_the_web")}</p>
             <div className='personal_add_socialMedias'>

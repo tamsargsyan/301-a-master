@@ -5,11 +5,11 @@ import FB from "../../assets/logo/fb.svg";
 import GMAIL from "../../assets/logo/gmail.svg";
 import PATTERN_1 from "../../assets/patterns/login-small.svg";
 import PATTERN_2 from "../../assets/patterns/login-big.svg";
-import {
-  changePassSchema,
-  forgetPassShcema,
-  signInSchema,
-} from "../../Validation";
+// import {
+//   changePassSchema,
+//   forgetPassShcema,
+//   signInSchema,
+// } from "../../Validation";
 import { Formik } from "formik";
 import "./index.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -30,6 +30,7 @@ import { login } from "../../actions/authActions";
 import { congratsModal } from "../../actions/congratsAction";
 import EYE_OPEN from "../../assets/eye-open-gray.svg";
 import EYE_CLOSE from "../../assets/eye-close-gray.svg";
+import ValidationSchema from "../../Validation";
 
 const SignIn = () => {
   const [forgetPassword, setForgetPassword] = useState(false);
@@ -45,6 +46,9 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const resetPass = searchParams.get("resetPass");
+  const { signInSchema, forgetPassShcema, changePassSchema } =
+    ValidationSchema();
+
   const signInState = () => {
     if (forgetPassword) return forgetPassShcema;
     else if (resetPass) return changePassSchema;
@@ -83,8 +87,31 @@ const SignIn = () => {
       dispatch(login());
       setHasNavigated(true);
       !hasNavigated && navigate(`/${lang}/`);
-    } else if (error) dispatch(congratsModal(true, "Your data is invalid"));
-  }, [response, dispatch, navigate, hasNavigated, lang]);
+    } else if (error && error.response?.data) {
+      if (
+        error.response?.status == 401 &&
+        error.response?.data.response_code === 34
+      )
+        dispatch(congratsModal(true, t("validation-errors.data-invalid")));
+    }
+    if (response) {
+      if (response.data?.response_code === 17) {
+        dispatch(congratsModal(true, t("validation-errors.pass-updated")));
+        navigate(`/${lang}/`);
+      }
+    }
+    if (error) {
+      if (error.response?.data.response_code === 16) {
+        dispatch(congratsModal(true, t("validation-errors.pass-not-updated")));
+      }
+      if (error.response?.data.response_code === 14) {
+        dispatch(congratsModal(true, t("validation-errors.email-not-exist")));
+      }
+      if (error.response?.data.response_code === 18) {
+        dispatch(congratsModal(true, t("validation-errors.user-not-exist")));
+      }
+    }
+  }, [response, dispatch, navigate, hasNavigated, lang, error]);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -99,7 +126,7 @@ const SignIn = () => {
     <>
       <Modal setOpenModal={navigateBack} openModal={true} headerShow={true}>
         <div className='modal_signIn'>
-          {windowSize.width > 600 && (
+          {windowSize.width > 800 && (
             <div className='modal_signIn_leftSide'>
               <img
                 src={PATTERN_1}
@@ -141,7 +168,9 @@ const SignIn = () => {
                 </p>
               )}
             </div>
-            {forgetPassword && response?.status === 201 ? (
+            {forgetPassword &&
+            response?.status === 201 &&
+            response?.data.response_code === 15 ? (
               <div className='checkEmail_icon'>
                 <img
                   src={CHECK_EMAIL_ICON}
@@ -162,7 +191,7 @@ const SignIn = () => {
                   if (forgetPassword) {
                     postRequest(
                       "reset-password-request",
-                      { email: values.email },
+                      { email: values.email, lang },
                       {}
                     );
                   } else if (resetPass) {

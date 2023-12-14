@@ -9,12 +9,6 @@ import country_dial from "../../locales/country_dial.json";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, ErrorMessage } from "formik";
-import {
-  doanteSignUpSchema,
-  otherSignUpSchema,
-  signUpSchema,
-  socialMediaRegisterSchema,
-} from "../../Validation";
 import { useEffect, useState } from "react";
 import {
   fetchingPrivacyPolicy,
@@ -30,6 +24,7 @@ import cookies from "js-cookie";
 import { login } from "../../actions/authActions";
 import EYE_OPEN from "../../assets/eye-open-gray.svg";
 import EYE_CLOSE from "../../assets/eye-close-gray.svg";
+import ValidationSchema from "../../Validation";
 
 const { Option } = Select;
 
@@ -166,6 +161,13 @@ const AccountTypeModal = () => {
     (state: RootState) => state.privacyPolicy.data
   );
 
+  const {
+    doanteSignUpSchema,
+    otherSignUpSchema,
+    signUpSchema,
+    socialMediaRegisterSchema,
+  } = ValidationSchema();
+
   const schema = () => {
     if (location.pathname.includes("donation")) {
       return doanteSignUpSchema;
@@ -182,7 +184,9 @@ const AccountTypeModal = () => {
       const value1 = Object.values(JSON.parse(error.response.data)).flat()[0];
       const value2 = Object.values(JSON.parse(error.response.data)).flat()[1];
       if (value1) {
-        dispatch(congratsModal(true, `${value1}`));
+        dispatch(
+          congratsModal(true, t("validation-errors.email-already-taken"))
+        );
       }
       if (value2) {
         dispatch(congratsModal(true, `${value2}`));
@@ -192,6 +196,8 @@ const AccountTypeModal = () => {
       }
     }
   }, [error]);
+
+  // console.log(error?.response);
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);

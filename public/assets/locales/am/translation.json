@@ -192,7 +192,37 @@
   "follow-us": "Հետեւեք մեզ",
   "login-with-fb": "Մուտք է գործում Facebook-ով, խնդրում ենք սպասել...",
   "login-with-gmail": "Մուտք է գործում էլ․ հասցեով, խնդրում ենք սպասել...",
-  "validationErrors": {
-    "emailRequired": "Էլ.փոստը պարտադիր դաշտ է"
+  "validation-errors": {
+    "email-required": "Էլ. փոստը պարտադիր դաշտ է",
+    "invalid-email": "Էլ. փոստի անվավեր ձևաչափ",
+    "pass-required": "Գաղտնաբառը պարտադիր դաշտ է",
+    "valid-pass": "Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ",
+    "pass-confirm-required": "Գաղտնաբառի հաստատումը պարտադիր դաշտ է",
+    "pass-must-match": "Գաղտնաբառերը պետք է համընկնեն",
+    "name-required": "Անունը պարտադիր դաշտ է",
+    "valid-name": "Անունը պետք է պարունակի միայն տառեր",
+    "last-name-required": "Ազգանունը պարտադիր դաշտ է",
+    "valid-last-name": "Ազգանունը պետք է պարունակի միայն տառեր",
+    "organization-required": "Կազմակերպությունը պարտադիր դաշտ է",
+    "valid-phone": "Հեռախոսահամարը պետք է պարունակի միայն թվեր",
+    "this-is-required": "Սա պարտադիր դաշտ է",
+    "at-least-one-project-required": "Պահանջվում է առնվազն մեկ նախագիծ",
+    "country-required": "Երկիրը պարտադիր դաշտ է",
+    "selected-field-required": "Այս դաշտը պետք է ընտրվի",
+    "amount-number-valid": "Գումարը պետք է լինի թիվ",
+    "amount-positive-valid": "Գումարը պետք է լինի դրական թիվ",
+    "amount-required": "Գումարը պարտադիր դաշտ է",
+    "data-invalid": "Ձեր տվյալները անվավեր են",
+    "token-not-found": "Թույլտվության նշանը չի գտնվել",
+    "user-update-successfully": "Ձեր տվյալները հաջողությամբ թարմացվեցին",
+    "email-already-taken": "Էլ. փոստն արդեն զբաղված է:",
+    "pass-updated": "Գաղտնաբառը թարմացվել է",
+    "pass-not-updated": "Ձեր տվյալները սխալ են",
+    "email-not-exist": "Էլ. փոստ գոյություն չունի:",
+    "user-not-exist": "Օգտատերը գոյություն չունի."
+  },
+  "errors": {
+    "old-pass-not-match": "Հին գաղտնաբառը չի համընկնում:",
+    "pass-field-confirmation": "Գաղտնաբառի դաշտի հաստատումը չի համընկնում:"
   }
 }

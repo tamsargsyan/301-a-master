@@ -54,7 +54,7 @@ function App() {
     }
     // @ts-ignore
     dispatch(fetchingContact("contact-us"));
-  }, [dispatch]);
+  }, [dispatch, isAuthenticated]);
 
   const existingProjects = JSON.parse(
     localStorage.getItem("favoriteProjects") || "[]"

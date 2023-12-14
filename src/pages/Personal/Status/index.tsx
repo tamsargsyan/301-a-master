@@ -20,7 +20,9 @@ const Status = () => {
     const token = localStorage.getItem("token");
     postRequest(
       "get-user-donate",
-      {},
+      {
+        lang,
+      },
       {
         Authorization: `Bearer ${token}`,
       }

@@ -193,7 +193,37 @@
   "follow-us": "Подписывайтесь на нас",
   "login-with-fb": "Войдите через Facebook, пожалуйста, подождите...",
   "login-with-gmail": "Войдите через Gmail, пожалуйста, подождите...",
-  "validationErrors": {
-    "emailRequired": "Эл. почта – обязательное поле"
+  "validation-errors": {
+    "email-required": "Эл. почта – обязательное поле",
+    "invalid-email": "Неверный формат эл. почты",
+    "pass-required": "Пароль – обязательное поле",
+    "valid-pass": "Пароль должен быть не менее 8 символов",
+    "pass-confirm-required": "Подтверждение пароля является обязательным полем",
+    "pass-must-match": "Пароли должны совпадать",
+    "name-required": "Имя – обязательное поле",
+    "valid-name": "Имя должно содержать только буквы",
+    "last-name-required": "Фамилия – обязательное поле",
+    "valid-last-name": "Фамилия должна содержать только буквы",
+    "organization-required": "Организация – обязательное поле",
+    "valid-phone": "Номер телефона должен содержать только цифры",
+    "this-is-required": "Данное поле является обязательным к заполнению",
+    "at-least-one-project-required": "Требуется хотя бы один проект",
+    "country-required": "Страна – обязательное поле",
+    "selected-field-required": "Это поле должно быть выбрано",
+    "amount-number-valid": "Сумма должна быть числом",
+    "amount-positive-valid": "Сумма должна быть положительным числом",
+    "amount-required": "Сумма – обязательное поле",
+    "data-invalid": "Ваши данные недействительны",
+    "token-not-found": "Токен авторизации не найден",
+    "user-update-successfully": "Ваши данные успешно обновлены",
+    "email-already-taken": "Эл. почта уже занято.",
+    "pass-updated": "Пароль обновлен",
+    "pass-not-updated": "Ваши данные неверны",
+    "email-not-exist": "Эл. почта не существует.",
+    "user-not-exist": "Пользователь не существует."
+  },
+  "errors": {
+    "old-pass-not-match": "Старый пароль не соответствует!",
+    "pass-field-confirmation": "Подтверждение поля пароля не совпадает."
   }
 }
