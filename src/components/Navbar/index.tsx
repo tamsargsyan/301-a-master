@@ -36,16 +36,16 @@ export const menu = [
     name: "projects",
     link: "/projects",
   },
-  {
-    id: 3,
-    name: "media",
-    link: "/media",
-  },
-  {
-    id: 4,
-    name: "calendar",
-    link: "/calendar",
-  },
+  // {
+  //   id: 3,
+  //   name: "media",
+  //   link: "/media",
+  // },
+  // {
+  //   id: 4,
+  //   name: "calendar",
+  //   link: "/calendar",
+  // },
   {
     id: 5,
     name: "about-us",

@@ -27,6 +27,7 @@ import Status from "./Personal/Status";
 import Thanks from "./Thanks";
 import RecommentedModal from "../components/RecommentedModal";
 import Props from "../components/Props";
+import Individual from "./Individual";
 
 const pagesData: routerType[] = [
   {
@@ -267,6 +268,11 @@ const pagesData: routerType[] = [
     path: "/:lang/thanks",
     element: <Thanks />,
     title: "Thanks",
+  },
+  {
+    path: "/:lang/individual",
+    element: <Individual />,
+    title: "Individual",
   },
 ];
 
