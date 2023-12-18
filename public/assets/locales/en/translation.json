@@ -238,6 +238,14 @@
     "executive-director": "Executive Director:",
     "bank": "Bank",
     "bank-title": "'AMERIABANK' CJSC",
-    "tin": "TIN:"
+    "bank-title-ru": "JSC Raiffeisenbank, Moscow",
+    "bank-of-recipient": "BANK OF RECIPIENT",
+    "recipient": "RECIPIENT",
+    "details-en": "SCIENTIFIC-EDUCATIONAL FOUNDATION 301 THE LAND OF WISDOM",
+    "usd-bank": "AMERIABANK, YEREVAN, SWIFT (BIC) ARMIAM22",
+    "tin": "TIN:",
+    "director-name": "Gayane Manukyan",
+    "indicating-payment-details": "Indicating payment details:",
+    "donation": "Donation"
   }
 }

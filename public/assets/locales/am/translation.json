@@ -236,6 +236,14 @@
     "executive-director": "Գործադիր տնօրեն`",
     "bank": "Բանկ",
     "bank-title": "«ԱՄԵՐԻԱԲԱՆԿ» ՓԲԸ",
-    "tin": "ՀՎՀՀ`"
+    "bank-title-ru": "Ռայֆայզենբանկ ԲԲԸ, Մոսկվա",
+    "bank-of-recipient": "ՍՏԱՑՈՂԻ ԲԱՆԿ.",
+    "recipient": "ՍՏԱՑՈՂ",
+    "details-en": "ԳԻՏԱԿՐԹԱԿԱՆ ՀԻՄՆԱԴՐԱՄ 301 ԻՄԱՍՏՈՒԹՅԱՆ ԵՐԿԻՐ.",
+    "usd-bank": "ԱՄԵՐԻԱԲԱՆԿ, ԵՐԵՎԱՆ, SWIFT (BIC) ARMIAM22",
+    "tin": "ՀՎՀՀ`",
+    "director-name": "Գայանե Մանուկյան",
+    "indicating-payment-details": "Նշելով վճարման մանրամասները.",
+    "donation": "Նվիրատվություն"
   }
 }

@@ -75,10 +75,11 @@ const PersonalSidebar = () => {
         error.response?.data?.response_code === 31 ||
         error.response?.data?.response_code === 32
       ) {
-        dispatch(congratsModal(true, t("congrats.login-again")));
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        dispatch(logout());
         navigate(`/${lang}/`);
+        dispatch(congratsModal(true, t("congrats.login-again")));
       }
     }
   }, [error]);
@@ -127,7 +128,7 @@ const PersonalSidebar = () => {
         </p>
         <button className='prof_sms'>
           <div className='sms_img'>
-            <span className='sms_notif'>3</span>
+            <span className='sms_notif'>0</span>
             <img src={SMS} alt='SMS ' decoding='async' loading='lazy' />
           </div>
           <span>{t("personal.my-message")}</span>

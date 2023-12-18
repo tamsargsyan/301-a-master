@@ -58,7 +58,9 @@ const Props = () => {
                 <p className='accountHolderTitle'>
                   {t("props-info.executive-director")}
                 </p>
-                <p className='accountHolderDescription'>Գայանե Մանուկյան</p>
+                <p className='accountHolderDescription'>
+                  {t("props-info.director-name")}
+                </p>
               </div>
             </div>
           </div>
@@ -104,14 +106,16 @@ const Props = () => {
                 <div className='propsInfo1'>
                   <p className='accountHolderTitle'>{t("props-info.bank")}:</p>
                   <p className='accountHolderDescription'>
-                    AO Райффайзен Банк, Москва
+                    {t("props-info.bank-title-ru")}
                   </p>
                 </div>
                 <div className='propsInfo1'>
                   <p className='accountHolderTitle'>
-                    с указанием деталей платежа:
+                    {t("props-info.indicating-payment-details")}
                   </p>
-                  <p className='accountHolderDescription'>Пожертвование</p>
+                  <p className='accountHolderDescription'>
+                    {t("props-info.donation")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -122,15 +126,19 @@ const Props = () => {
               <p className='propsTitle'>1570072504400101</p>
               <div className='propsInfoContainer'>
                 <div className='propsInfo1'>
-                  <p className='accountHolderTitle'>БАНК ПОЛУЧАТЕЛЬ: </p>
+                  <p className='accountHolderTitle'>
+                    {t("props-info.bank-of-recipient")}
+                  </p>
                   <p className='accountHolderDescription'>
-                    AMERIABANK, YEREVAN, SWIFT (BIC) ARMIAM22
+                    {t("props-info.usd-bank")}
                   </p>
                 </div>
                 <div className='propsInfo1'>
-                  <p className='accountHolderTitle'>ПОЛУЧАТЕЛЬ: </p>
+                  <p className='accountHolderTitle'>
+                    {t("props-info.recipient")}
+                  </p>
                   <p className='accountHolderDescription'>
-                    SCIENTIFIC-EDUCATIONAL FOUNDATION 301 THE LAND OF WISDOM
+                    {t("props-info.details-en")}
                   </p>
                 </div>
               </div>

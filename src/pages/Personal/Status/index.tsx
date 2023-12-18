@@ -8,6 +8,10 @@ import LOGO_301 from "../../../assets/logo/301-white.svg";
 import { useEffect } from "react";
 import { Popconfirm, Spin } from "antd";
 import INFO_ICON from "../../../assets/info-icon.svg";
+import { logout } from "../../../actions/authActions";
+import { useNavigate } from "react-router";
+import { congratsModal } from "../../../actions/congratsAction";
+import { useDispatch } from "react-redux";
 
 const Status = () => {
   const { t } = useTranslation();
@@ -28,6 +32,23 @@ const Status = () => {
       }
     );
   }, []);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      if (
+        error.response?.data?.response_code === 31 ||
+        error.response?.data?.response_code === 32
+      ) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        dispatch(logout());
+        navigate(`/${lang}/`);
+        dispatch(congratsModal(true, t("congrats.login-again")));
+      }
+    }
+  }, [error]);
 
   const payment_type = (type: string) => {
     if (type === "one_time") return t("payments.one_time");

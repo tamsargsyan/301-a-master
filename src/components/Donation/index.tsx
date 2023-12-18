@@ -101,7 +101,6 @@ const Donation = () => {
                       +user.subscription_status === 0
                     ) {
                       e.preventDefault();
-                      console.log(card.id);
                       const token = localStorage.getItem("token");
                       const result = {
                         ...user,

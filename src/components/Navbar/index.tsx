@@ -144,19 +144,20 @@ const Navbar: React.FC<NavbarProps> = ({ setOpenModal, signIn }) => {
     }
   }, [response, error]);
 
-  useEffect(() => {
-    if (error) {
-      if (
-        error.response?.data?.response_code === 31 ||
-        error.response?.data?.response_code === 32
-      ) {
-        dispatch(congratsModal(true, t("congrats.login-again")));
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate(`/${lang}/`);
-      }
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     if (
+  //       error.response?.data?.response_code === 31 ||
+  //       error.response?.data?.response_code === 32
+  //     ) {
+  //       localStorage.removeItem("user");
+  //       localStorage.removeItem("token");
+  //       dispatch(logout());
+  //       navigate(`/${lang}/`);
+  //       dispatch(congratsModal(true, t("congrats.login-again")));
+  //     }
+  //   }
+  // }, [error]);
 
   return (
     <div
